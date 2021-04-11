@@ -44,3 +44,4 @@ export default { // Highlighted
                 && regionMatches(true, 0, anotherString, 0, value.length);
     }
 ```
+![Alt text](../image/JVM.jpg)

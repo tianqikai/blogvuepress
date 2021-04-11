@@ -8,20 +8,6 @@ const sortFn = (a, b) => {
   }
 module.exports = {
     // theme: '@vuepress/blog',
-    locales: {
-        // 键名是该语言所属的子路径
-        // 作为特例，默认语言可以使用 '/' 作为其路径。
-        '/': {
-          lang: 'en-US', // 将会被设置为 <html> 的 lang 属性
-          title: 'VuePress',
-          description: 'Vue-powered Static Site Generator'
-        },
-        '/zh/': {
-          lang: 'zh-CN',
-          title: 'VuePress',
-          description: 'Vue 驱动的静态网站生成器'
-        }
-      },
     // https://shanyuhai123.github.io/vuepress-plugin-auto-sidebar 插件文档
     // https://shanyuhai123.github.io/vuepress-plugin-auto-sidebar/zh/features/plugin-options.html#collapse-%E6%8A%98%E5%8F%A0
     plugins: {
