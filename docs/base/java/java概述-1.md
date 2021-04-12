@@ -205,7 +205,7 @@ JRE。所以安装了JDK，就不用在单独安装JRE了。
 ******
  ![Alt text](../image/Java8.0_platform.jpg)
 
- 参考文献：
+ **参考文献**  
  <https://www.cnblogs.com/roger-yu/p/5827452.html>
  <https://www.cnblogs.com/chengdabelief/p/6576320.html>
 

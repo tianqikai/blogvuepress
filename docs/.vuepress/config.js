@@ -100,10 +100,16 @@ module.exports = {
                     { text: 'k8s', link: '/middleware/k8s/' },
                 ]
             },
-            { text: 'JVM', link: '/JVM/' },
-            { text: '数据结构与算法', link: '/data-structure/' },
-            { text: '设计模式', link: '/design-pattern/' },
-            { text: '源码分析', link: '/source-code/' },
+            {
+                text: '其他',
+                ariLabel: '其他',
+                items: [  //多级导航栏
+                    { text: '数据结构与算法', link: '/other/data-structure/' },
+                    { text: '设计模式', link: '/other/design-pattern/' },
+                    { text: 'JVM', link: '/other/JVM/' },
+                    { text: '源码分析', link: '/other/source-code/' },
+                ]
+            },
             {
                 text: '工具',
                 ariLabel: '工具',
