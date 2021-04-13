@@ -8,20 +8,6 @@ const sortFn = (a, b) => {
   }
 module.exports = {
     // theme: '@vuepress/blog',
-    locales: {
-        // 键名是该语言所属的子路径
-        // 作为特例，默认语言可以使用 '/' 作为其路径。
-        '/': {
-          lang: 'en-US', // 将会被设置为 <html> 的 lang 属性
-          title: 'VuePress',
-          description: 'Vue-powered Static Site Generator'
-        },
-        '/zh/': {
-          lang: 'zh-CN',
-          title: 'VuePress',
-          description: 'Vue 驱动的静态网站生成器'
-        }
-      },
     // https://shanyuhai123.github.io/vuepress-plugin-auto-sidebar 插件文档
     // https://shanyuhai123.github.io/vuepress-plugin-auto-sidebar/zh/features/plugin-options.html#collapse-%E6%8A%98%E5%8F%A0
     plugins: {
@@ -114,10 +100,16 @@ module.exports = {
                     { text: 'k8s', link: '/middleware/k8s/' },
                 ]
             },
-            { text: 'JVM', link: '/JVM/' },
-            { text: '数据结构与算法', link: '/data-structure/' },
-            { text: '设计模式', link: '/design-pattern/' },
-            { text: '源码分析', link: '/source-code/' },
+            {
+                text: '其他',
+                ariLabel: '其他',
+                items: [  //多级导航栏
+                    { text: '数据结构与算法', link: '/other/data-structure/' },
+                    { text: '设计模式', link: '/other/design-pattern/' },
+                    { text: 'JVM', link: '/other/JVM/' },
+                    { text: '源码分析', link: '/other/source-code/' },
+                ]
+            },
             {
                 text: '工具',
                 ariLabel: '工具',
