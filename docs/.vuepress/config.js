@@ -129,6 +129,7 @@ module.exports = {
                     { text: 'PowerDesigner', link: '/tool/PowerDesigner/' },
                 ]
             },
+            { text: '编程英语', link: '/english/' },
             { text: 'github', link: 'https://github.com/zeroonbush/blog.git' }
         ],
     }
