@@ -249,3 +249,15 @@ path 环境变量中，让系统帮我们去找运行执行的程序。
 ## 运行
   java HelloWorld
 ```
+
+## 面试题 谈谈你对Java平台的理解
+
+<font color='red'>
+Java语言是一种面向对象的高性能解释性语言，具有简单易学，易跨平台的特点。<br>
+<strong>一处编译，到处运行（Write once,run Anywhere）</strong>（不同的操作系统，只需要安装不同的JRE就能运行同一套代码）。<br>
+Java语言摒弃了C语言的指针等晦涩难懂的内存管理机制，程序员大部分情况下不用特别关注内存管理，java通过垃圾回收机制（GC）自动进行内存管理。<br>
+<strong>我们平常接触到JDK JRE JVM，他们之间的关系:</strong>
+<br>
+JDK涵盖JRE，JRE涵盖JVM。JDK可以看成JRE的一个超集，除了包含JRE，还包含Java开发的编译器(javac .java文件编译成.class文件)、各种诊断工具<br>
+JRE就是java的运行环境，包含JVM和java类库，以及一些其他模块等<br>
+JVM是实现java语言是解释性语言的主要载体。java源码通过javac编译成.class文件之后，通过JVM将java字节码翻译成真正的机器字节码翻译一句运行一句。同时现在的Hotspot JVM提供了JIT（Just-In——Time）动态编译器，会在运行时将热点代码编译成机器码，放在缓存中，这种情况属于编译执行，而不是解释执行。（感觉像是半编译，半解释的一种语言）</font>
