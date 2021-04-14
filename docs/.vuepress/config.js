@@ -108,6 +108,7 @@ module.exports = {
                     { text: '设计模式', link: '/other/design-pattern/' },
                     { text: 'JVM', link: '/other/JVM/' },
                     { text: '源码分析', link: '/other/source-code/' },
+                    { text: '阿里巴巴Java开发手册', link: '/other/alibaba/' },
                 ]
             },
             {
