@@ -479,7 +479,60 @@ public class BaseDataTypeBoolean {
 }
 ```
 ## 2.5 基本数据类型转换
+<font color='red' size=3><strong>基本数据类型转换</strong></font>  
+●自动类型转换：容量小的类型自动转换为容量大的数据类型。数据类型按容量大小排序为：  
 
+![自动类型转换](../image/autoconversion.jpg)
+●有多种类型的数据混合运算时，系统首先自动将所有数据转换成容量最大的那种数据类型，然后再进行计算。  
+●byte,short,char之间不会相互转换，他们三者在计算时首先转换为int类型。   
+●boolean类型不能与其它数据类型运算。  
+●当把任何基本数据类型的值和字符串(String)进行连接运算时(+)，基本数据类型的值将自动转化为字符串(String)类型。  
+```java
+package javabase.datatype;
+
+/**
+ * BaseDataTypeAutoConversion :
+ * @description: 自动类型转换
+ * @author: tianqikai
+ * @date : 2021/4/15 0015
+ */
+public class BaseDataTypeAutoConversion {
+    public static void main(String[] args) {
+        byte byte1=127;
+        short short1=1;
+        int int1=short1;
+        int int2=byte1;// byte 自动转换位int
+        //高级向低级转换报错
+        //s=i;
+        long long1=100000;// int自动装换为long
+        float float1=111.12F;
+        double double1=float1;//float自动装换为double，自动转换也存在了精度丢失，实际开发我们使用BigDecimal类处理
+        System.out.println(byte1);
+        System.out.println(short1);
+        System.out.println(int1);
+        System.out.println(int2);
+        System.out.println(long1);
+        System.out.println(float1);
+        System.out.println(double1);
+    }
+}
+```
+```java
+//输出结果：
+127
+1
+1
+127
+100000
+111.12
+111.12000274658203
+```
+<font color='red' size=4><strong>强制类型转换</strong></font>  
+●自动类型转换的逆过程，将容量大的数据类型转换为容量小的数据类型。使用时要加上强制转换符：()，但可能造成精度降低或溢出,格外要
+注意。   
+●通常，字符串不能直接转换为基本类型，但通过基本类型对应的包装类则可以实现把字符串转换成基本类型。   
+●如： String a = “43”; int i = Integer.parseInt(a);  
+●boolean类型不可以转换为其它的数据类型。  
 
 ## 2.6 数据类型与String间转换
 
