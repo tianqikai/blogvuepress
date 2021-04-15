@@ -168,6 +168,12 @@ java对各种 **变量、类、方法** 等命名是使用的字符串序列称�
 ▶**变量名、方法名**：多单词组成时，第一个单词首字母小写，第二个单词开始每个单词首字母大写:xxxYyyZzz  
 ▶**常量名**：所有字母都大写。多单词时每个单词用下划线连接：XXX_YYY_ZZZ  
 
+
+```` java
+/**包名和类名不能一样，不然会报错**/
+
+Error: A JNI error has occurred, please check your installation and try again
+````
 详细可参考《阿里巴巴Java开发手册》
 
 ## 2.3 变量
