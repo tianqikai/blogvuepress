@@ -109,6 +109,7 @@ module.exports = {
                     { text: 'JVM', link: '/other/JVM/' },
                     { text: '源码分析', link: '/other/source-code/' },
                     { text: '阿里巴巴Java开发手册', link: '/other/alibaba/' },
+                    { text: '编程英语', link: '/other/english/' },
                 ]
             },
             {
@@ -122,7 +123,6 @@ module.exports = {
                     { text: 'PowerDesigner', link: '/tool/PowerDesigner/' },
                 ]
             },
-            { text: '编程英语', link: '/english/' },
             { text: 'github', link: 'https://github.com/zeroonbush/blog.git' }
         ],
     }
