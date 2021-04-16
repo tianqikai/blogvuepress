@@ -430,9 +430,9 @@ A
 \
 ```
 <font color='red' size=4><strong>了解：ASCII 码</strong></font>   
-●在计算机内部，所有数据都使用二进制表示。每一个二进制位（bit）有 0 和 1 两种状态，因此 8 个二进制位就可以组合出 256 种状态，这被称为一个字节（byte）。一个字节一共可以用来表示 256 种不同的状态，每一个状态对应一个符号，就是 256 个符号，从0000000 到 11111111。 
-● ASCII码：上个世纪60年代，美国制定了一套字符编码，对英语字符与二进制位之间的关系，做了统一规定。这被称为ASCII码。ASCII码一共规定了128个字符的编码，比如空格“SPACE”是32（二进制00100000），大写的字母A是65（二进制01000001）。这128个符号（包括32个不能打印出来的控制符号），只占用了一个字节的后面7位，最前面的1位统一规定为0。 
-●缺点：  
+●在计算机内部，所有数据都使用二进制表示。每一个二进制位（bit）有 0 和 1 两种状态，因此 8 个二进制位就可以组合出 256 种状态，这被称为一个字节（byte）。一个字节一共可以用来表示 256 种不同的状态，每一个状态对应一个符号，就是 256 个符号，从0000000 到 11111111。  
+● ASCII码：上个世纪60年代，美国制定了一套字符编码，对英语字符与二进制位之间的关系，做了统一规定。这被称为ASCII码。ASCII码一共规定了128个字符的编码，比如空格“SPACE”是32（二进制00100000），大写的字母A是65（二进制01000001）。这128个符号（包括32个不能打印出来的控制符号），只占用了一个字节的后面7位，最前面的1位统一规定为0。   
+●缺点：    
 ▶ 不能表示所有字符。   
 ▶ 相同的编码表示的字符不一样：比如，130在法语编码中代表了é，在希伯来语编码中却代表(ג) 了字母Gimel    
 <font color='red' size=4><strong>了解： Unicode 编码</strong></font>  
@@ -534,8 +534,223 @@ public class BaseDataTypeAutoConversion {
 ●如： String a = “43”; int i = Integer.parseInt(a);  
 ●boolean类型不可以转换为其它的数据类型。  
 
-## 2.6 数据类型与String间转换
+```java
+package javabase.datatype;
+import java.math.BigDecimal;
 
-## 2.7 进制与进制之间转换
+/**
+ * BaseDatatypeForceConversion :
+ * @description:强制类型转换
+ * @author: tianqikai
+ * @date : 2021/4/16 0016
+ */
+public class BaseDatatypeForceConversion {
+    public static void main(String[] args) {
+        //强制类型转换，会存在精度缺失情况，尽量避免使用；实际商业开发中，存在计算是，一般使用BigDecimal类处理；
+        int i;
+        long l=10000L;
+        i=(int)l;
+        System.out.println(i);
+        float f;
+        double d=1000.1111;
+        f=(float)d;
+        System.out.println(f);
 
-## 2.8 运算符
+        BigDecimal bigDecimal=new BigDecimal(l);
+
+        bigDecimal=bigDecimal.add(new BigDecimal(i));
+        System.out.println(bigDecimal);
+        //任何类型和string拼接之后变成，string类型；
+        String s="String类型字符串对象";
+        s=s+l;
+        System.out.println(s);
+
+    }
+}
+```
+```java
+//输出结果
+10000
+1000.1111
+20000
+String类型字符串对象10000 
+```
+
+## 2.6 进制与进制之间转换
+略
+## 2.7 运算符
+
+运算符是一种特殊的符号，用以表示数据的运算、赋值和比较等。   
+●算术运算符  
+●赋值运算符  
+●比较运算符（关系运算符）  
+●逻辑运算符  
+●位运算符  
+●三元运算符  
+
+### 2.7.1 算术运算符
+
+```java
++   求和
+-   相减
+*   乘积
+/   相除
+++  自加1(前++和后++两种，前++：先运算再赋值；后++：先赋值后运算)
+--  自减1(前--和后--两种，前--：先运算再赋值；后--：先赋值后运算)
+%   取余、求模
++   字符串连接 “He”+”llo” “Hello”  
+```
+```java
+    private static void countOne(){
+        int a = 10;
+        int b = 3;
+        System.out.println(a + b); //13
+        System.out.println(a - b); //7
+        System.out.println(a * b); //30
+        System.out.println(a / b); //3 因为是int类型，所以结果也是int类型
+        System.out.println(a % b); //1
+    }
+```
+```java
+//运行结果
+13
+7
+30
+3
+1
+```
+```java
+    private static void countTwo(){
+        int k = 10;
+        k++;//相当于k = k + 1
+        System.out.println("k=" + k);
+        //这里面的+号是做的字符串相加的运算，输出结果为k=11
+        int j = 5;
+        ++j;//相当于j = j + 1
+        System.out.println("j=" + j); //j=6
+        int m = 8;
+        m--;//相当于m = m - 1
+        System.out.println("m=" + m); //m=7
+        int n = 6;
+        --n;//相当于n = n - 1
+        System.out.println("n=" + n); //n=5
+    }
+```
+```java
+//运行结果
+k=11
+j=6
+m=7
+n=5
+```
+测试题：
+
+```java
+    private static void countThree(){
+        int a = 10;
+        int b = 10;
+        int c = 10;
+        a = b++;
+        c = --a;
+        b = ++a;
+        a = c--;
+        System.out.println("a = " + a + ",b = " + b + ",c = " + c);
+    }
+```
+```java
+//输出结果
+a =9 ,b =10,c = 8
+```
+
+### 2.7.2 赋值运算符
+```java
+赋值运算符
+=
++= 把左边和右边做加法，然后赋值给左边
+-= 把左边和右边做减法，然后赋值给左边
+*= 把左边和右边做乘法，然后赋值给左边
+/= 把左边和右边做除法，然后赋值给左边
+%= 把左边和右边做取余，然后赋值给左边
+```
+```java
+package javabase.operators;
+
+/**
+ * AssignmentOperator :赋值运算符
+ */
+public class AssignmentOperator {
+    public static void main(String[] args) {
+        //基本的赋值运算符
+        int a = 10;
+        //追加
+        a += 10; //a = a+10;
+        System.out.println(a); //20
+
+        //a==20
+        a -= 5;
+        System.out.println(a); //15
+
+        //a==15
+        a *= 3;
+        System.out.println(a); //45
+
+        //a==45
+        a /= 15; // a = a/15;
+        System.out.println(a); //3
+
+        //a==3
+        a %= 2; //a = a%2;
+        System.out.println(a); //1
+
+
+        //基本赋值运算符和扩展赋值运算符的区别
+        byte i = 10;
+
+        //编译无法通过。运算结果是int类型，前边的变量是byte类型.
+        //i = i + 10;
+
+        //语法：扩展赋值运算符不改变运算结果类型。可能损失精度。
+        i += 10;
+        
+        //虽然编译通过，精度损失严重。
+        //最初变量是byte，最终还是byte类型
+        //相当于i = (byte)(i+10000);
+        i += 1000;
+    }
+}
+
+```
+```java
+//输出结果
+20
+15
+45
+3
+1
+```
+
+## 2.7.3 关系运算符
+
+```java
+== 判断是否相等(基本数据类型)
+!= 不等于
+> 大于
+>= 大于等于
+< 小于
+<= 小于等于
+```
+## 2.7.4 逻辑运算符
+```java
+& 逻辑与 两边都是true，结果是true
+| 逻辑或 一边是true,结果就是true
+! 逻辑非 取反 !true –> false
+^ 逻辑异或 两边只要是不一致就是true
+&& 短路与 用法和 & 一样。
+|| 短路或 用法和 | 一样
+```
+
+## 2.7.5 位运算符
+略 后补
+## 2.7.6 三目运算符
+
+## 2.7.7 运算符优先级
