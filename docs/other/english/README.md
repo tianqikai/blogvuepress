@@ -20,3 +20,5 @@
 [词典]	prohibit的过去分词和过去式;
 
 <br>
+
+Description
