@@ -20,3 +20,46 @@
 [词典]	prohibit的过去分词和过去式;
 
 <br>
+
+::: warning oriented
+英 [ˈɔːrientɪd]   美 [ˈɔːrientɪd]  
+v.
+朝向;面对;确定方向;使适应;确定方位;认识方向;熟悉;适应
+orient的过去分词和过去式
+:::
+::: tip  Programming
+英 [ˈprəʊɡræmɪŋ]   美 [ˈproʊɡræmɪŋ]  
+计算机程序;编程;程序设计;规划;节目制作
+:::
+::: tip  Programming
+英 [ˈprəʊɡræmɪŋ]   美 [ˈproʊɡræmɪŋ]  
+计算机程序;编程;程序设计;规划;节目制作
+:::
+::: tip  Procedure
+英 [prəˈsiːdʒə(r)]   美 [prəˈsiːdʒər]  
+n.
+(正常)程序，手续，步骤;(商业、法律或政治上的)程序;手术
+:::
+::: danger 危险
+面向对象：Object Oriented Programming   
+面向过程：Procedure Oriented Programming
+:::
+------
+
+<Badge text="description" type="error"/>
+<Badge text="description"/>
+<br>
+
+
+::: tip  description
+英 [dɪˈskrɪpʃn]   美 [dɪˈskrɪpʃn]       
+n.      
+描写(文字);形容;说明;类型     
+复数： descriptions     
+记忆技巧：de 加强 + script 写 + ion 表动作 → 描绘   
+:::
+
+
+::: danger 危险
+This is a dangerous warning
+:::

@@ -87,6 +87,7 @@ module.exports = {
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
                     { text: 'zuul', link: '/middleware/zuul/' },
                     { text: 'nocas', link: '/middleware/nocas/' },
+                    { text: 'seata', link: '/middleware/seata/' },
                     {   text: 'MQ消息队列',
                         ariLabel:"MQ",
                         link:'/middleware/MQ消息队列/'
