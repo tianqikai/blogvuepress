@@ -61,5 +61,5 @@ n.
 
 
 ::: danger 危险
-This is a dangerous warning
+ipconfig /flushdns
 :::
