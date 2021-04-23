@@ -20,6 +20,3 @@
 [词典]	prohibit的过去分词和过去式;
 
 <br>
-
-abnormally channel
-try the connection again later 。if the failure persists，record the error values and contact your systems administrator。 the return code from TCP/IP is110,the reason for the failure may be  that this host cannot reach the destination host . it may also be possible that the  listening program at host  relevant operations to start the tcp?ip listening program and try again
