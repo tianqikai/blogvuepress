@@ -69,13 +69,13 @@ module.exports = {
                 text: '常用框架',
                 ariLabel: '常用框架',
                 items: [  //多级导航栏
-                    { text: 'Spring', link: '/db/mysql/' },
-                    { text: 'SpringMVC', link: '/db/mysql/' },
-                    { text: 'mybatis', link: '/db/redis/' },
-                    { text: 'springboot', link: '/db/redis/' },
-                    { text: 'dubbo', link: '/db/oracle/' },
-                    { text: 'vue', link: '/db/mongdb/' },
-                    { text: 'springcloud-alibaba', link: '/db/db2/' }
+                    { text: 'Spring', link: '/framework/Spring/' },
+                    { text: 'SpringMVC', link: '/framework/SpringMVC/' },
+                    { text: 'Mybatis', link: '/framework/mybatis/' },
+                    { text: 'Springboot', link: '/framework/springboot/' },
+                    { text: 'Dubbo', link: '/framework/dubbo/' },
+                    { text: 'Vue', link: '/framework/vue/' },
+                    { text: 'SpringCloud-Alibaba', link: '/framework/SpringCloud/' }
                 ]
             },
             {
