@@ -47,22 +47,22 @@ module.exports = {
                 ariLabel: '入门基础',
                 link:'/base/',
                 items: [  //多级导航栏
-                    { text: 'java', link: '/base/java/' },
-                    { text: 'javascript', link: '/base/es6/' },
-                    { text: 'shell脚本', link: '/base/shell/' },
-                    { text: 'python', link: '/base/python/' },
-                    { text: 'c语言', link: '/base/c/' },
+                    { text: 'Java', link: '/base/java/' },
+                    { text: 'Javascript', link: '/base/es6/' },
+                    { text: 'Shell脚本', link: '/base/shell/' },
+                    { text: 'Python', link: '/base/python/' },
+                    { text: 'C语言', link: '/base/c/' },
                 ]
             },
             {
                 text: '数据库',
                 ariLabel: '数据库',
                 items: [  //多级导航栏
-                    { text: 'mysql', link: '/db/mysql/' },
-                    { text: 'redis', link: '/db/redis/' },
-                    { text: 'oracle', link: '/db/oracle/' },
-                    { text: 'mongdb', link: '/db/mongdb/' },
-                    { text: 'db2', link: '/db/db2/' }
+                    { text: 'Mysql', link: '/db/mysql/' },
+                    { text: 'Redis', link: '/db/redis/' },
+                    { text: 'Oracle', link: '/db/oracle/' },
+                    { text: 'Mongdb', link: '/db/mongdb/' },
+                    { text: 'DB2', link: '/db/db2/' }
                 ]
             },
             {
