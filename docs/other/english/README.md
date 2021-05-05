@@ -63,3 +63,36 @@ n.
 ::: danger 危险
 ipconfig /flushdns
 :::
+
+Reference to 'x' is ambiguous
+
+::: tip 引用  
+<br/> 
+<Badge text="Reference"/> 
+
+英 [ˈrefrəns]   美 [ˈrefrəns]    
+n.  
+说到(或写到)的事;提到;谈及;涉及;参考;查询;查阅;(帮助或意见的)征求，征询  
+v.  
+查阅;参考;给(书等)附参考资料  
+:::
+
+::: danger 不明确的  
+<br/> 
+<Badge text="ambiguous"/> 
+
+英 [æmˈbɪɡjuəs]   美 [æmˈbɪɡjuəs]    
+adj.  
+模棱两可的;含混不清的;不明确的  
+派生词： ambiguously adv.  
+:::
+::: warning 相配  配对 
+<br/> 
+<Badge text="match"/>  
+
+英 [mætʃ]   美 [mætʃ]    
+n.  
+火柴;比赛;竞赛;敌手;旗鼓相当的人  
+v.  
+般配;相配;相同;相似;相一致;找相称(或相关)的人(或物);配对   
+:::
