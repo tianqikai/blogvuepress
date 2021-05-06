@@ -791,16 +791,59 @@ class MyThread6 implements Runnable{
     }
 }
 ```
+```java
+public class CallableThread {
+    public static void main(String[] args) {
+        MyCallable myCallable=new MyCallable();
+        myCallable.setTicket(100);
 
-经典例题：生产者/消费者问题
-生产者(Productor)将产品交给店员(Clerk)，而消费者(Customer)从店员处
-取走产品，店员一次只能持有固定数量的产品(比如:20），如果生产者试图
-生产更多的产品，店员会叫生产者停一下，如果店中有空位放产品了再通
-知生产者继续生产；如果店中没有产品了，店员会告诉消费者等一下，如
-果店中有产品了再通知消费者来取走产品。
-这里可能出现两个问题：
-生产者比消费者快时，消费者会漏掉一些数据没有取到。
-消费者比生产者快时，消费者会取相同的数据。
+        FutureTask<Integer> futureTask = new FutureTask<Integer>(myCallable);
+        FutureTask<Integer> futureTask1 = new FutureTask<Integer>(myCallable);
+        new Thread(futureTask).start();
+        new Thread(futureTask1).start();
+        try {
+            Integer value = futureTask.get();
+            System.out.println("返回值："+value);
+            Integer value1 = futureTask1.get();
+            System.out.println("返回值1："+value1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+}
+class MyCallable implements Callable<Integer>{
+    private  int ticket;
+
+    public void setTicket(int ticket) {
+        this.ticket = ticket;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        while(true){
+            synchronized(this){
+                if (this.ticket>0){
+                    System.out.println(Thread.currentThread().getName()+" |卖出去的票号："+this.ticket);
+                    this.ticket--;
+                }else{
+                    break;
+                }
+            }
+        }
+        return 200;
+    }
+}
+```
+
+:::tip 经典例题：生产者/消费者问题
+　生产者(Productor)将产品交给店员(Clerk)，而消费者(Customer)从店员处取走产品，店员一次只能持有固定数量的产品(比如:20），如果生产者试图生产更多的产品，店员会叫生产者停一下，如果店中有空位放产品了再通知生产者继续生产；如果店中没有产品了，店员会告诉消费者等一下，如果店中有产品了再通知消费者来取走产品。  
+
+★这里可能出现两个问题：   
+　※生产者比消费者快时，消费者会漏掉一些数据没有取到。    
+　※消费者比生产者快时，消费者会取相同的数据。  
+:::  
 ## 线程的创建方式--Callable
 
 :::tip 与使用Runnable相比， Callable功能更强大些
@@ -882,7 +925,7 @@ JDK 5.0起提供了线程池相关API：<font color='red'><strong>ExecutorServic
 :::
 
 
-----------------
+--------------------------
 
 :::tip Executors：工具类、线程池的工厂类，用于创建并返回不同类型的线程池　　
 　A.Executors.newCachedThreadPool()：创建一个可根据需要创建新线程的线程池　　
@@ -891,7 +934,7 @@ JDK 5.0起提供了线程池相关API：<font color='red'><strong>ExecutorServic
 　D.Executors.newScheduledThreadPool(n)：创建一个线程池，它可安排在给定延迟后运行命令或者定期地执行。　　
 :::
 
--------------------------------
+------------------------
 
 :::tip 线程池的好处：
 1. 提高响应速度（减少了创建新线程的时间）
@@ -901,10 +944,17 @@ JDK 5.0起提供了线程池相关API：<font color='red'><strong>ExecutorServic
 5. maximumPoolSize：最大线程数 
 6. keepAliveTime：线程没有任务时最多保持多长时间后会终止
 :::
-线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险
+<font color='red'><strong>阿里巴巴开发手册---线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险</strong></font>
+
+
+
+
 ## 面试题
 1. java sleep和wait的区别？  
-首先，要记住这个差别，“sleep是Thread类的方法,wait是Object类中定义的方法”。尽管这两个方法都会影响线程的执行行为，但是本质上是有区别的。Thread.sleep不会导致锁行为的改变，如果当前线程是拥有锁的，那么Thread.sleep不会让线程释放锁。如果能够帮助你记忆的话，可以简单认为和锁相关的方法都定义在Object类中，因此调用Thread.sleep是不会影响锁的相关行为。Thread.sleep和Object.wait都会暂停当前的线程，对于CPU资源来说，不管是哪种方式暂停的线程，都表示它暂时不再需要CPU的执行时间。OS会将执行时间分配给其它线程。区别是，调用wait后，需要别的线程执行notify/notifyAll才能够重新获得CPU执行时间。线程的状态参考 Thread.State的定义。新创建的但是没有执行（还没有调用start())的线程处于“就绪”，或者说Thread.State.NEW状态。Thread.State.BLOCKED（阻塞）表示线程正在获取锁时，因为锁不能获取到而被迫暂停执行下面的指令，一直等到这个锁被别的线程释放。BLOCKED状态下线程，OS调度机制需要决定下一个能够获取锁的线程是哪个，这种情况下，就是产生锁的争用，无论如何这都是很耗时的操作
+首先，要记住这个差别，“sleep是Thread类的方法,wait是Object类中定义的方法”。尽管这两个方法都会影响线程的执行行为，但是本质上是有区别的。
+Thread.sleep不会导致锁行为的改变，如果当前线程是拥有锁的，那么Thread.sleep不会让线程释放锁。
+如果能够帮助你记忆的话，可以简单认为和锁相关的方法都定义在Object类中，因此调用Thread.sleep是不会影响锁的相关行为。
+Thread.sleep和Object.wait都会暂停当前的线程，对于CPU资源来说，不管是哪种方式暂停的线程，都表示它暂时不再需要CPU的执行时间。OS会将执行时间分配给其它线程。区别是，调用wait后，需要别的线程执行notify/notifyAll才能够重新获得CPU执行时间。线程的状态参考 Thread.State的定义。新创建的但是没有执行（还没有调用start())的线程处于“就绪”，或者说Thread.State.NEW状态。Thread.State.BLOCKED（阻塞）表示线程正在获取锁时，因为锁不能获取到而被迫暂停执行下面的指令，一直等到这个锁被别的线程释放。BLOCKED状态下线程，OS调度机制需要决定下一个能够获取锁的线程是哪个，这种情况下，就是产生锁的争用，无论如何这都是很耗时的操作
 
 2. Callable比Runable的优势？  
 两者最大的不同点是：实现Callable接口的任务线程能返回执行结果；而实现Runnable接口的任务线程不能返回结果；
