@@ -76,6 +76,8 @@ public class MyThread extends Thread{
     }
 }
 ```
+## 线程的创建和使用--Runnable接口
+
 :::tip 方式二：实现Runnable接口
 1) 定义子类，实现Runnable接口。  
 2) 子类中重写Runnable接口中的run方法。  
