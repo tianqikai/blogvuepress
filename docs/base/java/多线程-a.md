@@ -779,11 +779,13 @@ class MyThread6 implements Runnable{
                 if (this.ticket>0){
                     System.out.println(Thread.currentThread().getName()+" |卖出去的票号："+this.ticket);
                     this.ticket--;
-                }
-                try {
-                    this.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    if(this.ticket>0){
+                        try {
+                            this.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
             if(this.ticket<=0){
