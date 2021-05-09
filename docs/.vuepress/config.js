@@ -48,6 +48,7 @@ module.exports = {
                 link:'/base/',
                 items: [  //多级导航栏
                     { text: 'Java', link: '/base/java/' },
+                    { text: 'Java基础高级', link: '/base/seniorJava/' },
                     { text: 'Javascript', link: '/base/es6/' },
                     { text: 'Shell脚本', link: '/base/shell/' },
                     { text: 'Python', link: '/base/python/' },
@@ -111,6 +112,7 @@ module.exports = {
                     { text: '源码分析', link: '/other/source-code/' },
                     { text: '阿里巴巴Java开发手册', link: '/other/alibaba/' },
                     { text: '编程英语', link: '/other/english/' },
+                    { text: 'IDEA快捷键', link: '/other/idea/' },
                 ]
             },
             {
