@@ -137,16 +137,16 @@ public class Generic2 {
 8. 泛型的指定中不能使用基本数据类型，可以使用包装类替换。
 9. 在类/接口上声明的泛型，在本类或本接口中即代表某种类型，可以作为非静态属性的类型、非静态方法的参数类型、非静态方法的返回值类型。但在静态方法中不能使用类的泛型。
 10. 异常类不能是泛型的
-11. 不能使用new E[]。但是可以：E[] elements = (E[])new Object[capacity];
-    参考：ArrayList源码中声明：Object[] elementData，而非泛型参数类型数组。
-12.　父类有泛型，子类可以选择保留泛型也可以选择指定泛型类型：  
-    ▶子类不保留父类的泛型：按需实现
-    　√ 没有类型 擦除
-    　√ 具体类型
-    ▶ 子类保留父类的泛型：泛型子类
-    　√ 全部保留
-    　√ 部分保留
-结论：子类必须是“富二代”，子类除了指定或保留父类的泛型，还可以增加自己的泛型
+11. 不能使用new E[]。但是可以：E[] elements = (E[])new Object[capacity];  
+    参考：ArrayList源码中声明：Object[] elementData，而非泛型参数类型数组。  
+12. 父类有泛型，子类可以选择保留泛型也可以选择指定泛型类型：   
+    ▶子类不保留父类的泛型：按需实现  
+    　√ 没有类型 擦除  
+    　√ 具体类型  
+    ▶ 子类保留父类的泛型：泛型子类  
+    　√ 全部保留  
+    　√ 部分保留  
+结论：子类必须是“富二代”，子类除了指定或保留父类的泛型，还可以增加自己的泛型  
 ```java
 public class Father<T1,T2,T3> {
     public Father() {
@@ -189,11 +189,18 @@ class Son14<T2, A, B> extends Father<Integer, T2,Object> {
 
 ### 自定义泛型接口
 
+```java
+public interface Map<K, V> {
+    public void put(K key, V value);
+    public V get(K key);
+    //......
+}
+```
 ### 自定义泛型方法
 1.方法，也可以被泛型化，不管此时定义在其中的类是不是泛型类。
 在泛型方法中可以定义泛型参数，此时，参数的类型就是传入数据的类型。   
-泛型方法的格式：  
-<font color='red'><strong>[访问权限] <泛型> 返回类型 方法名([泛型标识 参数名称]) 抛出的异常</strong></font>  
+**泛型方法的格式：**  
+<font color='red'><strong>[访问权限] &lt;泛型&gt; 返回类型 方法名([泛型标识 参数名称]) 抛出的异常</strong></font>  
 
 ```java
 public class Generic2 {
@@ -215,17 +222,22 @@ public class Generic2 {
 ```
 
 ### 通配符
-1. 使用<font color='red'><strong>类型通配符：？</strong></font> 比如：List<?> ，Map<?,?>List<?>是List<String>、List<Object>等各种泛型List的父类。
-2. 读取List<?>的对象list中的元素时，永远是安全的，因为不管list的真实类型是什么，它包含的都是Object。  
-3. 写入list中的元素时，不行。因为我们不知道c的元素类型，我们不能向其中添加对象。 
-▶ 唯一的例外是null，它是所有类型的成员。
-▶ 将任意元素加入到其中不是类型安全的：
+
+1. 使用<font color='red'><strong>类型通配符：？</strong></font> 比如：List<?> ，Map<?,?>List<?>是List&lt;String&gt;、List&lt;Object&gt;等各种泛型List的父类。　 
+2. 读取List<?>的对象list中的元素时，永远是安全的，因为不管list的真实类型是什么，它包含的都是Object。  　
+3. 写入list中的元素时，不行。因为我们不知道c的元素类型，我们不能向其中添加对象  
+　▶ 唯一的例外是null，它是所有类型的成员。   
+　▶ 将任意元素加入到其中不是类型安全的：   
+
+--------------
+
 ```java
 Collection<?> c = new ArrayList<String>();
 c.add(new Object()); // 编译时错误
 ```
-因为我们不知道c的元素类型，我们不能向其中添加对象。add方法有类型参数E作为集合的元素类型。我们传给add的任何参数都必须是一个未知类型的子类。因为我们不知道那是什么类型，所以我们无法传任何东西进去。
-▶ 另一方面，我们可以调用get()方法并使用其返回值。返回值是一个未知的类型，但是我们知道，它总是一个Object。
+
+因为我们不知道c的元素类型，我们不能向其中添加对象。add方法有类型参数E作为集合的元素类型。我们传给add的任何参数都必须是一个未知类型的子类。因为我们不知道那是什么类型，所以我们无法传任何东西进去。  
+▶ 另一方面，我们可以调用get()方法并使用其返回值。返回值是一个未知的类型，但是我们知道，它总是一个Object。  
 
 ```java
 public class Generic3 {
@@ -263,18 +275,18 @@ class GenericTypeClass<?>{
 ArrayList<?> list2 = new ArrayList<?>();
 ```
 ### 有限制的通配符
-<?> 允许所有泛型的引用调用
-<font color='red'><strong>▶ 通配符指定上限</strong></font>   
-上限extends：使用时指定的类型必须是继承某个类，或者实现某个接口，即<=   
-<font color='red'><strong>▶  通配符指定下限</strong></font>   
-下限super：使用时指定的类型不能小于操作的类，即>=  
-举例：  
-<font color='red'><strong>▶ <? extends Number> (无穷小 , Number]</strong></font> 
-只允许泛型为Number及Number子类的引用调用
-<font color='red'><strong>▶ <? super Number> [Number , 无穷大)</strong></font> 
- 只允许泛型为Number及Number父类的引用调用
-<font color='red'><strong>▶ <? extends Comparable></strong></font> 
-只允许泛型为实现Comparable接口的实现类的引用调用
+<?> 允许所有泛型的引用调用  
+<font color='red'><strong>▶ 通配符指定上限</strong></font>     
+上限extends：使用时指定的类型必须是继承某个类，或者实现某个接口，即<=     
+<font color='red'><strong>▶  通配符指定下限</strong></font>     
+下限super：使用时指定的类型不能小于操作的类，即>=    
+举例：    
+<font color='red'><strong>▶ <? extends Number> (无穷小 , Number]</strong></font>   
+只允许泛型为Number及Number子类的引用调用  
+<font color='red'><strong>▶ <? super Number> [Number , 无穷大)</strong></font>   
+ 只允许泛型为Number及Number父类的引用调用  
+<font color='red'><strong>▶ <? extends Comparable></strong></font>   
+只允许泛型为实现Comparable接口的实现类的引用调用  
 
 ```java
 public class Generic4 {
