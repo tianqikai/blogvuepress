@@ -221,7 +221,7 @@ public class Generic2 {
 }
 ```
 
-### 通配符
+## 通配符
 
 1. 使用<font color='red'><strong>类型通配符：？</strong></font> 比如：List<?> ，Map<?,?>List<?>是List&lt;String&gt;、List&lt;Object&gt;等各种泛型List的父类。　 
 2. 读取List<?>的对象list中的元素时，永远是安全的，因为不管list的真实类型是什么，它包含的都是Object。  　
