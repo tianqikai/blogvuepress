@@ -36,6 +36,10 @@ module.exports = {
         //seo
         ["meta", { name: "author", content: "冰岛红茶" }],
         ["meta", { name: "keywords", content: "个人博客 ，java ，后端" }]
+        // // add jquert and fancybox
+        // ['script', { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js' }],
+        // ['script', { src: 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js' }],
+        // ['link', { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css' }]
     ],
     lastUpdated: 'Last Updated',
     themeConfig: {  //主题配置
@@ -48,6 +52,7 @@ module.exports = {
                 link:'/base/',
                 items: [  //多级导航栏
                     { text: 'Java', link: '/base/java/' },
+                    { text: 'Java基础高级', link: '/base/seniorJava/' },
                     { text: 'Javascript', link: '/base/es6/' },
                     { text: 'Shell脚本', link: '/base/shell/' },
                     { text: 'Python', link: '/base/python/' },
@@ -111,6 +116,7 @@ module.exports = {
                     { text: '源码分析', link: '/other/source-code/' },
                     { text: '阿里巴巴Java开发手册', link: '/other/alibaba/' },
                     { text: '编程英语', link: '/other/english/' },
+                    { text: 'IDEA快捷键', link: '/other/idea/' },
                 ]
             },
             {
