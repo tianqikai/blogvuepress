@@ -98,7 +98,7 @@ module.exports = {
                         // ]
                     },
                     { text: 'docker', link: '/middleware/docker/' },
-                    { text: 'k8s', link: '/middleware/k8s/' },
+                    { text: 'kubernetes', link: '/middleware/kubernetes/' },
                 ]
             },
             {
