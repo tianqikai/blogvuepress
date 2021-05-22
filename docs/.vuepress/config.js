@@ -1,6 +1,10 @@
 //config.js
 // const sortFn = key => (a, b) => a[key].split("-")[1][length - 1] > b[key].split("-")[1][length - 1] ? 1 : -1;
 const sortFn = (a, b) => {
+    console.log('-----------strat')
+    console.log(a.filename)
+    console.log(b.filename)
+    console.log('-----------end')
     const lastA = a.filename.split("-")[1].split(".")[0]
     const lastB = b.filename.split("-")[1].split(".")[0]
 
