@@ -40,7 +40,8 @@ module.exports = {
         //seo
         ["meta", { name: "author", content: "冰岛红茶" }],
         ["meta", { name: "keywords", content: "个人博客 ，java ，后端" }]
-        // // add jquert and fancybox
+        // // add jquert and fancybox 支持图片放大功能
+        //  img format   img reset format 
         // ['script', { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js' }],
         // ['script', { src: 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js' }],
         // ['link', { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css' }]
