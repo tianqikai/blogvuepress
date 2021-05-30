@@ -298,6 +298,8 @@ JDK中用Thread.State类定义了线程的几种状态要想实现多线程，�
 4. <font color='red'><strong>阻塞</strong></font> ：在某种特殊情况下，被人为挂起或执行输入输出操作时，让出 CPU 并临时中止自己的执行，进入阻塞状态
 5. <font color='red'><strong>死亡</strong></font> ：线程完成了它的全部工作或线程被提前强制性地中止或出现异常导致结束
 
+<a data-fancybox title="线程的生命周期" href="../image/duoxiancheng.jpg">![线程的生命周期](../image/duoxiancheng.jpg)</a>
+
 ## 线程的同步 --synchronized
 
 :::tip synchronized的锁是什么？
