@@ -12,3 +12,7 @@
 6. ctrl + alt + shift + c  复制类的全类名
 
 框架=注解+反射+设计模式
+
+
+export JAVA_HOME=/usr/java/jdk1.8.0_211-amd64
+PATH=$PATH:$JAVA_HOME/bin

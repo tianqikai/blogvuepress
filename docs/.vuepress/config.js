@@ -122,7 +122,8 @@ module.exports = {
                     { text: '阿里巴巴Java开发手册', link: '/other/alibaba/' },
                     { text: '编程英语', link: '/other/english/' },
                     { text: 'IDEA快捷键', link: '/other/idea/' },
-                    { text: '常用网站', link: '/other/url/' }
+                    { text: '常用网站', link: '/other/url/' },
+                    { text: 'Liunx安装jdk', link: '/other/jdk/' }
                 ]
             },
             {
