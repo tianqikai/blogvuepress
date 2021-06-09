@@ -93,7 +93,7 @@ module.exports = {
                 ariLabel: '中间件',
                 items: [  //多级导航栏
                     { text: 'nginx', link: '/middleware/nginx/' },
-                    { text: 'getways', link: '/middleware/getways/' },
+                    { text: 'gateway', link: '/middleware/gateway/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
                     { text: 'zuul', link: '/middleware/zuul/' },
                     { text: 'nocas', link: '/middleware/nocas/' },
