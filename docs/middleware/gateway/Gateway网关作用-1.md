@@ -750,6 +750,72 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
 }
 ```
 
+统一鉴权过滤器
+
+我们在网关过滤器中通过token判断用户是否登录，完成一个统一鉴权案例
+
+```java
+package com.example.config;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+/**
+ * @ClassName：AccessFilter
+ * @description: 权限过滤器
+ * @author: tianqikai
+ * @date : 23:36 2021/6/10
+ */
+@Slf4j
+@Component
+public class AccessFilter implements GlobalFilter, Ordered {
+
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        // 获取请求参数
+        String token = exchange.getRequest().getQueryParams().getFirst("token");
+        // 业务逻辑处理
+        if (null == token) {
+            log.info("token is null...");
+            ServerHttpResponse response = exchange.getResponse();
+            // 响应类型
+            response.getHeaders().add("Content-Type", "application/json; charset=utf-8");
+            // 响应状态码，HTTP 401 错误代表用户没有访问权限
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            // 响应内容
+            String message = "{\"message\":\"" + HttpStatus.UNAUTHORIZED.getReasonPhrase() + "\"}";
+            DataBuffer buffer = response.bufferFactory().wrap(message.getBytes());
+            // 请求结束，不在继续向下请求
+            return response.writeWith(Mono.just(buffer));
+        }
+        // 使用 token 进行身份验证
+        log.info("token is OK!");
+        return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
+    }
+}
+
+```
+
+http://localhost:9001/order/1
+
+http://localhost:9001/order/1?token=123
+
+<a data-fancybox title="统一鉴权过滤器" href="../image/tongyijianquan.jpg">![统一鉴权过滤器](../image/tongyijianquan.jpg)</a>
+
 ## 网关限流简介及算法
 
  
