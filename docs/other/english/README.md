@@ -96,3 +96,15 @@ n.
 v.  
 般配;相配;相同;相似;相一致;找相称(或相关)的人(或物);配对   
 :::
+
+::: warning  规范; 法则; 原则;	
+<br/> 
+<Badge text="principle"/>  
+
+英[ˈprɪnsəpl]
+美[ˈprɪnsəpl]
+n.	道德原则; 行为准则; 规范; 法则; 原则; 原理; 观念; (行动、思想的)理由，信条;
+[例句]The principle behind it is very simple.
+其中的原理十分简单。
+[其他]	复数：principles
+:::

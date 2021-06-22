@@ -45,5 +45,16 @@
   "main": "babel.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tianqikai/blogvuepress.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tianqikai/blogvuepress/issues"
+  },
+  "homepage": "https://github.com/tianqikai/blogvuepress#readme"
 }

@@ -13,6 +13,9 @@
 
 框架=注解+反射+设计模式
 
+7. Ctrl+Alt+Shift+U  open a UML class diagram in a new editor tab
+Press Ctrl+Alt+U to open a UML class diagram in a popup window.
+
 
 export JAVA_HOME=/usr/java/jdk1.8.0_211-amd64
 PATH=$PATH:$JAVA_HOME/bin
