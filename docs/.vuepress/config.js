@@ -109,6 +109,7 @@ module.exports = {
                     },
                     { text: 'docker', link: '/middleware/docker/' },
                     { text: 'kubernetes', link: '/middleware/kubernetes/' },
+                    { text: 'Elasticsearch', link: '/middleware/Elasticsearch/' }
                 ]
             },
             {
@@ -123,7 +124,8 @@ module.exports = {
                     { text: '编程英语', link: '/other/english/' },
                     { text: 'IDEA快捷键', link: '/other/idea/' },
                     { text: '常用网站', link: '/other/url/' },
-                    { text: 'Liunx安装jdk', link: '/other/jdk/' }
+                    { text: 'Liunx安装jdk', link: '/other/jdk/' },
+                    { text: 'Liunx集群', link: '/other/jiqun/' }
                 ]
             },
             {
