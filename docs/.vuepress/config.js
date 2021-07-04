@@ -56,8 +56,11 @@ module.exports = {
                 ariLabel: '入门基础',
                 link:'/base/',
                 items: [  //多级导航栏
-                    { text: 'Java', link: '/base/java/' },
-                    { text: 'Java基础高级', link: '/base/seniorJava/' },
+                    { text: 'Java基础', link: '/base/java/' },
+                    { text: 'Java基础(高级)', link: '/base/seniorJava/' },
+                    { text: '数据结构与算法', link: '/base/data-structure/' },
+                    { text: '设计模式', link: '/base/design-pattern/' },
+                    { text: 'JVM', link: '/base/JVM/' },
                     { text: 'Javascript', link: '/base/es6/' },
                     { text: 'Shell脚本', link: '/base/shell/' },
                     { text: 'Python', link: '/base/python/' },
@@ -70,8 +73,8 @@ module.exports = {
                 items: [  //多级导航栏
                     { text: 'Mysql', link: '/db/mysql/' },
                     { text: 'Redis', link: '/db/redis/' },
-                    { text: 'Oracle', link: '/db/oracle/' },
                     { text: 'Mongdb', link: '/db/mongdb/' },
+                    { text: 'Oracle', link: '/db/oracle/' },
                     { text: 'DB2', link: '/db/db2/' }
                 ]
             },
@@ -116,10 +119,7 @@ module.exports = {
                 text: '其他',
                 ariLabel: '其他',
                 items: [  //多级导航栏
-                    { text: '数据结构与算法', link: '/other/data-structure/' },
-                    { text: '设计模式', link: '/other/design-pattern/' },
-                    { text: 'JVM', link: '/other/JVM/' },
-                    { text: '源码分析', link: '/other/source-code/' },
+                    // { text: '源码分析', link: '/other/source-code/' },
                     { text: '阿里巴巴Java开发手册', link: '/other/alibaba/' },
                     { text: '编程英语', link: '/other/english/' },
                     { text: 'IDEA快捷键', link: '/other/idea/' },

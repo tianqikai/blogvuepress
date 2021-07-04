@@ -843,10 +843,10 @@ http://localhost:9001/order/1?token=123
 求过来的时候，counter 就加 1，如果 counter 的值大于 100 并且该请求与第一个请求的间隔时间还在 1 分钟之
 内，触发限流；如果该请求与第一个请求的间隔时间大于 1 分钟，重置 counter 重新计数，具体算法的示意图如
 下：
-<a data-fancybox title="计数器算法" href="../image/zuul2.jpg">![计数器算法](../image/zuul2.jpg)</a>
+<a data-fancybox title="计数器算法" href="../image/jishuqisuanfa1.jpg">![计数器算法](../image/jishuqisuanfa1.jpg)</a>
 这个算法虽然简单，但是有一个十分致命的问题，那就是临界问题，我们看下图：
 
-<a data-fancybox title="计数器算法" href="../image/zuul2.jpg">![计数器算法](../image/zuul2.jpg)</a>
+<a data-fancybox title="计数器算法" href="../image/jishuqisuanfa2.jpg">![计数器算法](../image/jishuqisuanfa2.jpg)</a>
 从上图中我们可以看到，假设有一个恶意用户，他在 0:59 时，瞬间发送了 100 个请求，并且 1:00 又瞬间发送
 了 100 个请求，那么其实这个用户在 1 秒里面，瞬间发送了 200 个请求。我们刚才规定的是 1 分钟最多 100 个请
 求，也就是每秒钟最多 1.7 个请求，用户通过在时间窗口的重置节点处突发请求， 可以瞬间超过我们的速率限制。
@@ -855,7 +855,7 @@ http://localhost:9001/order/1?token=123
 
 还有资料浪费的问题存在，我们的预期想法是希望 100 个请求可以均匀分散在这一分钟内，假设 30s 以内我们
 就请求上限了，那么剩余的半分钟服务器就会处于闲置状态，比如下图：
-<a data-fancybox title="计数器算法" href="../image/zuul2.jpg">![计数器算法](../image/zuul2.jpg)</a>
+<a data-fancybox title="计数器算法" href="../image/jishuqisuanfa3.jpg">![计数器算法](../image/jishuqisuanfa3.jpg)</a>
 
 
 ### 漏桶算法
@@ -888,7 +888,7 @@ http://localhost:9001/order/1?token=123
 4. 请求到达后首先要获取令牌桶中的令牌，拿着令牌才可以进行其他的业务逻辑，处理完业务逻辑之后，将令牌直接删除；
 5. 令牌桶有最低限额，当桶中的令牌达到最低限额的时候，请求处理完之后将不会删除令牌，以此保证足够的限流。
 :::
-
+<a data-fancybox title="令牌桶算法" href="../image/lingpaitong.jpg">![令牌桶算法](../image/lingpaitong.jpg)</a>
 **漏桶算法主要用途在于保护它人，而令牌桶算法主要目的在于保护自己，将请求压力交由目标服务处理。假设突然进来很多请求，只要拿到令牌这些请求会瞬时被处理调用目标服务。**
 
 ## Gateway 常用限流方式
