@@ -25,3 +25,6 @@
 
 export JAVA_HOME=/usr/java/jdk1.8.0_211-amd64
 PATH=$PATH:$JAVA_HOME/bin
+
+IDEA 如何自动导入（import）
+打开 IDEA 的首选项，找到setting -> Editor | General | Auto Import。勾选上 Add unambiguous imports on the fly 和 Optimize imports on the fly (for current project)
