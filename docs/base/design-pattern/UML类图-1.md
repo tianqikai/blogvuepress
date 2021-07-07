@@ -1,7 +1,31 @@
-## UML类图
+# UML类图
 
 <font color='red'><strong>类之间的关系：依赖、泛化（继承）、实现、关联、聚合与组合</strong></font>
+
+<a data-fancybox title="UML图用法" href="./image/UML1.jpg">![UML图用法](./image/UML1.jpg)</a>
+
 ---------------------
+
+
+
+## Eclipse 安装UML插件
+
+1. **在Eclipse安装AmaterasUML，help->install new software**
+
+<a data-fancybox title="## Eclipse 安装UML插件" href="./image/umldownload.jpg">![## Eclipse 安装UML插件](./image/umldownload.jpg)</a>
+
+2. **将AmaterasUML的3个jar包拷到Eclpise的plugins文件下**
+
+<a data-fancybox title="## Eclipse 安装UML插件" href="./image/umldownload2.jpg">![## Eclipse 安装UML插件](./image/umldownload2.jpg)</a>
+
+3. **重启Eclipse，结果在file-new-other看到AmaterasUML，在工程名称右键选择New-Other，弹出新建对话框如下图**：
+
+<a data-fancybox title="## Eclipse 安装UML插件" href="./image/umldownload1.jpg">![## Eclipse 安装UML插件](./image/umldownload1.jpg)</a>
+
+4. **可以看到AmaterasUML选项，在其中选择Class Diagram，并命名后得到.cld文件，接着我们把工程network包中三个java文件拖拽到.cld文件视图中，AmaterasUML瞬间帮我们生成了这三个类的关系图**
+
+<a data-fancybox title="## Eclipse 安装UML插件" href="./image/umldownload3.jpg">![## Eclipse 安装UML插件](./image/umldownload3.jpg)</a>
+
 
 ## IDEA生成UML类图
 
@@ -11,8 +35,6 @@
 <br/>
 <Badge text="Ctrl+Alt+U"/>  展示选中类的的UML类图    
 :::
-
-<a data-fancybox title="UML图用法" href="./image/UML1.jpg">![UML图用法](./image/UML1.jpg)</a>
 
 <br/>
 

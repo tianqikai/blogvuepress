@@ -18,7 +18,8 @@
 3. 子系统的集合：指模块或者子系统，处理Facade 对象指派的任务，他是功能的实际提供者
 :::
 
-<a data-fancybox title="外观模式" href="./image/facade2.jpg">![外观模式](./image/facade12.jpg)</a>
+<a data-fancybox title="外观模式" href="./image/facade2.jpg">![外观模式](./image/facade2.jpg)</a>
+
 ```java
 public class Client {
 
@@ -161,8 +162,6 @@ public class Screen {
 	public void down() {
 		System.out.println(" Screen down ");
 	}
-	
-
 }
 
 public class TheaterLight {
@@ -218,3 +217,43 @@ public class Stereo {
 ```
 
 ## 外观模式在MyBatis框架应用的源码分析
+
+```java
+public class Configuration {
+	protected ReflectorFactory reflectorFactory = new DefaultReflectorFactory();
+	protected ObjectFactory objectFactory = new DefaultObjectFactory();
+	protected ObjectWrapperFactory objectWrapperFactory =
+	new DefaultObjectWrapperFactory();
+	public MetaObject newMetaObject(Object object) { 
+		return MetaObject.forObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
+	}
+}
+```
+
+```java
+public class MetaObject{
+	private MetaObject(Object object, ObjectFactory objectFactory, O
+	this.originalObject = object;
+	this.objectFactory = objectFactory;	2
+	this.objectWrapperFactory = objectWrapperFactory;
+	this.reflectorFactory = reflectorFactory; 
+
+	if (object instanceof ObjectWrapper) {
+		this.objectWrapper = (ObjectWrapper) object;
+	} 
+	else if (objectWrapperFactory.hasWrapperFor(object)) {
+		this.objectWrapper = objectWrapperFactory.getWrapperFor(thi
+	} 
+	else if (object instanceof Map) {
+		this.objectWrapper = new MapWrapper(this, (Map) object);
+	} 
+	else if (object instanceof Collection) {
+		this.objectWrapper = new CollectionWrapper(this, (Collection)
+	} 
+	else {
+		this.objectWrapper = new BeanWrapper(this, object);
+	}
+}
+```
+
+<a data-fancybox title="外观模式" href="./image/facadeMybatis.jpg">![外观模式](./image/facadeMybatis.jpg)</a>
