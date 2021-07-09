@@ -18,8 +18,6 @@
 
 ## 访问者模式应用实例
 
-
-
 <a data-fancybox title="访问者模式应用实例" href="./image/Visitor2.jpg">![访问者模式应用实例](./image/Visitor2.jpg)</a>
 
 ```java
