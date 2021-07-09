@@ -16,6 +16,8 @@ module.exports = {
     // https://shanyuhai123.github.io/vuepress-plugin-auto-sidebar/zh/features/plugin-options.html#collapse-%E6%8A%98%E5%8F%A0
     plugins: {
         "vuepress-plugin-auto-sidebar": {
+            collapsable: true,
+            sidebarDepth: 3,
             sort: {
                 mode: 'custom',
                 fn: sortFn
