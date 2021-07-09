@@ -181,6 +181,7 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
 
 ## 12.2 IO流原理及流的分类
 
+### 12.2.1 Java IO原理
 ::: warning Java IO原理
 1. I/O是Input/Output的缩写， I/O技术是非常实用的技术，用于<font color='red'><strong>处理设备之间的数据传输</strong></font>。如读/写文件，网络通讯等。
 2. Java程序中，对于数据的输入/输出操作以<font color='red'><strong>“流(stream)”</strong></font> 的方式进行。
@@ -191,6 +192,7 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
 <font color='red'><strong>● 输出output：</strong></font>将程序（内存）数据输出到磁盘、光盘等存储设备中。  
 <a data-fancybox title="IO" href="../image/IO.jpg">![File类](../image/IO.jpg)</a>
 
+### 12.2.2 流的分类
 :::tip <font color='red'>流的分类</font>
 1. 按操作<font color='red'><strong>数据单位</strong></font>不同分为：**字节流(8 bit)，字符流(16 bit)**
 2. 按数据<font color='red'><strong>流的流向</strong></font>不同分为：**输入流，输出流**
@@ -212,10 +214,9 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
 <a data-fancybox title="IO" href="../image/IOzilei.png">![File类](../image/IOzilei.png)</a>
 :::
 
----------------------------------------
 
-::: tip <font color='red'>InputStream</font>
--------------------------
+### 12.2.3  InputStream
+
 1. <font color='red'><strong>int read()</strong></font>    
 从输入流中读取数据的下一个字节。返回 0 到 255 范围内的 int 字节值。如果因为已经到达流末尾而没有可用的字节，则返回值 -1。   
 2. <font color='red'><strong>int read(byte[] b) </strong></font>    
@@ -225,10 +226,9 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
 4. <font color='red'><strong>public void close() throws IOException</strong></font>      
 关闭此输入流并释放与该流关联的所有系统资源。  
 :::
------------------
 
-::: tip <font color='red'>Reader</font>
--------------------------
+### 12.2.4  Reader
+
 1. <font color='red'><strong>int read()</strong></font>      
 读取单个字符。作为整数读取的字符，范围在 0 到 65535 之间 (0x00-0xffff)（2个字节的Unicode码），如果已到达流的末尾，则返回 -1     
 2. <font color='red'><strong>int read(char[] cbuf)</strong></font>     
@@ -266,9 +266,9 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
     }
 ```
 
-----------------------
-::: tip <font color='red'>OutputStream</font>
--------------------------
+
+### 12.2.5  OutputStream
+
 1. <font color='red'><strong>void write(int b)</strong></font>  
 将指定的字节写入此输出流。write 的常规协定是：向输出流写入一个字节。要写入的字节是参数 b 的八个低位。b 的 24 个高位将被忽略。 即写入0~255范围的。   
 2. <font color='red'><strong>void write(byte[] b)</strong></font>  
@@ -280,9 +280,9 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
 5. <font color='red'><strong>public void close() throws IOException</strong></font>  
 关闭此输出流并释放与该流关联的所有系统资源。
 :::
---------------------
-::: tip <font color='red'>Writer</font>
--------------------------
+
+### 12.2.5  Writer
+
 1. <font color='red'><strong>void write(int c)</strong></font>  
 写入单个字符。要写入的字符包含在给定整数值的 16 个低位中，16 高位被忽略。 即写入0 到 65535 之间的Unicode码。   
 2. <font color='red'><strong>void write(char[] cbuf)</strong></font>  
@@ -322,6 +322,7 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
 
 ## 12.3 节点流(或文件流)
 
+### 12.3.1 读取文件
 :::warning <font color='red'>读取文件</font>
 1. 建立一个流对象，将已存在的一个文件加载进流。  
 <font color='blue'><strong>◆ FileReader fr = new FileReader(new File(“Test.txt”));</strong></font>  
@@ -361,7 +362,7 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
         return stringBuffer.toString();
     }
 ```
-
+### 12.3.2 写入文件
 :::danger <font color='#1459A1'>写入文件</font>
 1. 创建流对象，建立数据存放文件  
 <font color='#1459A1'><strong>◆ FileWriter fw = new FileWriter(new File(“Test.txt”));</strong></font>   
@@ -436,8 +437,8 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
         }
     }
 ```
-
-<font color='#1459A1'>**FileOutputStream/FileOutputStream**</font>  
+### 12.3.3 FileInputStream/FileOutputStream
+<font color='#1459A1'>**FileInputStream/FileOutputStream**</font>  
 
 -----------------
 
@@ -491,6 +492,8 @@ Java中的删除不走回收站。 要删除一个文件目录，请注意该文
         System.out.println(stringBuffer.toString());
     }
 ```
+### 12.3.4 注意事项
+
 :::danger <font color='#1459A1'>注意事项</font>
 1. 定义文件路径时，注意：可以用“/”或者“\\”。 
 2. 在写入一个文件时，如果使用构造器FileOutputStream(file)，则<font color='red'>目录下有同名文件(文件已存在)文件内容将被覆盖</font>。
@@ -1056,16 +1059,17 @@ public class RandomAccessFileTest {
 
 ## 12.11 NIO.2中Path、Paths、Files类的使用
 
-Path 常用方法：
- String toString() ： 返回调用 Path 对象的字符串表示形式
- boolean startsWith(String path) : 判断是否以 path 路径开始
- boolean endsWith(String path) : 判断是否以 path 路径结束
- boolean isAbsolute() : 判断是否是绝对路径
- Path getParent() ：返回Path对象包含整个路径，不包含 Path 对象指定的文件路径
- Path getRoot() ：返回调用 Path 对象的根路径
- Path getFileName() : 返回与调用 Path 对象关联的文件名
- int getNameCount() : 返回Path 根目录后面元素的数量
- Path getName(int idx) : 返回指定索引位置 idx 的路径名称
- Path toAbsolutePath() : 作为绝对路径返回调用 Path 对象
- Path resolve(Path p) :合并两个路径，返回合并后的路径对应的Path对象
- File toFile(): 将Path转化为File类的对象
+:::tip Path 常用方法
+1. **String toString()** ： 返回调用 Path 对象的字符串表示形式
+2. **boolean startsWith(String path)** : 判断是否以 path 路径开始
+3. **boolean endsWith(String path)** : 判断是否以 path 路径结束
+4. **boolean isAbsolute()** : 判断是否是绝对路径
+5. **Path getParent()** ：返回Path对象包含整个路径，不包含 Path 对象指定的文件路径
+6. **Path getRoot()** ：返回调用 Path 对象的根路径
+7. **Path getFileName()** : 返回与调用 Path 对象关联的文件名
+8. **int getNameCount()** : 返回Path 根目录后面元素的数量
+9. **Path getName(int idx)** : 返回指定索引位置 idx 的路径名称
+10. **Path toAbsolutePath()** : 作为绝对路径返回调用 Path 对象
+11. **Path resolve(Path p)** :合并两个路径，返回合并后的路径对应的Path对象
+12. **File toFile()**: 将Path转化为File类的对象
+:::
