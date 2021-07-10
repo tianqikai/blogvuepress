@@ -91,11 +91,11 @@ C 方法运行完了，C 方法出栈，接着 B 方法运行完了，B 方法�
 虚拟机栈的大小缺省为 1M，可用参数 –Xss 调整大小，例如-Xss256k。 参数官方文档（JDK1.8）：https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html
 
 
-**操作系统** 
-**cpu+缓存+主内存**
+<font color='blue'><strong>操作系统</strong></font>  
+<font color='red'><strong>cpu+缓存+主内存</strong></font>  
 
-**jvm模拟操作系统**
-**jvm执行引擎+操作数栈+堆、栈**
+<font color='blue'><strong>jvm模拟操作系统</strong></font>  
+<font color='red'><strong>jvm执行引擎+操作数栈+堆、栈</strong></font>  
 
 
 **栈帧**：在每个 Java 方法被调用的时候，都会创建一个栈帧，并入栈。一旦方法完成相应的调用，则出栈
@@ -186,8 +186,7 @@ public class Person {
  元空间大小参数：   
  jdk1.7 及以前（初始和最大值）：-XX:PermSize；-XX:MaxPermSize；   
  jdk1.8 以后（初始和最大值）：-XX:MetaspaceSize； -XX:MaxMetaspaceSize   
- jdk1.8 以后大小就只受本机总内存的限制（如果不设置参数的话）   
- JVM 参数参考：https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html 
+ jdk1.8 以后大小就只受本机总内存的限制（如果不设置参数的话）     
  <a data-fancybox title="JVM 参数参考" href=" https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html"> JVM 参数参考：https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a> 
 
 
@@ -237,3 +236,4 @@ JVM 在运行时，会从操作系统申请大块的堆内存，进行数据的�
 2. 其他堆外内存，主要是指使用了 Unsafe 或者其他 JNI 手段直接直接申请的内存。   
 堆外内存的泄漏是非常严重的，它的排查难度高、影响大，甚至会造成主机的死亡。后续章节会详细讲。  
  同时，要注意 Oracle 之前计划在 Java 9 中去掉 sun.misc.Unsafe API。这里删除 sun.misc.Unsafe 的原因之一是使 Java 更加安全，并且有替代方案。 目前我们主要针对的 JDK1.8，JDK1.9 暂时不放入讨论范围中，我们大致知道 java 的发展即可。  
+
