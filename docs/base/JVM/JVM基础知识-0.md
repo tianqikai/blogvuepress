@@ -145,6 +145,7 @@ public class Person {
 ```
 <a data-fancybox title="JAVA程序的执行过程" href="./image/jvmmemory1.jpg">![JAVA程序的执行过程](./image/jvmmemory1.jpg)</a> 
 
+**javap -c Person.class**
 <a data-fancybox title="JAVA程序的执行过程" href="./image/person.jpg">![JAVA程序的执行过程](./image/person.jpg)</a> 
 在 JVM 中，基于解释执行的这种方式是基于栈的引擎，这个说的栈，就是操作数栈。
 

@@ -4,7 +4,7 @@
 
 <a data-fancybox title="深入理解JVM内存区域" href="./image/jvm21.jpg">![深入理解JVM内存区域](./image/jvm21.jpg)</a> 
 
-<a data-fancybox title="深入理解JVM内存区域" href="./image/jvm21.jpg">![深入理解JVM内存区域](./image/jvm21.jpg)</a> 
+<a data-fancybox title="深入理解JVM内存区域" href="./image/jvm22.jpg">![深入理解JVM内存区域](./image/jvm22.jpg)</a> 
 
  ```java
  /**
@@ -217,7 +217,7 @@ ParallelScavengeHeap [
 :::
 
 
-## 2.3 栈的优化技术——栈帧之间数据的共享 
+## 2.3 栈的优化技术——栈帧之间数据的共享(非重点)
 
 在一般的模型中，两个不同的栈帧的内存区域是独立的，但是大部分的 JVM 在实现中会进行一些优化，使得两个栈帧出现一部分重叠。（主要体现在方法 中有参数传递的情况），让下面栈帧的操作数栈和上面栈帧的部分局部变量重叠在一起，这样做不但节约了一部分空间，更加重要的是在进行方法调用时
 就可以直接公用一部分数据，无需进行额外的参数复制传递了。
@@ -241,7 +241,12 @@ public class JVMStack {
     }
 }
 ```
+<a data-fancybox title="JVM 的整个处理过程" href="./image/JHSDB12.jpg">![JVM 的整个处理过程](./image/JHSDB12.jpg)</a>
+
+--------
+
 <a data-fancybox title="JVM对栈帧空间的优化" href="./image/JHSDBstack2.jpg">![JVM对栈帧空间的优化](./image/JHSDBstack2.jpg)</a>
+
 
 
 ## 2.4 内存溢出
