@@ -1,4 +1,4 @@
-# 3. JVM 中的对象及引用
+# 3. JVM中的对象及引用
 
 ## 3.1 JVM 中对象的创建过程（重点）
 <a data-fancybox title="JVM 中对象的创建过程" href="./image/classCreate.jpg">![JVM 中对象的创建过程](./image/classCreate.jpg)</a>
