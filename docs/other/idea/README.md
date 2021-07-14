@@ -28,3 +28,9 @@ PATH=$PATH:$JAVA_HOME/bin
 
 IDEA 如何自动导入（import）
 打开 IDEA 的首选项，找到setting -> Editor | General | Auto Import。勾选上 Add unambiguous imports on the fly 和 Optimize imports on the fly (for current project)
+
+
+## IDEA 2021.1 最新激活注册码 - 破解教程 https://www.bilibili.com/read/cv11262121
+
+
+##  idea也可以安装jclasslib插件 查看字节码文件 view ->Show ByteCode with jclasslib
