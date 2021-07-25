@@ -115,10 +115,10 @@ Lambda 表达式：在Java 8 语言中引入的一种新的语法元素和操作
 4. <font color='blue'><strong>所以以前用匿名实现类表示的现在都可以用Lambda表达式来写</strong></font>
 :::
 
-### Java 内置四大核心函数式接口
+### 16.2.1 Java内置四大核心函数式接口
 <a data-fancybox title="Function" href="../image/Function.jpg">![四大核心函数式接口](../image/Function.jpg)</a>
 
-**Consumer&lt;T&gt; 消费型接口**
+### 16.2.2 Consumer&lt;T&gt; 消费型接口
 ```java
     //Consumer<T> 消费型接口
     @Test
@@ -138,7 +138,7 @@ Lambda 表达式：在Java 8 语言中引入的一种新的语法元素和操作
         consumer2.accept("面朝大海，春暖花开！");
     }
 ```
-**Supplier&lt;T&gt;供给型接口**
+### 16.2.3 Supplier&lt;T&gt;供给型接口
 
 ```java
   @Test
@@ -170,7 +170,7 @@ Lambda 表达式：在Java 8 语言中引入的一种新的语法元素和操作
         return  (String) integerSupplierHashMap.get(choosenUserId).get();
     }
 ```
-**Predicate&lt;T&gt; 断定型接口**
+### 16.2.4 Predicate&lt;T&gt; 断定型接口
 ```java
     @Test
     public void method4(){
@@ -194,7 +194,7 @@ Lambda 表达式：在Java 8 语言中引入的一种新的语法元素和操作
         System.out.println(predicate1.test("济南"));
     }
 ```
-**Function&lt;T, R&gt;函数型接口**
+### 16.2.5 Function&lt;T, R&gt;函数型接口
 
 ```java
     @Test
@@ -346,9 +346,8 @@ public class MethodRefTest {
     }
 }
 ```
-
+### 16.3.1 格式： ClassName::new 
 :::warning 构造器引用
-**格式： ClassName::new ***
 与函数式接口相结合，自动与函数式接口中方法兼容。
 可以把构造器引用赋值给定义的方法，要求构造器参数列表要与接口中抽象方法的参数列表一致！且方法的返回值即为构造器对应类的对象。
 :::
@@ -381,10 +380,7 @@ public class MethodRefTest {
         System.out.println(employee1.getName());
     }
 ```
-
-:::warning 数组引用
-**格式： type[] :: new**
-:::
+### 16.3.1 数组引用 格式： type[] :: new
 
 ```java
     @Test
@@ -426,9 +422,10 @@ public class MethodRefTest {
 3.<font color=red size=4> 终止操作(终端操作)</font>     
 一旦执行终止操作，就执行中间操作链，并产生结果。之后，不会再被使用  
 :::
+### 16.4.1 创建Stream方式
 
-:::warning  创建 Stream方式
-1. 通过集合
+:::warning  创建Stream方式
+#### 16.4.1.1 通过集合
 Java8 中的 Collection 接口被扩展，提供了两个获取流的方法：   
 <font color=red size=4>▷ default Stream&lt;E&gt; stream()</font> : 返回一个顺序流  
 <font color=red size=4>▷ default Stream&lt;E&gt; parallelStream()</font> : 返回一个并行流  
@@ -447,7 +444,7 @@ Java8 中的 Collection 接口被扩展，提供了两个获取流的方法：
         list.parallelStream().forEach(System.out::println);
     }
 ```
-2. 通过数组
+#### 16.4.1.2 通过数组
 Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：  
 <font color=red size=4>▷ static &lt;T&gt; Stream&lt;T&gt; stream(T[] array) </font>   
 **返回一个流重载形式，能够处理对应基本类型的数组：**  
@@ -463,7 +460,7 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
         Arrays.stream(strings).forEach(System.out::println);
     }
 ```
-3. 通过Stream的of()
+#### 16.4.1.3 通过Stream的of()
 可以调用Stream类静态方法 of(), 通过显示值创建一个流。它可以接收任意数量的参数。  
 <font color=red size=4>▷ public static&lt;T&gt; Stream&lt;T&gt; of(T... values) </font>: 返回一个流  
 
@@ -475,7 +472,7 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
         stringStream.filter(e->e!="2").forEach(System.out::println);
     }
 ```
-4. 创建无限流
+#### 16.4.1.4 创建无限流
 可以使用静态方法 Stream.iterate() 和 Stream.generate(), 创建无限流。  
 ▷ 迭代  
 <font color=red size=4>public static&lt;T&gt; Stream&lt;T&gt; iterate(final T seed, final UnaryOperator&lt;T&gt; f) </font>    
@@ -500,9 +497,9 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
 ```
 :::
 
-## 16.4.1 Stream 的中间操作
+### 16.4.2 Stream 的中间操作
 多个中间操作可以连接起来形成一个流水线，除非流水线上触发终止操作，否则中间操作不会执行任何的处理！而在终止操作时一次性全部处理，称为“惰性求值”。  
-**1-筛选与切片**
+#### 16.4.2.1-筛选与切片
 <a data-fancybox title="筛选与切片" href="../image/shaixuan.jpg">![筛选与切片](../image/shaixuan.jpg)</a>
 
 ```java
@@ -527,7 +524,7 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
         employees.stream().skip(5).forEach(e-> System.out.println(e));
     }
 ```
-**2-映射**
+#### 16.4.2.2-映射
 <a data-fancybox title="映射" href="../image/yingshe.jpg">![映射](../image/yingshe.jpg)</a>
  
  ```java
@@ -571,7 +568,7 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
         return str;
     }
 ```
-**3-排序**
+#### 16.4.2.3-排序
 <a data-fancybox title="排序" href="../image/paixu.jpg">![排序](../image/paixu.jpg)</a>
 
 ```java
@@ -598,8 +595,8 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
     }
 ```
 
-## 16.4.3 Stream 的终止操作
-**1-匹配与查找**
+### 16.4.3 Stream 的终止操作
+#### 16.4.3.1-匹配与查找
 <a data-fancybox title="匹配与查找" href="../image/chazhao.png">![匹配与查找](../image/chazhao.png)</a>
 
 ```java
@@ -633,7 +630,7 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
     }
 ```
 
-**2-归约**
+#### 16.4.3.2-归约
 <a data-fancybox title="归约" href="../image/guiyue.png">![归约](../image/guiyue.png)</a>
 
 ```java
@@ -657,7 +654,7 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
 
     }
 ```
-**3-收集**
+#### 16.4.3.3-收集
 <a data-fancybox title="收集" href="../image/shouji.png">![收集](../image/shouji.png)</a> 
 
 ```java
@@ -709,9 +706,8 @@ public class StreamAPITest2 {
 1. Optional&lt;T>&gt; 类(java.util.Optional) 是一个容器类，它可以保存类型T的值，代表这个值存在。或者仅仅保存null，表示这个值不存在。原来用 null 表示一个值不存在，现在 Optional 可以更好的表达这个概念。并且可以避免空指针异常。 
 2. Optional类的Javadoc描述如下：这是一个可以为null的容器对象。如果值存在则isPresent()方法会返回true，调用get()方法会返回该对象。
 
-
-:::tip Optional提供很多有用的方法，这样我们就不用显式进行空值检测 
-1. 创建Optional类对象的方法：  
+### 16.5.1 创建Optional类对象的方法
+:::tip Optional提供很多有用的方法，这样我们就不用显式进行空值检测  
 <font color=red><strong>▷ Optional.of(T t)</strong></font> : 创建一个 Optional 实例，t必须非空；  
 <font color=red><strong>▷ Optional.empty()</strong></font> : 创建一个空的 Optional 实例  
 <font color=red><strong>▷ Optional.ofNullable(T t)</strong></font>：t可以为null  
@@ -746,7 +742,7 @@ Optional.ofNullable(T t)：t可以为null
 
     }
 ```
-2. 判断Optional容器中是否包含对象：  
+### 16.5.2 判断Optional容器中是否包含对象：  
 <font color=red><strong>▷ boolean isPresent()</strong></font> : 判断是否包含对象  
 <font color=red><strong>▷ void ifPresent(Consumer<? super T> consumer)</strong></font> ：如果有值，就执行Consumer接口的实现代码，并且该值会作为参数传给它。  
 3. 获取Optional容器的对象：  

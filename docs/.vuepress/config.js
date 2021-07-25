@@ -17,7 +17,7 @@ module.exports = {
     plugins: {
         "vuepress-plugin-auto-sidebar": {
             collapsable: true,
-            sidebarDepth: 3,
+            sidebarDepth: 4,
             sort: {
                 mode: 'custom',
                 fn: sortFn
