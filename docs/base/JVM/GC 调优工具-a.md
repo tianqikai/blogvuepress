@@ -619,6 +619,9 @@ ts=2021-07-27 01:39:14; [cost=11.34216ms] result=@ArrayList[
 [01:38.700]When I see you again
 [01:42.150]Ohh~~~
 ```
+###  10.2.10 命令总结
+<a data-fancybox title="命令总结" href="./image/arthas.jpg">![命令总结](./image/arthas.jpg)</a>
+
 ## 10.3 动态追踪技术底层分析
 
 
