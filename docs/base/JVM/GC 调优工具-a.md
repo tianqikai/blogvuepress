@@ -281,7 +281,7 @@ jstack  12360
 非标准选项是特定于 Java HotSpot 虚拟机的通用选项，因此不能保证所有 JVM 实现都支持它们，并且它们可能会发生变化。这些选项以开头-X。   
 -Xms30m -Xmx30m -Xss1m
 
-3. 高级选项：以开头-XX: 
+3. **高级选项：以开头-XX:** 
 
 这些是开发人员选项，用于调整 Java HotSpot 虚拟机操作的特定区域，这些区域通常具有特定的系统要求，并且可能需要对系统配置参数的特权访问。也不能保证所有 JVM 实现都支持它们，并且它们可能会发生变化。
 
@@ -302,7 +302,7 @@ GC 信息参数: -XX:+PrintGCDetails, +XX:+PrintGCTimeStamps
 参数设置： -XX：+PrintHeapAtGC   
 应用场景： 获取 Heap 在每次垃圾回收前后的使用状况 -XX:+TraceClassLoading  
 
- **参数方法： -XX:+TraceClassLoading** 
+ **参数方法：-XX:+TraceClassLoading** 
 应用场景：在系统控制台信息中看到 class 加载的过程和具体的 class 信息，可用以分析类的加载顺序以及是否可进行精简操作。 
 
  **-XX:+DisableExplicitGC** 禁止在运行期显式地调用 System.gc()
@@ -330,12 +330,14 @@ java -jar arthas-boot.jar
 ###  10.2.2 快速入门 
 
 1. 直接 java -jar arthas-boot.jar。选择 attach 的进程绑定
+
 ```sh 
 java -jar arthas-boot.jar 
 ```
 <a data-fancybox title="快速入门" href="./image/arthas2.jpg">![快速入门](./image/arthas2.jpg)</a>
 
 2. 通过 jps 命令快速查找 java 进程，再次直接绑定 java -jar arthas-boot.jar pid 启动 arthas 工具 attach 到目标进程
+
 ###  10.2.3 dashboard 命令
 注意在 arthas 中，有 tab 键填充功能，所以比较好用。但是这个界面是实时刷新的，一般 5s 刷新一次，使用 q 键退出刷新（没有退出 arthasq）
 
@@ -624,4 +626,17 @@ ts=2021-07-27 01:39:14; [cost=11.34216ms] result=@ArrayList[
 
 ## 10.3 动态追踪技术底层分析
 
+动态追踪技术是一个可以不用重启线上 java 项目来进行问题排查的技术，比如前面讲的 Arthas 就属于一种动态追踪的工具。
+它里面提供的 monitor 还有 watch 等命令就是动态的追踪技术。
 
+当然我们学技术要知其然还要知其所以然，Arthas工具的基础，就是<font color='red'><strong>Java Agent技术</strong></font>，可以利用它来构建一个附加的代理程序，用来协助检测性能，还可以替换一些现有功能，甚至JDK的一些类我们也能修改，有点像JVM级别的AOP功能。
+
+
+### 10.3.1 Java Agent 技术 
+
+既然作为 JVM 的 AOP，就必须要有 AOP 的功能，所以 Java Agent 提供了两个类似于 AOP 的方法  
+
+:::tip Java Agent的AOP的方法
+◆　一个方法叫做 premain 方法，可以在 main 运行之前的进行一些操作(Java 入口是一个 main 方法) 　  　
+◆　一个是 agentmain 方法，是控制类运行时的行为（Arthas 使用的就是这种）,但在一个 JVM 中，只会调用一个   　　
+:::
