@@ -23,6 +23,19 @@
 
 9. <Badge text=" Navigate -> Type Hierarchy"/> 查看类的子类
 
+10. 使用IDEA将普通项目打成jar包
+<a href='https://blog.csdn.net/weixin_38201936/article/details/88018493'>使用IDEA将普通项目打成jar包</a>
+:::tip 普通项目打成jar包
+
+1. 选中Java项目工程名称，在菜单中选择 File->project structure... (快捷键Ctrl+Alt+Shift+S)
+2. 在弹出的窗口中左侧选中"Artifacts"，点击"+"选择jar，然后选择"from modules with dependencies"
+3. Module: 一般默认是项目的名称。  
+    配置窗口中配置"Main Class"。  
+    选择“extract to the target JAR”，这样所有依赖的jar包都会放在生成的jar包中  
+4. 如果出现已经存在，在项目中删除原有的MANIFEST.MF,然后重新执行上面的操作  
+5. 点击OK保存成功后，点击build->build Artifacts    点击xxx.jar 对应的build  
+:::
+
 export JAVA_HOME=/usr/java/jdk1.8.0_211-amd64
 PATH=$PATH:$JAVA_HOME/bin
 
