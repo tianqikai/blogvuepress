@@ -59,6 +59,7 @@ public class FullGCProblem {
         public void user() {
             //
         }
+        
     }
 }
 ```
