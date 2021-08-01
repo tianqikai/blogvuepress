@@ -65,5 +65,5 @@ public class FullGCProblem {
 
 ```sh
 //在 Linux 服务跑起来 
-java -cp ref-JVM.jar -XX:+PrintGC -Xms200M -Xmx200M ex13.FullGCProblem
+java -cp JVM.jar -XX:+PrintGC -Xms200M -Xmx200M com.tqk.ex13.FullGCProblem
 ```
