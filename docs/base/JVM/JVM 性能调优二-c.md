@@ -98,4 +98,5 @@
 
 5. -Xss256K -XX:MetaspaceSize= 128M -XX:MaxMetaspaceSize= 128M 栈一般情况下很少用到 1M。所以为了线程占用内存更少，我们可以减少到 256K 元空间一般启动后就不会有太多的变化，我们可以设定为 128M，节约内存空间。    
 
-6. -XX:MaxTenuringThreshold=2 这个是分代年龄（年龄为 2 就可以进入老年代），因为我们基本上都使用的是 Spring 架构，Spring 中很多的 bean 是 长期要存活的，没有必要在 Survivor 区过渡太久，所以可以设定为 2，让大部分的 Spring 的内部的一些对象进入老年代。 7、-XX:ParallelGCThreads=8 线程数可以根据你的服务器资源情况来设定（要速度快的话可以设置大点，根据 CPU 的情况来定，一般设置成 CPU 的整数倍）  
+6. -XX:MaxTenuringThreshold=2 这个是分代年龄（年龄为 2 就可以进入老年代），因为我们基本上都使用的是 Spring 架构，Spring 中很多的 bean 是 长期要存活的，没有必要在 Survivor 区过渡太久，所以可以设定为 2，让大部分的 Spring 的内部的一些对象进入老年代。 
+7. -XX:ParallelGCThreads=8 线程数可以根据你的服务器资源情况来设定（要速度快的话可以设置大点，根据 CPU 的情况来定，一般设置成 CPU 的整数倍）  
