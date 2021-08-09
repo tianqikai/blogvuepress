@@ -1,44 +1,111 @@
 #  6. Class文件结构及字节码指令
 
 ## 6.1 JVM 的无关性
-与平台无关性是建立在操作系统上，虚拟机厂商提供了许多可以运行在各种不同平台的虚拟机，它们都可以载入和执行字节码，从而实现程序的“一次 编写，到处运行” https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 各种不同平台的虚拟机与所有平台都统一使用的程序存储格式——字节码（ByteCode）是构成平台无关性的基石，也是语言无关性的基础。Java 虚拟机不 和包括 Java 在内的任何语言绑定，它只与“Class 文件”这种特定的二进制文件格式所关联，Class 文件中包含了 Java 虚拟机指令集和符号表以及若干其他 辅助信息。
+与平台无关性是建立在操作系统上，虚拟机厂商提供了许多可以运行在各种不同平台的虚拟机，它们都可以载入和执行字节码，从而实现程序的“一次编写，到处运行” 
+<a herf="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a>  
+各种不同平台的虚拟机与所有平台都统一使用的程序存储格式——字节码（ByteCode）是构成平台无关性的基石，也是语言无关性的基础。Java 虚拟机不包括Java在内的任何语言绑定，它只与“Class 文件”这种特定的二进制文件格式所关联，Class 文件中包含了 Java 虚拟机指令集和符号表以及若干其他辅助信息。
 
 ## 6.2 Class 类文件（了解即可）
 
-Java 技术能够一直保持非常好的向后兼容性，这点 Class 文件结构的稳定性功不可没。
-Java 已经发展到 14 版本，但是 class 文件结构的内容，绝大部分在 JDK1.2 时代就已经定义好了。虽然 JDK1.2 的内容比较古老，但是 java 发展经历了十余个大版本，但是每次基本上知识在原有结构基础上新增内容、扩充 功能，并未对定义的内容做修改。 
-任何一个 Class 文件都对应着唯一一个类或接口的定义信息，但反过来说，Class文件实际上它并不一定以磁盘文件的形式存在（比如可以动态生成、或者 直接送入类加载器中）。 
-Class 文件是一组以 8 位字节为基础单位的二进制流。 Class 文件结构这些内容在面试的时候很少有人问，因此大家学这个东西要当成一个兴趣去学，这个是自身内力提升的过程。
+Java 技术能够一直保持非常好的向后兼容性，这点 Class 文件结构的稳定性功不可没。  
+Java 已经发展到 14 版本，但是 class 文件结构的内容，绝大部分在 JDK1.2 时代就已经定义好了。虽然 JDK1.2 的内容比较古老，但是 java 发展经历了十余个大版本，但是每次基本上知识在原有结构基础上新增内容、扩充 功能，并未对定义的内容做修改。   
+任何一个 Class 文件都对应着唯一一个类或接口的定义信息，但反过来说，Class文件实际上它并不一定以磁盘文件的形式存在（比如可以动态生成、或者 直接送入类加载器中）。  
+Class 文件是一组以 8 位字节为基础单位的二进制流。 Class 文件结构这些内容在面试的时候很少有人问，因此大家学这个东西要当成一个兴趣去学，这个是自身内力提升的过程。  
 
+<a data-fancybox title="Class类" href="./image/jvmclass.jpg">![Class类](./image/jvmclass.jpg)</a>
 
 ## 6.3 工具介绍 
 
 ### 6.3.1 Sublime 
 
 查看 16 进制的编辑器 
-
+（略）
 ### 6.3.2 javap 
 
-javap 是 JDK 自带的反解析工具。它的作用是将 .class 字节码文件解析成可读的文件格式。 在使用 javap 时我一般会添加 -v 参数，尽量多打印一些信息。同时，我也会使用 -p 参数，打印一些私有的字段和方法。 
+javap 是 JDK 自带的反解析工具。它的作用是将 .class 字节码文件解析成可读的文件格式。 在使用 javap 时我一般会添加 -v 参数，尽量多打印一些信息。同时，我也会使用 -p 参数，打印一些私有的字段和方法。
+
+```sh
+D:\javaweb\JVM\out\production\JVM\com\tqk\ex6>javap -v ByteCode.class
+Classfile /D:/javaweb/JVM/out/production/JVM/com/tqk/ex6/ByteCode.class
+  Last modified 2021-8-7; size 395 bytes
+  MD5 checksum 006627671e85a19d5255c4f3d46a03cf
+  Compiled from "ByteCode.java"
+public class com.tqk.ex6.ByteCode
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #3.#17         // java/lang/Object."<init>":()V
+   #2 = Class              #18            // com/tqk/ex6/ByteCode
+   #3 = Class              #19            // java/lang/Object
+   #4 = Utf8               <init>
+   #5 = Utf8               ()V
+   #6 = Utf8               Code
+   #7 = Utf8               LineNumberTable
+   #8 = Utf8               LocalVariableTable
+   #9 = Utf8               this
+  #10 = Utf8               Lcom/tqk/ex6/ByteCode;
+  #11 = Utf8               main
+  #12 = Utf8               ([Ljava/lang/String;)V
+  #13 = Utf8               args
+  #14 = Utf8               [Ljava/lang/String;
+  #15 = Utf8               SourceFile
+  #16 = Utf8               ByteCode.java
+  #17 = NameAndType        #4:#5          // "<init>":()V
+  #18 = Utf8               com/tqk/ex6/ByteCode
+  #19 = Utf8               java/lang/Object
+{
+  public com.tqk.ex6.ByteCode();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 4: 0
+        line 5: 4
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/tqk/ex6/ByteCode;
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=0, locals=1, args_size=1
+         0: return
+      LineNumberTable:
+        line 9: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       1     0  args   [Ljava/lang/String;
+}
+SourceFile: "ByteCode.java"
+```
 
 ### 6.3.3 jclasslib 
 
-如果你不太习惯使用命令行的操作，还可以使用 jclasslib，jclasslib 是一个图形化的工具，能够更加直观的查看字节码中的内容。它还分门别类的对类中 的各个部分进行了整理，非常的人性化。同时，它还提供了 Idea 的插件，你可以从 plugins 中搜索到它。 
+如果你不太习惯使用命令行的操作，还可以使用 jclasslib，jclasslib 是一个图形化的工具，能够更加直观的查看字节码中的内容。它还分门别类的对类中 的各个部分进行了整理，非常的人性化。  
+**同时它还提供了 Idea 的插件，你可以从 plugins 中搜索到它**  
 
-### 6.3.4 jclasslib 的下载地址：https://github.com/ingokegel/jclasslib 
+**jclasslib 的下载地址：https://github.com/ingokegel/jclasslib** 
 
-## 6.4 Class 文件格式 
+## 6.4 Class文件格式 
 
 从一个 Class 文件开始，下图是一个 java 文件。
+<a data-fancybox title="Class文件格式" href="./image/jvmclass1.jpg">![Class文件格式](./image/jvmclass1.jpg)</a>
 
 我们使用 Sublime 这个工具打开 class
-整个 class 文件的格式就是一个二进制的字节流。 那么这个二进制的字节流就看谁来解释了，我做了一个 Xmind 文件。 各个数据项目严格按照顺序紧凑地排列在 Class 文件之中，中间没有添加任何分隔符，这使得整个 Class 文件中存储的内容几乎全部是程序运行的必要数 据，没有空隙存在。 Class 文件格式采用一种类似于 C 语言结构体的伪结构来存储数据，这种伪结构中只有两种数据类型：无符号数和表。 无符号数属于基本的数据类型，以 u1、u2、u4、u8 来分别代表 1 个字节（一个字节是由两位 16 进制数组成）、2 个字节、4 个字节和 8 个字节的无符号
+整个 class 文件的格式就是一个二进制的字节流。 那么这个二进制的字节流就看谁来解释了，我做了一个 Xmind 文件。 各个数据项目严格按照顺序紧凑地排列在 Class 文件之中，中间没有添加任何分隔符，这使得整个 Class 文件中存储的内容几乎全部是程序运行的必要数 据，没有空隙存在。 Class 文件格式采用一种类似于 C 语言结构体的伪结构来存储数据，这种伪结构中只有两种数据类型：无符号数和表。
+
+无符号数属于基本的数据类型，以 u1、u2、u4、u8 来分别代表 1 个字节（一个字节是由两位 16 进制数组成）、2 个字节、4 个字节和 8 个字节的无符号
 数，无符号数可以用来描述数字、索引引用、数量值或者按照 UTF-8 编码构成字符串值。 表是由多个无符号数或者其他表作为数据项构成的复合数据类型，所有表都习惯性地以“_info”结尾。表用于描述有层次关系的复合结构的数据，整个 Class 文件本质上就是一张表。
 
 
-
 ## 6.5 Class 文件格式详解 
-Class 的结构不像 XML 等描述语言，由于它没有任何分隔符号，所以在其中的数据项，无论是顺序还是数量，都是被严格限定的，哪个字节代表什么含义， 长度是多少，先后顺序如何，都不允许改变。 按顺序包括：
+Class 的结构不像XML等描述语言，由于它没有任何分隔符号，所以在其中的数据项，无论是顺序还是数量，都是被严格限定的，哪个字节代表什么含义， 长度是多少，先后顺序如何，都不允许改变。 按顺序包括：
 
 ### 6.5.1 魔数与 Class 文件的版本 
 每个 Class 文件的头 4 个字节称为魔数（Magic Number），它的唯一作用是确定这个文件是否为一个能被虚拟机接受的 Class 文件。使用魔数而不是扩展 名来进行识别主要是基于安全方面的考虑，因为文件扩展名可以随意地改动。文件格式的制定者可以自由地选择魔数值，只要这个魔数值还没有被广泛 采用过同时又不会引起混淆即可。（ ） 紧接着魔数的 4 个字节存储的是 Class 文件的版本号：第 5 和第 6 个字节是次版本号（MinorVersion），第 7 和第 8 个字节是主版本号（Major Version）。 Java 的版本号是从 45 开始的，JDK 1.1 之后的每个 JDK 大版本发布主版本号向上加 1 高版本的 JDK 能向下兼容以前版本的 Class 文件，但不能运行以后版 本的 Class 文件，即使文件格式并未发生任何变化，虚拟机也必须拒绝执行超过其版本号的 Class 文件。 代表 JDK1.8（16 进制的 34，换成 10 进制就是 52）
@@ -59,3 +126,22 @@ Class 的结构不像 XML 等描述语言，由于它没有任何分隔符号，
 
 ### 6.5.6 属性表集合
 存储 Class 文件、字段表、方法表都自己的属性表集合，以用于描述某些场景专有的信息。如方法的代码就存储在 Code 属性表中。
+
+## 6.6 字节码指令
+
+<font color='red'><strong>阅读字节码作为了解 Java 虚拟机的基础技能，有需要的话可以去掌握常见指令</strong></font> 
+
+<a href="https://cloud.tencent.com/developer/article/1333540">字节码助记码解释地址：https://cloud.tencent.com/developer/article/1333540</a>
+
+## 6.7 字节码指令—异常处理
+
+每个时刻正在执行的当前方法就是虚拟机栈顶的栈桢。方法的执行就对应着栈帧在虚拟机栈中入栈和出栈的过程。 当一个方法执行完要返回结果，那么有两种情况，一种是正常，另外一种是异常
+
+
+## 6.8 字节码指令—拆箱装箱
+
+## 6.9 字节码指令—数组
+
+## 6.10 字节码指令—foreach
+
+## 6.11 字节码指令—注解
