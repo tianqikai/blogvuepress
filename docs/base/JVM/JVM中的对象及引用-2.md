@@ -368,12 +368,16 @@ public class EscapeAnalysisTest {
 这段代码在调用的过程中 Myboject 这个对象属于不可逃逸，JVM 可以做栈上分配  
 然后通过开启和关闭 DoEscapeAnalysis 开关观察不同。  
 
-开启逃逸分析（JVM 默认开启）  
+开启逃逸分析（JVM 默认开启）   
+
 <a data-fancybox title="栈上分配开启逃逸" href="./image/taoyi.jpg">![栈上分配开启逃逸](./image/taoyi.jpg)</a>
+
 查看执行速度  
 <a data-fancybox title="栈上分配开启逃逸" href="./image/taoyi1.jpg">![栈上分配开启逃逸](./image/taoyi1.jpg)</a>
+
 关闭逃逸分析  
 <a data-fancybox title="栈上分配关闭逃逸" href="./image/taoyi3.jpg">![栈上分配关闭逃逸](./image/taoyi3.jpg)</a>
+
 查看执行速度  
 <a data-fancybox title="栈上分配关闭逃逸" href="./image/taoyi4.jpg">![栈上分配关闭逃逸](./image/taoyi4.jpg)</a>
 

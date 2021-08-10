@@ -311,7 +311,25 @@ GC 信息参数: -XX:+PrintGCDetails, +XX:+PrintGCTimeStamps
 1. Jconsole
 (略)
 2. visualvm
-(略)
+
+<a title="插件中心地址" href=" https://visualvm.github.io ">插件中心地址 https://visualvm.github.io</a>
+ 
+但是注意版本问题，不同的 JDK 所带的 visualvm 是不一样的，下载插件时需要下对应的版本。 一般来说，这个工具是本机调试用，一般生产上来说，你一般是用不了的（除非启用远程连接）
+<a data-fancybox title="visualVM" href="./image/visualVM.jpg">![DeadLock](./image/visualVM.jpg)</a>
+
+```java
+/**
+ * VM Args：-Xms30m -Xmx30m -XX:+PrintGCDetails
+ * 堆内存溢出（直接溢出）
+ */
+public class HeapOom {
+    //实际开发中不要使用大的数组和对象、字符串
+    public static void main(String[] args) {
+        String[] strings = new String[35*1000*1000];  //35m的数组（堆）
+    }
+}
+```
+<a data-fancybox title="visualVM" href="./image/visualVM1.jpg">![DeadLock](./image/visualVM1.jpg)</a>
 
 ## 10.2 Arthas阿里工具
 

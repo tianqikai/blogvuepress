@@ -143,12 +143,275 @@ Class 的结构不像XML等描述语言，由于它没有任何分隔符号，�
 三步曲： 
 恢复上层方法的局部变量表和操作数栈、 
 把返回值（如果有的话）压入调用者栈帧的操作数栈中、 
-调整程序计数器的值以指向方法调用指令后面的一条指令、 
+调整程序计数器的值以指向方法调用指令后面的一条指令
+
+
 异常的话：（通过异常处理表<非栈帧中的>来确定）
+
+### 6.7.1 异常机制
+如果你熟悉 Java 语言，那么对上面的异常继承体系一定不会陌生，其中，Error 和 RuntimeException 是非检查型异常（Unchecked Exception），也就是 不需要 catch 语句去捕获的异常；而其他异常，则需要程序员手动去处理。
+
+<a data-fancybox title="异常机制" href="./image/jvmexception.jpg">![异常机制](./image/jvmexception.jpg)</a>
+
+### 6.7.2 异常表
+
+```java
+public class SynchronizedDemo {
+    final Object lock = new Object();
+
+    public SynchronizedDemo() {
+    }
+
+    synchronized void m1() {
+        System.out.println("m1");
+    }
+
+    static synchronized void m2() {
+        System.out.println("m2");
+    }
+
+    void doLock() {
+        synchronized(this.lock) {
+            System.out.println("lock");
+        }
+    }
+}
+```
+<a data-fancybox title="异常表" href="./image/jvmexception1.jpg">![异常机制](./image/jvmexception1.jpg)</a>
+
+在synchronized生成的字节码中，其实包含两条**monitorexit**指令，是为了保证所有的异常条件都能够退出。   
+可以看到编译后的字节码带有一个叫**Exception table**的异常表里面的每一行数据，都是一个异常处理器：   
+1. from 指定字节码索引的开始位置   
+2. to 指定字节码索引的结束位置    
+3. target 异常处理的起始位置   
+4. type 异常类型   
+
+-----------------------
+
+也就是说，只要在 from 和 to 之间发生了异常，就会跳转到 target 所指定的位置  
+我可以看到  
+ 第一条 monitorexit（16）在异常表第一条的范围中，如果异常，能够跳转到第 20 行   
+ 第二条 monitorexit（22）在异常表第二条的范围中，如果异常，能够跳转到第 20 行  
+
+### 6.7.3 finally
+
+```java
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class StreamDemo {
+    public StreamDemo() {
+    }
+
+    public void read() {
+        FileInputStream in = null;
+
+        try {
+            in = new FileInputStream("A.java");
+        } catch (FileNotFoundException var11) {
+            var11.printStackTrace();
+        } finally {
+            if (null != in) {
+                try {
+                    in.close();
+                } catch (IOException var10) {
+                    var10.printStackTrace();
+                }
+            }
+        }
+    }
+}
+
+```
+上面的代码，捕获了一个 FileNotFoundException 异常，然后在 finally 中捕获了 IOException 异常。当我们分析字节码的时候，却发现了一个有意思的地 方：IOException 足足出现了三次。
+<a data-fancybox title="异常表" href="./image/jvmexception2.jpg">![异常机制](./image/jvmexception2.jpg)</a>
+
+```java
+/**
+ * 加了finally为啥不会异常
+ */
+public class NoError {
+    public static void main(String[] args) {
+        NoError noError =new NoError();
+        System.out.println( noError.read());
+    }
+    volatile int kk =0;
+    public int read(){
+        try {
+            int a = 13/0;
+            return a;
+        }finally {
+            return 1;
+        }
+    }
+}
+```
+程序的字节码，可以看到，异常之后，直接跳转到序号 9 了,就后边还有return 1的指令 所以不报错
+
+<a data-fancybox title="异常表" href="./image/jvmexception3.jpg">![异常机制](./image/jvmexception3.jpg)</a>
+
 ## 6.8 字节码指令—拆箱装箱
+
+```java
+/**
+ * IntegerCache及修改
+ * -XX:AutoBoxCacheMax=256
+ */
+public class BoxCache {
+    public static void main(String[] args) {
+        //new一东西
+        Integer n1 = 123;
+        Integer n2 = 123;
+        Integer n3 = 128;
+        Integer n4 = 128;
+
+        System.out.println(n1 == n2);
+        System.out.println(n3 == n4);
+    }
+}
+```
+一般情况下是是 true,false 因为缓存的原因。（在缓存范围内的值，返回的是同一个缓存值，不在的话，每次都是 new 出来的） 当我加上 VM 参数 -XX:AutoBoxCacheMax=256 执行时，结果是 true,ture，扩大缓存范围，第二个为 true 原因就在于此。
+<a data-fancybox title="字节码指令—拆箱装箱" href="./image/jvmboxcache.jpg">![字节码指令—拆箱装箱](./image/jvmboxcache.jpg)</a>
+
+
+```java
+
+    private static class IntegerCache {
+        static final int low = -128;
+        static final int high;
+        static final Integer cache[];
+
+        static {
+            // high value may be configured by property
+            int h = 127;
+            String integerCacheHighPropValue =
+                sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+            if (integerCacheHighPropValue != null) {
+                try {
+                    int i = parseInt(integerCacheHighPropValue);
+                    i = Math.max(i, 127);
+                    // Maximum array size is Integer.MAX_VALUE
+                    h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+                } catch( NumberFormatException nfe) {
+                    // If the property cannot be parsed into an int, ignore it.
+                }
+            }
+            high = h;
+```
+我们继续跟踪 Integer.valueOf 方法，这个<font color='red'>IntegerCache</font>，缓存了 low 和 high 之间的 Integer 对象
+一般情况下，缓存是的-128 到 127 之间的值，但是可以通过 -XX:AutoBoxCacheMax 来修改上限。
 
 ## 6.9 字节码指令—数组
 
-## 6.10 字节码指令—foreach
+```java
+public class ArrayDemo {
+    int getValue() {
+        int[] arr = new int[]{1111, 2222, 3333, 4444};
+        return arr[2];
+    }
+    int getLength(int[] arr) {
+        return arr.length;
+    }
+    public static void main(String[] args) {
+        ArrayDemo arrayDemo=new ArrayDemo();
+        System.out.println(arrayDemo.getValue());
+    }
+}
+```
+<a data-fancybox title="字节码指令—数组" href="./image/jvmshuzu.jpg">![字节码指令—数组](./image/jvmshuzu.jpg)</a>
 
+可以看到新建数组的代码，被编译成了 newarray 指令数组里的初始内容，被顺序编译成了一系列指令放入： 
+**sipush** 将一个短整型常量值推送至栈顶  
+**iastore** 将栈顶 int 型数值存入指定数组的指定索引位置   
+
+-----------
+
+具体操作： 
+1. iconst_0,常量 0，入操作数栈   
+2. sipush 将一个常量 1111 加载到操作数栈   
+3. 将栈顶 int 型数值存入数组的 0 索引位置为了支持多种类型，从操作数栈存储到数组，有更多的指令：bastore、castore、sastore、iastore、lastore、fastore、dastore、aastore  
+
+## 6.10 字节码指令—foreach
+无论是 Java 的数组，还是 List，都可以使用 foreach 语句进行遍历，虽然在语言层面它们的表现形式是一致的，但实际实现的方法并不同。
+```java
+public class ForDemo {
+    static void loop(int[] arr) {
+        for (int i : arr) {
+            System.out.println(i);
+        }
+    }
+    void loop(List<Integer> arr) {
+        for (int i : arr) {
+            System.out.println(i);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{1111, 2222, 3333, 4444};
+        loop(arr);
+    }
+}
+```
+数组：它将代码解释成了传统的变量方式，即 for(int i;i<length;i++) 的形式。 List 的它实际是把 list 对象进行迭代并遍历的，在循环中，使用了 Iterator.next() 方法
+
+```java
+//class文件
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+package com.tqk.ex6;
+
+import java.util.Iterator;
+import java.util.List;
+
+public class ForDemo {
+    public ForDemo() {
+    }
+
+    static void loop(int[] arr) {
+        int[] var1 = arr;
+        int var2 = arr.length;
+
+        for(int var3 = 0; var3 < var2; ++var3) {
+            int i = var1[var3];
+            System.out.println(i);
+        }
+
+    }
+
+    void loop(List<Integer> arr) {
+        Iterator var2 = arr.iterator();
+
+        while(var2.hasNext()) {
+            int i = (Integer)var2.next();
+            System.out.println(i);
+        }
+
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{1111, 2222, 3333, 4444};
+        loop(arr);
+    }
+}
+
+```
 ## 6.11 字节码指令—注解
+
+```java
+public @interface Tqk {
+}
+
+@Tqk
+public class AnnotationDemo {
+    @Tqk
+    public void test(@Tqk  int a){
+    }
+}
+
+```
+无论是类的注解，还是方法注解，都是由一个叫做 RuntimeInvisibleAnnotations 的结构来存储的，
+而参数的存储，是由 RuntimeInvisibleParameterAnotations 来保证的
+<a data-fancybox title="字节码指令—注解" href="./image/jvmannotation.jpg">![字节码指令—注解](./image/jvmannotation.jpg)</a>
