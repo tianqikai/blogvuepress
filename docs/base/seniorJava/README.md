@@ -1,6 +1,6 @@
 ---
-autoNext: 类加载机制-0
+autoNext: Java线程和操作系统线程关系-0
 ---
-# JAVA基础高级
+# JAVA并发编程
 
 [[toc]]
