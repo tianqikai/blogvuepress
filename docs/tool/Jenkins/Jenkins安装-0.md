@@ -115,3 +115,5 @@ cat /var/lib/jenkins/secrets/initialAdminPassword
 
 <a data-fancybox title="插件安装成功之后" href="./image/Jenkins6.jpg">![插件安装成功之后](./image/Jenkins6.jpg)</a> 
 
+https://blog.csdn.net/qq_34272964/article/details/93747652
+https://juejin.cn/post/6844903864466948110#heading-6
