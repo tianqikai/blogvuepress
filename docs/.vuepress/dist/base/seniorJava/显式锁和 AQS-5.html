@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>6. 显式锁和AQS | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.07975a58.js" as="script"><link rel="preload" href="/assets/js/2.9b7b9b39.js" as="script"><link rel="preload" href="/assets/js/31.d4f40ddc.js" as="script"><link rel="prefetch" href="/assets/js/10.b44e9a69.js"><link rel="prefetch" href="/assets/js/100.d32d6b55.js"><link rel="prefetch" href="/assets/js/101.8f2dab44.js"><link rel="prefetch" href="/assets/js/102.c59ed81b.js"><link rel="prefetch" href="/assets/js/103.d421bc52.js"><link rel="prefetch" href="/assets/js/104.b85da85d.js"><link rel="prefetch" href="/assets/js/105.1f6c2fb2.js"><link rel="prefetch" href="/assets/js/11.c68a82ca.js"><link rel="prefetch" href="/assets/js/12.e47c4696.js"><link rel="prefetch" href="/assets/js/13.014fb7fe.js"><link rel="prefetch" href="/assets/js/14.b3b6c5e3.js"><link rel="prefetch" href="/assets/js/15.ad767010.js"><link rel="prefetch" href="/assets/js/16.8a1fb8f9.js"><link rel="prefetch" href="/assets/js/17.ebc0bd3e.js"><link rel="prefetch" href="/assets/js/18.48006d19.js"><link rel="prefetch" href="/assets/js/19.75793c98.js"><link rel="prefetch" href="/assets/js/20.f46261e5.js"><link rel="prefetch" href="/assets/js/21.fb66a7a3.js"><link rel="prefetch" href="/assets/js/22.df6b7f5b.js"><link rel="prefetch" href="/assets/js/23.26069880.js"><link rel="prefetch" href="/assets/js/24.cc1274e9.js"><link rel="prefetch" href="/assets/js/25.3d1b0723.js"><link rel="prefetch" href="/assets/js/26.56d4e64d.js"><link rel="prefetch" href="/assets/js/27.b3b9ea37.js"><link rel="prefetch" href="/assets/js/28.cdc1da5b.js"><link rel="prefetch" href="/assets/js/29.2ba47f9f.js"><link rel="prefetch" href="/assets/js/3.c9d70827.js"><link rel="prefetch" href="/assets/js/30.7f19858d.js"><link rel="prefetch" href="/assets/js/32.f2e357b2.js"><link rel="prefetch" href="/assets/js/33.39d0ed3d.js"><link rel="prefetch" href="/assets/js/34.9382e270.js"><link rel="prefetch" href="/assets/js/35.32f4254c.js"><link rel="prefetch" href="/assets/js/36.d13fb89b.js"><link rel="prefetch" href="/assets/js/37.f99b0f8d.js"><link rel="prefetch" href="/assets/js/38.21b4798e.js"><link rel="prefetch" href="/assets/js/39.63177659.js"><link rel="prefetch" href="/assets/js/4.2f65749f.js"><link rel="prefetch" href="/assets/js/40.b2c2ddbc.js"><link rel="prefetch" href="/assets/js/41.26a827df.js"><link rel="prefetch" href="/assets/js/42.b5c3b7f8.js"><link rel="prefetch" href="/assets/js/43.8c14e3f0.js"><link rel="prefetch" href="/assets/js/44.8d8b17cf.js"><link rel="prefetch" href="/assets/js/45.43105f9d.js"><link rel="prefetch" href="/assets/js/46.28202d98.js"><link rel="prefetch" href="/assets/js/47.695b9b3b.js"><link rel="prefetch" href="/assets/js/48.b3590dc0.js"><link rel="prefetch" href="/assets/js/49.f2aeeb51.js"><link rel="prefetch" href="/assets/js/5.c1387c4d.js"><link rel="prefetch" href="/assets/js/50.c5da5596.js"><link rel="prefetch" href="/assets/js/51.52466020.js"><link rel="prefetch" href="/assets/js/52.71140995.js"><link rel="prefetch" href="/assets/js/53.964a5b8a.js"><link rel="prefetch" href="/assets/js/54.98f647d9.js"><link rel="prefetch" href="/assets/js/55.ceabdb25.js"><link rel="prefetch" href="/assets/js/56.c515f455.js"><link rel="prefetch" href="/assets/js/57.4dcd36d1.js"><link rel="prefetch" href="/assets/js/58.89161636.js"><link rel="prefetch" href="/assets/js/59.265a4e3f.js"><link rel="prefetch" href="/assets/js/6.ed388bbb.js"><link rel="prefetch" href="/assets/js/60.788da0d5.js"><link rel="prefetch" href="/assets/js/61.a8411043.js"><link rel="prefetch" href="/assets/js/62.ff2759b6.js"><link rel="prefetch" href="/assets/js/63.73fc118f.js"><link rel="prefetch" href="/assets/js/64.185044bd.js"><link rel="prefetch" href="/assets/js/65.85567e39.js"><link rel="prefetch" href="/assets/js/66.6ab0f528.js"><link rel="prefetch" href="/assets/js/67.5ccd87ed.js"><link rel="prefetch" href="/assets/js/68.2c058c4c.js"><link rel="prefetch" href="/assets/js/69.cd6ee95b.js"><link rel="prefetch" href="/assets/js/7.0851ecbd.js"><link rel="prefetch" href="/assets/js/70.a3e38fde.js"><link rel="prefetch" href="/assets/js/71.e8b0d735.js"><link rel="prefetch" href="/assets/js/72.17ff9f1c.js"><link rel="prefetch" href="/assets/js/73.323a50ef.js"><link rel="prefetch" href="/assets/js/74.f1e2f11f.js"><link rel="prefetch" href="/assets/js/75.4bed4178.js"><link rel="prefetch" href="/assets/js/76.e385802b.js"><link rel="prefetch" href="/assets/js/77.3f328019.js"><link rel="prefetch" href="/assets/js/78.af48c363.js"><link rel="prefetch" href="/assets/js/79.81d18bb0.js"><link rel="prefetch" href="/assets/js/8.8d231471.js"><link rel="prefetch" href="/assets/js/80.c945f5e7.js"><link rel="prefetch" href="/assets/js/81.3e8c0674.js"><link rel="prefetch" href="/assets/js/82.9d27294e.js"><link rel="prefetch" href="/assets/js/83.1807d5e3.js"><link rel="prefetch" href="/assets/js/84.e95b221b.js"><link rel="prefetch" href="/assets/js/85.eea2324a.js"><link rel="prefetch" href="/assets/js/86.4d9d080c.js"><link rel="prefetch" href="/assets/js/87.baa03231.js"><link rel="prefetch" href="/assets/js/88.b71db76b.js"><link rel="prefetch" href="/assets/js/89.d5aa5c9d.js"><link rel="prefetch" href="/assets/js/9.e0493a24.js"><link rel="prefetch" href="/assets/js/90.3205ca8f.js"><link rel="prefetch" href="/assets/js/91.3fd6a8b1.js"><link rel="prefetch" href="/assets/js/92.6e14ca4a.js"><link rel="prefetch" href="/assets/js/93.1cc984fe.js"><link rel="prefetch" href="/assets/js/94.1bd2ca54.js"><link rel="prefetch" href="/assets/js/95.2b578c6f.js"><link rel="prefetch" href="/assets/js/96.ffb58889.js"><link rel="prefetch" href="/assets/js/97.ddc7c7a7.js"><link rel="prefetch" href="/assets/js/98.d1920eba.js"><link rel="prefetch" href="/assets/js/99.9bdb3f20.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link router-link-active">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/MQ消息队列/" class="nav-link">
+  MQ消息队列
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link router-link-active">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/MQ消息队列/" class="nav-link">
+  MQ消息队列
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Senior Java</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/base/seniorJava/" aria-current="page" class="sidebar-link">JAVA并发编程</a></li><li><a href="/base/seniorJava/Java线程和操作系统线程关系-0.html" class="sidebar-link">1.Java线程和操作系统线程关系</a></li><li><a href="/base/seniorJava/Java线程基础扩充-1.html" class="sidebar-link">2. Java线程基础扩充</a></li><li><a href="/base/seniorJava/线程间的共享和协作-2.html" class="sidebar-link">3. 线程间的共享和协作</a></li><li><a href="/base/seniorJava/线程的并发工具类-3.html" class="sidebar-link">4.线程的并发工具类</a></li><li><a href="/base/seniorJava/原子操作 CAS-4.html" class="sidebar-link">5. 原子操作 CAS</a></li><li><a href="/base/seniorJava/显式锁和 AQS-5.html" class="active sidebar-link">6. 显式锁和AQS</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-1-显式锁" class="sidebar-link">6.1 显式锁</a></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-2-lock-的标准用法" class="sidebar-link">6.2 Lock 的标准用法</a></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-3-lock-的常用-api" class="sidebar-link">6.3 Lock 的常用 API</a></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-4-reentranlock" class="sidebar-link">6.4 ReenTranLock</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-4-1-锁的可重入" class="sidebar-link">6.4.1 锁的可重入</a></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-4-2公平和非公平锁" class="sidebar-link">6.4.2公平和非公平锁</a></li></ul></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-5-locksupport" class="sidebar-link">6.5 LockSupport</a></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-6-abstractqueuedsynchronizer-aqs" class="sidebar-link">6.6 AbstractQueuedSynchronizer(AQS)</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-6-1-aqs-使用方式和其中的设计模式" class="sidebar-link">6.6.1 AQS 使用方式和其中的设计模式</a></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-6-2-实现一个自己的独占锁" class="sidebar-link">6.6.2 实现一个自己的独占锁</a></li><li class="sidebar-sub-header"><a href="/base/seniorJava/显式锁和 AQS-5.html#_6-6-源码分析" class="sidebar-link">6.6. 源码分析</a></li></ul></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_6-显式锁和aqs"><a href="#_6-显式锁和aqs" class="header-anchor">#</a> 6. 显式锁和AQS</h1> <h2 id="_6-1-显式锁"><a href="#_6-1-显式锁" class="header-anchor">#</a> 6.1 显式锁</h2> <p>有了synchronized 为什么还要 Lock？ Java 程序是靠synchronized关键字实现锁功能的，使用 synchronized 关键字 将会隐式地获取锁，但是它将锁的获取和释放固化了，也就是先获取再释放。</p> <h2 id="_6-2-lock-的标准用法"><a href="#_6-2-lock-的标准用法" class="header-anchor">#</a> 6.2 Lock 的标准用法</h2> <div class="language-java line-numbers-mode"><pre class="language-java"><code>lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span>
+    count<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">finally</span><span class="token punctuation">{</span>
+    lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>在 finally 块中释放锁，目的是保证在获取到锁之后，最终能够被释放。 不要将获取锁的过程写在 try 块中，因为如果在获取锁（自定义锁的实现） 时发生了异常，异常抛出的同时也会导致锁无故释放。</p> <h2 id="_6-3-lock-的常用-api"><a href="#_6-3-lock-的常用-api" class="header-anchor">#</a> 6.3 Lock 的常用 API</h2> <p><a data-fancybox="" title="Lock 的常用 API" href="./image/lock.jpg"><img src="/assets/img/lock.50daf58e.jpg" alt="Lock 的常用 API"></a></p> <h2 id="_6-4-reentranlock"><a href="#_6-4-reentranlock" class="header-anchor">#</a> 6.4 ReenTranLock</h2> <h3 id="_6-4-1-锁的可重入"><a href="#_6-4-1-锁的可重入" class="header-anchor">#</a> 6.4.1 锁的可重入</h3> <p><font color="red"><strong>可重入锁又叫递归锁(互斥锁)</strong></font>。是指在同一个线程的外层方法中获取锁的时候，再进入该线程的内层方法会自动获取锁（前提锁的是同一个对象）。不会因为之前已经过去过锁还没释放而阻塞。</p> <p>java中ReentrantLock和Synchronized都是可重入锁。可重入锁的一个优点是一定程度避免死锁。</p> <p>简单地讲就是：“同一个线程对于已经获得到的锁，可以多次继续申请到该锁的使用权”。</p> <h4 id="_6-4-1-1-synchronized-关键字隐式的支持重进入-比如一个-synchronized-修饰的递归方法-在方法执行时执行线程在获取了锁之后仍能连续多次地获得该锁。"><a href="#_6-4-1-1-synchronized-关键字隐式的支持重进入-比如一个-synchronized-修饰的递归方法-在方法执行时执行线程在获取了锁之后仍能连续多次地获得该锁。" class="header-anchor">#</a> 6.4.1.1 synchronized 关键字隐式的支持重进入，比如一个 synchronized 修饰的递归方法，在方法执行时执行线程在获取了锁之后仍能连续多次地获得该锁。</h4> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>ex4</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>text<span class="token punctuation">.</span></span><span class="token class-name">SimpleDateFormat</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Date</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">TimeUnit</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LockDemo</span> <span class="token punctuation">{</span>
+    <span class="token comment">/**
+     * 代码中m1，m2都是由synchronized锁住的。在进入m1的时候持有锁了，方法里调用m2直接进入m2了。
+     * 这个时候m1的锁还没释放。因为m2也是这个锁，所以能靠这把未释放的锁进入m2。证明了可重入性。
+     * 
+     **/</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">m1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入到m1方法！&quot;</span><span class="token operator">+</span><span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">m2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>         
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>       
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">m2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入到m2方法！&quot;</span><span class="token operator">+</span><span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>       
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+    * 没有死锁本身就说明了synchronized的同步块可重入
+    **/</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">m3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入m3的一层同步块&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入m3的二层同步块&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入m3的三层同步块&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">LockDemo</span> lockDemo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LockDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        lockDemo<span class="token punctuation">.</span><span class="token function">m3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span>lockDemo<span class="token punctuation">.</span><span class="token function">m1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span>lockDemo<span class="token punctuation">.</span><span class="token function">m2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//输出结果</span>
+进入m3的一层同步块
+进入m3的二层同步块
+进入m3的三层同步块
+进入到m1方法！<span class="token number">2021</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">24</span> <span class="token number">21</span><span class="token operator">:</span><span class="token number">47</span><span class="token operator">:</span><span class="token number">40</span>
+进入到m2方法！<span class="token number">2021</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">24</span> <span class="token number">21</span><span class="token operator">:</span><span class="token number">47</span><span class="token operator">:</span><span class="token number">40</span>
+进入到m2方法！<span class="token number">2021</span><span class="token operator">-</span><span class="token number">08</span><span class="token operator">-</span><span class="token number">24</span> <span class="token number">21</span><span class="token operator">:</span><span class="token number">47</span><span class="token operator">:</span><span class="token number">50</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br></div></div><p><font color="red"><strong>可重入锁实现原理:每个锁对象拥有一个锁计数器和一个指向持有该锁的线程的指针</strong></font></p> <p>当执行monitor-enter的时候，如果该对象计数器为0说明当前锁没有被其他线程锁占有，java虚拟机会将该锁对象的持有线程设置为当前线程。并将计数器+1.
+在目标锁对象不为0的情况下：
+如果锁的持有者是当前线程。则锁对象的计数器+1.
+如果锁对象不是当前线程则要等待锁对象的计数器归0，才能获得锁。
+当执行monitor-exit的时候，java虚拟机将锁对象的计数器-1.计数器归0代表锁已经被释放</p> <h4 id="_6-4-1-2-reentrantlock-在调用-lock-方法时-已经获取到锁的线程-能够再次调用-lock-方法获取锁而不被阻塞。"><a href="#_6-4-1-2-reentrantlock-在调用-lock-方法时-已经获取到锁的线程-能够再次调用-lock-方法获取锁而不被阻塞。" class="header-anchor">#</a> 6.4.1.2 ReentrantLock 在调用 lock()方法时，已经获取到锁的线程，能够再次调用 lock()方法获取锁而不被阻塞。</h4> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>ex4</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>text<span class="token punctuation">.</span></span><span class="token class-name">SimpleDateFormat</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Date</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span></span><span class="token class-name">TimeUnit</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>locks<span class="token punctuation">.</span></span><span class="token class-name">Lock</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>locks<span class="token punctuation">.</span></span><span class="token class-name">ReentrantLock</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LockDemo</span> <span class="token punctuation">{</span>
+    <span class="token class-name">Lock</span> lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">m1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>           
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入m1方法&quot;</span><span class="token operator">+</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">m2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">m2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入m2方法&quot;</span><span class="token operator">+</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">LockDemo</span> lockDemo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LockDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        lockDemo<span class="token punctuation">.</span><span class="token function">m1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><p><strong>lock和synchronized最主要的区别的synchronized是隐式获取锁和释放锁</strong>。<br>
+而ReentrantLock的是要手动lock，unlock的。而lock和unlock就是syncronized原理是+1，-1的操作。<br>
+记住加几次锁就要放几次锁。否则会导致锁无法释放。</p> <h3 id="_6-4-2公平和非公平锁"><a href="#_6-4-2公平和非公平锁" class="header-anchor">#</a> 6.4.2公平和非公平锁</h3> <p>如果在时间上，<strong>先对锁进行获取的请求一定先被满足，那么这个锁是公平的</strong>， 反之，是不公平的。公平的获取锁，也就是等待时间最长的线程最优先获取锁， 也可以说锁获取是顺序的。 ReentrantLock 提供了一个构造函数，能够控制锁是否是公平的。事实上，公平的锁机制往往没有非公平的效率高。</p> <p>在激烈竞争的情况下,非公平锁的性能高于公平锁的性能的一个原因是:<br> <strong>在恢复一个被挂起的线程与该线程真正开始运行之间存在着严重的延迟</strong>。<br>
+假设线程 A 持有一个锁,并且线程 B 请求这个锁。由于这个锁已被线程 A 持有,因此 B 将被挂起。当 A 释放锁时,B 将被唤醒,因此会再次尝试获取锁。与此同时,如果 C 也请求这个锁,那么 C 很可能会在 B 被完全唤醒之前获得、使用以及释放这个锁。这样的情况是一种“双赢”的局面:B 获得锁的时刻并没有推迟,C 更早地获得了锁,并且吞吐量也获得了提高。</p> <h2 id="_6-5-locksupport"><a href="#_6-5-locksupport" class="header-anchor">#</a> 6.5 LockSupport</h2> <p>LockSupport 定义了一组的公共静态方法，这些方法提供了最基本的线程阻塞和唤醒功能，而 LockSupport 也成为构建同步组件的基础工具。</p> <p>LockSupport 定义了一组以 park 开头的方法用来阻塞当前线程，以及 unpark(Thread thread)方法来唤醒一个被阻塞的线程。LockSupport 增加了 park(Object blocker)、parkNanos(Object blocker,long nanos)和 parkUntil(Object blocker,long deadline)3 个方法，用于实现阻塞当前线程的功能，其中参数 blocker 是用来标识当前线程在等待的对象（以下称为阻塞对象），该对象主要用于问题 排查和系统监控。</p> <p><a data-fancybox="" title="LockSupport" href="./image/locksupport.jpg"><img src="/assets/img/locksupport.b55453a1.jpg" alt="LockSupport"></a></p> <p><strong>LockSupport可以让线程在任意位置阻塞.阻塞之后也有对应的唤醒方法.其本质上调用的是Unsafe类的native方法.</strong></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">park</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        UNSAFE<span class="token punctuation">.</span><span class="token function">park</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token number">0L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LockSupportDemo</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Thread</span> a <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入到a线程&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">LockSupport</span><span class="token punctuation">.</span><span class="token function">park</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;a线程被唤醒&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token string">&quot;线程a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        a<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;进入到b线程&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">LockSupport</span><span class="token punctuation">.</span><span class="token function">unpark</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token string">&quot;线程b&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>其实现原理是这样的:每个使用它的线程都有一个许可(permit)关联.
+permit相当于1,0的开关.默认是0.<br>
+调用一次unpark就加1,变成1.<br>
+调用一次park就把1变成0.同时park立即返回.<br>
+注意的是只有0,1两种状态.也就是连续调用unpark多次,也只能让许可证变成1.能解一次park而已.</p> <p><strong>调用park时</strong>:如果有凭证.则消耗这个凭证并且正常退出;如果没凭证,则要等待有凭证才可以退出<br> <strong>调用unpark时</strong>:会增加一个凭证,但是凭证的上限是1.</p> <h2 id="_6-6-abstractqueuedsynchronizer-aqs"><a href="#_6-6-abstractqueuedsynchronizer-aqs" class="header-anchor">#</a> 6.6 AbstractQueuedSynchronizer(AQS)</h2> <p>队列同步器 AbstractQueuedSynchronizer（以下简称同步器或 AQS），是用来构建锁或者其他同步组件的基础框架，它使用了一个 int 成员变量（<font color="red"><strong>state</strong></font>）表示同步状态，通过内置的 FIFO 队列来完成资源获取线程的排队工作。并发包的大师（Doug Lea）期望它能够成为实现大部分同步需求的基础。</p> <h3 id="_6-6-1-aqs-使用方式和其中的设计模式"><a href="#_6-6-1-aqs-使用方式和其中的设计模式" class="header-anchor">#</a> 6.6.1 AQS 使用方式和其中的设计模式</h3> <p>AQS 的主要使用方式是继承，子类通过继承 AQS 并实现它的抽象方法来管 理同步状态，在 AQS 里由一个 int 型的 state 来代表这个状态，在抽象方法的实现过程中免不了要对同步状态进行更改，</p> <h4 id="_6-6-1-1-aqs-使用方式和其中的设计模式"><a href="#_6-6-1-1-aqs-使用方式和其中的设计模式" class="header-anchor">#</a> 6.6.1.1 AQS 使用方式和其中的设计模式</h4> <p>这时就需要使用同步器提供的 3 个方法：
+<font color="red"><strong>• getState()</strong></font>  ：获取当前同步状态。<br> <font color="red"><strong>• setState(int newState)</strong></font>  ：设置当前同步状态。<br> <font color="red"><strong>• compareAndSetState(int expect,int update)</strong></font>  ：使用 CAS 设置当前状态，该方 法能够保证状态设置的原子性。<br>
+来进行操作，因为它们能够保证状态的改变是安全的。</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>
+    <span class="token comment">/**
+     * The synchronization state.
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> state<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>在实现上，子类推荐被定义为自定义同步组件的静态内部类，AQS 自身没有 实现任何同步接口，它仅仅是定义了若干同步状态获取和释放的方法来供自定义同步组件使用，同步器既可以支持<font color="red"><strong>独占式地获取同步状态</strong></font> ，也可以支持<font color="red"><strong>共享式地获取同步状态</strong></font> ，这样就可以方便实现不同类型的同步组件（ReentrantLock、 ReentrantReadWriteLock 和 CountDownLatch 等）。</p> <p><strong>同步器是实现锁（也可以是任意同步组件）的关键，在锁的实现中聚合同步器。</strong></p> <p>可以这样理解二者之间的关系： 锁是面向使用者的，它定义了使用者与锁交互的接口（比如可以允许两个线 程并行访问），隐藏了实现细节；</p> <p>同步器面向的是锁的实现者，它简化了锁的实现方式，屏蔽了同步状态管理、 线程的排队、等待与唤醒等底层操作。锁和同步器很好地隔离了使用者和实现者所需关注的领域。</p> <p>实现者需要继承同步器并重写指定的方法，随后将同步器组合在自定义同步组件的实现中，并调用同步器提供的模板方法，而这些模板方法将会调用使用者重写的方法。</p> <p><strong>模板方法模式</strong><br>
+同步器的设计基于模板方法模式。模板方法模式的意图是，定义一个操作中 的算法的骨架，而将一些步骤的实现延迟到子类中。模板方法使得子类可以不改
+变一个算法的结构即可重定义该算法的某些特定步骤。我们最常见的就是 Spring 框架里的各种 Template。</p> <h4 id="_6-6-1-2-aqs-中的方法"><a href="#_6-6-1-2-aqs-中的方法" class="header-anchor">#</a> 6.6.1.2 AQS 中的方法</h4> <p><strong>模板方法</strong></p> <p>实现自定义同步组件时，将会调用同步器提供的模板方法，
+<a data-fancybox="" title="acquire" href="./image/acquire.jpg"><img src="/assets/img/acquire.f1d2fd54.jpg" alt="acquire"></a></p> <p><strong>可重写的方法</strong> <a data-fancybox="" title="tryacquire" href="./image/tryacquire.jpg"><img src="/assets/img/tryacquire.b6b05e31.jpg" alt="tryacquire"></a></p> <h3 id="_6-6-2-实现一个自己的独占锁"><a href="#_6-6-2-实现一个自己的独占锁" class="header-anchor">#</a> 6.6.2 实现一个自己的独占锁</h3> <h3 id="_6-6-源码分析"><a href="#_6-6-源码分析" class="header-anchor">#</a> 6.6. 源码分析</h3> <p>从ReentrantLock说起，Lock接口的实现类，基本都是通过聚合了一个队列同步器的子类完成线程访问控制的。</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sync<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ReentrantLock</span> <span class="token keyword">implements</span> <span class="token class-name">Lock</span><span class="token punctuation">,</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>Serializable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token number">7373984872572414699L</span><span class="token punctuation">;</span>
+    <span class="token comment">/** Synchronizer providing all implementation mechanics */</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Sync</span> sync<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * Base of synchronization control for this lock. Subclassed
+     * into fair and nonfair versions below. Uses AQS state to
+     * represent the number of holds on the lock.
+     */</span>
+    <span class="token keyword">abstract</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Sync</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractQueuedSynchronizer</span> <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">5179523762034025860L</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p><strong>上面两段代码就可以看出来：lock.lock本质上是在lock类中聚合一个AQS的实现类，然后调用lock和unlock都是调用这个AQS的实现类的方法来实现（unlock是调用sysn.release(1);）的。</strong></p> <p>然后注意，我们知道ReentrantLock默认是非公平锁的，可以创建的时候传参设置为公平锁，那么这个公平还是非公平对于AQS的实现类有什么区别呢？</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>    <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">FairSync</span> <span class="token keyword">extends</span> <span class="token class-name">Sync</span> <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">3000897897090466540L</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">/**
+         * Fair version of tryAcquire.  Don't grant access unless
+         * recursive call or no waiters or is first.
+         */</span>
+        <span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">tryAcquire</span><span class="token punctuation">(</span><span class="token keyword">int</span> acquires<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">final</span> <span class="token class-name">Thread</span> current <span class="token operator">=</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">hasQueuedPredecessors</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>
+                    <span class="token function">compareAndSetState</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> acquires<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token function">setExclusiveOwnerThread</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token function">getExclusiveOwnerThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">int</span> nextc <span class="token operator">=</span> c <span class="token operator">+</span> acquires<span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>nextc <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">&quot;Maximum lock count exceeded&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">setState</span><span class="token punctuation">(</span>nextc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * Creates an instance of {@code ReentrantLock}.
+     * This is equivalent to using {@code ReentrantLock(false)}.
+     */</span>
+    <span class="token keyword">public</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sync <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NonfairSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/**
+     * Creates an instance of {@code ReentrantLock} with the
+     * given fairness policy.
+     *
+     * @param fair {@code true} if this lock should use a fair ordering policy
+     */</span>
+    <span class="token keyword">public</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> fair<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        sync <span class="token operator">=</span> fair <span class="token operator">?</span> <span class="token keyword">new</span> <span class="token class-name">FairSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">NonfairSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ```
+    从上述代码可以看出，根据传参的不同去实现不同的配置的<span class="token class-name">Sync</span>类型，<span class="token class-name">Sync</span>类型又是AQS的实现类。</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/base/seniorJava/原子操作 CAS-4.html" class="prev">
+        5. 原子操作 CAS
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.07975a58.js" defer></script><script src="/assets/js/2.9b7b9b39.js" defer></script><script src="/assets/js/31.d4f40ddc.js" defer></script>
+  </body>
+</html>

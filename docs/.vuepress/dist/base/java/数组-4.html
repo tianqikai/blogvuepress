@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>4.数组 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.07975a58.js" as="script"><link rel="preload" href="/assets/js/2.9b7b9b39.js" as="script"><link rel="preload" href="/assets/js/49.f2aeeb51.js" as="script"><link rel="prefetch" href="/assets/js/10.b44e9a69.js"><link rel="prefetch" href="/assets/js/100.d32d6b55.js"><link rel="prefetch" href="/assets/js/101.8f2dab44.js"><link rel="prefetch" href="/assets/js/102.c59ed81b.js"><link rel="prefetch" href="/assets/js/103.d421bc52.js"><link rel="prefetch" href="/assets/js/104.b85da85d.js"><link rel="prefetch" href="/assets/js/105.1f6c2fb2.js"><link rel="prefetch" href="/assets/js/11.c68a82ca.js"><link rel="prefetch" href="/assets/js/12.e47c4696.js"><link rel="prefetch" href="/assets/js/13.014fb7fe.js"><link rel="prefetch" href="/assets/js/14.b3b6c5e3.js"><link rel="prefetch" href="/assets/js/15.ad767010.js"><link rel="prefetch" href="/assets/js/16.8a1fb8f9.js"><link rel="prefetch" href="/assets/js/17.ebc0bd3e.js"><link rel="prefetch" href="/assets/js/18.48006d19.js"><link rel="prefetch" href="/assets/js/19.75793c98.js"><link rel="prefetch" href="/assets/js/20.f46261e5.js"><link rel="prefetch" href="/assets/js/21.fb66a7a3.js"><link rel="prefetch" href="/assets/js/22.df6b7f5b.js"><link rel="prefetch" href="/assets/js/23.26069880.js"><link rel="prefetch" href="/assets/js/24.cc1274e9.js"><link rel="prefetch" href="/assets/js/25.3d1b0723.js"><link rel="prefetch" href="/assets/js/26.56d4e64d.js"><link rel="prefetch" href="/assets/js/27.b3b9ea37.js"><link rel="prefetch" href="/assets/js/28.cdc1da5b.js"><link rel="prefetch" href="/assets/js/29.2ba47f9f.js"><link rel="prefetch" href="/assets/js/3.c9d70827.js"><link rel="prefetch" href="/assets/js/30.7f19858d.js"><link rel="prefetch" href="/assets/js/31.d4f40ddc.js"><link rel="prefetch" href="/assets/js/32.f2e357b2.js"><link rel="prefetch" href="/assets/js/33.39d0ed3d.js"><link rel="prefetch" href="/assets/js/34.9382e270.js"><link rel="prefetch" href="/assets/js/35.32f4254c.js"><link rel="prefetch" href="/assets/js/36.d13fb89b.js"><link rel="prefetch" href="/assets/js/37.f99b0f8d.js"><link rel="prefetch" href="/assets/js/38.21b4798e.js"><link rel="prefetch" href="/assets/js/39.63177659.js"><link rel="prefetch" href="/assets/js/4.2f65749f.js"><link rel="prefetch" href="/assets/js/40.b2c2ddbc.js"><link rel="prefetch" href="/assets/js/41.26a827df.js"><link rel="prefetch" href="/assets/js/42.b5c3b7f8.js"><link rel="prefetch" href="/assets/js/43.8c14e3f0.js"><link rel="prefetch" href="/assets/js/44.8d8b17cf.js"><link rel="prefetch" href="/assets/js/45.43105f9d.js"><link rel="prefetch" href="/assets/js/46.28202d98.js"><link rel="prefetch" href="/assets/js/47.695b9b3b.js"><link rel="prefetch" href="/assets/js/48.b3590dc0.js"><link rel="prefetch" href="/assets/js/5.c1387c4d.js"><link rel="prefetch" href="/assets/js/50.c5da5596.js"><link rel="prefetch" href="/assets/js/51.52466020.js"><link rel="prefetch" href="/assets/js/52.71140995.js"><link rel="prefetch" href="/assets/js/53.964a5b8a.js"><link rel="prefetch" href="/assets/js/54.98f647d9.js"><link rel="prefetch" href="/assets/js/55.ceabdb25.js"><link rel="prefetch" href="/assets/js/56.c515f455.js"><link rel="prefetch" href="/assets/js/57.4dcd36d1.js"><link rel="prefetch" href="/assets/js/58.89161636.js"><link rel="prefetch" href="/assets/js/59.265a4e3f.js"><link rel="prefetch" href="/assets/js/6.ed388bbb.js"><link rel="prefetch" href="/assets/js/60.788da0d5.js"><link rel="prefetch" href="/assets/js/61.a8411043.js"><link rel="prefetch" href="/assets/js/62.ff2759b6.js"><link rel="prefetch" href="/assets/js/63.73fc118f.js"><link rel="prefetch" href="/assets/js/64.185044bd.js"><link rel="prefetch" href="/assets/js/65.85567e39.js"><link rel="prefetch" href="/assets/js/66.6ab0f528.js"><link rel="prefetch" href="/assets/js/67.5ccd87ed.js"><link rel="prefetch" href="/assets/js/68.2c058c4c.js"><link rel="prefetch" href="/assets/js/69.cd6ee95b.js"><link rel="prefetch" href="/assets/js/7.0851ecbd.js"><link rel="prefetch" href="/assets/js/70.a3e38fde.js"><link rel="prefetch" href="/assets/js/71.e8b0d735.js"><link rel="prefetch" href="/assets/js/72.17ff9f1c.js"><link rel="prefetch" href="/assets/js/73.323a50ef.js"><link rel="prefetch" href="/assets/js/74.f1e2f11f.js"><link rel="prefetch" href="/assets/js/75.4bed4178.js"><link rel="prefetch" href="/assets/js/76.e385802b.js"><link rel="prefetch" href="/assets/js/77.3f328019.js"><link rel="prefetch" href="/assets/js/78.af48c363.js"><link rel="prefetch" href="/assets/js/79.81d18bb0.js"><link rel="prefetch" href="/assets/js/8.8d231471.js"><link rel="prefetch" href="/assets/js/80.c945f5e7.js"><link rel="prefetch" href="/assets/js/81.3e8c0674.js"><link rel="prefetch" href="/assets/js/82.9d27294e.js"><link rel="prefetch" href="/assets/js/83.1807d5e3.js"><link rel="prefetch" href="/assets/js/84.e95b221b.js"><link rel="prefetch" href="/assets/js/85.eea2324a.js"><link rel="prefetch" href="/assets/js/86.4d9d080c.js"><link rel="prefetch" href="/assets/js/87.baa03231.js"><link rel="prefetch" href="/assets/js/88.b71db76b.js"><link rel="prefetch" href="/assets/js/89.d5aa5c9d.js"><link rel="prefetch" href="/assets/js/9.e0493a24.js"><link rel="prefetch" href="/assets/js/90.3205ca8f.js"><link rel="prefetch" href="/assets/js/91.3fd6a8b1.js"><link rel="prefetch" href="/assets/js/92.6e14ca4a.js"><link rel="prefetch" href="/assets/js/93.1cc984fe.js"><link rel="prefetch" href="/assets/js/94.1bd2ca54.js"><link rel="prefetch" href="/assets/js/95.2b578c6f.js"><link rel="prefetch" href="/assets/js/96.ffb58889.js"><link rel="prefetch" href="/assets/js/97.ddc7c7a7.js"><link rel="prefetch" href="/assets/js/98.d1920eba.js"><link rel="prefetch" href="/assets/js/99.9bdb3f20.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link router-link-active">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/MQ消息队列/" class="nav-link">
+  MQ消息队列
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link router-link-active">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/MQ消息队列/" class="nav-link">
+  MQ消息队列
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Java</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/base/java/" aria-current="page" class="sidebar-link">JAVA基础学习</a></li><li><a href="/base/java/java概述-1.html" class="sidebar-link">1.java概述</a></li><li><a href="/base/java/java数据类型-2.html" class="sidebar-link">2.java数据类型</a></li><li><a href="/base/java/java基础语法-3.html" class="sidebar-link">3.java基础语法</a></li><li><a href="/base/java/数组-4.html" class="active sidebar-link">4.数组</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/java/数组-4.html#_4-1-数组概述" class="sidebar-link">4.1 数组概述</a></li><li class="sidebar-sub-header"><a href="/base/java/数组-4.html#_4-2-一维数组的使用" class="sidebar-link">4.2 一维数组的使用</a></li><li class="sidebar-sub-header"><a href="/base/java/数组-4.html#_4-3-多维数组的使用" class="sidebar-link">4.3 多维数组的使用</a></li><li class="sidebar-sub-header"><a href="/base/java/数组-4.html#_4-3-数组中涉及的常见算法" class="sidebar-link">4.3 数组中涉及的常见算法</a></li><li class="sidebar-sub-header"><a href="/base/java/数组-4.html#_4-4-arrays工具类的使用" class="sidebar-link">4.4 Arrays工具类的使用</a></li><li class="sidebar-sub-header"><a href="/base/java/数组-4.html#_4-5-数组使用中的常见异常" class="sidebar-link">4.5 数组使用中的常见异常</a></li></ul></li><li><a href="/base/java/面向对象-5.html" class="sidebar-link">5.面向对象</a></li><li><a href="/base/java/异常处理-6.html" class="sidebar-link">6.异常处理</a></li><li><a href="/base/java/枚举值和注解-7.html" class="sidebar-link">7.枚举值和注解</a></li><li><a href="/base/java/常用类-8.html" class="sidebar-link">8.常用类</a></li><li><a href="/base/java/集合-9.html" class="sidebar-link">9.集合</a></li><li><a href="/base/java/多线程-a.html" class="sidebar-link">10.多线程</a></li><li><a href="/base/java/泛型-b.html" class="sidebar-link">11.泛型</a></li><li><a href="/base/java/IO流-c.html" class="sidebar-link">12. IO流</a></li><li><a href="/base/java/网络编程-d.html" class="sidebar-link">13.Java网络编程基础</a></li><li><a href="/base/java/反射-e.html" class="sidebar-link">14.反射</a></li><li><a href="/base/java/动态代理-f.html" class="sidebar-link">15.动态代理</a></li><li><a href="/base/java/JDK8特性-g.html" class="sidebar-link">16.JDK8特性</a></li><li><a href="/base/java/JDK9特性-h.html" class="sidebar-link">17.JDK9特性</a></li><li><a href="/base/java/JDK11特性-i.html" class="sidebar-link">18.JDK11特性</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_4-数组"><a href="#_4-数组" class="header-anchor">#</a> 4.数组</h1> <h2 id="_4-1-数组概述"><a href="#_4-1-数组概述" class="header-anchor">#</a> 4.1 数组概述</h2> <p><font color="red"><strong>数组(Array)，是多个相同类型数据按一定顺序排列的集合，并使用一个名字命名，并通过编号的方式对这些数据进行统一管理</strong></font></p> <p><strong>数组的常见概念</strong><br>
+▷  数组名<br>
+▷  下标(或索引)<br>
+▷  元素<br>
+▷  数组的长度</p> <p>数组本身是引用数据类型，而数组中的元素可以是<font color="red"><strong>任何数据类型</strong></font> ，包括基本数据类型和引用数据类型</p> <ol><li><p>创建数组对象会在内存中开辟一整块连续的空间，而<font color="red"><strong>数组名中引用的是这块连续空间的首地址</strong></font></p></li> <li><p><font color="red"><strong>数组的长度一旦确定，就不能修改</strong></font></p></li> <li><p>我们可以直接通过下标(或索引)的方式调用指定位置的元素，速度很快。</p></li> <li><p>数组的分类：
+▷  按照维度：一维数组、二维数组、三维数组、…
+▷  按照元素的数据类型分：基本数据类型元素的数组、引用数据类型元素的数组(即对象数组)</p></li></ol> <h2 id="_4-2-一维数组的使用"><a href="#_4-2-一维数组的使用" class="header-anchor">#</a> 4.2 一维数组的使用</h2> <p><strong>一维数组的声明方式：</strong> <font color="red"><strong>type var[] 或 type[] var；</strong></font></p> <p><strong>例如:</strong>
+int a[];<br>
+int[] a1;<br>
+double b[];<br>
+String[] c; //引用类型变量数组<br>
+▷ ava语言中声明数组时不能指定其长度(数组中元素的数)， 例如： int a[5]; //非法</p> <p><strong>一维数组的使用：初始化</strong></p> <p><font color="red"><strong>动态初始化：数组声明且为数组元素分配空间与赋值的操作分开进行</strong></font></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+arr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">;</span>
+arr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">;</span> 
+
+<span class="token class-name">String</span> names<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+names <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+names<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;钱学森&quot;</span><span class="token punctuation">;</span>
+names<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;邓稼先&quot;</span><span class="token punctuation">;</span>
+names<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;袁隆平&quot;</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p><font color="red"><strong>静态初始化：在定义数组的同时就为数组元素分配空间并赋值</strong></font></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token class-name">String</span> names<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;李四光&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;茅以升&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;华罗庚&quot;</span> <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p><strong>■ 数组是引用类型，它的元素相当于类的成员变量，因此数组一经分配空间，其中的每个元素也被按照成员变量同样的方式被<font color="red">隐式初始化</font></strong> 例如：</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//a[3]的默认值为0 </span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p><font color="red"><strong>▷对于基本数据类型而言，默认初始化值各有不同</strong></font> <font color="red"><strong>▷对于引用数据类型而言，默认初始化值为null(注意与0不同！)</strong></font></p> <p><a data-fancybox="" title="数组元素的默认初始化值" href="../image/arrays1.jpg"><img src="/assets/img/arrays1.23f818d0.jpg" alt="数组元素的默认初始化值"></a></p> <h2 id="_4-3-多维数组的使用"><a href="#_4-3-多维数组的使用" class="header-anchor">#</a> 4.3 多维数组的使用</h2> <p><font color="#4C8BF4"><strong>二维数组[][]：数组中的数组</strong></font></p> <p><font color="red"><strong>格式1（动态初始化）：int[][] arr = new int[3][2];</strong></font><br>
+定义了名称为arr的二维数组<br>
+二维数组中有3个一维数组<br>
+每一个一维数组中有2个元素<br>
+一维数组的名称分别为arr[0], arr[1], arr[2]<br>
+给第一个一维数组1脚标位赋值为78写法是：arr[0][1] = 78;</p> <p><font color="red"><strong>格式2（动态初始化）：int[][] arr = new int[3][];</strong></font><br>
+二维数组中有3个一维数组。<br>
+每个一维数组都是默认初始化值null (注意：区别于格式1）<br>
+可以对这个三个一维数组分别进行初始化<br>
+arr[0] = new int[3]; arr[1] = new int[1]; arr[2] = new int[2];<br> <font color="blue"><strong>注：int[][]arr = new int[][3]; //非法</strong></font></p> <p><font color="red"><strong>格式3（静态初始化):</strong></font></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>定义一个名称为arr的二维数组，二维数组中有三个一维数组<br>
+每一个一维数组中具体元素也都已初始化<br>
+第一个一维数组 arr[0] = {3,8,2};<br>
+第二个一维数组 arr[1] = {2,7};<br>
+第三个一维数组 arr[2] = {9,0,1,6};<br>
+第三个一维数组的长度表示方式：arr[2].length;</p> <p>▷ 注意特殊写法情况：int[] x,y[]; x是一维数组，y是二维数组<br>
+▷ Java中多维数组不必都是规则矩阵形式</p> <h4 id="多维数组的使用-二维数组内存解析"><a href="#多维数组的使用-二维数组内存解析" class="header-anchor">#</a> 多维数组的使用：二维数组内存解析</h4> <p><a data-fancybox="" title="二维数组内存解析" href="../image/arrays2.jpg"><img src="/assets/img/arrays2.ee54b976.jpg" alt="二维数组内存解析"></a></p> <h2 id="_4-3-数组中涉及的常见算法"><a href="#_4-3-数组中涉及的常见算法" class="header-anchor">#</a> 4.3 数组中涉及的常见算法</h2> <ol><li>数组元素的赋值(杨辉三角、回形数等)</li> <li>求数值型数组中元素的最大值、最小值、平均数、总和等</li> <li>数组的复制、反转、查找(线性查找、二分法查找)</li> <li>数组元素的排序算法</li></ol> <div class="custom-block warning"><p class="custom-block-title">十大内部排序算法</p> <ol><li>选择排序<br>
+▷  直接选择排序、堆排序</li> <li>交换排序<br>
+▷  冒泡排序、快速排序</li> <li>插入排序<br>
+▷  直接插入排序、折半插入排序、Shell排序</li> <li>归并排序</li> <li>桶式排序</li> <li>基数排序</li></ol></div> <h2 id="_4-4-arrays工具类的使用"><a href="#_4-4-arrays工具类的使用" class="header-anchor">#</a> 4.4 Arrays工具类的使用</h2> <ol><li>boolean equals(int[] a,int[] b) 判断两个数组是否相等。</li> <li>String toString(int[] a) 输出数组信息。</li> <li>void fill(int[] a,int val) 将指定值填充到数组之中。</li> <li>void sort(int[] a) 对数组进行排序。</li> <li>int binarySearch(int[] a,int key) 对排序后的数组进行二分法检索指定的值。</li></ol> <h2 id="_4-5-数组使用中的常见异常"><a href="#_4-5-数组使用中的常见异常" class="header-anchor">#</a> 4.5 数组使用中的常见异常</h2> <div class="custom-block tip"><p class="custom-block-title"><font color="red"><strong>数组使用中的常见异常</strong></font></p> <ol><li><font color="red"><strong>数组脚标越界异常(ArrayIndexOutOfBoundsException)</strong></font></li></ol> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 访问到了数组中的不存在的脚标时发生</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ol start="2"><li><font color="red"><strong>空指针异常(NullPointerException)</strong></font></li></ol> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// arr引用没有指向实体，却在操作实体中的元素时</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/base/java/java基础语法-3.html" class="prev">
+        3.java基础语法
+      </a></span> <span class="next"><a href="/base/java/面向对象-5.html">
+        5.面向对象
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.07975a58.js" defer></script><script src="/assets/js/2.9b7b9b39.js" defer></script><script src="/assets/js/49.f2aeeb51.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gateway网关简介（入门） | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.07975a58.js" as="script"><link rel="preload" href="/assets/js/2.9b7b9b39.js" as="script"><link rel="preload" href="/assets/js/27.b3b9ea37.js" as="script"><link rel="prefetch" href="/assets/js/10.b44e9a69.js"><link rel="prefetch" href="/assets/js/100.d32d6b55.js"><link rel="prefetch" href="/assets/js/101.8f2dab44.js"><link rel="prefetch" href="/assets/js/102.c59ed81b.js"><link rel="prefetch" href="/assets/js/103.d421bc52.js"><link rel="prefetch" href="/assets/js/104.b85da85d.js"><link rel="prefetch" href="/assets/js/105.1f6c2fb2.js"><link rel="prefetch" href="/assets/js/11.c68a82ca.js"><link rel="prefetch" href="/assets/js/12.e47c4696.js"><link rel="prefetch" href="/assets/js/13.014fb7fe.js"><link rel="prefetch" href="/assets/js/14.b3b6c5e3.js"><link rel="prefetch" href="/assets/js/15.ad767010.js"><link rel="prefetch" href="/assets/js/16.8a1fb8f9.js"><link rel="prefetch" href="/assets/js/17.ebc0bd3e.js"><link rel="prefetch" href="/assets/js/18.48006d19.js"><link rel="prefetch" href="/assets/js/19.75793c98.js"><link rel="prefetch" href="/assets/js/20.f46261e5.js"><link rel="prefetch" href="/assets/js/21.fb66a7a3.js"><link rel="prefetch" href="/assets/js/22.df6b7f5b.js"><link rel="prefetch" href="/assets/js/23.26069880.js"><link rel="prefetch" href="/assets/js/24.cc1274e9.js"><link rel="prefetch" href="/assets/js/25.3d1b0723.js"><link rel="prefetch" href="/assets/js/26.56d4e64d.js"><link rel="prefetch" href="/assets/js/28.cdc1da5b.js"><link rel="prefetch" href="/assets/js/29.2ba47f9f.js"><link rel="prefetch" href="/assets/js/3.c9d70827.js"><link rel="prefetch" href="/assets/js/30.7f19858d.js"><link rel="prefetch" href="/assets/js/31.d4f40ddc.js"><link rel="prefetch" href="/assets/js/32.f2e357b2.js"><link rel="prefetch" href="/assets/js/33.39d0ed3d.js"><link rel="prefetch" href="/assets/js/34.9382e270.js"><link rel="prefetch" href="/assets/js/35.32f4254c.js"><link rel="prefetch" href="/assets/js/36.d13fb89b.js"><link rel="prefetch" href="/assets/js/37.f99b0f8d.js"><link rel="prefetch" href="/assets/js/38.21b4798e.js"><link rel="prefetch" href="/assets/js/39.63177659.js"><link rel="prefetch" href="/assets/js/4.2f65749f.js"><link rel="prefetch" href="/assets/js/40.b2c2ddbc.js"><link rel="prefetch" href="/assets/js/41.26a827df.js"><link rel="prefetch" href="/assets/js/42.b5c3b7f8.js"><link rel="prefetch" href="/assets/js/43.8c14e3f0.js"><link rel="prefetch" href="/assets/js/44.8d8b17cf.js"><link rel="prefetch" href="/assets/js/45.43105f9d.js"><link rel="prefetch" href="/assets/js/46.28202d98.js"><link rel="prefetch" href="/assets/js/47.695b9b3b.js"><link rel="prefetch" href="/assets/js/48.b3590dc0.js"><link rel="prefetch" href="/assets/js/49.f2aeeb51.js"><link rel="prefetch" href="/assets/js/5.c1387c4d.js"><link rel="prefetch" href="/assets/js/50.c5da5596.js"><link rel="prefetch" href="/assets/js/51.52466020.js"><link rel="prefetch" href="/assets/js/52.71140995.js"><link rel="prefetch" href="/assets/js/53.964a5b8a.js"><link rel="prefetch" href="/assets/js/54.98f647d9.js"><link rel="prefetch" href="/assets/js/55.ceabdb25.js"><link rel="prefetch" href="/assets/js/56.c515f455.js"><link rel="prefetch" href="/assets/js/57.4dcd36d1.js"><link rel="prefetch" href="/assets/js/58.89161636.js"><link rel="prefetch" href="/assets/js/59.265a4e3f.js"><link rel="prefetch" href="/assets/js/6.ed388bbb.js"><link rel="prefetch" href="/assets/js/60.788da0d5.js"><link rel="prefetch" href="/assets/js/61.a8411043.js"><link rel="prefetch" href="/assets/js/62.ff2759b6.js"><link rel="prefetch" href="/assets/js/63.73fc118f.js"><link rel="prefetch" href="/assets/js/64.185044bd.js"><link rel="prefetch" href="/assets/js/65.85567e39.js"><link rel="prefetch" href="/assets/js/66.6ab0f528.js"><link rel="prefetch" href="/assets/js/67.5ccd87ed.js"><link rel="prefetch" href="/assets/js/68.2c058c4c.js"><link rel="prefetch" href="/assets/js/69.cd6ee95b.js"><link rel="prefetch" href="/assets/js/7.0851ecbd.js"><link rel="prefetch" href="/assets/js/70.a3e38fde.js"><link rel="prefetch" href="/assets/js/71.e8b0d735.js"><link rel="prefetch" href="/assets/js/72.17ff9f1c.js"><link rel="prefetch" href="/assets/js/73.323a50ef.js"><link rel="prefetch" href="/assets/js/74.f1e2f11f.js"><link rel="prefetch" href="/assets/js/75.4bed4178.js"><link rel="prefetch" href="/assets/js/76.e385802b.js"><link rel="prefetch" href="/assets/js/77.3f328019.js"><link rel="prefetch" href="/assets/js/78.af48c363.js"><link rel="prefetch" href="/assets/js/79.81d18bb0.js"><link rel="prefetch" href="/assets/js/8.8d231471.js"><link rel="prefetch" href="/assets/js/80.c945f5e7.js"><link rel="prefetch" href="/assets/js/81.3e8c0674.js"><link rel="prefetch" href="/assets/js/82.9d27294e.js"><link rel="prefetch" href="/assets/js/83.1807d5e3.js"><link rel="prefetch" href="/assets/js/84.e95b221b.js"><link rel="prefetch" href="/assets/js/85.eea2324a.js"><link rel="prefetch" href="/assets/js/86.4d9d080c.js"><link rel="prefetch" href="/assets/js/87.baa03231.js"><link rel="prefetch" href="/assets/js/88.b71db76b.js"><link rel="prefetch" href="/assets/js/89.d5aa5c9d.js"><link rel="prefetch" href="/assets/js/9.e0493a24.js"><link rel="prefetch" href="/assets/js/90.3205ca8f.js"><link rel="prefetch" href="/assets/js/91.3fd6a8b1.js"><link rel="prefetch" href="/assets/js/92.6e14ca4a.js"><link rel="prefetch" href="/assets/js/93.1cc984fe.js"><link rel="prefetch" href="/assets/js/94.1bd2ca54.js"><link rel="prefetch" href="/assets/js/95.2b578c6f.js"><link rel="prefetch" href="/assets/js/96.ffb58889.js"><link rel="prefetch" href="/assets/js/97.ddc7c7a7.js"><link rel="prefetch" href="/assets/js/98.d1920eba.js"><link rel="prefetch" href="/assets/js/99.9bdb3f20.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link router-link-active">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/MQ消息队列/" class="nav-link">
+  MQ消息队列
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link router-link-active">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/MQ消息队列/" class="nav-link">
+  MQ消息队列
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Gateway</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/gateway/" aria-current="page" class="sidebar-link">Gateway 服务网关</a></li><li><a href="/middleware/gateway/Gateway网关简介-0.html" class="active sidebar-link">Gateway网关简介（入门）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#什么是-spring-cloud-gateway" class="sidebar-link">什么是 Spring Cloud Gateway</a></li><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#什么是服务网关" class="sidebar-link">什么是服务网关</a></li><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#为什么要使用网关" class="sidebar-link">为什么要使用网关</a></li><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#常用网关解决方案" class="sidebar-link">常用网关解决方案</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#nginx-lua" class="sidebar-link">Nginx + Lua</a></li><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#kong" class="sidebar-link">Kong</a></li><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#traefik" class="sidebar-link">Traefik</a></li><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#spring-cloud-netflix-zuul" class="sidebar-link">Spring Cloud Netflix Zuul</a></li><li class="sidebar-sub-header"><a href="/middleware/gateway/Gateway网关简介-0.html#spring-cloud-gateway" class="sidebar-link">Spring Cloud Gateway</a></li></ul></li></ul></li><li><a href="/middleware/gateway/Gateway网关作用-1.html" class="sidebar-link">Gateway网关作用(入门)</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="gateway网关简介-入门"><a href="#gateway网关简介-入门" class="header-anchor">#</a> Gateway网关简介（入门）</h1> <p><a data-fancybox="" title="API Gateway简介" href="../image/Gateway.jpg"><img src="/assets/img/Gateway.a24e5cc7.jpg" alt="API Gateway"></a></p> <h2 id="什么是-spring-cloud-gateway"><a href="#什么是-spring-cloud-gateway" class="header-anchor">#</a> 什么是 Spring Cloud Gateway</h2> <p>Spring Cloud Gateway 作为 Spring Cloud 生态系统中的网关，目标是替代 Netflix Zuul，其不仅提供统一的路由方式，并且还基于 Filter 链的方式提供了网关基本的功能。目前最新版 Spring Cloud 中引用的还是 <font color="blue"><strong>Zuul 1.x 版本</strong></font>，而这个版本是<font color="blue"><strong>基于过滤器的，是阻塞 IO，不支持长连接</strong></font>。</p> <p>Zuul 2.x 版本一直跳票，2019 年 5 月，Netflix 终于开源了支持异步调用模式的 Zuul 2.0 版本，真可谓千呼万唤始出来。但是 Spring Cloud 已经不再集成 Zuul 2.x 了，那么是时候了解一下 Spring Cloud Gateway 了。</p> <p><strong>Spring Cloud Gateway 是基于 Spring 生态系统之上构建的 API 网关</strong>，包括：Spring 5，Spring Boot 2 和Project Reactor。Spring Cloud Gateway 旨在提供一种简单而有效的方法来路由到 API，并为它们提供跨领域的关注点，例如：<font color="red"><strong>安全性，监视/指标，限流等</strong></font>。由于 Spring 5.0 支持 Netty，Http2，而 Spring Boot 2.0 支持 Spring5.0，因此 Spring Cloud Gateway 支持 <font color="red"><strong>Netty 和 Http2</strong></font> 顺理成章。</p> <h2 id="什么是服务网关"><a href="#什么是服务网关" class="header-anchor">#</a> 什么是服务网关</h2> <p><font color="red"><strong>API Gateway（APIGW / API 网关）</strong></font>，顾名思义，是出现在系统边界上的一个面向 API 的、串行集中式的强管控服务，这里的边界是企业 IT 系统的边界，可以理解为 企业级应用防火墙 ，主要起到 隔离外部访问与内部系统的作用 。在微服务概念的流行之前，API 网关就已经诞生了，例如银行、证券等领域常见的<strong>前置机系统</strong>，它也是<font color="red"><strong>解决访问认证、报文转换、访问统计</strong></font>等问题的。</p> <p>API 网关的流行，源于近几年来移动应用与企业间互联需求的兴起。移动应用、企业互联，使得后台服务支持的对象，从以前单一的Web应用，扩展到多种使用场景，且每种使用场景对后台服务的要求都不尽相同。这不仅增加了后台服务的响应量，还增加了后台服务的复杂性。 随着微服务架构概念的提出，API网关成为了微服务架构的一个标配组件 。</p> <p>API 网关是一个服务器，是系统对外的唯一入口。API 网关封装了系统内部架构，为每个客户端提供定制的API。所有的客户端和消费端都通过统一的网关接入微服务，在网关层处理所有非业务功能。API 网关并不是微服务场景中必须的组件，如下图，不管有没有 API 网关，后端微服务都可以通过 API 很好地支持客户端的访问。
+<a data-fancybox="" title="API Gateway" href="../image/APIGateway.jpg"><img src="/assets/img/APIGateway.2f0a2879.jpg" alt="API Gateway"></a></p> <div class="custom-block tip"><p class="custom-block-title">网关的应用场景</p> <ol><li><p><font color="red"><strong>黑白名单</strong></font>：实现通过IP地址控制禁止访问网关功能，此功能是应用层面控制实现，再往前也可以通过网络传输方面进行控制访问。</p></li> <li><p><font color="red"><strong>日志</strong></font>：实现访问日志的记录，可用于分析访问、处理性能指标，同时将分析结果支持其他模块功能应用。</p></li> <li><p><font color="red"><strong>协议适配</strong></font>：实现通信协议校验、适配转换的功能。</p></li> <li><p><font color="red"><strong>身份认证</strong></font>：负责网关访问身份认证验证，此模块与“访问认证中心”通信，实际认证业务逻辑交移“访问认证中心”处理。</p></li> <li><p><font color="red"><strong>计流限流</strong></font>：实现微服务访问流量计算，基于流量计算分析进行限流，可以定义多种限流规则。</p></li></ol> <p>路由：<font color="red"><strong>路由是API网关很核心的模块功能，此模块实现根据请求，锁定目标微服务并将请求进行转发</strong></font>。此模块需要与“服务发布管理中心”通信。“服务发布管理中心”实现微服务发布注册管理功能，与其通信获得目标微服务信息。</p></div> <div class="custom-block warning"><p class="custom-block-title">对于服务数量众多、复杂度比较高、规模比较大的业务来说，引入 API 网关也有一系列的好处：</p> <ol><li><font color="red"><strong>聚合接口使得服务对调用者透明，客户端与后端的耦合度降低</strong></font></li> <li><font color="red"><strong>聚合后台服务，节省流量，提高性能，提升用户体验</strong></font></li> <li><font color="red"><strong>提供安全、流控、过滤、缓存、计费、监控等 API 管理功能</strong></font></li></ol></div> <h2 id="为什么要使用网关"><a href="#为什么要使用网关" class="header-anchor">#</a> 为什么要使用网关</h2> <p><font color="red"><strong>单体应用</strong></font>：浏览器发起请求到单体应用所在的机器，应用从数据库查询数据原路返回给浏览器，<strong>对于单体应用来说是不需要网关的</strong></p> <p><font color="red"><strong>微服务</strong></font>：微服务的应用可能部署在不同机房，不同地区，不同域名下。此时客户端（浏览器/手机/软件工具）想要请求对应的服务，都需要知道机器的具体 IP 或者域名 URL，当微服务实例众多时，这是非常难以记忆的，对于客户端来说也太复杂难以维护。<strong>此时就有了网关，客户端相关的请求直接发送到网关，由网关根据请求标识</strong></p> <p><a data-fancybox="" title="网关" href="../image/wangguan.jpg"><img src="/assets/img/wangguan.999f83c7.jpg" alt="网关"></a></p> <div class="custom-block danger"><p class="custom-block-title">如果让客户端直接与各个微服务交互</p> <ol><li>客户端会多次请求不同的微服务，增加了客户端的复杂性</li> <li>存在跨域请求，在一定场景下处理相对复杂</li> <li>身份认证问题，每个微服务需要独立身份认证</li> <li>难以重构，随着项目的迭代，可能需要重新划分微服务</li> <li>某些微服务可能使用了防火墙/浏览器不友好的协议，直接访问会有一定的困难</li></ol></div> <p><font color="red"><strong>网关具有身份认证与安全、审查与监控、动态路由、负载均衡、缓存、请求分片与管理、静态响应处理等功能。当然最主要的职责还是与“外界联系”</strong></font></p> <p><a data-fancybox="" title="网关功能" href="../image/wangguan2.jpg"><img src="/assets/img/wangguan2.583a916e.jpg" alt="网关功能"></a></p> <div class="custom-block warning"><p class="custom-block-title">网关应当具备以下功能：</p> <ol><li><font color="red"><strong>性能</strong></font>：API 高可用，负载均衡，容错机制。</li> <li><font color="red"><strong>安全</strong></font>：权限身份认证、脱敏，流量清洗，后端签名（保证全链路可信调用），黑名单（非法调用的限制）。</li> <li><font color="red"><strong>日志</strong></font>：日志记录，一旦涉及分布式，全链路跟踪必不可少。</li> <li><font color="red"><strong>缓存</strong></font>：数据缓存。</li> <li><font color="red"><strong>监控</strong></font>：记录请求响应数据，API 耗时分析，性能监控。</li> <li><font color="red"><strong>限流</strong></font>：流量控制，错峰流控，可以定义多种限流规则。</li> <li><font color="red"><strong>灰度</strong></font>：线上灰度部署，可以减小风险。</li> <li><font color="red"><strong>路由</strong></font>：动态路由规则。</li></ol></div> <h2 id="常用网关解决方案"><a href="#常用网关解决方案" class="header-anchor">#</a> 常用网关解决方案</h2> <div class="custom-block tip"><p class="custom-block-title">环境准备</p> <p>eureka-server ：注册中心<br>
+eureka-server02 ：注册中心<br>
+product-service ：商品服务，提供了根据主键查询商品接口 http://localhost:7070/product/{id}<br>
+order-service ：订单服务，提供了根据主键查询订单接口 http://localhost:9090/order/{id} 且订单服务调用商品服务</p></div> <h3 id="nginx-lua"><a href="#nginx-lua" class="header-anchor">#</a> Nginx + Lua</h3> <p>Nginx 是由 IgorSysoev 为俄罗斯访问量第二的 Rambler.ru 站点开发的，一个高性能的 HTTP 和反向代理服务器。<font color="red"><strong>Ngnix 一方面可以做反向代理</strong></font>，另外一方面可以<font color="red"><strong>做静态资源服务器</strong></font><br> <font color="red"><strong>Nginx 适合做门户网关，是作为整个全局的网关，对外的处于最外层的那种</strong></font> ；而 <font color="blue"><strong>Gateway 属于业务网关，主要用来对应不同的客户端提供服务，用于聚合业务</strong></font> 。各个微服务独立部署，职责单一，对外提供服务的时候需要有一个东西把业务聚合起来<br> <font color="red"><strong>Gateway 可以实现熔断、重试等功能，这是 Nginx 不具备的</strong></font></p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>    server <span class="token punctuation">{</span>
+        listen <span class="token number">8081</span><span class="token punctuation">;</span>
+        server_name  tianqikai.top<span class="token punctuation">;</span>
+        <span class="token comment"># 路由到商品服务</span>
+        location /api-product <span class="token punctuation">{</span>
+                proxy_pass http://tianqikai.top:7070<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment"># 路由到订单服务</span>
+        location /api-order <span class="token punctuation">{</span>
+                proxy_pass http://tianqikai.top:9090<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h3 id="kong"><a href="#kong" class="header-anchor">#</a> Kong</h3> <p>Kong 是 Mashape 提供的一款 API 管理软件，它本身是<strong>基于 Ngnix + Lua 的，但比 Nginx 提供了更简单的配置方式</strong>，数据采用了 ApacheCassandra/PostgreSQL 存储，并且提供了一些优秀的插件，比如验证，日志，调用频次限制等。Kong 非常诱人的地方就是提供了大量的插件来扩展应用，通过设置不同的插件可以为服务提供各种增强的功能。
+优点：基于 Nginx 所以在性能和稳定性上都没有问题。Kong 作为一款商业软件，在 Nginx 上做了很扩展工作，而且还有很多付费的商业插件。Kong 本身也有付费的企业版，其中包括技术支持、使用培训服务以及 API分析插件。
+缺点：如果你使用 Spring Cloud，Kong 如何结合目前已有的服务治理体系？</p> <h3 id="traefik"><a href="#traefik" class="header-anchor">#</a> Traefik</h3> <p>Traefik 是一个开源的 GO 语言开发的为了让部署微服务更加便捷而诞生的现代HTTP反向代理、负载均衡工具。它支持多种后台 (Docker, Swarm, Kubernetes, Marathon, Mesos, Consul, Etcd, Zookeeper, BoltDB, Rest API,file…) 来自动化、动态的应用它的配置文件设置。Traefik 拥有一个基于 AngularJS 编写的简单网站界面，支持 RestAPI，配置文件热更新，无需重启进程。高可用集群模式等。
+相对 Spring Cloud 和 Kubernetes 而言，<font color="red"><strong>目前比较适合 Kubernetes</strong></font></p> <h3 id="spring-cloud-netflix-zuul"><a href="#spring-cloud-netflix-zuul" class="header-anchor">#</a> Spring Cloud Netflix Zuul</h3> <p>Zuul 是 Netflix 公司开源的一个 API 网关组件，Spring Cloud 对其进行二次基于 Spring Boot 的注解式封装做到开箱即用。目前来说，结合 Sring Cloud 提供的服务治理体系，可以做到请求转发，根据配置或者默认的路由规则进行路由和 Load Balance，<strong>无缝集成 Hystrix</strong>
+虽然可以通过自定义 Filter 实现我们想要的功能，但是由于 Zuul 本身的设计是基于 单线程的接收请求和转发处理 ，是阻塞 IO，不支持长连接。目前来看 Zuul 就显得很鸡肋，随着 Zuul 2.x 一直跳票（2019 年 5 月发布了Zuul 2.0 版本），Spring Cloud 推出自己的 Spring Cloud Gateway。大意就是：<strong>Zuul 已死，Spring Cloud Gateway 永生</strong></p> <p><strong>Zuul 1.0 服务架构</strong> <a data-fancybox="" title="Zuul 1.0" href="../image/zuul1.jpg"><img src="/assets/img/zuul1.01f20a13.jpg" alt="Zuul 1.0"></a></p> <p><strong>Zuul 2.0 服务架构</strong> <a data-fancybox="" title="Zuul 2.0" href="../image/zuul2.jpg"><img src="/assets/img/zuul2.8397ec12.jpg" alt="Zuul 2.0"></a></p> <h3 id="spring-cloud-gateway"><a href="#spring-cloud-gateway" class="header-anchor">#</a> Spring Cloud Gateway</h3></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/gateway/" class="prev router-link-active">
+        Gateway 服务网关
+      </a></span> <span class="next"><a href="/middleware/gateway/Gateway网关作用-1.html">
+        Gateway网关作用(入门)
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.07975a58.js" defer></script><script src="/assets/js/2.9b7b9b39.js" defer></script><script src="/assets/js/27.b3b9ea37.js" defer></script>
+  </body>
+</html>
