@@ -140,6 +140,7 @@ module.exports = {
                     { text: 'postman', link: '/tool/postman/' },
                     { text: 'PowerDesigner', link: '/tool/PowerDesigner/' },
                     { text: 'Jenkins', link: '/tool/Jenkins/' },
+                    { text: 'Nodejs', link: '/tool/Nodejs/' },
                 ]
             },
             { text: 'github', link: 'https://github.com/zeroonbush/blog.git' }

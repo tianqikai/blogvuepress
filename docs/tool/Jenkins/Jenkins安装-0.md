@@ -3,6 +3,8 @@
 <font color='red'><strong>★ 安装前提需要安装 jDK</strong></font>
 
 <font color='red'><strong>★ 如果你的系统没有自带git，那么也需要安装一个</strong></font>
+
+<font color='red'><strong>★ 安装Node js/strong></font>
 ```sh
 yum install git
 
@@ -117,3 +119,14 @@ cat /var/lib/jenkins/secrets/initialAdminPassword
 
 https://blog.csdn.net/qq_34272964/article/details/93747652
 https://juejin.cn/post/6844903864466948110#heading-6
+
+
+你的私人令牌自动构建Jenkins使用已生成
+
+8e482a2f314b4b2189a66871791537b4
+
+Gitee WebHook 密码
+d16e44e59eb6e13ad27f7594c6db0089
+
+
+wget https://nodejs.org/dist/v14.15.5/node-v14.15.5-linux-arm64.tar.xz
