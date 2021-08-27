@@ -14,6 +14,8 @@ module.exports = {
     // theme: '@vuepress/blog',
     // https://shanyuhai123.github.io/vuepress-plugin-auto-sidebar 插件文档
     // https://shanyuhai123.github.io/vuepress-plugin-auto-sidebar/zh/features/plugin-options.html#collapse-%E6%8A%98%E5%8F%A0
+
+    // 安装命令 npm i vuepress-plugin-auto-sidebar -D
     plugins: {
         "vuepress-plugin-auto-sidebar": {
             collapsable: true,
