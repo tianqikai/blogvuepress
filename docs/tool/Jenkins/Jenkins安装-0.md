@@ -4,7 +4,6 @@
 
 <font color='red'><strong>★ 如果你的系统没有自带git，那么也需要安装一个</strong></font>
 
-<font color='red'><strong>★ 安装Node js/strong></font>
 ```sh
 yum install git
 
@@ -13,6 +12,18 @@ yum install git
 git: /usr/bin/git /usr/share/man/man1/git.1.gz
 
 ```
+
+<font color='red'><strong>★ 安装Node js</strong></font>
+
+安装完成配置环境变量，不然Jenkins可能找不到 node npm
+
+```sh
+[root@tianqikai ~]# echo $PATH
+/usr/local/src/node-v14.15.5-linux-x64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+```
+**系统管理->系统配置->全局变量**
+<a data-fancybox title="Jenkins PATH" href="./image/Jenkins10.jpg">![Jenkins PATH](./image/Jenkins10.jpg)</a> 
+
 ## 1.1 下载安装包并安装
 
 ### 1.1.1 安装方式一
