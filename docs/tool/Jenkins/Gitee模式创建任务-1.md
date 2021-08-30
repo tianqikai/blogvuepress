@@ -35,6 +35,8 @@
 
 ### 2.3.4 构建
 
+我在这里没有在服务端进行项目编译打包，全部是本地编译完成之后，上传服务器。
+如果需要，需要放开npm编译打包命令
 <a data-fancybox title="构建触发器" href="./image/JenkinsGitee8.jpg">![构建触发器](./image/JenkinsGitee8.jpg)</a> 
 
 ```sh
