@@ -28,6 +28,13 @@
 <a data-fancybox title="源码管理" href="./image/JenkinsGitee5.jpg">![源码管理](./image/JenkinsGitee5.jpg)</a> 
 
 ### 2.3.3 构建触发器
+
+我们这里采用WebHook触发方式进行构建
+
+因为Gitee经常有代码处理动作，需要配置Gitee项目仓库在处理这些动作时同时会发信号到Jenkins，才能触发Jenkins自动构建。
+打开你想自动构建的项目的GitHub地址，点击setting,进入Webhooks，将Jenkins生成的Hook URL 填入 Payload URL 中，选择自主事件，这样当GitHub收到客户端有push动作时，会触发一个Hook
+
+
 <a data-fancybox title="构建触发器" href="./image/JenkinsGitee6.jpg">![构建触发器](./image/JenkinsGitee6.jpg)</a> 
 
 <a data-fancybox title="构建触发器" href="./image/JenkinsGitee7.jpg">![构建触发器](./image/JenkinsGitee7.jpg)</a> 
