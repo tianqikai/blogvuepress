@@ -1,7 +1,15 @@
 # 11.JVM性能调优（一）
 
 ## 11.1 压测工具 
-AB Ab(ApacheBench) 测试工具是 Apache 提供的一款测试工具，具有简单易上手的特点，在测试 Web 服务时非常实用。  
+
+**wrk压测工具**
+```sh
+git clone https://github.com/wg/wrk
+
+make
+```
+
+**AB (Apache Beanch)** 测试工具是 Apache 提供的一款测试工具，具有简单易上手的特点，在测试 Web 服务时非常实用。  
 ab 一般都是在 Linux 上用。 安装非常简单，只需要在 Linux 系统中输入   
 ```sh
 // 安装命令
