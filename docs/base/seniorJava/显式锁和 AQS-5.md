@@ -25,9 +25,9 @@ try{
 
 ### 6.4.1 锁的可重入
 
-<font color='red'><strong>可重入锁又叫递归锁(互斥锁)</strong></font>。是指在同一个线程的外层方法中获取锁的时候，再进入该线程的内层方法会自动获取锁（前提锁的是同一个对象）。不会因为之前已经过去过锁还没释放而阻塞。
+<font color='red'><strong>可重入锁又叫递归锁(互斥锁)</strong></font>。是指在同一个线程的外层方法中获取锁的时候，再进入该线程的内层方法会自动获取锁（前提锁的是同一个对象）。不会因为之前已经获取过锁还没释放而阻塞。
 
-java中ReentrantLock和Synchronized都是可重入锁。可重入锁的一个优点是一定程度避免死锁。
+java中ReentrantLock和Synchronized都是可重入锁。可重入锁的一个优点是**一定程度避免死锁**。
 
 
 简单地讲就是：“同一个线程对于已经获得到的锁，可以多次继续申请到该锁的使用权”。
@@ -221,10 +221,10 @@ AQS 的主要使用方式是继承，子类通过继承 AQS 并实现它的抽�
 
 
 #### 6.6.1.1 AQS 使用方式和其中的设计模式
-这时就需要使用同步器提供的 3 个方法：
+这时就需要使用同步器提供的 3 个方法：  
 <font color='red'><strong>• getState()</strong></font>  ：获取当前同步状态。   
 <font color='red'><strong>• setState(int newState)</strong></font>  ：设置当前同步状态。   
-<font color='red'><strong>• compareAndSetState(int expect,int update)</strong></font>  ：使用 CAS 设置当前状态，该方 法能够保证状态设置的原子性。  
+<font color='red'><strong>• compareAndSetState(int expect,int update)</strong></font>  ：使用 CAS 设置当前状态，该方法能够保证状态设置的原子性。  
 来进行操作，因为它们能够保证状态的改变是安全的。
 
 ```java
