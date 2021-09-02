@@ -214,13 +214,20 @@ permit相当于1,0的开关.默认是0.
 
 队列同步器 AbstractQueuedSynchronizer（以下简称同步器或 AQS），是用来构建锁或者其他同步组件的基础框架，它使用了一个 int 成员变量（<font color='red'><strong>state</strong></font>）表示同步状态，通过内置的 FIFO 队列来完成资源获取线程的排队工作。并发包的大师（Doug Lea）期望它能够成为实现大部分同步需求的基础。
 
-### 6.6.1 AQS 使用方式和其中的设计模式 
+### 6.6.1 CLH队列锁
+研究过AQS源码的小伙伴们应该知道，AQS是JUC的核心，而CLH锁又是AQS的基础，说核心也不为过，因为AQS就是用了变种的CLH锁。如果要学好Java并发编程，那么必定要学好JUC；学好JUC，必定要先学好AQS；学好AQS，那么必定先学好CLH。因此，这就是我们为什么要学习CLH锁的原因。
+https://zhuanlan.zhihu.com/p/197840259
+https://www.cnblogs.com/yuyutianxia/p/4296220.html
+
+### 6.6.2 AQS 使用方式和其中的设计模式 
 
 AQS 的主要使用方式是继承，子类通过继承 AQS 并实现它的抽象方法来管 理同步状态，在 AQS 里由一个 int 型的 state 来代表这个状态，在抽象方法的实现过程中免不了要对同步状态进行更改，
 
+CLH 队列锁即 Craig, Landin, and Hagersten (CLH) locks。 CLH 队列锁也是一种基于链表的可扩展、高性能、公平的自旋锁，申请线程仅仅在本地变量上自旋，它不断轮询前驱的状态，假设发现前驱释放了锁就结束自旋。
 
 
-#### 6.6.1.1 AQS 使用方式和其中的设计模式
+
+#### 6.6.2.1 AQS 使用方式和其中的设计模式
 这时就需要使用同步器提供的 3 个方法：  
 <font color='red'><strong>• getState()</strong></font>  ：获取当前同步状态。   
 <font color='red'><strong>• setState(int newState)</strong></font>  ：设置当前同步状态。   
@@ -249,7 +256,7 @@ AQS 的主要使用方式是继承，子类通过继承 AQS 并实现它的抽�
 同步器的设计基于模板方法模式。模板方法模式的意图是，定义一个操作中 的算法的骨架，而将一些步骤的实现延迟到子类中。模板方法使得子类可以不改
 变一个算法的结构即可重定义该算法的某些特定步骤。我们最常见的就是 Spring 框架里的各种 Template。
 
-#### 6.6.1.2 AQS 中的方法
+#### 6.6.2.2 AQS 中的方法
 
 **模板方法**
 
@@ -259,9 +266,9 @@ AQS 的主要使用方式是继承，子类通过继承 AQS 并实现它的抽�
 **可重写的方法**
 <a data-fancybox title="tryacquire" href="./image/tryacquire.jpg">![tryacquire](./image/tryacquire.jpg)</a>
 
-### 6.6.2 实现一个自己的独占锁
+### 6.6.3 实现一个自己的独占锁
 
-### 6.6. 源码分析
+### 6.6.4 源码分析
 从ReentrantLock说起，Lock接口的实现类，基本都是通过聚合了一个队列同步器的子类完成线程访问控制的。
 ```java
     public void lock() {
@@ -286,6 +293,7 @@ public class ReentrantLock implements Lock, java.io.Serializable {
 
 
 然后注意，我们知道ReentrantLock默认是非公平锁的，可以创建的时候传参设置为公平锁，那么这个公平还是非公平对于AQS的实现类有什么区别呢？
+
 ```java
     static final class FairSync extends Sync {
         private static final long serialVersionUID = -3000897897090466540L;
@@ -331,10 +339,16 @@ public class ReentrantLock implements Lock, java.io.Serializable {
      * Creates an instance of {@code ReentrantLock} with the
      * given fairness policy.
      *
-     * @param fair {@code true} if this lock should use a fair ordering policy
+     * param fair {@code true} if this lock should use a fair ordering policy
      */
     public ReentrantLock(boolean fair) {
         sync = fair ? new FairSync() : new NonfairSync();
     }
-    ```
-    从上述代码可以看出，根据传参的不同去实现不同的配置的Sync类型，Sync类型又是AQS的实现类。
+
+```
+
+-----------------------
+
+从上述代码可以看出，根据传参的不同去实现不同的配置的Sync类型，Sync类型又是AQS的实现类。
+
+<a data-fancybox title="tryacquire" href="http://49.232.21.151/group1/M00/00/00/rBUAEGBXad2AVvLXAACIHxTorUk541.jpg">![tryacquire](./image/tryacquire.jpg)</a>
