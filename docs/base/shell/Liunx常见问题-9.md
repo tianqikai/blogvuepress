@@ -35,3 +35,7 @@ yum -y install man-pages
 ```sh
 sudo apt-get install manpages-posix-dev 
 ```
+
+## 9.3 CENTOS7 安装telnet
+
+<a herf="https://www.cnblogs.com/suni/p/11528480.html">CENTOS7 安装telnet:https://www.cnblogs.com/suni/p/11528480.html</a>

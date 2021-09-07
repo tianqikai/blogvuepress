@@ -21,7 +21,7 @@ docker run --name mysqlserver5.7 \
 -v /mydata/mysql/data:/var/lib/mysql \
 -v /mydata/mysql/conf:/etc/mysql \
 -e MYSQL_ROOT_PASSWORD=12345@tqk \
--i -p 3366:3366 \
+-i -p 3366:3306 \
 -d mysql:5.7 
 ```
 
@@ -86,4 +86,43 @@ exit
 
 ```sh
 docker restart mysqlserver5.7
+
+
+# docker开机自启动mysql
+docker update mysqlserver5.7 --restart=always
+
+# redis
+docker update redis --restart=always
 ```
+## 5.6 Docker安装mysql网络不通
+
+**用docker创建MySQL无法访问的问题（WARNING: IPv4 forwarding is disabled. Networking will not work）**
+
+--------------
+
+
+```sh
+# 查看内核参数 net.ipv4.ip_forward=0
+cat /etc/sysctl.conf|grep forward
+# 修改内核参数
+vi /etc/sysctl.conf
+net.ipv4.ip_forward=0
+#改成
+net.ipv4.ip_forward=1
+
+#重启network服务
+systemctl restart network
+
+#重启docker服务
+systemctl restart docker
+
+#重启iptables（可有可无，我的是腾讯云没有执行）
+systemctl restart iptables
+
+#上述步骤还是无法解决问题时，执行完上述步骤，重新安装MySQL
+```
+
+gyp ERR! stack Error : can't find python executable "python",you can set the PYTHON env variable.
+
+https://blog.csdn.net/caicsama/article/details/103679242?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.no_search_link
+

@@ -45,7 +45,6 @@ IDEA 如何自动导入（import）
 
 ## IDEA 2021.1 最新激活注册码 - 破解教程 https://www.bilibili.com/read/cv11262121
 
-
-https://blog.lupf.cn/articles/2020/12/03/1606959540262.html
+<a herf='https://blog.lupf.cn/articles/2020/12/03/1606959540262.html'>https://blog.lupf.cn/articles/2020/12/03/1606959540262.html</a>
 
 ##  idea也可以安装jclasslib插件 查看字节码文件 view ->Show ByteCode with jclasslib
