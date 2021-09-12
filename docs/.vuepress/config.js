@@ -105,18 +105,18 @@ module.exports = {
                     { text: 'zuul', link: '/middleware/zuul/' },
                     { text: 'nocas', link: '/middleware/nocas/' },
                     { text: 'seata', link: '/middleware/seata/' },
-                    {   text: 'MQ消息队列',
-                        ariLabel:"MQ",
-                        link:'/middleware/MQ消息队列/'
-                        // items:[
-                        //     { text: 'kafka', link: '/middleware/kafka/' },
-                        //     { text: 'ActiveMQ', link: '/middleware/ActiveMQ/' },
-                        //     { text: 'RocketMQ', link: '/middleware/RocketMQ/' },
-                        // ]
-                    },
                     { text: 'docker', link: '/middleware/docker/' },
                     { text: 'kubernetes', link: '/middleware/kubernetes/' },
-                    { text: 'Elasticsearch', link: '/middleware/Elasticsearch/' }
+                    { text: 'Elasticsearch', link: '/middleware/Elasticsearch/' },
+                    {   text: 'MQ',
+                        ariLabel:"MQ",
+                        link:'/middleware/MQ/',
+                        items:[
+                            { text: 'kafka', link: '/middleware/kafka/' },
+                            { text: 'ActiveMQ', link: '/middleware/ActiveMQ/' },
+                            { text: 'RocketMQ', link: '/middleware/RocketMQ/' },
+                        ]
+                    },
                 ]
             },
             {
