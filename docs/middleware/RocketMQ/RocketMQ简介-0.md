@@ -224,6 +224,35 @@ RocketMQ 的核心，用于暂存和传输消息。
 
 ##  2.3 RocketMQ 的概念模型
 
-分组(Group) 
-生产者：标识发送同一类消息的 Producer，通常发送逻辑一致。发送普通消息的时候，仅标识使用，并无特别用处。主要作用用于事务消息： （事务消息中如果某条发送某条消息的producer-A宕机，使得事务消息一直处于PREPARED状态并超时，则broker会回查同一个group的其它producer， 确认这条消息应该 commit 还是 rollback） 消费者：标识一类 Consumer 的集合名称，这类 Consumer 通常消费一类消息，且消费逻辑一致。同一个 Consumer Group 下的各个实例将共同消费 topic 的消息，起到负载均衡的作用。 消费进度以 Consumer Group 为粒度管理，不同 Consumer Group 之间消费进度彼此不受影响，即消息 A 被 Consumer Group1 消费过，也会再给 Consumer Group2 消费。 主题(Topic) 标识一类消息的逻辑名字，消息的逻辑管理单位。无论消息生产还是消费，都需要指定 Topic。 区分消息的种类；一个发送者可以发送消息给一个或者多个 Topic；一个消息的接收者可以订阅一个或者多个 Topic 消息
-标签(Tag) RocketMQ 支持给在发送的时候给 topic 打 tag，同一个 topic 的消息虽然逻辑管理是一样的。但是消费 topic1 的时候，如果你消费订阅的时候指定的 是 tagA，那么 tagB 的消息将不会投递。 消息队列(Message Queue) 简称 Queue 或 Q。消息物理管理单位。一个 Topic 将有若干个 Q。若一个 Topic 创建在不同的 Broker，则不同的 broker 上都有若干 Q，消息将物理地 存储落在不同 Broker 结点上，具有水平扩展的能力。 无论生产者还是消费者，实际的生产和消费都是针对 Q 级别。例如 Producer 发送消息的时候，会预先选择（默认轮询）好该 Topic 下面的某一条 Q 发送；Consumer 消费的时候也会负载均衡地分配若干个 Q，只拉取对应 Q 的消息。 每一条 message queue 均对应一个文件，这个文件存储了实际消息的索引信息。并且即使文件被删除，也能通过实际纯粹的消息文件（commit log） 恢复回来。 偏移量(Offset) RocketMQ 中，有很多 offset 的概念。一般我们只关心暴露到客户端的 offset。不指定的话，就是指 Message Queue 下面的 offset。 Message queue 是无限长的数组。一条消息进来下标就会涨 1,而这个数组的下标就是 offset，Message queue 中的 max offset 表示消息的最大 offset Consumer offset 可以理解为标记 Consumer Group 在一条逻辑 Message Queue 上，消息消费到哪里即消费进度。但从源码上看，这个数值是消费过的 最新消费的消息 offset+1，即实际上表示的是下次拉取的 offset 位置。
+###  2.3.1 分组(Group) 
+
+<font color='red'><strong>生产者</strong></font>：标识发送同一类消息的 Producer，通常发送逻辑一致。发送普通消息的时候，仅标识使用，并无特别用处。
+主要作用用于事务消息： （事务消息中如果某条发送某条消息的producer-A宕机，使得事务消息一直处于PREPARED状态并超时，则broker会回查同一个group的其它producer， 确认这条消息应该 commit 还是 rollback）
+
+<font color='red'><strong>消费者</strong></font>：标识一类 Consumer 的集合名称，这类 Consumer 通常消费一类消息，且消费逻辑一致。同一个 Consumer Group 下的各个实例将共同消费 topic 的消息，起到负载均衡的作用。 消费进度以 Consumer Group 为粒度管理，不同 Consumer Group 之间消费进度彼此不受影响，即消息 A 被 Consumer Group1 消费过，也会再给 Consumer Group2 消费。 主题(Topic) 标识一类消息的逻辑名字，消息的逻辑管理单位。无论消息生产还是消费，都需要指定 Topic。 区分消息的种类；一个发送者可以发送消息给一个或者多个 Topic；一个消息的接收者可以订阅一个或者多个 Topic 消息
+
+###  2.3.2 标签(Tag) 
+RocketMQ 支持给在发送的时候给 topic 打 tag，同一个 topic 的消息虽然逻辑管理是一样的。但是消费 topic1 的时候，如果你消费订阅的时候指定的 是 tagA，那么 tagB 的消息将不会投递。 
+
+###  2.3.3 消息队列(Message Queue) 
+
+简称 Queue 或 Q。消息物理管理单位。一个 Topic 将有若干个 Q。若一个 Topic 创建在不同的 Broker，则不同的 broker 上都有若干 Q，消息将物理地存储落在不同 Broker 结点上，具有水平扩展的能力。 
+
+无论生产者还是消费者，实际的生产和消费都是针对 Q 级别。例如 Producer 发送消息的时候，会预先选择（默认轮询）好该 Topic 下面的某一条 Q 发送；
+
+Consumer 消费的时候也会负载均衡地分配若干个 Q，只拉取对应 Q 的消息。 每一条 message queue 均对应一个文件，这个文件存储了实际消息的索引信息。并且即使文件被删除，也能通过实际纯粹的消息文件（commit log） 恢复回来。 
+
+###  2.3.4 偏移量(Offset) 
+
+RocketMQ 中，有很多 offset 的概念。一般我们只关心暴露到客户端的 offset。不指定的话，就是指 Message Queue 下面的 offset。  
+
+Message queue 是无限长的数组。一条消息进来下标就会涨 1,而这个数组的下标就是 offset，Message queue 中的 max offset 表示消息的最大 offset Consumer offset 可以理解为标记 Consumer Group 在一条逻辑 Message Queue 上，消息消费到哪里即消费进度。
+
+但从源码上看，这个数值是消费过的 最新消费的消息 offset+1，即实际上表示的是下次拉取的 offset 位置。
+
+
+##  2.3 RocketMQ消息基础用法
+
+###  2.3.1 普通消息
+
+###  2.3.2 顺序消息
