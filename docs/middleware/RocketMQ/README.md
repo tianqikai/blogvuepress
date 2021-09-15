@@ -1,5 +1,5 @@
 ---
-autoNext: RocketMQ简介-0
+autoNext: RocketMQ安装-0
 ---
 # RocketMQ
 
