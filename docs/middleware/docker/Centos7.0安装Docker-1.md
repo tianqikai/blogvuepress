@@ -101,12 +101,12 @@ docker info
 ## 2.6 启动Docker后台容器
 
 ```sh
-docker run hello world
+docker run hello-world
 ```
 
 ----------
 
-<a data-fancybox title="hello world" href="./image/Snipaste_2020-10-03_10-54-57.png">![hello world](./image/Snipaste_2020-10-03_10-54-57.png)</a>
+<a data-fancybox title="hello world" href="./image/Snipaste_2020-10-03_10-54-57.jpg">![hello world](./image/Snipaste_2020-10-03_10-54-57.jpg)</a>
 
 
 
