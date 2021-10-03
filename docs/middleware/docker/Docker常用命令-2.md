@@ -95,14 +95,14 @@ hello-world   latest    feb5d9fea6a5   8 days ago   13.3kB
 
 ```sh
 
-​#删除单个 
-docker rm -f 镜像ID
+​#删除单个 镜像名:版本号/镜像id
+docker rmi 镜像名:版本号/镜像id
 
 ​#删除多个 
-docker rm -f 镜像名1:TAG 镜像名2:TAG
+docker rmi 镜像名1:TAG 镜像名2:TAG
 
 ​#删除多个
-docker rmi -f ${docker images -qa}
+docker rmi ${docker images -qa}
 ```
 
 ## 3.3 容器命令
