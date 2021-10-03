@@ -31,7 +31,7 @@
 
 对于一个精简的**OS(操作系统), rootfs**可以很小，只需要包括最基本的命令、工具和程序库就可以了，因为底层直接用**Host（宿主机）**的**kernel（内核）**,只需要提供rootfs就行了。由此可见对于不同的**linux**发行版, **bootfs**基本是一致的, **rootfs**会有差别，因此不同的发行版可以公用**bootfs**。
 
-### 分层的镜像
+### 4.3.1 分层的镜像
 
 ![](./image/Snipaste_2020-10-03_13-40-06.png)
 
@@ -41,7 +41,7 @@
 
 
 
-### 为什么 Docker纪念馆想要采用这种分层结构
+### 4.3.2 为什么 Docker纪念馆想要采用这种分层结构
 
 最大的一个好处就是-**共享资源**
 比如:**有多个镜像都从相同的base镜像构建而来**，那么宿主机只需在磁盘上保存一份**base**镜像,
@@ -49,9 +49,10 @@
 
 
 
-## 特点
+### 4.3.3 特点
 
 Docker镜像都是只读的，当容器启动时，一个新的可写层被加载到**镜像的顶部**，这一层通常被称为**容器层**，容器层之下都叫**镜像层**
+
 ## 4.3 Docker镜像Commit操作
 
 :::tip Commit命令模板
@@ -62,3 +63,52 @@ docker commit -m="提交的描述信息" -a="作者" 容器ID 要创建的目标
 :::
 
 ### 4.3.1 案例演示
+
+
+#### 4.3.1.1 从Hub上下载tomcat镜像到本地并成功运行
+
+```sh
+[root@TXYUN-NO2 ~]# docker run -p 8888:8080 tomcat:8.5.0
+
+-p主机端口：docker容器端口
+-P:随机分配端口
+i:交互
+t:终端
+```
+<a data-fancybox title="案例演示" href="./image/docker03.jpg">![案例演示]​(./image/docker03.jpg)</a>
+
+#### 4.3.1.2 故意删除上一步镜像生产tomcat容器的文档
+
+```sh
+[root@TXYUN-NO2 ~]# docker exec -it  3b6f52c4060c /bin/bash
+root@3b6f52c4060c:/usr/local/tomcat# cd webapps/
+root@3b6f52c4060c:/usr/local/tomcat/webapps# ls
+ROOT  docs  examples  host-manager  manager
+root@3b6f52c4060c:/usr/local/tomcat/webapps# rm -rf docs
+root@3b6f52c4060c:/usr/local/tomcat/webapps# ls -lrt
+total 16
+drwxr-x--- 5 root root 4096 May  5  2016 manager
+drwxr-x--- 5 root root 4096 May  5  2016 host-manager
+drwxr-x--- 6 root root 4096 May  5  2016 examples
+drwxr-x--- 3 root root 4096 May  5  2016 ROOT
+```
+
+#### 4.3.1.3 也即当前的tomcat运行实例是一个没有文档内容的容器，以他为模板commit一个没有doc的tomcat新镜像 tqk/tomcat02
+
+```sh
+docker commit -m="提交的描述信息" -a="作者" 容器ID 要创建的目标镜像名:[标签名]
+
+docker commit -m="yyds" -a="tianqikai" 3b6f52c4060c tqk/tomcat02:1.0
+```
+
+#### 4.3.1.4 启动我们的新镜像并和原来的对比
+
+```sh
+
+docker run -d -p 7777:8080 tomcat:8.5.0
+docker run -d -p 9999:8080 tqk/tomcat02:1.0
+```
+
+​	启动atuigu/tomcat02 没有doc
+
+​	启动原来tomcat他有doc
