@@ -53,14 +53,36 @@
 
 Docker镜像都是只读的，当容器启动时，一个新的可写层被加载到**镜像的顶部**，这一层通常被称为**容器层**，容器层之下都叫**镜像层**
 
-## 4.3 Docker镜像Commit操作
+## 4.3 Docker迁移与备份
 
 :::tip Commit命令模板
 
-docker commit 提交容器副本使之称为一个新的镜像
+**docker commit 容器名称 镜像名称**
+
+docker commit 提交**容器副本**使之称为一个新的镜像
 
 docker commit -m="提交的描述信息" -a="作者" 容器ID 要创建的目标镜像名:[标签名]
 :::
+
+-----------
+
+:::tip 镜像备份
+我们可以通过以下命令将镜像保存为tar 文件
+
+docker save -o tqk/tomcat02.tar tqk/tomcat02
+:::
+
+---------------
+
+:::tip 镜像恢复与迁移
+
+首先我们先删除掉tqk/tomcat02镜像 然后执行此命令进行恢复 
+
+docker load -i tqk/tomcat02.tar -i 输入的文件
+
+执行后再次查看镜像，可以看到镜像已经恢复
+:::
+
 
 ### 4.3.1 案例演示
 
@@ -68,7 +90,7 @@ docker commit -m="提交的描述信息" -a="作者" 容器ID 要创建的目标
 #### 4.3.1.1 从Hub上下载tomcat镜像到本地并成功运行
 
 ```sh
-[root@TXYUN-NO2 ~]# docker run -p 8888:8080 tomcat:8.5.0
+[root@TXYUN-NO2 ~]# docker run -id --name tomcat01 -p 8888:8080 tomcat:8.5.0
 
 -p主机端口：docker容器端口
 -P:随机分配端口
@@ -80,7 +102,7 @@ t:终端
 #### 4.3.1.2 故意删除上一步镜像生产tomcat容器的文档
 
 ```sh
-[root@TXYUN-NO2 ~]# docker exec -it  3b6f52c4060c /bin/bash
+[root@TXYUN-NO2 ~]# docker exec -it  tomcat01 /bin/bash
 root@3b6f52c4060c:/usr/local/tomcat# cd webapps/
 root@3b6f52c4060c:/usr/local/tomcat/webapps# ls
 ROOT  docs  examples  host-manager  manager
@@ -98,7 +120,7 @@ drwxr-x--- 3 root root 4096 May  5  2016 ROOT
 ```sh
 docker commit -m="提交的描述信息" -a="作者" 容器ID 要创建的目标镜像名:[标签名]
 
-docker commit -m="yyds" -a="tianqikai" 3b6f52c4060c tqk/tomcat02:1.0
+docker commit -m="yyds" -a="tianqikai" tomcat01 tqk/tomcat02:1.0
 ```
 
 #### 4.3.1.4 启动我们的新镜像并和原来的对比
@@ -109,6 +131,6 @@ docker run -d -p 7777:8080 tomcat:8.5.0
 docker run -d -p 9999:8080 tqk/tomcat02:1.0
 ```
 
-​	启动atuigu/tomcat02 没有doc
+​启动atuigu/tomcat02 没有doc
 
-​	启动原来tomcat他有doc
+​启动原来tomcat他有doc

@@ -26,7 +26,7 @@ docker run --name mysqlserver5.7 \
 ```
 
 :::tip 参数介绍
-<font color='red'><strong>-p 3366:3366</strong></font>：将容器的3366端口映射到主机的3366端口   
+<font color='red'><strong>-p 3366:3306</strong></font>：将容器的3366端口映射到主机的3366端口   
 <font color='red'><strong>--name</strong></font>：给容器命名  
 <font color='red'><strong>-v /mydata/mysql/conf:/etc/mysql</strong></font>：将配置文件挂载到主机/mydata/..  
 <font color='red'><strong>-e MYSQL_ROOT_PASSWORD=12345@tqk</strong></font>：初始化root用户的密码为12345@tqk   
