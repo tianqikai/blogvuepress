@@ -81,12 +81,18 @@ docker run -it -d -v /mydata/logs:/usr/local/tomcat/logs:ro  -p 8888:8080 590715
 
 ## 5.4 DockerFile添加
 
+### 5.4.1 创建Dockerfile文件
+
 ```sh
-FROM tomcat
-VOLUME ["/mydata/mylogs","/usr/local/tomcat/logs"]
+# 建议使用Dockerfile作为文件名
+vi Dockerfile
+
+FROM tomcat:8.5.0
+VOLUME ["/mydata/mylogs01","/mydata/mylogs02"]
 CMD echo "finished,-----------success"
 CMD /bin/bash
 ```
+
 :::tip DockerFile命令说明
 
 FROM  来自于一个父类的镜像
@@ -94,4 +100,27 @@ FROM  来自于一个父类的镜像
 VOLUME  给镜像添加一个或多个容器卷
 
 CMD  控制台执行的命令
-:::
+::: 
+
+### 5.4.2 执行dockerfile文件
+
+```sh
+$ docker build -f Dockerfile -t tqk001/tomcat .
+# -f 指定dockerfile的路径
+# -t target 指定目标，镜像的名称(不能以/开头)
+# 最后的.不能忽略，表示输出的目录
+```
+### 5.4.3 启动刚才创建的容器
+
+```sh
+docker run -it --name tomcat01 -d -p 7777:8080 tqk001/tomcat /bin/bash
+docker run -it  -d --name tomcat02 --volumes-from tomcat01 -p 8888:8080 tqk001/tomcat /bin/bash
+docker run -it  -d --name tomcat03 --volumes-from tomcat01 -p 9999:8080 tqk001/tomcat /bin/bash
+```
+
+**注意**
+
+Docker挂载主机目录Docker访问出现cannot open directory . Permission denied  
+解决办法:在挂载目录后多加一个--privileged=true参数即可
+
+## 5.5 容器间传递共享(--volumes-from)
