@@ -1,6 +1,6 @@
 ---
 autoNext: Nginx简介-0
 ---
-# Nginx 
+# Nginx简介
 
 [[toc]]
