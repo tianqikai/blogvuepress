@@ -25,7 +25,7 @@
 
 ###  2.1.2 events 块
 
-<a data-fancybox title="image-20201012105928481" href="./image/image/-20201012105928481.png">![image-20201012105928481](./image/image/-20201012105928481.png)</a>
+<a data-fancybox title="image-20201012105928481" href="./image/image-20201012105928481.png">![image-20201012105928481](./image/image-20201012105928481.png)</a>
 
 events 块涉及的指令主要影响Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多work process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个word process 可以同时支持的最大连接数等。
 
@@ -38,7 +38,7 @@ events 块涉及的指令主要影响Nginx 服务器与用户的网络连接，�
 
 ###  2.1.3 http块
 
-<a data-fancybox title="image-20201012110023268" href="./image/image/-20201012110023268.png">![image-20201012110023268](./image/image/-20201012110023268.png)</a>
+<a data-fancybox title="image-20201012110023268" href="./image/image-20201012110023268.png">![image-20201012110023268](./image/image-20201012110023268.png)</a>
 
 这是 Nginx 服务器中最频繁的部分，代理，缓存，日志，定义的功能绝大多数功能和第三方模块都在这里
 
