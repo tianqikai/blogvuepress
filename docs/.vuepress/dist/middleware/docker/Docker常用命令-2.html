@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>3. Docker常用命令 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.7f84f354.css" as="style"><link rel="preload" href="/assets/js/app.c507168b.js" as="script"><link rel="preload" href="/assets/js/2.96aef110.js" as="script"><link rel="preload" href="/assets/js/64.e30139ab.js" as="script"><link rel="prefetch" href="/assets/js/10.b5d6b426.js"><link rel="prefetch" href="/assets/js/100.bdb9f169.js"><link rel="prefetch" href="/assets/js/101.871b2c7c.js"><link rel="prefetch" href="/assets/js/102.37ce2f99.js"><link rel="prefetch" href="/assets/js/103.c8f26b2c.js"><link rel="prefetch" href="/assets/js/104.2db49027.js"><link rel="prefetch" href="/assets/js/105.44d1d73e.js"><link rel="prefetch" href="/assets/js/106.578bbab7.js"><link rel="prefetch" href="/assets/js/107.a2537f28.js"><link rel="prefetch" href="/assets/js/108.a025b492.js"><link rel="prefetch" href="/assets/js/109.f6016305.js"><link rel="prefetch" href="/assets/js/11.1b5c46d4.js"><link rel="prefetch" href="/assets/js/110.c136d672.js"><link rel="prefetch" href="/assets/js/111.c1cc099b.js"><link rel="prefetch" href="/assets/js/112.2c1affb6.js"><link rel="prefetch" href="/assets/js/113.6876375f.js"><link rel="prefetch" href="/assets/js/114.6f266cca.js"><link rel="prefetch" href="/assets/js/115.32bec25a.js"><link rel="prefetch" href="/assets/js/116.32924564.js"><link rel="prefetch" href="/assets/js/117.5c0e9a60.js"><link rel="prefetch" href="/assets/js/118.610b1553.js"><link rel="prefetch" href="/assets/js/119.a31f73e2.js"><link rel="prefetch" href="/assets/js/12.e0fb4661.js"><link rel="prefetch" href="/assets/js/120.7d5cdd4a.js"><link rel="prefetch" href="/assets/js/121.3ae217b4.js"><link rel="prefetch" href="/assets/js/122.ce2934ac.js"><link rel="prefetch" href="/assets/js/123.460c5bcf.js"><link rel="prefetch" href="/assets/js/124.766dd199.js"><link rel="prefetch" href="/assets/js/125.61829879.js"><link rel="prefetch" href="/assets/js/126.a65041bc.js"><link rel="prefetch" href="/assets/js/127.84e3302c.js"><link rel="prefetch" href="/assets/js/128.d028e866.js"><link rel="prefetch" href="/assets/js/129.d972b818.js"><link rel="prefetch" href="/assets/js/13.3c995993.js"><link rel="prefetch" href="/assets/js/130.8aeae6e2.js"><link rel="prefetch" href="/assets/js/131.6287defa.js"><link rel="prefetch" href="/assets/js/132.eb4763f6.js"><link rel="prefetch" href="/assets/js/133.3c440bd3.js"><link rel="prefetch" href="/assets/js/14.8ae66e61.js"><link rel="prefetch" href="/assets/js/15.efb19852.js"><link rel="prefetch" href="/assets/js/16.9d5f6d09.js"><link rel="prefetch" href="/assets/js/17.a61539f1.js"><link rel="prefetch" href="/assets/js/18.ad8e3109.js"><link rel="prefetch" href="/assets/js/19.d5bb5fd2.js"><link rel="prefetch" href="/assets/js/20.99bfcc88.js"><link rel="prefetch" href="/assets/js/21.25d7061a.js"><link rel="prefetch" href="/assets/js/22.eb0cb513.js"><link rel="prefetch" href="/assets/js/23.2ee7274e.js"><link rel="prefetch" href="/assets/js/24.dd17d198.js"><link rel="prefetch" href="/assets/js/25.8073477f.js"><link rel="prefetch" href="/assets/js/26.7f8ff9aa.js"><link rel="prefetch" href="/assets/js/27.37a0df38.js"><link rel="prefetch" href="/assets/js/28.4a25c749.js"><link rel="prefetch" href="/assets/js/29.2e97a2e7.js"><link rel="prefetch" href="/assets/js/3.96944897.js"><link rel="prefetch" href="/assets/js/30.dbd88168.js"><link rel="prefetch" href="/assets/js/31.e46bbcb7.js"><link rel="prefetch" href="/assets/js/32.811b3d27.js"><link rel="prefetch" href="/assets/js/33.d6085b98.js"><link rel="prefetch" href="/assets/js/34.f22b2e91.js"><link rel="prefetch" href="/assets/js/35.3b81eb6c.js"><link rel="prefetch" href="/assets/js/36.dc6f62df.js"><link rel="prefetch" href="/assets/js/37.c30a83ab.js"><link rel="prefetch" href="/assets/js/38.b41fe090.js"><link rel="prefetch" href="/assets/js/39.09ddf6a2.js"><link rel="prefetch" href="/assets/js/4.ccf4b03f.js"><link rel="prefetch" href="/assets/js/40.754b71af.js"><link rel="prefetch" href="/assets/js/41.08b2f3bb.js"><link rel="prefetch" href="/assets/js/42.aebd2c10.js"><link rel="prefetch" href="/assets/js/43.d10c1a88.js"><link rel="prefetch" href="/assets/js/44.250c669c.js"><link rel="prefetch" href="/assets/js/45.b39c8287.js"><link rel="prefetch" href="/assets/js/46.e60ceaa2.js"><link rel="prefetch" href="/assets/js/47.d302a501.js"><link rel="prefetch" href="/assets/js/48.7837d171.js"><link rel="prefetch" href="/assets/js/49.9f94bebb.js"><link rel="prefetch" href="/assets/js/5.df60f10d.js"><link rel="prefetch" href="/assets/js/50.71da1beb.js"><link rel="prefetch" href="/assets/js/51.3d21852c.js"><link rel="prefetch" href="/assets/js/52.1cb76fa4.js"><link rel="prefetch" href="/assets/js/53.3ed19c30.js"><link rel="prefetch" href="/assets/js/54.ec36156d.js"><link rel="prefetch" href="/assets/js/55.f552810d.js"><link rel="prefetch" href="/assets/js/56.dc3f140c.js"><link rel="prefetch" href="/assets/js/57.50024158.js"><link rel="prefetch" href="/assets/js/58.516885f3.js"><link rel="prefetch" href="/assets/js/59.f2ba3ff9.js"><link rel="prefetch" href="/assets/js/6.2f6f3877.js"><link rel="prefetch" href="/assets/js/60.cc5ba1f7.js"><link rel="prefetch" href="/assets/js/61.fe02334a.js"><link rel="prefetch" href="/assets/js/62.ee5d9f41.js"><link rel="prefetch" href="/assets/js/63.a8765bdf.js"><link rel="prefetch" href="/assets/js/65.a23b3a9a.js"><link rel="prefetch" href="/assets/js/66.6c6c602d.js"><link rel="prefetch" href="/assets/js/67.7b5649c4.js"><link rel="prefetch" href="/assets/js/68.78facdaa.js"><link rel="prefetch" href="/assets/js/69.9ca84428.js"><link rel="prefetch" href="/assets/js/7.2bcd3410.js"><link rel="prefetch" href="/assets/js/70.c69294f1.js"><link rel="prefetch" href="/assets/js/71.cbf06533.js"><link rel="prefetch" href="/assets/js/72.00e442cd.js"><link rel="prefetch" href="/assets/js/73.0927a6ac.js"><link rel="prefetch" href="/assets/js/74.ce67d6db.js"><link rel="prefetch" href="/assets/js/75.d90c6292.js"><link rel="prefetch" href="/assets/js/76.959840de.js"><link rel="prefetch" href="/assets/js/77.2003672b.js"><link rel="prefetch" href="/assets/js/78.13fddae7.js"><link rel="prefetch" href="/assets/js/79.e585d05b.js"><link rel="prefetch" href="/assets/js/8.c52ae732.js"><link rel="prefetch" href="/assets/js/80.08ca753c.js"><link rel="prefetch" href="/assets/js/81.725238fe.js"><link rel="prefetch" href="/assets/js/82.c9c5cace.js"><link rel="prefetch" href="/assets/js/83.ec4aa106.js"><link rel="prefetch" href="/assets/js/84.330a3527.js"><link rel="prefetch" href="/assets/js/85.ccca2431.js"><link rel="prefetch" href="/assets/js/86.c4e06363.js"><link rel="prefetch" href="/assets/js/87.25fdf8e8.js"><link rel="prefetch" href="/assets/js/88.cc4907e3.js"><link rel="prefetch" href="/assets/js/89.58386751.js"><link rel="prefetch" href="/assets/js/9.3e543a61.js"><link rel="prefetch" href="/assets/js/90.f4b8bbff.js"><link rel="prefetch" href="/assets/js/91.07e83bcd.js"><link rel="prefetch" href="/assets/js/92.97ff12d7.js"><link rel="prefetch" href="/assets/js/93.8a84c5c0.js"><link rel="prefetch" href="/assets/js/94.04b97b18.js"><link rel="prefetch" href="/assets/js/95.af1aba4d.js"><link rel="prefetch" href="/assets/js/96.49bfaf52.js"><link rel="prefetch" href="/assets/js/97.4427a1e6.js"><link rel="prefetch" href="/assets/js/98.e11d92d9.js"><link rel="prefetch" href="/assets/js/99.06abf0b2.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7f84f354.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link router-link-active">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link router-link-active">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Docker</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/docker/" aria-current="page" class="sidebar-link">Docker容器</a></li><li><a href="/middleware/docker/Docker简介-0.html" class="sidebar-link">1.Docker简介</a></li><li><a href="/middleware/docker/Centos7.0安装Docker-1.html" class="sidebar-link">2. Centos7.0安装Docker</a></li><li><a href="/middleware/docker/Docker常用命令-2.html" class="active sidebar-link">3. Docker常用命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-docker的启动与停止" class="sidebar-link">3.1 Docker的启动与停止</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-1-启动docker" class="sidebar-link">3.1.1 启动docker</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-2-停止docker" class="sidebar-link">3.1.2 停止docker</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-3-重启docker" class="sidebar-link">3.1.3 重启docker</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-4-查看docker状态" class="sidebar-link">3.1.4 查看docker状态</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-5-开机启动" class="sidebar-link">3.1.5 开机启动</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-6-查看docker概要信息" class="sidebar-link">3.1.6 查看docker概要信息</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-1-7-查看docker帮助文档" class="sidebar-link">3.1.7 查看docker帮助文档</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-2-镜像命令" class="sidebar-link">3.2 镜像命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-2-1-查看镜像" class="sidebar-link">3.2.1 查看镜像</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-2-2-搜索镜像" class="sidebar-link">3.2.2 搜索镜像</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-2-3-​下载镜像" class="sidebar-link">3.2.3 ​下载镜像</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-2-4-删除镜像" class="sidebar-link">3.2.4 删除镜像</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-容器命令" class="sidebar-link">3.3 容器命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-1-查看容器" class="sidebar-link">3.3.1 查看容器</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-2-启动容器" class="sidebar-link">3.3.2 启动容器</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-3-停止docker" class="sidebar-link">3.3.3 停止docker</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-4-进入docker容器" class="sidebar-link">3.3.4 进入docker容器</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-5-终止容器" class="sidebar-link">3.3.5 终止容器</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-6-删除容器" class="sidebar-link">3.3.6 删除容器</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-7-文件拷贝" class="sidebar-link">3.3.7 文件拷贝</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-8-目录挂载" class="sidebar-link">3.3.8 目录挂载</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker常用命令-2.html#_3-3-9-查看容器ip地址" class="sidebar-link">3.3.9 查看容器IP地址</a></li></ul></li></ul></li><li><a href="/middleware/docker/Docker镜像-3.html" class="sidebar-link">4. Docker镜像</a></li><li><a href="/middleware/docker/Docker容器数据卷-4.html" class="sidebar-link">5. Docker容器数据卷</a></li><li><a href="/middleware/docker/DockerFile-5.html" class="sidebar-link">6. DockerFile</a></li><li><a href="/middleware/docker/Docker私有仓库-6.html" class="sidebar-link">7. Docker私有仓库搭建与配置</a></li><li><a href="/middleware/docker/DockerMaven插件-7.html" class="sidebar-link">8. DockerMaven插件</a></li><li><a href="/middleware/docker/Docker安装mysql-8.html" class="sidebar-link">5 Docker安装mysql</a></li><li><a href="/middleware/docker/Docker安装Redis-9.html" class="sidebar-link">6 Docker安装Redis</a></li><li><a href="/middleware/docker/Docker安装Elasticsearch&amp;Kibana-a.html" class="sidebar-link">7 Docker安装Elasticsearch、Kibana</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_3-docker常用命令"><a href="#_3-docker常用命令" class="header-anchor">#</a> 3. Docker常用命令</h1> <p><a data-fancybox="" title="Docker常用命令" href="./image/docker02.jpg"><img src="/assets/img/docker02.024c9150.jpg" alt="Docker常用命令"></a></p> <h2 id="_3-1-docker的启动与停止"><a href="#_3-1-docker的启动与停止" class="header-anchor">#</a> 3.1 Docker的启动与停止</h2> <h2 id="_3-1-1-启动docker"><a href="#_3-1-1-启动docker" class="header-anchor">#</a> 3.1.1 启动docker</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#启动docker：</span>
+systemctl start docker
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-1-2-停止docker"><a href="#_3-1-2-停止docker" class="header-anchor">#</a> 3.1.2 停止docker</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#停止docker</span>
+systemctl stop docker
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-1-3-重启docker"><a href="#_3-1-3-重启docker" class="header-anchor">#</a> 3.1.3 重启docker</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#重启docker</span>
+systemctl restart docker
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-1-4-查看docker状态"><a href="#_3-1-4-查看docker状态" class="header-anchor">#</a> 3.1.4 查看docker状态</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#查看docker状态</span>
+systemctl status docker
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-1-5-开机启动"><a href="#_3-1-5-开机启动" class="header-anchor">#</a> 3.1.5 开机启动</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#开机启动</span>
+systemctl <span class="token builtin class-name">enable</span> docker
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-1-6-查看docker概要信息"><a href="#_3-1-6-查看docker概要信息" class="header-anchor">#</a> 3.1.6 查看docker概要信息</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#查看docker概要信息</span>
+docker info
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-1-7-查看docker帮助文档"><a href="#_3-1-7-查看docker帮助文档" class="header-anchor">#</a> 3.1.7 查看docker帮助文档</h2> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#查看docker帮助文档</span>
+docker --help
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-2-镜像命令"><a href="#_3-2-镜像命令" class="header-anchor">#</a> 3.2 镜像命令</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker pull nginx  <span class="token comment">#下载最新版</span>
+
+<span class="token comment"># 镜像名:版本名（标签）</span>
+
+docker pull nginx:1.20.1
+
+
+docker pull redis  <span class="token comment">#下载最新</span>
+docker pull redis:6.2.4
+
+<span class="token comment">## 下载来的镜像都在本地</span>
+docker images  <span class="token comment">#查看所有镜像</span>
+
+redis <span class="token operator">=</span> redis:latest
+
+docker rmi 镜像名:版本号/镜像id
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h3 id="_3-2-1-查看镜像"><a href="#_3-2-1-查看镜像" class="header-anchor">#</a> 3.2.1 查看镜像</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@TXYUN-NO2 ~<span class="token punctuation">]</span><span class="token comment"># docker images</span>
+REPOSITORY    TAG       IMAGE ID       CREATED      SIZE
+hello-world   latest    feb5d9fea6a5   <span class="token number">8</span> days ago   <span class="token number">13</span>.3kB
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">参数说明</p> <ol><li>REPOSITORY ：镜像名称</li> <li>TAG ：镜像标签</li> <li>IMAGE ID ：镜像ID</li> <li>CREATED ：镜像的创建日期（不是获取该镜像的日期）</li> <li>SIZE ：镜像大小<br>
+这些镜像都是存储在Docker宿主机的 /var/lib/docker 目录下</li></ol></div> <hr> <p><a data-fancybox="" title="镜像命令说明" href="./image/Snipaste_2020-10-03_11-09-33.png"><img src="/assets/img/Snipaste_2020-10-03_11-09-33.6b910102.png" alt="镜像命令说明"></a></p> <h4 id="options-说明"><a href="#options-说明" class="header-anchor">#</a> OPTIONS 说明：</h4> <div class="language-dockerfile line-numbers-mode"><pre class="language-dockerfile"><code><span class="token punctuation">-</span>a 列出本地所有的镜像(含中间映射层)
+<span class="token punctuation">-</span>q 只显示镜像ID
+<span class="token punctuation">-</span><span class="token punctuation">-</span>digests 显示镜像的摘要信息
+<span class="token punctuation">-</span><span class="token punctuation">-</span>no<span class="token punctuation">-</span>trunc 显示完整的镜像信息
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="_3-2-2-搜索镜像"><a href="#_3-2-2-搜索镜像" class="header-anchor">#</a> 3.2.2 搜索镜像</h3> <p><a data-fancybox="" title="dockerhub" href="www.dockerhub.com">![dockerhub]​网站 www.dockerhub.com 可查看镜像版本</a></p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>	​docker search <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> 镜像名字
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="options-说明-2"><a href="#options-说明-2" class="header-anchor">#</a> OPTIONS 说明</h4> <div class="language-dockerfile line-numbers-mode"><pre class="language-dockerfile"><code>	<span class="token punctuation">-</span><span class="token punctuation">-</span>no<span class="token punctuation">-</span>trun 显示完整的镜像描述
+	<span class="token punctuation">-</span>s 列出收藏数不小于指定值的镜像
+	<span class="token punctuation">-</span><span class="token punctuation">-</span>automated 只列出 automated build类型的镜像
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><hr> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>	<span class="token punctuation">[</span>root@TXYUN-NO2 ~<span class="token punctuation">]</span><span class="token comment"># docker search mysql</span>
+	NAME                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+	mysql                             MySQL is a widely used, open-source relation…   <span class="token number">11490</span>     <span class="token punctuation">[</span>OK<span class="token punctuation">]</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">参数说明</p> <p>NAME ：仓库名称<br>
+DESCRIPTION ：镜像描述<br>
+STARS ：用户评价，反应一个镜像的受欢迎程度<br>
+OFFICIAL ：是否官方<br>
+AUTOMATED ：自动构建，表示该镜像由Docker Hub自动构建流程创建的</p></div> <h3 id="_3-2-3-​下载镜像"><a href="#_3-2-3-​下载镜像" class="header-anchor">#</a> 3.2.3 ​下载镜像</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>​	docker pull 镜像名字<span class="token punctuation">[</span>:TAG<span class="token punctuation">]</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_3-2-4-删除镜像"><a href="#_3-2-4-删除镜像" class="header-anchor">#</a> 3.2.4 删除镜像</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>
+​<span class="token comment">#删除单个 镜像名:版本号/镜像id</span>
+docker rmi 镜像名:版本号/镜像id
+
+​<span class="token comment">#删除多个 </span>
+docker rmi 镜像名1:TAG 镜像名2:TAG
+
+​<span class="token comment">#删除所有镜像</span>
+docker rmi <span class="token variable">${docker images -qa}</span>
+docker rmi <span class="token variable"><span class="token variable">`</span>docker images -q<span class="token variable">`</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h2 id="_3-3-容器命令"><a href="#_3-3-容器命令" class="header-anchor">#</a> 3.3 容器命令</h2> <h3 id="_3-3-1-查看容器"><a href="#_3-3-1-查看容器" class="header-anchor">#</a> 3.3.1 查看容器</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment">#查看正在运行的容器</span>
+docker <span class="token function">ps</span>
+
+<span class="token comment">#查看所有容器</span>
+docker <span class="token function">ps</span> –a
+
+<span class="token comment">#查看最后一次运行的容器</span>
+docker <span class="token function">ps</span> –l
+
+<span class="token comment">#查看停止的容器</span>
+docker <span class="token function">ps</span> -f <span class="token assign-left variable">status</span><span class="token operator">=</span>exited
+
+<span class="token comment">#docker container  ls</span>
+<span class="token comment">#docker container -a</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="_3-3-2-启动容器"><a href="#_3-3-2-启动容器" class="header-anchor">#</a> 3.3.2 启动容器</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker start 容器id/名字
+
+<span class="token comment"># -d：后台运行</span>
+<span class="token comment"># --restart=always: 开机自启</span>
+docker run --name<span class="token operator">=</span>mynginx   -d  --restart<span class="token operator">=</span>always -p  <span class="token number">88</span>:80   nginx
+
+<span class="token comment">#应用开机自启</span>
+docker update 容器id/名字 --restart<span class="token operator">=</span>always
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><hr> <div class="custom-block tip"><p class="custom-block-title">参数说明</p> <p>-i ：表示运行容器</p> <p>-t ：表示容器启动后会进入其命令行。加入这两个参数后，容器创建就能登录进去。即分配一个伪终端。</p> <p>--name :为创建的容器命名。</p> <p>-v ：表示目录映射关系（前者是宿主机目录，后者是映射到宿主机上的目录），可以使用多个-v 做多个目录或文件
+映射。注意：最好做目录映射，在宿主机上做修改，然后共享到容器上。</p> <p>-d ：在run后面加上-d参数,则会创建一个守护式容器在后台运行（这样创建容器后不会自动登录容器，如果只加-i -t
+两个参数，创建后就会自动进去容器）。</p> <p>-p ：表示端口映射，前者是宿主机端口，后者是容器内的映射端口。可以使用多个-p做多个端口映射</p></div> <h3 id="_3-3-3-停止docker"><a href="#_3-3-3-停止docker" class="header-anchor">#</a> 3.3.3 停止docker</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker stop 容器id/名字
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_3-3-4-进入docker容器"><a href="#_3-3-4-进入docker容器" class="header-anchor">#</a> 3.3.4 进入docker容器</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 进入容器内部的系统，修改容器内容</span>
+docker <span class="token builtin class-name">exec</span> -it 容器id  /bin/bash
+
+docker <span class="token builtin class-name">exec</span> -it mysql_mysql_1 /bin/bash
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h3 id="_3-3-5-终止容器"><a href="#_3-3-5-终止容器" class="header-anchor">#</a> 3.3.5 终止容器</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>使用docker stop <span class="token variable">$CONTAINER_ID</span>来终止一个运行中的容器。并且可以使用
+docker <span class="token function">ps</span> -a来看终止状态的容器
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="_3-3-6-删除容器"><a href="#_3-3-6-删除容器" class="header-anchor">#</a> 3.3.6 删除容器</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker <span class="token function">rm</span> 容器id/名字
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_3-3-7-文件拷贝"><a href="#_3-3-7-文件拷贝" class="header-anchor">#</a> 3.3.7 文件拷贝</h3> <p>如果我们需要将文件拷贝到容器内可以使用cp命令<br> <strong>docker cp 需要拷贝的文件或目录 容器名称:容器目录</strong></p> <p>也可以将文件从容器内拷贝出来<br> <strong>docker cp 容器名称:容器目录 需要拷贝的文件或目录</strong></p> <h3 id="_3-3-8-目录挂载"><a href="#_3-3-8-目录挂载" class="header-anchor">#</a> 3.3.8 目录挂载</h3> <p>我们可以在创建容器的时候，将宿主机的目录与容器内的目录进行映射，这样我们就可以通过修改宿主机某个目录的
+文件从而去影响容器。
+创建容器 添加 -v 参数后边为宿主机目录:容器目录，例如：</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker run -di -v /usr/local/myhtml:/usr/local/myhtml --name<span class="token operator">=</span>mycentos3 centos:7
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>如果你共享的是多级的目录，可能会出现权限不足的提示。<br>
+这是因为CentOS7中的安全模块selinux把权限禁掉了，我们需要添加参数 <strong>--privileged=true</strong> 来解决挂载的目录没
+有权限的问题</p> <h3 id="_3-3-9-查看容器ip地址"><a href="#_3-3-9-查看容器ip地址" class="header-anchor">#</a> 3.3.9 查看容器IP地址</h3> <p>我们可以通过以下命令查看容器运行的各种数据</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker inspect 容器名称（容器ID）
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>也可以直接执行下面的命令直接输出IP地址</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker inspect --format<span class="token operator">=</span><span class="token string">'{{.NetworkSettings.IPAddress}}'</span> 容器名称（容器ID）
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/docker/Centos7.0安装Docker-1.html" class="prev">
+        2. Centos7.0安装Docker
+      </a></span> <span class="next"><a href="/middleware/docker/Docker镜像-3.html">
+        4. Docker镜像
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.c507168b.js" defer></script><script src="/assets/js/2.96aef110.js" defer></script><script src="/assets/js/64.e30139ab.js" defer></script>
+  </body>
+</html>

@@ -19,6 +19,19 @@
 ## 3.2 Nginx反向代理范例二
 
 ```sh
+vi 
+    server {
+        listen       9000;
+        server_name  122.51.156.245;
+
+        location ~ /tqk001/ {
+            proxy_pass http://127.0.0.1:5555;
+        }
+
+        location ~ /tqk/ {
+            proxy_pass http://127.0.0.1:5557;
+        }
+    }
 
 ```
 

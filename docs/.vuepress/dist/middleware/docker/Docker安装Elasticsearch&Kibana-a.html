@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>7 Docker安装Elasticsearch、Kibana | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.7f84f354.css" as="style"><link rel="preload" href="/assets/js/app.c507168b.js" as="script"><link rel="preload" href="/assets/js/2.96aef110.js" as="script"><link rel="preload" href="/assets/js/63.a8765bdf.js" as="script"><link rel="prefetch" href="/assets/js/10.b5d6b426.js"><link rel="prefetch" href="/assets/js/100.bdb9f169.js"><link rel="prefetch" href="/assets/js/101.871b2c7c.js"><link rel="prefetch" href="/assets/js/102.37ce2f99.js"><link rel="prefetch" href="/assets/js/103.c8f26b2c.js"><link rel="prefetch" href="/assets/js/104.2db49027.js"><link rel="prefetch" href="/assets/js/105.44d1d73e.js"><link rel="prefetch" href="/assets/js/106.578bbab7.js"><link rel="prefetch" href="/assets/js/107.a2537f28.js"><link rel="prefetch" href="/assets/js/108.a025b492.js"><link rel="prefetch" href="/assets/js/109.f6016305.js"><link rel="prefetch" href="/assets/js/11.1b5c46d4.js"><link rel="prefetch" href="/assets/js/110.c136d672.js"><link rel="prefetch" href="/assets/js/111.c1cc099b.js"><link rel="prefetch" href="/assets/js/112.2c1affb6.js"><link rel="prefetch" href="/assets/js/113.6876375f.js"><link rel="prefetch" href="/assets/js/114.6f266cca.js"><link rel="prefetch" href="/assets/js/115.32bec25a.js"><link rel="prefetch" href="/assets/js/116.32924564.js"><link rel="prefetch" href="/assets/js/117.5c0e9a60.js"><link rel="prefetch" href="/assets/js/118.610b1553.js"><link rel="prefetch" href="/assets/js/119.a31f73e2.js"><link rel="prefetch" href="/assets/js/12.e0fb4661.js"><link rel="prefetch" href="/assets/js/120.7d5cdd4a.js"><link rel="prefetch" href="/assets/js/121.3ae217b4.js"><link rel="prefetch" href="/assets/js/122.ce2934ac.js"><link rel="prefetch" href="/assets/js/123.460c5bcf.js"><link rel="prefetch" href="/assets/js/124.766dd199.js"><link rel="prefetch" href="/assets/js/125.61829879.js"><link rel="prefetch" href="/assets/js/126.a65041bc.js"><link rel="prefetch" href="/assets/js/127.84e3302c.js"><link rel="prefetch" href="/assets/js/128.d028e866.js"><link rel="prefetch" href="/assets/js/129.d972b818.js"><link rel="prefetch" href="/assets/js/13.3c995993.js"><link rel="prefetch" href="/assets/js/130.8aeae6e2.js"><link rel="prefetch" href="/assets/js/131.6287defa.js"><link rel="prefetch" href="/assets/js/132.eb4763f6.js"><link rel="prefetch" href="/assets/js/133.3c440bd3.js"><link rel="prefetch" href="/assets/js/14.8ae66e61.js"><link rel="prefetch" href="/assets/js/15.efb19852.js"><link rel="prefetch" href="/assets/js/16.9d5f6d09.js"><link rel="prefetch" href="/assets/js/17.a61539f1.js"><link rel="prefetch" href="/assets/js/18.ad8e3109.js"><link rel="prefetch" href="/assets/js/19.d5bb5fd2.js"><link rel="prefetch" href="/assets/js/20.99bfcc88.js"><link rel="prefetch" href="/assets/js/21.25d7061a.js"><link rel="prefetch" href="/assets/js/22.eb0cb513.js"><link rel="prefetch" href="/assets/js/23.2ee7274e.js"><link rel="prefetch" href="/assets/js/24.dd17d198.js"><link rel="prefetch" href="/assets/js/25.8073477f.js"><link rel="prefetch" href="/assets/js/26.7f8ff9aa.js"><link rel="prefetch" href="/assets/js/27.37a0df38.js"><link rel="prefetch" href="/assets/js/28.4a25c749.js"><link rel="prefetch" href="/assets/js/29.2e97a2e7.js"><link rel="prefetch" href="/assets/js/3.96944897.js"><link rel="prefetch" href="/assets/js/30.dbd88168.js"><link rel="prefetch" href="/assets/js/31.e46bbcb7.js"><link rel="prefetch" href="/assets/js/32.811b3d27.js"><link rel="prefetch" href="/assets/js/33.d6085b98.js"><link rel="prefetch" href="/assets/js/34.f22b2e91.js"><link rel="prefetch" href="/assets/js/35.3b81eb6c.js"><link rel="prefetch" href="/assets/js/36.dc6f62df.js"><link rel="prefetch" href="/assets/js/37.c30a83ab.js"><link rel="prefetch" href="/assets/js/38.b41fe090.js"><link rel="prefetch" href="/assets/js/39.09ddf6a2.js"><link rel="prefetch" href="/assets/js/4.ccf4b03f.js"><link rel="prefetch" href="/assets/js/40.754b71af.js"><link rel="prefetch" href="/assets/js/41.08b2f3bb.js"><link rel="prefetch" href="/assets/js/42.aebd2c10.js"><link rel="prefetch" href="/assets/js/43.d10c1a88.js"><link rel="prefetch" href="/assets/js/44.250c669c.js"><link rel="prefetch" href="/assets/js/45.b39c8287.js"><link rel="prefetch" href="/assets/js/46.e60ceaa2.js"><link rel="prefetch" href="/assets/js/47.d302a501.js"><link rel="prefetch" href="/assets/js/48.7837d171.js"><link rel="prefetch" href="/assets/js/49.9f94bebb.js"><link rel="prefetch" href="/assets/js/5.df60f10d.js"><link rel="prefetch" href="/assets/js/50.71da1beb.js"><link rel="prefetch" href="/assets/js/51.3d21852c.js"><link rel="prefetch" href="/assets/js/52.1cb76fa4.js"><link rel="prefetch" href="/assets/js/53.3ed19c30.js"><link rel="prefetch" href="/assets/js/54.ec36156d.js"><link rel="prefetch" href="/assets/js/55.f552810d.js"><link rel="prefetch" href="/assets/js/56.dc3f140c.js"><link rel="prefetch" href="/assets/js/57.50024158.js"><link rel="prefetch" href="/assets/js/58.516885f3.js"><link rel="prefetch" href="/assets/js/59.f2ba3ff9.js"><link rel="prefetch" href="/assets/js/6.2f6f3877.js"><link rel="prefetch" href="/assets/js/60.cc5ba1f7.js"><link rel="prefetch" href="/assets/js/61.fe02334a.js"><link rel="prefetch" href="/assets/js/62.ee5d9f41.js"><link rel="prefetch" href="/assets/js/64.e30139ab.js"><link rel="prefetch" href="/assets/js/65.a23b3a9a.js"><link rel="prefetch" href="/assets/js/66.6c6c602d.js"><link rel="prefetch" href="/assets/js/67.7b5649c4.js"><link rel="prefetch" href="/assets/js/68.78facdaa.js"><link rel="prefetch" href="/assets/js/69.9ca84428.js"><link rel="prefetch" href="/assets/js/7.2bcd3410.js"><link rel="prefetch" href="/assets/js/70.c69294f1.js"><link rel="prefetch" href="/assets/js/71.cbf06533.js"><link rel="prefetch" href="/assets/js/72.00e442cd.js"><link rel="prefetch" href="/assets/js/73.0927a6ac.js"><link rel="prefetch" href="/assets/js/74.ce67d6db.js"><link rel="prefetch" href="/assets/js/75.d90c6292.js"><link rel="prefetch" href="/assets/js/76.959840de.js"><link rel="prefetch" href="/assets/js/77.2003672b.js"><link rel="prefetch" href="/assets/js/78.13fddae7.js"><link rel="prefetch" href="/assets/js/79.e585d05b.js"><link rel="prefetch" href="/assets/js/8.c52ae732.js"><link rel="prefetch" href="/assets/js/80.08ca753c.js"><link rel="prefetch" href="/assets/js/81.725238fe.js"><link rel="prefetch" href="/assets/js/82.c9c5cace.js"><link rel="prefetch" href="/assets/js/83.ec4aa106.js"><link rel="prefetch" href="/assets/js/84.330a3527.js"><link rel="prefetch" href="/assets/js/85.ccca2431.js"><link rel="prefetch" href="/assets/js/86.c4e06363.js"><link rel="prefetch" href="/assets/js/87.25fdf8e8.js"><link rel="prefetch" href="/assets/js/88.cc4907e3.js"><link rel="prefetch" href="/assets/js/89.58386751.js"><link rel="prefetch" href="/assets/js/9.3e543a61.js"><link rel="prefetch" href="/assets/js/90.f4b8bbff.js"><link rel="prefetch" href="/assets/js/91.07e83bcd.js"><link rel="prefetch" href="/assets/js/92.97ff12d7.js"><link rel="prefetch" href="/assets/js/93.8a84c5c0.js"><link rel="prefetch" href="/assets/js/94.04b97b18.js"><link rel="prefetch" href="/assets/js/95.af1aba4d.js"><link rel="prefetch" href="/assets/js/96.49bfaf52.js"><link rel="prefetch" href="/assets/js/97.4427a1e6.js"><link rel="prefetch" href="/assets/js/98.e11d92d9.js"><link rel="prefetch" href="/assets/js/99.06abf0b2.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7f84f354.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link router-link-active">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link router-link-active">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Docker</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/docker/" aria-current="page" class="sidebar-link">Docker容器</a></li><li><a href="/middleware/docker/Docker简介-0.html" class="sidebar-link">1.Docker简介</a></li><li><a href="/middleware/docker/Centos7.0安装Docker-1.html" class="sidebar-link">2. Centos7.0安装Docker</a></li><li><a href="/middleware/docker/Docker常用命令-2.html" class="sidebar-link">3. Docker常用命令</a></li><li><a href="/middleware/docker/Docker镜像-3.html" class="sidebar-link">4. Docker镜像</a></li><li><a href="/middleware/docker/Docker容器数据卷-4.html" class="sidebar-link">5. Docker容器数据卷</a></li><li><a href="/middleware/docker/DockerFile-5.html" class="sidebar-link">6. DockerFile</a></li><li><a href="/middleware/docker/Docker私有仓库-6.html" class="sidebar-link">7. Docker私有仓库搭建与配置</a></li><li><a href="/middleware/docker/DockerMaven插件-7.html" class="sidebar-link">8. DockerMaven插件</a></li><li><a href="/middleware/docker/Docker安装mysql-8.html" class="sidebar-link">5 Docker安装mysql</a></li><li><a href="/middleware/docker/Docker安装Redis-9.html" class="sidebar-link">6 Docker安装Redis</a></li><li><a href="/middleware/docker/Docker安装Elasticsearch&amp;Kibana-a.html" class="active sidebar-link">7 Docker安装Elasticsearch、Kibana</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/docker/Docker安装Elasticsearch&amp;Kibana-a.html#_7-1-下载elasticsearch、kibana镜像文件" class="sidebar-link">7.1 下载Elasticsearch、Kibana镜像文件</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker安装Elasticsearch&amp;Kibana-a.html#_7-2-启动elasticsearch" class="sidebar-link">7.2 启动Elasticsearch</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker安装Elasticsearch&amp;Kibana-a.html#_7-3-启动可视化kibana" class="sidebar-link">7.3 启动可视化Kibana</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker安装Elasticsearch&amp;Kibana-a.html#_7-4-设置-elasticsearch、kibana-随docker启动" class="sidebar-link">7.4 设置 Elasticsearch、Kibana 随Docker启动</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_7-docker安装elasticsearch、kibana"><a href="#_7-docker安装elasticsearch、kibana" class="header-anchor">#</a> 7 Docker安装Elasticsearch、Kibana</h1> <h2 id="_7-1-下载elasticsearch、kibana镜像文件"><a href="#_7-1-下载elasticsearch、kibana镜像文件" class="header-anchor">#</a> 7.1 下载Elasticsearch、Kibana镜像文件</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 存储和检索数据</span>
+docker pull elasticsearch:7.4.2
+
+<span class="token comment"># 可视化检索数据</span>
+docker pull kibana:7.4.2
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h2 id="_7-2-启动elasticsearch"><a href="#_7-2-启动elasticsearch" class="header-anchor">#</a> 7.2 启动Elasticsearch</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment">#配置挂载数据文件夹</span>
+<span class="token comment"># 创建配置文件目录</span>
+<span class="token function">mkdir</span> -p /mydata/elasticsearch/config
+
+<span class="token comment"># 创建数据目录</span>
+<span class="token function">mkdir</span> -p /mydata/elasticsearch/data
+
+<span class="token comment"># 将/mydata/elasticsearch/文件夹中文件都可读可写（必须是777）</span>
+<span class="token function">chmod</span> -R <span class="token number">777</span> /mydata/elasticsearch/
+
+<span class="token comment"># 配置任意机器可以访问 elasticsearch</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;http.host: 0.0.0.0&quot;</span> <span class="token operator">&gt;</span>/mydata/elasticsearch/config/elasticsearch.yml
+
+<span class="token comment">#命令后面的 \是换行符，注意前面有空格</span>
+
+docker run --name elasticsearch -p <span class="token number">9200</span>:9200 -p <span class="token number">9300</span>:9300 <span class="token punctuation">\</span>
+-e  <span class="token string">&quot;discovery.type=single-node&quot;</span> <span class="token punctuation">\</span>
+-e <span class="token assign-left variable">ES_JAVA_OPTS</span><span class="token operator">=</span><span class="token string">&quot;-Xms512m -Xmx512m&quot;</span> <span class="token punctuation">\</span>
+-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml <span class="token punctuation">\</span>
+-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data <span class="token punctuation">\</span>
+-v  /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins <span class="token punctuation">\</span>
+-d elasticsearch:7.4.2 
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">参数介绍</p> <p><font color="red"><strong>-p 9200:9200 -p 9300:9300</strong></font>：向外暴露两个端口，9200用于HTTP REST API请求，9300 ES 在分布式集群状态下 ES 之间的通信端口；<br> <font color="red"><strong>-e  &quot;discovery.type=single-node&quot;</strong></font>：es 以单节点运行<br> <font color="red"><strong>-e ES_JAVA_OPTS=&quot;-Xms64m -Xmx512m&quot;</strong></font>：设置启动占用内存，不设置可能会占用当前系统所有内存<br> <font color="red"><strong>-v</strong></font>：挂载容器中的配置文件、数据文件、插件数据到本机的文件夹；<br> <font color="red"><strong>-d elasticsearch:7.6.2</strong></font>：指定要启动的镜像</p></div> <p><strong>访问 http://49.233.34.168:9200 看到返回的 json 数据说明启动成功</strong></p> <p><a data-fancybox="" title="elasticsearch" href="./image/els.jpg"><img src="/assets/img/els.72ff9c9b.jpg" alt="elasticsearch"></a></p> <h2 id="_7-3-启动可视化kibana"><a href="#_7-3-启动可视化kibana" class="header-anchor">#</a> 7.3 启动可视化Kibana</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker run --name kibana <span class="token punctuation">\</span>
+-e <span class="token assign-left variable">ELASTICSEARCH_HOSTS</span><span class="token operator">=</span>http://49.233.34.168:9200 <span class="token punctuation">\</span>
+-p <span class="token number">5601</span>:5601 <span class="token punctuation">\</span>
+-d kibana:7.4.2 
+
+<span class="token comment">#-e ELASTICSEARCH_HOSTS=http://49.233.34.168:9200  这里的ip要设置成自己的虚拟机IP地址</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><strong>浏览器输入http://49.233.34.168:5601 测试</strong></p> <p><a data-fancybox="" title="启动可视化Kibana" href="./image/kibana.jpg"><img src="/assets/img/kibana.30a3fabd.jpg" alt="启动可视化Kibana"></a></p> <h2 id="_7-4-设置-elasticsearch、kibana-随docker启动"><a href="#_7-4-设置-elasticsearch、kibana-随docker启动" class="header-anchor">#</a> 7.4 设置 Elasticsearch、Kibana 随Docker启动</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 当前 Docker 开机自启，所以 ES 现在也是开机自启</span>
+docker update elasticsearch --restart<span class="token operator">=</span>always
+
+<span class="token comment"># 当前 Docker 开机自启，所以 kibana 现在也是开机自启</span>
+docker update kibana --restart<span class="token operator">=</span>always
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/docker/Docker安装Redis-9.html" class="prev">
+        6 Docker安装Redis
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.c507168b.js" defer></script><script src="/assets/js/2.96aef110.js" defer></script><script src="/assets/js/63.a8765bdf.js" defer></script>
+  </body>
+</html>
