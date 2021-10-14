@@ -22,7 +22,7 @@ vi /usr/local/openresty/nginx/conf/nginx.conf
 
 <a title='反向代理范例一' href='http://122.51.156.245/'>http://122.51.156.245/</a>
 
-<a data-fancybox title="Nginx反向代理范例一" href="./image/nginx04.jpg">![启动nginx](./image/nginx04.jpg)</a>
+<a data-fancybox title="Nginx反向代理范例一" href="./image/nginx06.jpg">![启动nginx](./image/nginx06.jpg)</a>
 
 ----------------------------------
 
@@ -55,7 +55,7 @@ vi /usr/local/openresty/nginx/conf/nginx.conf
 
 -----------------------------
 
-<a data-fancybox title="反向代理范例二" href="./image/nginx03.jpg">![启动nginx](./image/nginx03.jpg)</a>
+<a data-fancybox title="反向代理范例二" href="./image/nginx05.jpg">![启动nginx](./image/nginx05.jpg)</a>
 
 -------------------------------
 
