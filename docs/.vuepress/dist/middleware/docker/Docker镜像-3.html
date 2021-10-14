@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>4. Docker镜像 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.7f84f354.css" as="style"><link rel="preload" href="/assets/js/app.c507168b.js" as="script"><link rel="preload" href="/assets/js/2.96aef110.js" as="script"><link rel="preload" href="/assets/js/39.09ddf6a2.js" as="script"><link rel="prefetch" href="/assets/js/10.b5d6b426.js"><link rel="prefetch" href="/assets/js/100.bdb9f169.js"><link rel="prefetch" href="/assets/js/101.871b2c7c.js"><link rel="prefetch" href="/assets/js/102.37ce2f99.js"><link rel="prefetch" href="/assets/js/103.c8f26b2c.js"><link rel="prefetch" href="/assets/js/104.2db49027.js"><link rel="prefetch" href="/assets/js/105.44d1d73e.js"><link rel="prefetch" href="/assets/js/106.578bbab7.js"><link rel="prefetch" href="/assets/js/107.a2537f28.js"><link rel="prefetch" href="/assets/js/108.a025b492.js"><link rel="prefetch" href="/assets/js/109.f6016305.js"><link rel="prefetch" href="/assets/js/11.1b5c46d4.js"><link rel="prefetch" href="/assets/js/110.c136d672.js"><link rel="prefetch" href="/assets/js/111.c1cc099b.js"><link rel="prefetch" href="/assets/js/112.2c1affb6.js"><link rel="prefetch" href="/assets/js/113.6876375f.js"><link rel="prefetch" href="/assets/js/114.6f266cca.js"><link rel="prefetch" href="/assets/js/115.32bec25a.js"><link rel="prefetch" href="/assets/js/116.32924564.js"><link rel="prefetch" href="/assets/js/117.5c0e9a60.js"><link rel="prefetch" href="/assets/js/118.610b1553.js"><link rel="prefetch" href="/assets/js/119.a31f73e2.js"><link rel="prefetch" href="/assets/js/12.e0fb4661.js"><link rel="prefetch" href="/assets/js/120.7d5cdd4a.js"><link rel="prefetch" href="/assets/js/121.3ae217b4.js"><link rel="prefetch" href="/assets/js/122.ce2934ac.js"><link rel="prefetch" href="/assets/js/123.460c5bcf.js"><link rel="prefetch" href="/assets/js/124.766dd199.js"><link rel="prefetch" href="/assets/js/125.61829879.js"><link rel="prefetch" href="/assets/js/126.a65041bc.js"><link rel="prefetch" href="/assets/js/127.84e3302c.js"><link rel="prefetch" href="/assets/js/128.d028e866.js"><link rel="prefetch" href="/assets/js/129.d972b818.js"><link rel="prefetch" href="/assets/js/13.3c995993.js"><link rel="prefetch" href="/assets/js/130.8aeae6e2.js"><link rel="prefetch" href="/assets/js/131.6287defa.js"><link rel="prefetch" href="/assets/js/132.eb4763f6.js"><link rel="prefetch" href="/assets/js/133.3c440bd3.js"><link rel="prefetch" href="/assets/js/14.8ae66e61.js"><link rel="prefetch" href="/assets/js/15.efb19852.js"><link rel="prefetch" href="/assets/js/16.9d5f6d09.js"><link rel="prefetch" href="/assets/js/17.a61539f1.js"><link rel="prefetch" href="/assets/js/18.ad8e3109.js"><link rel="prefetch" href="/assets/js/19.d5bb5fd2.js"><link rel="prefetch" href="/assets/js/20.99bfcc88.js"><link rel="prefetch" href="/assets/js/21.25d7061a.js"><link rel="prefetch" href="/assets/js/22.eb0cb513.js"><link rel="prefetch" href="/assets/js/23.2ee7274e.js"><link rel="prefetch" href="/assets/js/24.dd17d198.js"><link rel="prefetch" href="/assets/js/25.8073477f.js"><link rel="prefetch" href="/assets/js/26.7f8ff9aa.js"><link rel="prefetch" href="/assets/js/27.37a0df38.js"><link rel="prefetch" href="/assets/js/28.4a25c749.js"><link rel="prefetch" href="/assets/js/29.2e97a2e7.js"><link rel="prefetch" href="/assets/js/3.96944897.js"><link rel="prefetch" href="/assets/js/30.dbd88168.js"><link rel="prefetch" href="/assets/js/31.e46bbcb7.js"><link rel="prefetch" href="/assets/js/32.811b3d27.js"><link rel="prefetch" href="/assets/js/33.d6085b98.js"><link rel="prefetch" href="/assets/js/34.f22b2e91.js"><link rel="prefetch" href="/assets/js/35.3b81eb6c.js"><link rel="prefetch" href="/assets/js/36.dc6f62df.js"><link rel="prefetch" href="/assets/js/37.c30a83ab.js"><link rel="prefetch" href="/assets/js/38.b41fe090.js"><link rel="prefetch" href="/assets/js/4.ccf4b03f.js"><link rel="prefetch" href="/assets/js/40.754b71af.js"><link rel="prefetch" href="/assets/js/41.08b2f3bb.js"><link rel="prefetch" href="/assets/js/42.aebd2c10.js"><link rel="prefetch" href="/assets/js/43.d10c1a88.js"><link rel="prefetch" href="/assets/js/44.250c669c.js"><link rel="prefetch" href="/assets/js/45.b39c8287.js"><link rel="prefetch" href="/assets/js/46.e60ceaa2.js"><link rel="prefetch" href="/assets/js/47.d302a501.js"><link rel="prefetch" href="/assets/js/48.7837d171.js"><link rel="prefetch" href="/assets/js/49.9f94bebb.js"><link rel="prefetch" href="/assets/js/5.df60f10d.js"><link rel="prefetch" href="/assets/js/50.71da1beb.js"><link rel="prefetch" href="/assets/js/51.3d21852c.js"><link rel="prefetch" href="/assets/js/52.1cb76fa4.js"><link rel="prefetch" href="/assets/js/53.3ed19c30.js"><link rel="prefetch" href="/assets/js/54.ec36156d.js"><link rel="prefetch" href="/assets/js/55.f552810d.js"><link rel="prefetch" href="/assets/js/56.dc3f140c.js"><link rel="prefetch" href="/assets/js/57.50024158.js"><link rel="prefetch" href="/assets/js/58.516885f3.js"><link rel="prefetch" href="/assets/js/59.f2ba3ff9.js"><link rel="prefetch" href="/assets/js/6.2f6f3877.js"><link rel="prefetch" href="/assets/js/60.cc5ba1f7.js"><link rel="prefetch" href="/assets/js/61.fe02334a.js"><link rel="prefetch" href="/assets/js/62.ee5d9f41.js"><link rel="prefetch" href="/assets/js/63.a8765bdf.js"><link rel="prefetch" href="/assets/js/64.e30139ab.js"><link rel="prefetch" href="/assets/js/65.a23b3a9a.js"><link rel="prefetch" href="/assets/js/66.6c6c602d.js"><link rel="prefetch" href="/assets/js/67.7b5649c4.js"><link rel="prefetch" href="/assets/js/68.78facdaa.js"><link rel="prefetch" href="/assets/js/69.9ca84428.js"><link rel="prefetch" href="/assets/js/7.2bcd3410.js"><link rel="prefetch" href="/assets/js/70.c69294f1.js"><link rel="prefetch" href="/assets/js/71.cbf06533.js"><link rel="prefetch" href="/assets/js/72.00e442cd.js"><link rel="prefetch" href="/assets/js/73.0927a6ac.js"><link rel="prefetch" href="/assets/js/74.ce67d6db.js"><link rel="prefetch" href="/assets/js/75.d90c6292.js"><link rel="prefetch" href="/assets/js/76.959840de.js"><link rel="prefetch" href="/assets/js/77.2003672b.js"><link rel="prefetch" href="/assets/js/78.13fddae7.js"><link rel="prefetch" href="/assets/js/79.e585d05b.js"><link rel="prefetch" href="/assets/js/8.c52ae732.js"><link rel="prefetch" href="/assets/js/80.08ca753c.js"><link rel="prefetch" href="/assets/js/81.725238fe.js"><link rel="prefetch" href="/assets/js/82.c9c5cace.js"><link rel="prefetch" href="/assets/js/83.ec4aa106.js"><link rel="prefetch" href="/assets/js/84.330a3527.js"><link rel="prefetch" href="/assets/js/85.ccca2431.js"><link rel="prefetch" href="/assets/js/86.c4e06363.js"><link rel="prefetch" href="/assets/js/87.25fdf8e8.js"><link rel="prefetch" href="/assets/js/88.cc4907e3.js"><link rel="prefetch" href="/assets/js/89.58386751.js"><link rel="prefetch" href="/assets/js/9.3e543a61.js"><link rel="prefetch" href="/assets/js/90.f4b8bbff.js"><link rel="prefetch" href="/assets/js/91.07e83bcd.js"><link rel="prefetch" href="/assets/js/92.97ff12d7.js"><link rel="prefetch" href="/assets/js/93.8a84c5c0.js"><link rel="prefetch" href="/assets/js/94.04b97b18.js"><link rel="prefetch" href="/assets/js/95.af1aba4d.js"><link rel="prefetch" href="/assets/js/96.49bfaf52.js"><link rel="prefetch" href="/assets/js/97.4427a1e6.js"><link rel="prefetch" href="/assets/js/98.e11d92d9.js"><link rel="prefetch" href="/assets/js/99.06abf0b2.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7f84f354.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link router-link-active">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link router-link-active">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Docker</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/docker/" aria-current="page" class="sidebar-link">Docker容器</a></li><li><a href="/middleware/docker/Docker简介-0.html" class="sidebar-link">1.Docker简介</a></li><li><a href="/middleware/docker/Centos7.0安装Docker-1.html" class="sidebar-link">2. Centos7.0安装Docker</a></li><li><a href="/middleware/docker/Docker常用命令-2.html" class="sidebar-link">3. Docker常用命令</a></li><li><a href="/middleware/docker/Docker镜像-3.html" class="active sidebar-link">4. Docker镜像</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-1-docker镜像是什么" class="sidebar-link">4.1 Docker镜像是什么</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-2-unionfs-联合文件系统" class="sidebar-link">4.2 UnionFS(联合文件系统)</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-3-docker镜像加载原理" class="sidebar-link">4.3 Docker镜像加载原理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-3-1-分层的镜像" class="sidebar-link">4.3.1 分层的镜像</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#分层的镜像" class="sidebar-link">分层的镜像</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-3-2-为什么docker纪念馆想要采用这种分层结构" class="sidebar-link">4.3.2 为什么Docker纪念馆想要采用这种分层结构</a></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-3-3-特点" class="sidebar-link">4.3.3 特点</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-3-docker迁移与备份" class="sidebar-link">4.3 Docker迁移与备份</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/docker/Docker镜像-3.html#_4-3-1-案例演示" class="sidebar-link">4.3.1 案例演示</a></li></ul></li></ul></li><li><a href="/middleware/docker/Docker容器数据卷-4.html" class="sidebar-link">5. Docker容器数据卷</a></li><li><a href="/middleware/docker/DockerFile-5.html" class="sidebar-link">6. DockerFile</a></li><li><a href="/middleware/docker/Docker私有仓库-6.html" class="sidebar-link">7. Docker私有仓库搭建与配置</a></li><li><a href="/middleware/docker/DockerMaven插件-7.html" class="sidebar-link">8. DockerMaven插件</a></li><li><a href="/middleware/docker/Docker安装mysql-8.html" class="sidebar-link">5 Docker安装mysql</a></li><li><a href="/middleware/docker/Docker安装Redis-9.html" class="sidebar-link">6 Docker安装Redis</a></li><li><a href="/middleware/docker/Docker安装Elasticsearch&amp;Kibana-a.html" class="sidebar-link">7 Docker安装Elasticsearch、Kibana</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_4-docker镜像"><a href="#_4-docker镜像" class="header-anchor">#</a> 4. Docker镜像</h1> <h2 id="_4-1-docker镜像是什么"><a href="#_4-1-docker镜像是什么" class="header-anchor">#</a> 4.1 Docker镜像是什么</h2> <p>镜像是一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的有内容，包括代码、运行时、库、环境变量和配置文件。</p> <h2 id="_4-2-unionfs-联合文件系统"><a href="#_4-2-unionfs-联合文件系统" class="header-anchor">#</a> 4.2 UnionFS(联合文件系统)</h2> <p><strong>UnionFS (联合文件系统)：</strong> Union文件系统(UnionFS)是一一种分层、轻量级并且高性能的文件系统，它支持对文件系统的修作为一 次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下(unite several directories into a singlevirtualfilesystem)。Union文件系统是Docker镜像的基础。镜像可以通过分层来进行继承，基于基础镜像(没有父镜像)可以制作各种具.体的应用镜像。</p> <p><strong>特性:</strong> 一次同时加载多个文件系统，但从外面看起来，只能看到一个文件系统，联合加载会把各层文件系统叠加起来，这样最终的文
+件系统会包含所有底层的文件和目录</p> <h2 id="_4-3-docker镜像加载原理"><a href="#_4-3-docker镜像加载原理" class="header-anchor">#</a> 4.3 Docker镜像加载原理</h2> <p><strong>Docker镜像加载原理:</strong></p> <p><strong>docker</strong>的镜像实际上由一层一层的文件系统组成，这种层级的文件系统<strong>UnionFS（联合文件系统）</strong></p> <p><strong>botfs(boot file system)<strong>主要包含</strong>bootloader</strong>和<strong>kernel</strong>, <strong>bootloader</strong>主要是引导加载<strong>kernel（内核）</strong>, <strong>Linux</strong>刚启动时会加载bootfs文件系统，在<strong>Docker</strong>镜像的最底层是<strong>bootfs</strong>。这一层与我们典型的<strong>Linux/Unix</strong>系统是一样的，包含<font color="red"><strong>boot加载器和内核</strong></font>。当boot加载完成之后整个内核就都在内存中了，此时内存的使用权己由bootfs转交给内核，此时系统也会卸载bootfs。</p> <p><strong>rootfs (root file system)，<strong>在</strong>bootfs</strong>之 上。 包含的就是典型Linux系统中的**/dev, /proc, /bin, /etc<strong>等标准目录和文件。<strong>rootfs</strong>就 是各种不同的操作系统发行版，比如</strong>Ubuntu**，<strong>Centos</strong>等等。</p> <p><img src="/assets/img/Snipaste_2020-10-03_13-38-28.2155c42f.png" alt="UnionFS 联合文件系统"></p> <p>平时我们安装的虚拟机的Centos都是好几个G ，为什么docker这里才要200m</p> <p><img src="/assets/img/QQ20201003133908.90f83fe8.png" alt="CENTOS"></p> <p>对于一个精简的<strong>OS(操作系统), rootfs</strong>可以很小，只需要包括最基本的命令、工具和程序库就可以了，因为底层直接用<strong>Host（宿主机）<strong>的</strong>kernel（内核）</strong>,只需要提供rootfs就行了。由此可见对于不同的<strong>linux</strong>发行版, <strong>bootfs</strong>基本是一致的, <strong>rootfs</strong>会有差别，因此不同的发行版可以公用<strong>bootfs</strong>。</p> <h3 id="_4-3-1-分层的镜像"><a href="#_4-3-1-分层的镜像" class="header-anchor">#</a> 4.3.1 分层的镜像</h3> <p><img src="/assets/img/Snipaste_2020-10-03_13-40-06.083d76cc.png" alt="分层的镜像"></p> <h3 id="分层的镜像"><a href="#分层的镜像" class="header-anchor">#</a> 分层的镜像</h3> <p><img src="/assets/img/Snipaste_2020-10-03_14-02-22.bdb7aa2b.png" alt=""></p> <h3 id="_4-3-2-为什么docker纪念馆想要采用这种分层结构"><a href="#_4-3-2-为什么docker纪念馆想要采用这种分层结构" class="header-anchor">#</a> 4.3.2 为什么Docker纪念馆想要采用这种分层结构</h3> <p>最大的一个好处就是-<strong>共享资源</strong>
+比如:<strong>有多个镜像都从相同的base镜像构建而来</strong>，那么宿主机只需在磁盘上保存一份<strong>base</strong>镜像,
+同时内存中也只需加载一份<strong>base</strong>镜像，就可以为所有容器服务了。而且镜像的每一层都可以被共享。</p> <h3 id="_4-3-3-特点"><a href="#_4-3-3-特点" class="header-anchor">#</a> 4.3.3 特点</h3> <p>Docker镜像都是只读的，当容器启动时，一个新的可写层被加载到<strong>镜像的顶部</strong>，这一层通常被称为<strong>容器层</strong>，容器层之下都叫<strong>镜像层</strong></p> <h2 id="_4-3-docker迁移与备份"><a href="#_4-3-docker迁移与备份" class="header-anchor">#</a> 4.3 Docker迁移与备份</h2> <div class="custom-block tip"><p class="custom-block-title">Commit命令模板</p> <p><strong>docker commit 容器名称 镜像名称</strong></p> <p>docker commit 提交<strong>容器副本</strong>使之称为一个新的镜像</p> <p>docker commit -m=&quot;提交的描述信息&quot; -a=&quot;作者&quot; 容器ID 要创建的目标镜像名:[标签名]</p></div> <hr> <div class="custom-block tip"><p class="custom-block-title">镜像备份</p> <p>我们可以通过以下命令将镜像保存为tar 文件</p> <p>docker save -o tqk/tomcat02.tar tqk/tomcat02</p></div> <hr> <div class="custom-block tip"><p class="custom-block-title">镜像恢复与迁移</p> <p>首先我们先删除掉tqk/tomcat02镜像 然后执行此命令进行恢复</p> <p>docker load -i tqk/tomcat02.tar -i 输入的文件</p> <p>执行后再次查看镜像，可以看到镜像已经恢复</p></div> <h3 id="_4-3-1-案例演示"><a href="#_4-3-1-案例演示" class="header-anchor">#</a> 4.3.1 案例演示</h3> <h4 id="_4-3-1-1-从hub上下载tomcat镜像到本地并成功运行"><a href="#_4-3-1-1-从hub上下载tomcat镜像到本地并成功运行" class="header-anchor">#</a> 4.3.1.1 从Hub上下载tomcat镜像到本地并成功运行</h4> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@TXYUN-NO2 ~<span class="token punctuation">]</span><span class="token comment"># docker run -id --name tomcat01 -p 8888:8080 tomcat:8.5.0</span>
+
+-p主机端口：docker容器端口
+-P:随机分配端口
+i:交互
+t:终端
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p><a data-fancybox="" title="案例演示" href="./image/docker03.jpg">![案例演示]​(./image/docker03.jpg)</a></p> <h4 id="_4-3-1-2-故意删除上一步镜像生产tomcat容器的文档"><a href="#_4-3-1-2-故意删除上一步镜像生产tomcat容器的文档" class="header-anchor">#</a> 4.3.1.2 故意删除上一步镜像生产tomcat容器的文档</h4> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@TXYUN-NO2 ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it  tomcat01 /bin/bash</span>
+root@3b6f52c4060c:/usr/local/tomcat<span class="token comment"># cd webapps/</span>
+root@3b6f52c4060c:/usr/local/tomcat/webapps<span class="token comment"># ls</span>
+ROOT  docs  examples  host-manager  manager
+root@3b6f52c4060c:/usr/local/tomcat/webapps<span class="token comment"># rm -rf docs</span>
+root@3b6f52c4060c:/usr/local/tomcat/webapps<span class="token comment"># ls -lrt</span>
+total <span class="token number">16</span>
+drwxr-x--- <span class="token number">5</span> root root <span class="token number">4096</span> May  <span class="token number">5</span>  <span class="token number">2016</span> manager
+drwxr-x--- <span class="token number">5</span> root root <span class="token number">4096</span> May  <span class="token number">5</span>  <span class="token number">2016</span> host-manager
+drwxr-x--- <span class="token number">6</span> root root <span class="token number">4096</span> May  <span class="token number">5</span>  <span class="token number">2016</span> examples
+drwxr-x--- <span class="token number">3</span> root root <span class="token number">4096</span> May  <span class="token number">5</span>  <span class="token number">2016</span> ROOT
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h4 id="_4-3-1-3-也即当前的tomcat运行实例是一个没有文档内容的容器-以他为模板commit一个没有doc的tomcat新镜像-tqk-tomcat02"><a href="#_4-3-1-3-也即当前的tomcat运行实例是一个没有文档内容的容器-以他为模板commit一个没有doc的tomcat新镜像-tqk-tomcat02" class="header-anchor">#</a> 4.3.1.3 也即当前的tomcat运行实例是一个没有文档内容的容器，以他为模板commit一个没有doc的tomcat新镜像 tqk/tomcat02</h4> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>docker commit -m<span class="token operator">=</span><span class="token string">&quot;提交的描述信息&quot;</span> -a<span class="token operator">=</span><span class="token string">&quot;作者&quot;</span> 容器ID 要创建的目标镜像名:<span class="token punctuation">[</span>标签名<span class="token punctuation">]</span>
+
+docker commit -m<span class="token operator">=</span><span class="token string">&quot;yyds&quot;</span> -a<span class="token operator">=</span><span class="token string">&quot;tianqikai&quot;</span> tomcat01 tqk/tomcat02:1.0
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h4 id="_4-3-1-4-启动我们的新镜像并和原来的对比"><a href="#_4-3-1-4-启动我们的新镜像并和原来的对比" class="header-anchor">#</a> 4.3.1.4 启动我们的新镜像并和原来的对比</h4> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>
+docker run -d -p <span class="token number">7777</span>:8080 tomcat:8.5.0
+docker run -d -p <span class="token number">9999</span>:8080 tqk/tomcat02:1.0
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>​启动atuigu/tomcat02 没有doc</p> <p>​启动原来tomcat他有doc</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/docker/Docker常用命令-2.html" class="prev">
+        3. Docker常用命令
+      </a></span> <span class="next"><a href="/middleware/docker/Docker容器数据卷-4.html">
+        5. Docker容器数据卷
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.c507168b.js" defer></script><script src="/assets/js/2.96aef110.js" defer></script><script src="/assets/js/39.09ddf6a2.js" defer></script>
+  </body>
+</html>
