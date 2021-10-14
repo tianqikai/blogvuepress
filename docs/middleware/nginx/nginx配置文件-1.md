@@ -18,14 +18,14 @@
 
 从配置文件开始到events 块之间的内容，主要会设置一些影响nginx 服务器整体运行的配置指令，主要包括配置运行Nginx 服务器的用户（组）、允许生成的worker process 数，进程PID 存放路径、日志存放路径和类型以及配置文件的引入等。比如上面第一行配置的
 
-<a data-fancybox title="image-20201012105805808" href="./image/image-20201012105805808.png">![image-20201012105805808](./image/image-20201012105805808.png)</a>
+<a data-fancybox title="全局块" href="./image/image-20201012105805808.png">![全局块](./image/image-20201012105805808.png)</a>
 
 这是nginx 服务器并发处理服务的关键配置，worker_processes 值越大，可以支持的并发处理量就越多，但是会受到硬件、软件等设备的制约
 
 
 ###  2.1.2 events 块
 
-<a data-fancybox title="image-20201012105928481" href="./image/image-20201012105928481.png">![image-20201012105928481](./image/image-20201012105928481.png)</a>
+<a data-fancybox title="events 块" href="./image/image-20201012105928481.png">![events 块](./image/image-20201012105928481.png)</a>
 
 events 块涉及的指令主要影响Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多work process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个word process 可以同时支持的最大连接数等。
 
@@ -38,7 +38,7 @@ events 块涉及的指令主要影响Nginx 服务器与用户的网络连接，�
 
 ###  2.1.3 http块
 
-<a data-fancybox title="image-20201012110023268" href="./image/image-20201012110023268.png">![image-20201012110023268](./image/image-20201012110023268.png)</a>
+<a data-fancybox title="http块" href="./image/image-20201012110023268.png">![http块](./image/image-20201012110023268.png)</a>
 
 这是 Nginx 服务器中最频繁的部分，代理，缓存，日志，定义的功能绝大多数功能和第三方模块都在这里
 
