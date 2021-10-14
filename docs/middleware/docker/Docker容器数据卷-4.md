@@ -106,7 +106,7 @@ docker volumn inspect mylog
 docker run -it -d -v /mydata/logs:/usr/local/tomcat/logs:ro  -p 8888:8080 590715041a56
 
 #读写权限
-docker run -it -d -v /mydata/logs:/usr/local/tomcat/logs:ro  -p 8888:8080 590715041a56
+docker run -it -d -v /mydata/logs:/usr/local/tomcat/logs:rw  -p 8888:8080 590715041a56
 
 [root@TXYUN-NO2 logs]# docker inspect  c0b1399e3fd6|grep mydata
                 "/mydata/logs:/usr/local/tomcat/logs"
