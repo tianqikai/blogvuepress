@@ -177,3 +177,11 @@ docker run -it  -d --name tomcat03 --volumes-from tomcat01 -p 9999:8080 tqk001/t
 
 Docker挂载主机目录Docker访问出现cannot open directory . Permission denied  
 解决办法:在挂载目录后多加一个--privileged=true参数即可
+
+---------------
+
+```sh
+apt-get update
+
+apt-get install vim
+```
