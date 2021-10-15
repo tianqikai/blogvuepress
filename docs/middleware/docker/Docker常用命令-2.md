@@ -272,3 +272,9 @@ docker inspect 容器名称（容器ID）
 ```sh
 docker inspect --format='{{.NetworkSettings.IPAddress}}' 容器名称（容器ID）
 ```
+
+### 3.3.9 容器中安装vim
+```sh
+apt-get update
+apt-get install -y vim
+```

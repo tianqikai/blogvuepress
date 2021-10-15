@@ -143,3 +143,205 @@ cd /usr/local/openresty/nginx/sbin
 <a data-fancybox title="启动nginx" href="./image/nginx02.jpg">![启动nginx](./image/nginx02.jpg)</a>
 
 这个脚本可以复用,下次直接赋予执行文件配置 环境即可  
+
+
+## 1.4 官网安装包安装nginx
+
+### 1.4.1 创建安装脚本
+```cpp
+
+vi nginx.sh
+
+#!/bin/bash
+#一键安装上面四个依赖
+yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
+
+#创建一个文件夹
+cd /usr/local
+
+#下载tar包
+# wget http://nginx.org/download/nginx-1.13.7.tar.gz
+wget http://nginx.org/download/nginx-1.16.0.tar.gz
+
+#解压安装包
+tar -xzvf nginx-1.16.0.tar.gz
+
+#修改路径
+mv  nginx-1.16.0  nginx
+
+cd /usr/local/nginx
+./configure --prefix=/usr/local/nginx --conf-path=/usr/local/nginx/nginx.conf
+# 编译
+make & make install
+
+#启动nginx
+/usr/local/nginx/sbin/nginx 
+
+```
+
+
+### 1.4.2 日志备份脚本
+
+```sh
+#!/bin/bash
+LOGS_PATH=/usr/local/nginx/logs/oldlogs
+CUR_LOGS_PATH=/usr/local/nginx/logs
+YESTERDAY=$(date +%Y%m%d)
+mv $CUR_LOGS_PATH/access.log  $LOGS_PATH/${YESTERDAY}_access.log
+mv $CUR_LOGS_PATH/_access.log  $LOGS_PATH/${YESTERDAY}_access_bak.log
+mv $CUR_LOGS_PATH/error.log  $LOGS_PATH/${YESTERDAY}_error.log
+mv $CUR_LOGS_PATH/_error.log  $LOGS_PATH/${YESTERDAY}_error_bak.log
+kill -USR1 $(cat /usr/local/nginx/logs/nginx.pid)
+```
+-------------------
+
+```sh
+#添加定时任务处理
+crontab -e
+0 1 * * * /usr/local/nginx/logs/backup.sh
+
+crontab -l 查看
+```
+
+### 1.4.3 nginx安装图片压缩模块
+
+
+#### 1.4.3.1 安装图片压缩模块
+```sh
+#!/bin/bash
+cd /usr/local/nginx
+#GD library安装命令：
+yum install gd-devel   //centos7系统
+#apt-get install libgd2-xpm libgd2-xpm-dev   Ubuntu系统
+##----不安装报以下错误
+#PS: HttpImageFilterModule模块需要依赖gd-devel的支持，可以使用yum或apt-get方便地安装，如果未安装回报“/configure: error:the HTTP image filter module requires the GD library.”错误
+
+#安装命令：
+./configure   --prefix=/usr/local/nginx  --with-http_image_filter_module=dynamic
+# 编译
+make
+
+#关闭nginx
+systemctl stop nginx
+
+cd /usr/local/nginx/objs
+cp ./nginx  /usr/local/nginx/sbin/nginx
+#将动态库文件放在一个固定目录下
+cp ngx_http_image_filter_module.so  /usr/local/nginx/moudles/
+
+```
+---------------------
+#### 1.4.3.2 检查图片压缩模块
+
+```cpp
+//查看nginx版本
+/usr/local/nginx/sbin/nginx -V  
+
+//查看image模块 
+./configure --help| grep image
+
+//回显信息
+  --with-http_image_filter_module    enable ngx_http_image_filter_module
+  --with-http_image_filter_module=dynamic
+                                     enable dynamic ngx_http_image_filter_module
+```
+
+#### 1.4.3.3 重启nginx
+
+```sh
+
+#修改配置文件
+vi /usr/local/nginx/conf/nginx.conf
+
+# 全局内配置
+load_module "moudles/ngx_http_image_filter_module.so";
+
+# server http内配置
+location /images/ {
+    root /root/ftpadmin ;
+    #root 能够让访问 /images/ 路径时，访问到 /User/XX/Desktop/images，
+    #如果将 root 替换为 alias，则访问的是 /User/XX/Desktop/；其中 /User/XX/Desktop/ 是本机中的绝对路径。
+    autoindex on; #打开目录浏览功能
+    image_filter   resize  800 1200;
+}
+
+# 重新加载配置文件
+# nginx: [error] open() "/usr/local/nginx/logs/nginx.pid" failed (2: No such file or directory)
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+#  重启
+/usr/local/nginx/sbin/nginx  -s reload
+```
+
+
+### 1.4.4 ssl证书安装
+
+
+#### 1.4.4.1 SSL证书模块
+
+```sh
+#!bin/bash 
+
+
+cd /usr/local/nginx
+# 安装 openssl-devel
+yum  install  -y  openssl-devel
+# 安装httpssl证书模块   
+./configure   --prefix=/usr/local/nginx  --with-http_image_filter_module=dynamic --with-http_ssl_module
+#编译 使用
+make
+#关闭nginx
+systemctl stop nginx
+
+#查看 objs目录查看编译好的文件 
+cd /usr/local/nginx/objs
+
+cp ./nginx  /usr/local/nginx/sbin/nginx
+
+```
+
+#### 1.4.4.2 修改nginx.conf配置文件
+
+```sh
+./configure --help|grep ssl
+
+cd /usr/local/nginx/conf
+
+# 查看公钥秘钥存放路径--/usr/local/nginx/conf
+ls -lrt
+-rw-r--r-- 1 root root  3925 May 24 16:13 1_tianqikai.club_bundle.crt
+-rw-r--r-- 1 root root  1678 May 24 16:13 2_tianqikai.club.key
+
+
+#修改配置文件
+vi /usr/local/nginx/conf/nginx.conf
+server {
+     #SSL 访问端口号为 443
+     listen 443 ssl; 
+     #填写绑定证书的域名
+     server_name tianqikai.club; 
+     #证书文件名称
+     ssl_certificate 1_tianqikai.club_bundle.crt; 
+     #私钥文件名称
+     ssl_certificate_key 2_tianqikai.club.key; 
+     ssl_session_timeout 5m;
+     #请按照以下协议配置
+     ssl_protocols TLSv1 TLSv1.1 TLSv1.2; 
+     #请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。
+     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE; 
+     ssl_prefer_server_ciphers on;
+     location / {
+        #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。
+         root /var/www/tianqikai.club; 
+         index  index.html index.htm;
+     }
+ }
+
+# 重新加载配置文件
+# nginx: [error] open() "/usr/local/nginx/logs/nginx.pid" failed (2: No such file or directory)
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+#  重启
+/usr/local/nginx/sbin/nginx  -s reload
+```
+ 
