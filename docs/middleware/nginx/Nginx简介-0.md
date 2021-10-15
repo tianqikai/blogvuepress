@@ -345,3 +345,12 @@ server {
 /usr/local/nginx/sbin/nginx  -s reload
 ```
  
+#### 1.4.4.3 AB压测工具
+```sh
+yum -y install httpd-tools
+
+ab -c 1 -n 100   http://49.233.34.168/
+# -c 10表示并发用户数为10
+
+# -n 100表示请求总数为100
+```

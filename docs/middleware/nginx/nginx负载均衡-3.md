@@ -79,9 +79,18 @@ upstream  tqk001-server {
 
 <a title="" href='https://github.com/gnosek/nginx-upstream-fair'>下载地址：https://github.com/gnosek/nginx-upstream-fair</a>
 
- ./configure --with-http_ssl_module --with-http_stub_status_module  --with-http_gzip_static_module  --add-module=/mydata/nginx-upstream-fair-master
 
- https://www.cnblogs.com/alca0126/articles/14040879.html
+```sh
+#下载安装包并解压处理
+
+#安装
+./configure --with-http_ssl_module --with-http_stub_status_module  --with-http_gzip_static_module  --add-module=/mydata/nginx-upstream-fair-master
+
+#完成后直接make,注意不要make install
+make
+```
+
+https://www.cnblogs.com/alca0126/articles/14040879.html
 目录一定和本地文件对应好,之前有加入其它模块也要同时加入。完成后直接make,注意不要make install。
 
 此步骤可能出现异常：
@@ -98,7 +107,20 @@ nginx-upstream-fair/ngx_http_upstream_fair_module.c:543:28: error: ‘ngx_http_u
 
 cp objs/nginx /usr/local/default_port/nginx/sbin/nginx
 
-nginx执行reload   nginx -V 查看即可看到新增加的模块。
+```sh
+# 重新加载配置文件
+# nginx: [error] open() "/usr/local/nginx/logs/nginx.pid" failed (2: No such file or directory)
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+#  重启
+/usr/local/nginx/sbin/nginx  -s reload
+
+# 查看即可看到新增加的模块
+nginx -V 
+
+```
+--------------------------------
+
 ```cpp
 upstream  tqk001-server {
     server    127.0.0.1:5557 weight=1;
@@ -106,12 +128,11 @@ upstream  tqk001-server {
     fair;  
 }
 ```
-
-
 ./configure   --prefix=/usr/local/openresty/nginx  --with-http_image_filter_module=dynamic
-### 3.2.6 Nginx配置
 
-以轮询为例，如下是nginx.conf完整代码。
+### 3.2.6 Nginx完整配置
+
+**以轮询为例，如下是nginx.conf完整代码**
 
 ```cpp
 worker_processes  1;
