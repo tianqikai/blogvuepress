@@ -96,17 +96,17 @@ systemctl start keepalived.service
 ## 6.3 最终测试
 1. 在浏览器地址栏输入虚拟ip地址192.168.17.50 
 
-![image-20201012163807688](./image/image-20201012163807688.png)
+<a data-fancybox title="image-20201012163807688" href="./image/image-20201012163807688.png">![image-20201012163807688](./image/image-20201012163807688.png)</a>
 
-![image-20201012163817357](./image/image-20201012163817357.png)
+<a data-fancybox title="image-20201012163817357" href="./image/image-20201012163817357.png">![image-20201012163817357](./image/image-20201012163817357.png)</a>
 
 2. 把主服务器（192.168.17.129）nginx和keepalived停止，再输入192.168.17.50
 
-![image-20201012163836255](./image/image-20201012163836255.png)
+<a data-fancybox title="image-20201012163836255" href="./image/image-20201012163836255.png">![image-20201012163836255](./image/image-20201012163836255.png)</a>
 
-![image-20201012163840741](./image/image-20201012163840741.png)
+<a data-fancybox title="image-20201012163840741" href="./image/image-20201012163840741.png">![image-20201012163840741](./image/image-20201012163840741.png)</a>
 
 
 
-![image-20201012162304285](./image/image-20201012162304285.png)
+<a data-fancybox title="image-20201012162304285" href="./image/image-20201012162304285.png">![image-20201012162304285](./image/image-20201012162304285.png)</a>
 

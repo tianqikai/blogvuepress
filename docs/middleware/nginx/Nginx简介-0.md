@@ -246,7 +246,7 @@ cp ngx_http_image_filter_module.so  /usr/local/nginx/moudles/
                                      enable dynamic ngx_http_image_filter_module
 ```
 
-#### 1.4.3.3 重启nginx
+#### 1.4.3.3 Nginx配置实例-动静分离
 
 ```sh
 
