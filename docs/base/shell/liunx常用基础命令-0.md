@@ -743,7 +743,346 @@ du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目�
 <font color='red'><strong>[Ctrl]+r</strong></font>	  :重做上一个动作。(常用)  
 :::
 
-## 1.5 安装命令
+## 1.5 搜索查找命令
 
+### 1.5.1 find命令
+
+```sh
+#      查询目录  操作参数                          执行前进行确认操作       命令            find结果集                
+find   path     -option   [   -print ]   [ -exec   -ok                    command ]       {} \;
+
+# -exec 参数后面跟的是command命令，它的终止是以;为结束标志的，所以这句命令后面的分号是不可缺少的，考虑到各个系统中分号会有不同的意义，所以前面加反斜杠。
+# {} 花括号代表前面find查找出来的文件名。
+```
+
+:::tip 参数说明 
+find 根据下列规则判断 path 和 expression，在命令列上第一个 - ( ) , ! 之前的部份为 path，之后的是 expression。如果 path 是空字串则使用目前路径，如果 expression 是空字串则使用 -print 为预设 expression。
+
+expression 中可使用的选项有二三十个之多，在此只介绍最常用的部份。
+
+<font color='red'><strong>-mount, -xdev </strong></font>: 只检查和指定目录在同一个文件系统下的文件，避免列出其它文件系统中的文件
+
+<font color='red'><strong>-amin n </strong></font>: 在过去 n 分钟内被读取过
+
+<font color='red'><strong>-anewer file</strong></font> : 比文件 file 更晚被读取过的文件
+
+<font color='red'><strong>-atime n </strong></font>: 在过去n天内被读取过的文件
+
+<font color='red'><strong>-cmin n </strong></font>: 在过去 n 分钟内被修改过
+
+<font color='red'><strong>-cnewer file </strong></font>:比文件 file 更新的文件
+
+<font color='red'><strong>-ctime n </strong></font>: 在过去n天内被修改过的文件
+
+<font color='red'><strong>+n几天之前 -n几天之内</strong></font>
+
+<font color='red'><strong>-empty</strong></font> : 空的文件-gid n or -group name : gid 是 n 或是 group 名称是 name
+
+<font color='red'><strong>-ipath p, -path p</strong></font> : 路径名称符合 p 的文件，ipath 会忽略大小写
+
+<font color='red'><strong>-name name, -iname name </strong></font>: 文件名称符合 name 的文件。iname 会忽略大小写
+
+<font color='red'><strong>-size n </strong></font>: 文件大小 是 n 单位，b 代表 512 位元组的区块，c 表示字元数，k 表示 kilo bytes，w 是二个位元组。
+
+<font color='red'><strong>-type c </strong></font>: 文件类型是 c 的文件。
+
+```bash
+d: 目录
+
+c: 字型装置文件
+
+b: 区块装置文件
+
+p: 具名贮列
+
+f: 一般文件
+
+l: 符号连结
+
+s: socket
+```
+
+<font color='red'><strong>-pid n </strong></font>: process id 是 n 的文件
+
+```bash
+#你可以使用 ( ) 将运算式分隔，并使用下列运算。
+
+exp1 -and exp2
+
+! expr
+
+-not expr
+
+exp1 -or exp2
+
+exp1, exp2
+```
+:::
+
+#### 应用实例
+
+##### 将当前目录及其子目录下所有文件后缀为 .c 的文件列出来:
+
+```bash
+# find . -name "*.c"
+
+[root@TXYUN-NO2 ~]# find ~ -name "*.cpp"
+/root/3.cpp
+/root/2.cpp
+
+[root@TXYUN-NO2 ~]# find . -iname "*.cpp"
+./3.cpp
+./2.cpp
+
+# -o or或者
+[root@TXYUN-NO2 ~]# find . -name "*.cpp" -o -name "*.sh"
+./3.cpp
+./cutFile.sh
+./openresty.sh
+./2.cpp
+
+```
+##### 将当前目录及其子目录中的所有文件列出：
+
+```bash
+# find . -type f
+
+[root@TXYUN-NO2 ~]# find . -type f  -name "2.cpp"
+./2.cpp
+
+```
+##### 将当前目录及其子目录下所有最近 20 天内更新过的文件列出:
+
+```bash
+# find . -ctime -20
+
+# 当天更新的文件
+[root@TXYUN-NO2 ~]# find . -ctime -1
+.
+./.bash_history
+./2.cpp
+./.2.cpp.swp
+
+```
+##### 查找 /var/log 目录中更改时间在 7 日以前的普通文件，并在删除之前询问它们：
+
+```bash
+# find /var/log -type f -mtime +7 -ok rm {} \;
+
+[root@TXYUN-NO2 test]# touch 1.cpp 2.cpp 3.cpp 4.cpp 5.cpp
+[root@TXYUN-NO2 test]# find . -type f -exec rm  {} \;
+[root@TXYUN-NO2 test]# ls -lrt
+total 0
+[root@TXYUN-NO2 test]# touch 1.cpp 2.cpp 3.cpp 4.cpp 5.cpp
+[root@TXYUN-NO2 test]# find . -type f -ok rm -rf {} \;
+< rm ... ./5.cpp > ? y
+< rm ... ./1.cpp > ? n
+< rm ... ./4.cpp > ? y
+< rm ... ./3.cpp > ? y
+< rm ... ./2.cpp > ? n
+[root@TXYUN-NO2 test]# ls
+1.cpp  2.cpp
+
+```
+##### 查找当前目录中文件属主具有读、写权限，并且文件所属组的用户和其他用户具有读权限的文件：
+
+```bash
+# find . -type f -perm 644 -exec ls -l {} \;
+
+[root@TXYUN-NO2 test]# ls -lrt
+total 0
+-rw-r--r-- 1 root root 0 Oct 18 14:13 2.cpp
+-rw-r--r-- 1 root root 0 Oct 18 14:13 1.cpp
+# 544 查询不到
+[root@TXYUN-NO2 test]# find . -type f -perm 544
+[root@TXYUN-NO2 test]# find . -type f -perm 644
+./1.cpp
+./2.cpp
+[root@TXYUN-NO2 test]# find . -type f -perm 644 -exec ls -lrt {} \;
+-rw-r--r-- 1 root root 0 Oct 18 14:13 ./1.cpp
+-rw-r--r-- 1 root root 0 Oct 18 14:13 ./2.cpp
+
+```
+##### 查找系统中所有文件长度为 0 的普通文件，并列出它们的完整路径：
+
+```bash
+# find / -type f -size 0 -exec ls -l {} \;
+
+[root@TXYUN-NO2 test]# find . -size 0 -exec ls -lrt {} \;
+-rw-r--r-- 1 root root 0 Oct 18 14:13 ./1.cpp
+-rw-r--r-- 1 root root 0 Oct 18 14:13 ./2.cpp
+
+```
+
+##### 查找当前路径下的文件名后缀是cpp，文件内容含有‘tq’字母的文件
+
+```bash
+[root@TXYUN-NO2 test]# find . -name "*.cpp"|xargs grep tq
+./1.cpp:12345tql
+```
+
+### 1.5.2 grep命令
+
+Linux系统中grep命令是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。grep全称是Global Regular Expression Print，表示全局正则表达式版本，它的使用权限是所有用户
+:::tip 主要参数
+grep --help可查看
+
+-c：只输出匹配行的计数。
+
+-i：不区分大小写。
+
+-h：查询多文件时不显示文件名。
+
+-l：查询多文件时只输出包含匹配字符的文件名。
+
+-n：显示匹配行及行号。
+
+-s：不显示不存在或无匹配文本的错误信息。
+
+-v：显示不包含匹配文本的所有行。
+
+--color=auto ：可以将找到的关键词部分加上颜色的显示。
+
+pattern正则表达式主要参数:
+
+```sh
+\： 忽略正则表达式中特殊字符的原有含义。
+
+^：匹配正则表达式的开始行。
+
+$: 匹配正则表达式的结束行。
+
+\<：从匹配正则表达 式的行开始。
+
+\>：到匹配正则表达式的行结束。
+
+[ ]：单个字符，如[A]即A符合要求 。
+
+[ - ]：范围，如[A-Z]，即A、B、C一直到Z都符合要求 。
+
+.：所有的单个字符。
+
+*：所有字符，长度可以为0。
+```
+:::
+
+#### 显示所有以.cpp结尾的文件中包含tq的行
+```sh
+#  grep 'tq' o *.cpp
+[root@TXYUN-NO2 test]# grep 'tq' --color=auto *.cpp
+1.cpp:12345tql
+2.cpp:tqk tqk
+3.cpp:tqk tqk002 asda
+3.cpp:tqk tqk002 asda
+
+```
+#### 显示/root/test/目录下的文件中包含tqk的行
+```sh
+# read读取
+[root@TXYUN-NO2 test]# grep 'tqk' -d read /root/test/*
+grep: /root/test/001: Is a directory
+/root/test/2.cpp:tqk tqk
+/root/test/3.cpp:tqk tqk002 asda
+/root/test/3.cpp:tqk tqk002 asda
+
+# 递归方式 recurse
+[root@TXYUN-NO2 test]# grep 'tqk' -d recurse /root/test/*
+/root/test/001/1.cpp:tqktqk00111
+/root/test/2.cpp:tqk tqk
+/root/test/3.cpp:tqk tqk002 asda
+/root/test/3.cpp:tqk tqk002 asda
+
+# 跳过 001目录
+[root@TXYUN-NO2 test]# grep 'tqk' -d skip '001' /root/test/*
+/root/test/2.cpp:tqk tqk
+/root/test/3.cpp:tqk tqk002 asda
+/root/test/3.cpp:tqk tqk002 asda
+
+```
+#### 显示/root/test/目录下的文件中包含tqk的行
+```sh
+#-r 递归方式循环查找
+[root@TXYUN-NO2 test]# grep 'tqk' -r  /root/test
+/root/test/3.cpp:tqk tqk002 asda
+/root/test/3.cpp:tqk tqk002 asda
+/root/test/001/1.cpp:tqktqk00111
+/root/test/2.cpp:tqk tqk
+```
+
+--------------------------------------
+
+```bash
+
+# -r递归文件目录 -h不显示文件名  -n显示行号
+[root@TXYUN-NO2 test]# grep -nrh 'tqk'  /root/test
+1:tqk tqk002 asda
+2:tqk tqk002 asda
+1:tqktqk00111
+1:tqk tqk
+
+# -r递归文件目录； -h不显示文件名 ； -n显示行号 ；-i 不区分大小写
+[root@TXYUN-NO2 test]# grep -nrhi 'tqk'  /root/test
+2:TQK
+1:tqk tqk002 asda
+2:tqk tqk002 asda
+1:tqktqk00111
+1:tqk tqk
+```
+----------------------------------------
+
+```bash
+
+# 已TQK开始的行
+[root@TXYUN-NO2 test]# grep '^TQK' *.cpp
+1.cpp:TQK
+
+# 已da结尾的行
+[root@TXYUN-NO2 test]# grep 'da$' *.cpp
+3.cpp:tqk tqk002 asda
+3.cpp:tqk tqk002 asda
+
+```
+
+## 1.6 web工具命令
+
+### 1.6.1 curl命令
+
+### 1.6.2 wget命令
+
+### 1.6.3 nc命令
+
+### 1.6.4 telnet命令
+
+### 1.6.5 ping命令
+
+### 1.6.6 sshfs命令
+
+```sh
+sudo sshfs -o allow_other,defer_permissions root@1.117.13.88:/mydata/tqk /mydata/gzg
+``` 
+
+## 1.7 安装命令
 
 ## 1.6 其他命令
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
