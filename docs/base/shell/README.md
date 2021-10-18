@@ -1,5 +1,5 @@
 ---
-autoNext: liunx常用命令-0
+autoNext: liunx常用基础命令-0
 ---
 # shell脚本
 
