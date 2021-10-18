@@ -1046,14 +1046,104 @@ grep: /root/test/001: Is a directory
 ## 1.6 web工具命令
 
 ### 1.6.1 curl命令
+在Linux中curl是一个利用URL规则在命令行下工作的文件传输工具，可以说是一款很强大的http命令行工具。它支持文件的上传和下载，是综合传输工具，但按传统，习惯称curl为下载工具
+
+#### curl作为http客户端使用
+```sh
+## 客户端发送消息
+curl -H "Content-Type:application/json" -X POST -d '{"service":"tqk001","partId":"95qqtt"}' 'http://49.232.21.151:12345'
+
+## 服务端收到消息
+[root@tianqikai ~]# nc -l 12345
+POST / HTTP/1.1
+Host: 49.232.21.151:12345
+User-Agent: curl/7.61.1
+Accept: */*
+Content-Type:application/json
+Content-Length: 38
+
+{"service":"tqk001","partId":"95qqtt"}
+
+```
+#### curl下载文件使用
+
+```sh
+curl http://49.232.21.151/group1/M00/00/00/rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg >> 1.jpg
+```
 
 ### 1.6.2 wget命令
 
+wget是Linux中的一个下载文件的工具，wget是在Linux下开发的开放源代码的软件，作者是Hrvoje Niksic
+
+```sh
+# 直接下载
+wget http://49.232.21.151/group1/M00/00/00/rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg
+
+# 使用 wget -O 下载并以不同的文件名保存 
+wget -O tqk.jpg http://49.232.21.151/group1/M00/00/00/rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg
+
+# 使用wget -c重新启动下载中断的文件:
+# 对于我们下载大文件时突然由于网络等原因中断非常有帮助，我们可以继续接着下载而不是重新下载一个文件
+wget -c http://49.232.21.151/group1/M00/00/00/rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg
+
+# 使用 wget -b 后台下载
+wget -b http://49.232.21.151/group1/M00/00/00/rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg
+
+[root@TXYUN-NO2 ~]# wget http://49.232.21.151/group1/M00/00/00/rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg
+--2021-10-18 23:25:47--  http://49.232.21.151/group1/M00/00/00/rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg
+Connecting to 49.232.21.151:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 22635 (22K) [image/jpeg]
+Saving to: ‘rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg’
+
+rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg                          100%[===========================================================================================================================================>]  22.10K  --.-KB/s    in 0.03s   
+
+2021-10-18 23:25:47 (708 KB/s) - ‘rBUAEGB-sOaAFhbtAABYayAtqWU181.jpg’ saved [22635/22635]
+
+```
+
 ### 1.6.3 nc命令
+
+Linux nc命令用于设置路由器。
+
+**nc -l port**
+
+使用监听模式，管控传入的资料。
+
+```sh
+[root@TXYUN-NO2 ~]# telnet 49.232.21.151 12345
+Trying 49.232.21.151...
+Connected to 49.232.21.151.
+Escape character is '^]'.
+hello world
+quit
+Connection closed by foreign host.
+
+[root@tianqikai ~]# nc -l 12345
+hello world
+
+```
 
 ### 1.6.4 telnet命令
 
+```bash
+#安装telnet
+[root@TXYUN-NO2 ~]# yum install telnet  -y
+
+[root@TXYUN-NO2 ~]# telnet 49.232.21.151 8080
+Trying 49.232.21.151...
+Connected to 49.232.21.151.
+Escape character is '^]'.
+
+```
 ### 1.6.5 ping命令
+
+```sh
+[root@TXYUN-NO2 ~]# ping 49.232.21.151
+PING 49.232.21.151 (49.232.21.151) 56(84) bytes of data.
+64 bytes from 49.232.21.151: icmp_seq=1 ttl=55 time=28.6 ms
+64 bytes from 49.232.21.151: icmp_seq=2 ttl=55 time=23.9 ms
+```
 
 ### 1.6.6 sshfs命令
 
@@ -1062,6 +1152,68 @@ sudo sshfs -o allow_other,defer_permissions root@1.117.13.88:/mydata/tqk /mydata
 ``` 
 
 ## 1.7 安装命令
+
+### 1.7.1 yum命令
+
+**yum（ Yellow dog Updater, Modified）是一个在 Fedora 和 RedHat 以及 SUSE 中的 Shell 前端软件包管理器**
+
+:::tip yum常用命令
+
+1. 列出所有可更新的软件清单命令：<font color='green'><strong>yum check-update</strong></font>
+
+2. 更新所有软件命令：<font color='green'><strong>yum update</strong></font>
+
+3. 仅安装指定的软件命令：<font color='green'><strong>yum install [package_name]</strong></font>
+
+4. 仅更新指定的软件命令：<font color='green'><strong>yum update [package_name]</strong></font>
+
+5. 列出所有可安裝的软件清单命令：<font color='green'><strong>yum list</strong></font>
+
+6. 删除软件包命令：<font color='green'><strong>yum remove [package_name]</strong></font>
+
+7. 查找软件包命令：<font color='green'><strong>yum search [keyword]</strong></font>
+
+8. 清除缓存命令:  
+<font color='green'><strong>yum clean packages</strong></font>: 清除缓存目录下的软件包  
+<font color='green'><strong>yum clean headers</strong></font>: 清除缓存目录下的 headers  
+<font color='green'><strong>yum clean oldheaders</strong></font>: 清除缓存目录下旧的 headers  
+<font color='green'><strong>yum clean, yum clean all (= yum clean packages; yum clean oldheaders)</strong></font> :清除缓存目录下的软件包及旧的 headers  
+:::
+
+### 1.7.2 apt命令
+
+**apt（Advanced Packaging Tool）是一个在 Debian 和 Ubuntu 中的 Shell 前端软件包管理器。**
+
+:::tip apt 常用命令
+
+1. 列出所有可更新的软件清单命令：sudo apt update
+
+2. 升级软件包：sudo apt upgrade
+
+3. 列出可更新的软件包及版本信息：apt list --upgradeable
+
+4. 升级软件包，升级前先删除需要更新软件包：sudo apt full-upgrade
+
+5. 安装指定的软件命令：sudo apt install [package_name]
+
+6. 安装多个软件包：sudo apt install [package_1] [package_2] [package_3]
+
+7. 更新指定的软件命令：sudo apt update [package_name]
+
+8. 显示软件包具体信息,例如：版本号，安装大小，依赖关系等等：sudo apt show [package_name]
+
+9. 删除软件包命令：sudo apt remove [package_name]
+
+10. 清理不再使用的依赖和库文件: sudo apt autoremove
+
+11. 移除软件包及配置文件: sudo apt purge [package_name]
+
+12. 查找软件包命令： sudo apt search [keyword]
+
+13. 列出所有已安装的包：apt list --installed
+
+14. 列出所有已安装的包的版本信息：apt list --all-versions
+:::
 
 ## 1.6 其他命令
 
