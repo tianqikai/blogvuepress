@@ -919,6 +919,7 @@ total 0
 ### 1.5.2 grep命令
 
 Linux系统中grep命令是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。grep全称是Global Regular Expression Print，表示全局正则表达式版本，它的使用权限是所有用户
+
 :::tip 主要参数
 grep --help可查看
 
@@ -938,7 +939,7 @@ grep --help可查看
 
 --color=auto ：可以将找到的关键词部分加上颜色的显示。
 
-pattern正则表达式主要参数:
+**pattern正则表达式主要参数:**
 
 ```sh
 \： 忽略正则表达式中特殊字符的原有含义。
