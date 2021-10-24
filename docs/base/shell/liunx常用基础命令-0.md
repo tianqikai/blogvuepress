@@ -672,8 +672,7 @@ du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目�
 :这个 N 是英文按键。与 n 刚好相反，为『反向』进行前一个搜寻动作。 例如 /vbird 后，按下 N 则表示『向上』搜寻 vbird 。
 使用 /word 配合 n 及 N 是非常有帮助的！可以让你重复的找到一些你搜寻的关键词！
 
-<hr>
-///--------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 <font color='red'><strong>:n1,n2s/word1/word2/g</strong></font>	  
 :n1 与 n2 为数字。在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 ！举例来说，在 100 到 200 行之间搜寻 vbird 并取代为 VBIRD 则：**:100,200s/vbird/VBIRD/g**
@@ -711,9 +710,7 @@ du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目�
 <font color='red'><strong>d0</strong></font>     
 :那个是数字的 0 ，删除游标所在处，到该行的最前面一个字符  
 
-<hr>
 --------------------------------------------------------------------------------
-
 
 <font color='red'><strong>yy</strong></font>   :复制游标所在的那一行(常用)  
 
@@ -731,7 +728,7 @@ du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目�
 
  举例来说，我目前光标在第 20 行，且已经复制了 10 行数据。则按下 p 后， 那 10 行数据会贴在原本的 20 行之后，亦即由 21 行开始贴。但如果是按下 P 呢？ 那么原本的第 20 行会被推到变成 30 行。 (常用)
 
-<hr>
+
 --------------------------------------------------------------------------------
 
 <font color='red'><strong>J</strong></font>	  :将光标所在行与下一行的数据结合成同一行  
@@ -1186,33 +1183,33 @@ sudo sshfs -o allow_other,defer_permissions root@1.117.13.88:/mydata/tqk /mydata
 
 :::tip apt 常用命令
 
-1. 列出所有可更新的软件清单命令：sudo apt update
+1. 列出所有可更新的软件清单命令：<font color='blue'><strong>sudo apt update</strong></font>
 
-2. 升级软件包：sudo apt upgrade
+2. 升级软件包：<font color='blue'><strong>sudo apt upgrade</strong></font>
 
-3. 列出可更新的软件包及版本信息：apt list --upgradeable
+3. 列出可更新的软件包及版本信息：<font color='blue'><strong>apt list --upgradeable</strong></font>
 
-4. 升级软件包，升级前先删除需要更新软件包：sudo apt full-upgrade
+4. 升级软件包，升级前先删除需要更新软件包：<font color='blue'><strong>sudo apt full-upgrade</strong></font>
 
-5. 安装指定的软件命令：sudo apt install [package_name]
+5. 安装指定的软件命令：<font color='blue'><strong>sudo apt install [package_name]</strong></font>
 
-6. 安装多个软件包：sudo apt install [package_1] [package_2] [package_3]
+6. 安装多个软件包：<font color='blue'><strong>sudo apt install [package_1] [package_2] [package_3]</strong></font>
 
-7. 更新指定的软件命令：sudo apt update [package_name]
+7. 更新指定的软件命令：<font color='blue'><strong>sudo apt update [package_name]</strong></font>
 
-8. 显示软件包具体信息,例如：版本号，安装大小，依赖关系等等：sudo apt show [package_name]
+8. 显示软件包具体信息,例如：版本号，安装大小，依赖关系等等：<font color='blue'><strong>sudo apt show [package_name]</strong></font>
 
-9. 删除软件包命令：sudo apt remove [package_name]
+9. 删除软件包命令：<font color='blue'><strong>sudo apt remove [package_name]</strong></font>
 
-10. 清理不再使用的依赖和库文件: sudo apt autoremove
+10. 清理不再使用的依赖和库文件: <font color='blue'><strong>sudo apt autoremove</strong></font>
 
-11. 移除软件包及配置文件: sudo apt purge [package_name]
+11. 移除软件包及配置文件: <font color='blue'><strong>sudo apt purge [package_name]</strong></font>
 
-12. 查找软件包命令： sudo apt search [keyword]
+12. 查找软件包命令： <font color='blue'><strong>sudo apt search [keyword]</strong></font>
 
-13. 列出所有已安装的包：apt list --installed
+13. 列出所有已安装的包：<font color='blue'><strong>apt list --installed</strong></font>
 
-14. 列出所有已安装的包的版本信息：apt list --all-versions
+14. 列出所有已安装的包的版本信息：<font color='blue'><strong>apt list --all-versions</strong></font>
 :::
 
 ## 1.6 其他命令
