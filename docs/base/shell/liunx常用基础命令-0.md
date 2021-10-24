@@ -528,11 +528,68 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 
 ###  1.3.3 ps命令
 
-:::tip 参数说明
-PID: 运行着的命令(CMD)的进程编号  
-TTY: 命令所运行的位置（终端）   
-TIME: 运行着的该命令所占用的CPU处理时间   
-CMD: 该进程所运行的命令  
+:::tip 常用参数
+<font color='red'><strong>-A </strong></font>显示所有进程（等价于-e）(utility)  
+<font color='red'><strong>-a </strong></font>显示一个终端的所有进程，除了会话引线  
+<font color='red'><strong>-N </strong></font>忽略选择。  
+<font color='red'><strong>-d </strong></font>显示所有进程，但省略所有的会话引线(utility)  
+<font color='red'><strong>-x </strong></font>显示没有控制终端的进程，同时显示各个命令的具体路径。dx不可合用。（utility）  
+<font color='red'><strong>-p pid </strong></font>进程使用cpu的时间  
+<font color='red'><strong>-u uid or username </strong></font>选择有效的用户id或者是用户名  
+<font color='red'><strong>-g gid or groupname </strong></font>显示组的所有进程。  
+<font color='red'><strong>U username </strong></font>显示该用户下的所有进程，且显示各个命令的详细路径。如:ps U zhang;(utility)  
+<font color='red'><strong>-f </strong></font>全部列出，通常和其他选项联用。如：ps -fa or ps -fx and so on.  
+<font color='red'><strong>-l </strong></font>长格式（有F,wchan,C 等字段）  
+<font color='red'><strong>-j </strong></font>作业格式  
+<font color='red'><strong>-o </strong></font>用户自定义格式。  
+<font color='red'><strong>v</strong></font> 以虚拟存储器格式显示  
+<font color='red'><strong>s </strong></font>以信号格式显示  
+<font color='red'><strong>-m</strong></font> 显示所有的线程  
+<font color='red'><strong>-H</strong></font> 显示进程的层次(和其它的命令合用，如：ps -Ha)（utility）   
+<font color='red'><strong>e</strong></font> 命令之后显示环境（如：ps -d e; ps -a e）(utility)  
+<font color='red'><strong>h</strong></font> 不显示第一行  
+:::
+
+---------------
+
+:::tip 显示参数说明
+ps aux 或 lax 输出的解释：
+
+<font color='red'><strong>USER</strong></font>： 进程的属主；  
+<font color='red'><strong>PID</strong></font>： 进程的ID；  
+<font color='red'><strong>PPID</strong></font>： 父进程；  
+<font color='red'><strong>%CPU</strong></font>： 进程占用的CPU百分比；  
+<font color='red'><strong>%MEM</strong></font>： 占用内存的百分比；  
+<font color='red'><strong>NI</strong></font>： 进程的NICE值，数值大，表示较少占用CPU时间；  
+<font color='red'><strong>VSZ</strong></font>： 进程虚拟大小；  
+<font color='red'><strong>RSS</strong></font>： 驻留中页的数量；  
+<font color='red'><strong>TTY</strong></font>： 终端ID  
+<font color='red'><strong>STAT</strong></font>： 进程状态（有以下几种）  
+
+```sh
+D 无法中断的休眠状态（通常 IO 的进程）；
+R 正在运行可中在队列中可过行的；
+S 处于休眠状态；
+T 停止或被追踪；
+W 进入内存交换（从内核2.6开始无效）；
+X 死掉的进程（从来没见过）；
+Z 僵尸进程；
+
+----------------------
+
+< 优先级高的进程
+N 优先级较低的进程
+L 有些页被锁进内存；
+s 进程的领导者（在它之下有子进程）；
+l 多进程的（使用 CLONE_THREAD, 类似 NPTL pthreads）；
++ 位于后台的进程组；
+```
+-----------------------
+
+<font color='red'><strong>WCHAN</strong></font>： 正在等待的进程资源；
+<font color='red'><strong>START</strong></font>： 启动进程的时间；
+<font color='red'><strong>TIME</strong></font>： 进程消耗CPU的时间；
+<font color='red'><strong>COMMAND</strong></font>： 命令的名称和参数； 
 :::
 
 ```sh
@@ -549,7 +606,10 @@ ps -L 1213 #根据线程来过滤进程
 ps -axjf（或pstree） #树形显示进程
 ps -eo pid,user,args # 显示安全信息
 ps -U root -u root u #格式化输出 root 用户（真实的或有效的UID）创建的进程
- 
+
+ps -aux|grep Z # 查看僵尸进程
+
+ps -mq|wc -l # 查看该进程的线程数
 ------------------------------------------------------
 
 [root@tianqikai ~]# ps -ef
@@ -624,8 +684,6 @@ du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目�
 
 如果你将右手放在键盘上的话，你会发现 hjkl 是排列在一起的，因此可以使用这四个按钮来移动光标。 如果想要进行多次移动的话，例如向下移动 30 行，可以使用 "30j" 或 "30↓" 的组合按键， 亦即加上想要进行的次数(数字)后，按下动作即可！
 
-
-<hr>
 
 ---------------------------
 
@@ -727,7 +785,6 @@ du [-abcDhHklmsSx][-L <符号连接>][-X <文件>][--block-size][--exclude=<目�
 <font color='red'><strong>p, P</strong></font> :p 为将已复制的数据在光标下一行贴上，P 则为贴在游标上一行！  
 
  举例来说，我目前光标在第 20 行，且已经复制了 10 行数据。则按下 p 后， 那 10 行数据会贴在原本的 20 行之后，亦即由 21 行开始贴。但如果是按下 P 呢？ 那么原本的第 20 行会被推到变成 30 行。 (常用)
-
 
 --------------------------------------------------------------------------------
 
@@ -921,6 +978,7 @@ total 0
 ### 1.5.2 grep命令
 
 Linux系统中grep命令是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。grep全称是Global Regular Expression Print，表示全局正则表达式版本，它的使用权限是所有用户
+
 :::tip 主要参数
 grep --help可查看
 
@@ -940,7 +998,7 @@ grep --help可查看
 
 --color=auto ：可以将找到的关键词部分加上颜色的显示。
 
-pattern正则表达式主要参数:
+**pattern正则表达式主要参数:**
 
 ```sh
 \： 忽略正则表达式中特殊字符的原有含义。
