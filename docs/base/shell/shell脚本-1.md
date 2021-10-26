@@ -515,10 +515,363 @@ fi
 
 ```
 
-## 2.4 shell中条件判断	
+## 2.4 shell中流程控制		
+
+### 2.4.1 if判断
+
+#### 2.4.1.1 基本语法
+:::tip 基本语法
+
+1. 方式一
+```sh
+if [ 条件判断式 ];then 
+  程序 
+fi 
+```
+---------------------
+
+2. 方式二
+```sh
+if [ 条件判断式 ] 
+  then 
+    程序 
+fi
+```
+-------------------
+3. 方式三
+```sh
+if [ 条件判断式 ]; then 
+  程序 
+elseif [ 条件判断式 ]; then
+  程序
+else
+  程序
+fi
+```
+**注意事项：**
+（1）[ 条件判断式 ],中括号和条件判断式之间必须有空格
+（2）<font color='red'>if后要有空格</font>
+:::
+
+#### 2.4.1.2 实例演示
 
 ```sh
+#!bash/bin
+a=10;
+b=10;
+if [ $a -gt $b ];then
+    echo "$a 大于 $b"
+elif [ $a -eq $b ]
+then
+    echo "$a 等于 $b";
+else
+    echo "$a 小于 $b";
+fi
+```
+----------
+```sh
+[root@TXYUN-NO2 JVM]# sh ifelse.sh
+10 等于 10
+```
 
+### 2.4.2 for循环
+
+#### 2.4.2.1 基本语法
+
+:::tip 基本语法
+1. 方式一
+```sh
+for (( 初始值;循环控制条件;变量变化 )) 
+  do 
+    程序 
+  done
+```
+2. 方式二
+```sh
+for  变量 in item1 item2 ... itemN
+do
+    echo "$val"
+done
+```
+3. 方式三
+```sh
+for  变量 in `表达式`
+do
+    echo "$val"
+done
+```
+:::
+#### 2.4.2.2 案例实例
+
+```sh
+#!bash/bin
+for  val in `find . -name "*.sh"`
+do
+        echo "$val"
+done
+
+echo '--------------------'
+files=`find . -name "*.sh"`
+
+for filename in $files
+do
+echo "$filename"
+done
+
+echo '--------------------'
+for (( i=0;i<10;i++))
+do
+echo "NO.$i"
+done
+```
+
+```sh
+[root@TXYUN-NO2 JVM]# sh for.sh
+./bool.sh
+./expr.sh
+./file.sh
+./str.sh
+./ifelse.sh
+./than.sh
+./test.sh
+./for.sh
+./boolean.sh
+--------------------
+./bool.sh
+./expr.sh
+./file.sh
+./str.sh
+./ifelse.sh
+./than.sh
+./test.sh
+./for.sh
+./boolean.sh
+--------------------
+NO.0
+NO.1
+NO.2
+NO.3
+NO.4
+NO.5
+NO.6
+NO.7
+NO.8
+NO.9
+```
+### 2.4.3 while循环
+
+#### 2.4.3.1 基础语法
+:::tip 基础语法
+1. 方式一
+```sh
+while ((条件表达式))
+do
+    command
+done
+```
+-----------
+2. 方式二
+```sh
+while :
+do
+    command
+done
+```
+-------------
+3. 方式三
+```sh
+while true
+do
+    command
+done
+```
+:::
+#### 2.4.3.2 案例实例
+
+```sh
+#!bash/bin
+i=0;
+while (($i<2))
+do
+ echo "NO.$i";
+ i=`expr $i + 1`;
+done
+
+echo "----------------------";
+while true
+do
+  echo "NUMBER NO.$i";
+  i=`expr $i + 1`;
+  if [ $i -gt 10 ];then
+    break
+  fi
+done
+
+echo "----------------------";
+while :
+do
+  echo "NUMBER NO.$i";
+  i=`expr $i + 1`;
+  if [ $i -gt 20 ];then
+    break
+  fi
+done
+
+```
+----------------
+
+```sh
+[root@TXYUN-NO2 JVM]# sh while.sh
+NO.0
+NO.1
+----------------------
+NUMBER NO.2
+NUMBER NO.3
+NUMBER NO.4
+NUMBER NO.5
+NUMBER NO.6
+NUMBER NO.7
+NUMBER NO.8
+NUMBER NO.9
+NUMBER NO.10
+----------------------
+NUMBER NO.11
+NUMBER NO.12
+NUMBER NO.13
+NUMBER NO.14
+NUMBER NO.15
+NUMBER NO.16
+NUMBER NO.17
+NUMBER NO.18
+NUMBER NO.19
+NUMBER NO.20
+```
+### 2.4.4 until 循环
+until 循环执行一系列命令直至条件为 true 时停止。
+
+until 循环与 while 循环在处理方式上刚好相反。
+
+一般 while 循环优于 until 循环，但在某些时候—也只是极少数情况下，until 循环更加有用。
+
+#### 2.4.4.1 基础语法
+:::tip 基础语法
+1. 方式一
+```sh
+until condition
+do
+    command
+done
+```
+:::
+
+#### 2.4.4.2 案例实例
+
+```sh
+#!/bin/bash
+a=0
+until [ ! $a -lt 10 ]
+do
+   echo $a
+   a=`expr $a + 1`
+done
+```
+--------------------------
+```sh
+[root@TXYUN-NO2 JVM]# sh until.sh
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+```
+
+### 2.4.5 case ... esac语句
+
+#### 2.4.5.1 基础语法
+:::tip 基础语法
+1. 方式一
+```sh
+case 值 in
+值1)
+    command1
+    command2
+    ...
+    commandN
+    ;;
+值2）
+    command1
+    command2
+    ...
+    commandN
+    ;;
+esac
+```
+:::
+
+#### 2.4.5.2 案例实例
+```sh
+#!bash/bin
+while :
+do
+echo "请输入1到4之间的数字"
+read NUM
+case $NUM in
+    1)  echo '你选择了 1'
+    ;;
+    2)  echo '你选择了 2'
+    ;;
+    3)  echo '你选择了 3'
+    ;;
+    4)  echo '你选择了 4'
+    ;;
+    *)  echo '你没有输入 1 到 4 之间的数字,游戏结束'
+        break;
+    ;;
+esac
+done
+```
+```sh
+[root@TXYUN-NO2 JVM]# sh case.sh
+请输入1到5之间的数字
+1
+你选择了 1
+请输入1到5之间的数字
+5
+你没有输入 1 到 4 之间的数字,游戏结束
+
+```
+### 2.4.6 break命令
+break命令允许跳出所有循环（终止执行后面的所有循环）。
+
+```sh
+#!bash/bin
+while :
+do
+echo "请输入1到4之间的数字"
+read NUM
+case $NUM in
+    1)  echo '你选择了 1'
+    ;;
+    2)  echo '你选择了 2'
+    ;;
+    3)  echo '你选择了 3'
+    ;;
+    4)  echo '你选择了 4'
+    ;;
+    *)  echo '你没有输入 1 到 4 之间的数字,游戏结束'
+        break;
+    ;;
+esac
+done
+```
+### 2.4.7 continue命令
+continue命令与break命令类似，只有一点差别，它不会跳出所有循环，仅仅跳出当前循环
+```sh
 ```
 
 ## 2.5 shell中流程控制	
