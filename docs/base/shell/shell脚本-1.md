@@ -903,8 +903,46 @@ dirname 文件绝对路径
 
 #### 2.5.1.2 案例实例
 
+```sh
+[root@TXYUN-NO2 JVM]# basename /root/JVM/find.sh  .sh
+find
+[root@TXYUN-NO2 JVM]# basename /root/JVM/find.sh
+find.sh
+[root@TXYUN-NO2 JVM]# dirname /root/JVM/find.sh
+/root/JVM
+```
+
+**查出当前路径下所有的的shell脚本，并检查是否在目标数组中，如果不在标注出来并返回**
+```sh
+#!bash/bin
+
+myarray=(test.sh expr.sh than.sh bool.sh boolean.sh str.sh file.sh);
+
+echo "${myarray[@]}"
+echo "${myarray[*]}"
+
+shellname=`find . -name "*.sh" -exec  basename {} \;`
+
+echo "$shellname"
+notgetfilename="";
+count=0;
+for filename in $shellname
+
+do
+ if [[ ${myarray[*]} =~ $filename ]]; then
+   echo "$filename 存在于数组中"
+ else
+   count=`expr $count + 1`;
+   notgetfilename="$notgetfilename |$filename"
+ fi
+
+done
+echo "多余文件个数：$count $notgetfilename"
+```
+
 ### 2.5.2 自定义函数
 
+#### 2.5.2.1 基本语法
 :::tip 基本语法
 1. 基本语法
 ```sh
@@ -922,11 +960,159 @@ funname
 	（2）函数返回值，只能通过$?系统变量获得，可以显示加：return返回，如果不加，将以最后一条命令运行结果，作为返回值。return后跟数值n(0-255)  
 :::
 
------------
+------------
+
+#### 2.5.2.2 实际案例
 
 ```sh
+
 ```
+
+## 2.6 shell中数组
+
+### 2.6.1 基础语法
+```sh
+array_name=(value1 value2 ... valuen)
+```
+### 2.6.2 实际案例
+
+```sh
+#!bash/bin
+
+myarray=(test.sh expr.sh than.sh bool.sh boolean.sh str.sh file.sh);
+
+echo "${myarray[@]}"
+echo "${myarray[*]}"
+echo "${myarray[1]}"
+echo "${myarray[0]}"
+
+ if [[ ${myarray[*]} =~ "bool.sh" ]]; then
+   echo "$filename 存在于数组中"
+ else
+   echo "$filename 不存在于数组中"
+ fi
+```
+-------------
+
+```sh
+[root@TXYUN-NO2 JVM]# sh array.sh
+test.sh expr.sh than.sh bool.sh boolean.sh str.sh file.sh
+test.sh expr.sh than.sh bool.sh boolean.sh str.sh file.sh
+expr.sh
+test.sh
+存在于数组中
+```
+
 ## 2.7 shell中工具命令	
+
+### 2.7.1 cut命令
+#### 2.7.1.1 基础语法
+:::tip 基础语法
+cut  [-bn] [file]
+cut [-c] [file]
+cut [-df] [file]
+:::
+
+:::warning 参数
+<font color='red'><strong>-b</strong></font> ：以字节为单位进行分割。这些字节位置将忽略多字节字符边界，除非也指定了 -n 标志。
+
+<font color='red'><strong>-c</strong></font> ：以字符为单位进行分割。
+
+<font color='red'><strong>-d</strong></font> ：自定义分隔符，默认为**制表符**。
+
+<font color='red'><strong>-f</strong></font> ：与-d一起使用，指定显示哪个区域。
+
+<font color='red'><strong>-n</strong></font> ：取消分割多字节字符。仅和 -b 标志一起使用。如果字符的最后一个字节落在由 -b 标志的 List 参数指示的
+范围之内，该字符将被写出；否则，该字符将被排除
+:::
+
+#### 2.7.1.2 实际案例
+
+```sh
+[root@TXYUN-NO2 JVM]# cat cut.txt
+qw er dsf ffg ssdfsa
+sd tqk 001 tian kai qi
+sss ff bai chuan lei
+qiue meng meng kkkk sss
+田起凯 球儿萌萌
+```
+--------------
+
+```sh
+# 1. 切割第四个字节
+[root@TXYUN-NO2 JVM]# who
+root     pts/0        2021-10-27 08:58 (218.201.132.130)
+[root@TXYUN-NO2 JVM]# who|cut -b 4
+t
+## 提取第3,4,10的字节
+[root@TXYUN-NO2 JVM]# cut -b 3-4,10 cut.txt
+ e
+ t1
+s i
+ue
+
+## 当遇到多字节字符时，使用-n选项，不会将多字节字符拆开(汉字的情况)
+[root@TXYUN-NO2 JVM]# cut -nb 1 cut.txt
+q
+s
+s
+q
+田
+
+[root@TXYUN-NO2 JVM]# cut -b 1 cut.txt
+q
+s
+s
+q
+▒
+
+-------------------------------------
+# 2. -f 切割某几列
+# 切割第2 3列
+[root@TXYUN-NO2 JVM]# cut -d " " -f 2,3 cut.txt
+er dsf
+tqk 001
+ff bai
+meng meng
+# 切割 2到4列
+[root@TXYUN-NO2 JVM]# cut -d " " -f 2-4 cut.txt
+er dsf ffg
+tqk 001 tian
+ff bai chuan
+meng meng kkkk
+------------------------------
+
+```
+
+### 2.7.2 sed命令
+#### 2.7.2.1 基础语法
+:::tip 基础语法
+
+:::
+#### 2.7.2.2 实际案例
+```sh
+
+```
+
+### 2.7.3 awk命令
+#### 2.7.3.1 基础语法
+:::tip 基础语法
+
+:::
+#### 2.7.3.2 实际案例
+```sh
+
+```
+
+### 2.7.4 sort命令
+
+#### 2.7.4.1 基础语法
+
+:::tip 基础语法
+
+:::
+
+#### 2.7.4.2 实际案例
 
 ```sh
 
