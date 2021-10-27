@@ -896,7 +896,7 @@ suffix为后缀，如果suffix被指定了，basename会将pathname或string中�
 
 ------------------
 
-3. dirname基本语法
+3. **dirname**基本语法
 dirname 文件绝对路径	  	
 （功能描述：从给定的包含绝对路径的文件名中去除文件名（非目录的部分），然后返回剩下的路径（目录的部分））
 :::
@@ -1085,31 +1085,56 @@ meng meng kkkk
 ```
 
 ### 2.7.2 sed命令
+
+sed是一种流编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”，接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。<font color='red'><strong>文件内容并没有改变</strong></font>，除非你使用重定向存储输出。
+
 #### 2.7.2.1 基础语法
 :::tip 基础语法
+**sed [选项参数]  ‘command’  filename**
 
+动作说明：
+<font color='red'><strong>a</strong></font> ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～  
+<font color='red'><strong>c</strong></font> ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！  
+<font color='red'><strong>d</strong></font> ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；  
+<font color='red'><strong>i</strong></font> ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；  
+<font color='red'><strong>p</strong></font> ：打印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～  
+<font color='red'><strong>s</strong></font> ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是  啦！
 :::
+
 #### 2.7.2.2 实际案例
 ```sh
 
 ```
 
 ### 2.7.3 awk命令
+一个强大的文本分析工具，把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行分析处理
+
 #### 2.7.3.1 基础语法
+
 :::tip 基础语法
 
 :::
+
 #### 2.7.3.2 实际案例
+
 ```sh
 
 ```
 
 ### 2.7.4 sort命令
 
+sort命令是在Linux里非常有用，它将文件进行排序，并将排序结果标准输出
+
 #### 2.7.4.1 基础语法
 
 :::tip 基础语法
+**sort(选项)(参数)**
 
+**选项说明:**  
+<font color='red'><strong>-n</strong></font>	依照数值的大小排序  
+<font color='red'><strong>-r</strong></font>	以相反的顺序来排序  
+<font color='red'><strong>-t</strong></font>	设置排序时所用的分隔字符  
+<font color='red'><strong>-k</strong></font>	指定需要排序的列   
 :::
 
 #### 2.7.4.2 实际案例
