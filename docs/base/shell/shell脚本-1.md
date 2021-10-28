@@ -1105,7 +1105,77 @@ sed是一种流编辑器，它一次处理一行内容。处理时，把当前�
 :::
 
 #### 2.7.2.2 实际案例
+
 ```sh
+# 文本显示
+[root@TXYUN-NO2 JVM]# cat sed.txt 
+NO1
+NO2
+NO3
+NO4
+NO5
+# 每行后边添加tqk
+[root@TXYUN-NO2 JVM]# sed 'a\tqk' sed.txt 
+NO1
+tqk
+NO2
+tqk
+NO3
+tqk
+NO4
+tqk
+NO5
+tqk
+# 第一行后边添加tqk
+[root@TXYUN-NO2 JVM]# sed '1a\tqk' sed.txt 
+NO1
+tqk
+NO2
+NO3
+NO4
+NO5
+# 1到2行后边添加tqk
+[root@TXYUN-NO2 JVM]# sed '1,2a\tqk' sed.txt 
+NO1
+tqk
+NO2
+tqk
+NO3
+NO4
+NO5
+#删除第一行
+[root@TXYUN-NO2 JVM]# sed '1d' sed.txt 
+NO2
+NO3
+NO4
+NO5
+#第一行前边添加TQK
+[root@TXYUN-NO2 JVM]# sed '1c\TQK' sed.txt 
+TQK
+NO2
+NO3
+NO4
+NO5
+#一到三行替换成TQK
+[root@TXYUN-NO2 JVM]# sed '1,3c\TQK' sed.txt 
+TQK
+NO4
+NO5
+#NO替换成TQK
+[root@TXYUN-NO2 JVM]# sed 's/NO/TQK/g' sed.txt 
+TQK1
+TQK2
+TQK3
+TQK4
+TQK5
+#第一行前添加TQK001
+[root@TXYUN-NO2 JVM]# sed '1i\TQK001' sed.txt 
+TQK001
+NO1
+NO2
+NO3
+NO4
+NO5
 
 ```
 
@@ -1115,13 +1185,158 @@ sed是一种流编辑器，它一次处理一行内容。处理时，把当前�
 #### 2.7.3.1 基础语法
 
 :::tip 基础语法
+1. **基本用法**
 
+**awk [选项参数] 'pattern1{action1}  pattern2{action2}...' filename**
+
+<font color='red'><strong>pattern</strong></font>：表示AWK在数据中查找的内容，就是匹配模式
+
+<font color='red'><strong>action</strong></font>：在找到匹配内容时所执行的一系列命令
+
+2. **选项参数说明**
+<font color='red'><strong>-F</strong></font>	指定输入文件折分隔符
+<font color='red'><strong>-v</strong></font>	赋值一个用户定义变量
+
+3. **内建变量**
+<font color='red'><strong>$n</strong></font>		当前记录的第n个字段，字段间由FS分隔  
+<font color='red'><strong>$0</strong></font>		完整的输入记录  
+<font color='red'><strong>ARGC</strong></font>		命令行参数的数目  
+<font color='red'><strong>ARGIND</strong></font>		命令行中当前文件的位置(从0开始算)  
+<font color='red'><strong>ARGV</strong></font>		包含命令行参数的数组  
+<font color='red'><strong>CONVFMT</strong></font>		数字转换格式(默认值为%.6g)ENVIRON环境变量关联数组  
+<font color='red'><strong>ERRNO</strong></font>		最后一个系统错误的描述  
+<font color='red'><strong>FIELDWIDTHS</strong></font>		字段宽度列表(用空格键分隔)  
+<font color='red'><strong>FILENAME</strong></font>		当前文件名  
+<font color='red'><strong>FNR</strong></font>		各文件分别计数的行号   
+<font color='red'><strong>FS</strong></font>		字段分隔符(默认是任何空格)  
+<font color='red'><strong>IGNORECASE</strong></font>		如果为真，则进行忽略大小写的匹配  
+<font color='red'><strong>NF</strong></font>		一条记录的字段的数目  
+<font color='red'><strong>NR</strong></font>		已经读出的记录数，就是行号，从1开始  
+<font color='red'><strong>OFMT</strong></font>		数字的输出格式(默认值是%.6g)  
+<font color='red'><strong>OFS</strong></font>		输出字段分隔符，默认值与输入字段分隔符一致。  
+<font color='red'><strong>ORS</strong></font>		输出记录分隔符(默认值是一个换行符)  
+<font color='red'><strong>RLENGTH</strong></font>		由match函数所匹配的字符串的长度  
+<font color='red'><strong>RS</strong></font>		记录分隔符(默认是一个换行符)  
+<font color='red'><strong>RSTART</strong></font>		由match函数所匹配的字符串的第一个位置  
+<font color='red'><strong>SUBSEP</strong></font>		数组下标分隔符(默认值是/034)  
 :::
 
 #### 2.7.3.2 实际案例
 
+```bash
+[root@TXYUN-NO2 JVM]# cat awk.txt 
+./str.sh  :tqk:1
+./awk.sh:1:1
+./while.sh:345:2
+tqk  001 :1:3
+tqk  002 :3:4
+tqk:001:003
+```
+------------
+1. **方式一**
+
 ```sh
 
+# 默认使用空格进行分割取第二个字段
+[root@TXYUN-NO2 JVM]# awk '{print $2}' awk.txt 
+:tqk:1
+
+
+001
+002
+
+# -F使用：进行分割
+# awk -F  #-F相当于内置变量FS, 指定分割字符
+[root@TXYUN-NO2 JVM]# awk -F: '{print $1 ,$2 ,$3 }' awk.txt 
+./str.sh   tqk 1
+./awk.sh 1 1
+./while.sh 345 2
+tqk  001  1 3
+tqk  002  3 4
+tqk 001 003
+
+#awk -v  # 设置变量
+# -v 定义变量i
+[root@TXYUN-NO2 JVM]#  awk -v 'i=1' -F: '{print $3  ,$3+i }' awk.txt 
+1 2
+1 2
+2 3
+3 4
+4 5
+003 4
+```
+------------
+2. **方式二--运算符**
+
+```sh
+[root@TXYUN-NO2 JVM]# awk -F: '$3>2 {print $1,$3}' awk.txt
+tqk  001  3
+tqk  002  4
+tqk 003
+
+```
+------------
+3. **方式三--使用正则，字符串匹配**
+
+```sh
+[root@TXYUN-NO2 JVM]# awk -F: '/^tqk/ {print $1,$3}' awk.txt
+tqk  001  3
+tqk  002  4
+tqk 003
+
+```
+------------
+4. **方式四--awk脚本**
+
+```sh
+[root@TXYUN-NO2 JVM]# vi cal.awk 
+[root@TXYUN-NO2 JVM]# cat scare.txt 
+Marry   2143 78 84 77
+Jack    2321 66 78 45
+Tom     2122 48 77 71
+Mike    2537 87 97 95
+Bob     2415 40 57 62
+```
+
+```sh
+#!/bin/awk -f
+#运行前
+BEGIN {
+    math = 0
+    english = 0
+    computer = 0
+
+    printf "NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL\n"
+    printf "---------------------------------------------\n"
+}
+#运行中
+{
+    math+=$3
+    english+=$4
+    computer+=$5
+    printf "%-6s %-6s %4d %8d %8d %8d\n", $1, $2, $3,$4,$5, $3+$4+$5
+}
+#运行后
+END {
+    printf "---------------------------------------------\n"
+    printf "  TOTAL:%10d %8d %8d \n", math, english, computer
+    printf "AVERAGE:%10.2f %8.2f %8.2f\n", math/NR, english/NR, computer/NR
+}
+
+```
+
+```sh
+[root@TXYUN-NO2 JVM]# awk -f  cal.awk  scare.txt 
+NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL
+---------------------------------------------
+Marry  2143     78       84       77      239
+Jack   2321     66       78       45      189
+Tom    2122     48       77       71      196
+Mike   2537     87       97       95      279
+Bob    2415     40       57       62      159
+---------------------------------------------
+  TOTAL:       319      393      350 
+AVERAGE:     63.80    78.60    70.00
 ```
 
 ### 2.7.4 sort命令
@@ -1142,6 +1357,12 @@ sort命令是在Linux里非常有用，它将文件进行排序，并将排序�
 
 #### 2.7.4.2 实际案例
 
+
+
 ```sh
 
 ```
+
+<font color='red'><strong>grep 更适合单纯的查找或匹配文本</strong></font>  
+<font color='red'><strong>sed 更适合编辑匹配到的文本</strong></font>  
+<font color='red'><strong>awk 更适合格式化文本，对文本进行较复杂格式处理</strong></font>  
