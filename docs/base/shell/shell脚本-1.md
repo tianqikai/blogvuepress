@@ -1357,10 +1357,71 @@ sort命令是在Linux里非常有用，它将文件进行排序，并将排序�
 
 #### 2.7.4.2 实际案例
 
+```sh
+[root@TXYUN-NO2 JVM]# cat sort.txt 
+3
+465
+21
+3
+7
+8
+43
+56
+34
+9
 
+```
+
+```sh
+#依照数值的大小排序
+[root@TXYUN-NO2 JVM]# sort -n sort.txt 
+3
+3
+7
+8
+9
+21
+34
+43
+56
+465
+#以相反的顺序来排序 
+[root@TXYUN-NO2 JVM]# sort -nr sort.txt 
+465
+56
+43
+34
+21
+9
+8
+7
+3
+3
+
+```
 
 ```sh
 
+# -t 设置排序时所用的分隔字符  
+# -k 指定需要排序的列  
+[root@TXYUN-NO2 JVM]# sort -nr sort2.txt -t : -k 2
+tqk:999
+aa:234
+sdf:10
+sd:7
+sdafd:5
+3:4
+a:2
+1:1
+[root@TXYUN-NO2 JVM]# sort -n sort2.txt -t : -k 2
+1:1
+a:2
+3:4
+sdafd:5
+sd:7
+sdf:10
+aa:234
+tqk:999
 ```
 
 <font color='red'><strong>grep 更适合单纯的查找或匹配文本</strong></font>  
