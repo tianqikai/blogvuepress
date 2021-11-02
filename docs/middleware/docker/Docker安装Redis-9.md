@@ -1,5 +1,5 @@
 # 6 Docker安装Redis
-
+[[toc]]
 ## 6.1 Docker拉取redis镜像
 
 ```sh
