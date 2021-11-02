@@ -1,5 +1,5 @@
 # 1.RocketMQ安装
-
+[[toc]]
 ## 1.1 RocketMQ在linux下安装
 
 

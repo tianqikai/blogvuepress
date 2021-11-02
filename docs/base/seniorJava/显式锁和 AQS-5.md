@@ -1,8 +1,9 @@
 # 6. 显式锁和AQS
 
+[[toc]]
 
 ## 6.1 显式锁
-有了synchronized 为什么还要 Lock？ Java 程序是靠synchronized关键字实现锁功能的，使用 synchronized 关键字 将会隐式地获取锁，但是它将锁的获取和释放固化了，也就是先获取再释放。
+有了synchronized 为什么还要 Lock？ Java 程序是靠synchronized关键字实现锁功能的，使用 synchronized 关键字将会隐式地获取锁，但是它将锁的获取和释放固化了，也就是先获取再释放。
 
 ## 6.2 Lock 的标准用法
 

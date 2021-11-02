@@ -1,5 +1,5 @@
 # 2.java数据类型
-
+[[toc]]
 **JAVA基础知识图解** 
 
  ![JAVA基础知识图解](../image/java_base.png)

@@ -1,5 +1,5 @@
 # 二、Zookeeper安装
-
+[[toc]]
 ## 2.1 zookeeper单机版安装
 
 <font color='red' size=4><strong>1. 安装前准备</strong></font>  

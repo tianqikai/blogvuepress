@@ -1,5 +1,5 @@
 # 3. Jenkins+GitHub自动化构建
-
+[[toc]]
 ## 3.1 Jenkins安装Github插件
 
 Jenkins如果默认已经安装过来，可不执行此步骤

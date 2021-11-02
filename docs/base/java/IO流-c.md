@@ -1,5 +1,5 @@
 # 12. IO流
-
+[[toc]]
 ## 12.1 File 类的使用
 
 <a data-fancybox title="File类" href="../image/File.jpg">![File类](../image/File.jpg)</a>

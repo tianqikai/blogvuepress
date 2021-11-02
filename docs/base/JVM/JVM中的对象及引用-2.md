@@ -52,12 +52,16 @@ TLAB 只是让每个线程有私有的分配指针，但底下存对象的内存
 在上面工作都完成之后，从虚拟机的视角来看，一个新的对象已经产生了，但从 Java 程序的视角来看，对象创建才刚刚开始，所有的字段都还为零值。 所以，一般来说，执行 new 指令之后会接着把对象按照程序员的意愿进行初始化(构造方法)，这样一个真正可用的对象才算完全产生出来。
 
 ## 3.2 对象的内存布局（重点）
-<a data-fancybox title="对象的内存布局" href="./image/objectStructrue.jpg">![对象的内存布局](./image/objectStructrue.jpg)</a>
+
+<a data-fancybox title="对象的内存布局" href="./image/markword.jpg">![对象的内存布局](./image/markword.jpg)</a>
+
+
 在 HotSpot 虚拟机中，对象在内存中存储的布局可以分为 3 块区域： <font color='red'><strong>对象头（Header）、实例数据（Instance Data）和对齐填充（Padding）</strong></font>。   
 对象头包括两部分信息，第一部分用于存储对象自身的运行时数据，如 <font color='red'><strong>哈希码（HashCode）、GC 分代年龄、锁状态标志、线程持有的锁、偏向线程 ID、偏向时间戳</strong></font>等。   
 对象头的另外一部分是类型指针，即对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。 如果对象是一个 java 数组，那么在对象头中还有一块用于记录数组长度的数据。   
 第三部分对齐填充并不是必然存在的，也没有特别的含义，它仅仅起着占位符的作用。  
 由于 HotSpot VM 的自动内存管理系统要求对对象的大小必须 是 8 字节的整数倍。当对象其他数据部分没有对齐时，就需要通过对齐填充来补全。  
+<a data-fancybox title="对象的内存布局" href="./image/objectStructrue.jpg">![对象的内存布局](./image/objectStructrue.jpg)</a>
 
 ## 3.3 对象的访问定位
 建立对象是为了使用对象，我们的 Java 程序需要通过栈上的 reference 数据来操作堆上的具体对象。目前主流的访问方式有使用<font color='red'><strong>句柄和直接指针</strong></font>两种。 

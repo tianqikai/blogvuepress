@@ -1,5 +1,5 @@
 # 10.多线程
-
+[[toc]]
 ### 10.1程序、进程、线程
 
 1. <font color='blue'><strong><Badge text="程序(program)"/> </strong></font>是为完成特定任务、用某种语言编写的一组指令的集合。即指<font color='red'>一段静态的代码</font>，静态对象。  

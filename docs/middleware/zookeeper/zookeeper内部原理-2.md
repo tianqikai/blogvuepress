@@ -1,4 +1,6 @@
 # 三、zookeeper内部原理
+[[toc]]
+
 ## 3.1 选举机制（面试重点）
 1）半数机制：集群中<font color='red'>**半数以上机器存活**</font>，集群可用；所以Zookeeper适合安装<font color='red'>**奇数**</font>台服务器。  
 2）Zookeeper虽然在配置文件中并没有指定Master和Slave。但是，Zookeeper工作时，是有一个节点为Leader，其他则为Follower，<font color='red'>**Leader是通过内部的选举机制临时产生的**</font>。  

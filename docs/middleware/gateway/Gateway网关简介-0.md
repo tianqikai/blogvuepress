@@ -1,5 +1,5 @@
 # Gateway网关简介（入门）
-
+[[toc]]
 <a data-fancybox title="API Gateway简介" href="../image/Gateway.jpg">![API Gateway](../image/Gateway.jpg)</a>
 
 ## 什么是 Spring Cloud Gateway

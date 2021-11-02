@@ -1,5 +1,5 @@
 # 1. CentOS 7 安装 Jenkins
-
+[[toc]]
 <font color='red'><strong>★ 安装前提需要安装 jDK</strong></font>
 
 <font color='red'><strong>★ 如果你的系统没有自带git，那么也需要安装一个</strong></font>
