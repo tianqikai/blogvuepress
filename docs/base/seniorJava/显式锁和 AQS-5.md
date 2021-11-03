@@ -2,7 +2,9 @@
 
 [[toc]]
 
-## 6.1 显式锁
+Java并发编程核心在于java.util.concurrent包而juc当中的大多数同步器实现都是围绕着共同的基础行为，比如等待队列、条件队列、独占获取、共享获取等，而这个行为的抽象就是基于AbstractQueuedSynchronizer简称AQS，AQS定义了一套多线程访问共享资源的同步器框架，是一个依赖状态(state)的同步器。
+
+## 6.1 ReentrantLock显式锁
 有了synchronized 为什么还要 Lock？ Java 程序是靠synchronized关键字实现锁功能的，使用 synchronized 关键字将会隐式地获取锁，但是它将锁的获取和释放固化了，也就是先获取再释放。
 
 ## 6.2 Lock 的标准用法
@@ -23,6 +25,14 @@ try{
 
 
 ## 6.4 ReenTranLock
+ReentrantLock是一种基于AQS框架的应用实现，是JDK中的一种线程并发访问的同步手段，它的功能类似于synchronized是一种互斥锁，可以保证线程安全。而且它具有比synchronized更多的特性，比如它支持手动加锁与解锁，支持加锁的公平性。
+
+```sh
+使用ReentrantLock进行同步
+ReentrantLock lock = new ReentrantLock(false);//false为非公平锁，true为公平锁
+lock.lock() //加锁
+lock.unlock() //解锁
+```
 
 ### 6.4.1 锁的可重入
 
@@ -163,6 +173,14 @@ public class LockDemo {
 **在恢复一个被挂起的线程与该线程真正开始运行之间存在着严重的延迟**。   
 假设线程 A 持有一个锁,并且线程 B 请求这个锁。由于这个锁已被线程 A 持有,因此 B 将被挂起。当 A 释放锁时,B 将被唤醒,因此会再次尝试获取锁。与此同时,如果 C 也请求这个锁,那么 C 很可能会在 B 被完全唤醒之前获得、使用以及释放这个锁。这样的情况是一种“双赢”的局面:B 获得锁的时刻并没有推迟,C 更早地获得了锁,并且吞吐量也获得了提高。
 
+#### ReentrantLock如何实现synchronized不具备的公平与非公平性呢？
+
+在ReentrantLock内部定义了一个Sync的内部类，该类继承AbstractQueuedSynchronized，对该抽象类的部分方法做了实现；并且还定义了两个子类：
+1. FairSync 公平锁的实现
+2. NonfairSync 非公平锁的实现
+
+这两个类都继承自Sync，也就是间接继承了AbstractQueuedSynchronized，所以这一个ReentrantLock同时具备公平与非公平特性。
+**上面主要涉及的设计模式：模板模式-子类根据需要做具体业务实现**
 
 ## 6.5 LockSupport
 
@@ -211,13 +229,68 @@ permit相当于1,0的开关.默认是0.
 **调用park时**:如果有凭证.则消耗这个凭证并且正常退出;如果没凭证,则要等待有凭证才可以退出  
 **调用unpark时**:会增加一个凭证,但是凭证的上限是1.  
 
-## 6.6 AbstractQueuedSynchronizer(AQS)
+## 6.6 AQS
 
-队列同步器 AbstractQueuedSynchronizer（以下简称同步器或 AQS），是用来构建锁或者其他同步组件的基础框架，它使用了一个 int 成员变量（<font color='red'><strong>state</strong></font>）表示同步状态，通过内置的 FIFO 队列来完成资源获取线程的排队工作。并发包的大师（Doug Lea）期望它能够成为实现大部分同步需求的基础。
+**队列同步器 AbstractQueuedSynchronizer****（以下简称同步器或 AQS）**，是用来构建锁或者其他同步组件的基础框架，它使用了一个 int 成员变量（<font color='red'><strong>state</strong></font>）表示同步状态，通过内置的 FIFO 队列来完成资源获取线程的排队工作。并发包的大师（Doug Lea）期望它能够成为实现大部分同步需求的基础。
+
+:::tip AQS具备特性
+1. 阻塞等待队列
+2. 共享/独占
+3. 公平/非公平
+4. 可重入
+5. 允许中断
+:::
+
+除了Lock外，Java.util.concurrent当中同步器的实现如Latch,Barrier,BlockingQueue等，都是基于AQS框架实现
+一般通过定义内部类Sync继承AQS
+将同步器所有调用都映射到Sync对应的方法
+AQS内部维护属性volatile int state (32位)
+**state表示资源的可用状态**
+State三种访问方式
+<font color='red'><strong>getState()、setState()、compareAndSetState()</strong></font>
+
+:::tip AQS定义两种资源共享方式
+1. Exclusive-独占，只有一个线程能执行，如ReentrantLock  
+2. Share-共享，多个线程可以同时执行，如Semaphore/CountDownLatch
+:::
+
+
+不同的自定义同步器争用共享资源的方式也不同。自定义同步器在实现时只需要实现共享资源state的获取与释放方式即可，至于具体线程等待队列的维护（如获取资源失败入队/唤醒出队等），AQS已经在顶层实现好了。
+
+:::tip 自定义同步器实现时主要实现以下几种方法：
+isHeldExclusively()：该线程是否正在独占资源。只有用到condition才需要去实现它。
+tryAcquire(int)：独占方式。尝试获取资源，成功则返回true，失败则返回false。
+tryRelease(int)：独占方式。尝试释放资源，成功则返回true，失败则返回false。
+tryAcquireShared(int)：共享方式。尝试获取资源。负数表示失败；0表示成功，但没有剩余可用资源；正数表示成功，且有剩余资源。
+tryReleaseShared(int)：共享方式。尝试释放资源，如果释放后允许唤醒后续等待结点返回true，否则返回false。
+:::
 
 ### 6.6.1 CLH队列锁
+
+:::tip AQS定义两种队列
+同步等待队列  
+条件等待队列  
+:::
+
+#### 同步等待队列
+AQS当中的同步等待队列也称CLH队列，CLH队列是Craig、Landin、Hagersten三人发明的一种基于双向链表数据结构的队列，是FIFO先入先出线程等待队列，Java中的CLH队列是原CLH队列的一个变种,线程由原自旋机制改为阻塞机制。
+<a data-fancybox title="acquire" href="./image/CLH.jpg">![acquire](./image/CLH.jpg)</a>
+
+:::tip CLH锁原理如下
+1. 首先有一个尾节点指针，通过这个尾结点指针来构建等待线程的逻辑队列，因此能确保线程线程先到先服务的公平性，因此尾指针可以说是构建逻辑队列的桥梁；此外这个尾节点指针是原子引用类型，避免了多线程并发操作的线程安全性问题；
+
+2. 通过等待锁的每个线程在自己的某个变量上自旋等待，这个变量将由前一个线程写入。由于某个线程获取锁操作时总是通过尾节点指针获取到前一线程写入的变量，而尾节点指针又是原子引用类型，因此确保了这个变量获取出来总是线程安全的。
+:::
+
+#### 条件等待队列
+Condition是一个多线程间协调通信的工具类，使得某个，或者某些线程一起等待某个条件（Condition）,只有当该条件具备时，这些等待线程才会被唤醒，从而重新争夺锁
+<a data-fancybox title="acquire" href="./image/tiaojianduilie.jpg">![acquire](./image/tiaojianduilie.jpg)</a>
+
+
 研究过AQS源码的小伙伴们应该知道，AQS是JUC的核心，而CLH锁又是AQS的基础，说核心也不为过，因为AQS就是用了变种的CLH锁。如果要学好Java并发编程，那么必定要学好JUC；学好JUC，必定要先学好AQS；学好AQS，那么必定先学好CLH。因此，这就是我们为什么要学习CLH锁的原因。
+
 https://zhuanlan.zhihu.com/p/197840259
+
 https://www.cnblogs.com/yuyutianxia/p/4296220.html
 
 ### 6.6.2 AQS 使用方式和其中的设计模式 
@@ -226,9 +299,8 @@ AQS 的主要使用方式是继承，子类通过继承 AQS 并实现它的抽�
 
 CLH 队列锁即 Craig, Landin, and Hagersten (CLH) locks。 CLH 队列锁也是一种基于链表的可扩展、高性能、公平的自旋锁，申请线程仅仅在本地变量上自旋，它不断轮询前驱的状态，假设发现前驱释放了锁就结束自旋。
 
-
-
 #### 6.6.2.1 AQS 使用方式和其中的设计模式
+
 这时就需要使用同步器提供的 3 个方法：  
 <font color='red'><strong>• getState()</strong></font>  ：获取当前同步状态。   
 <font color='red'><strong>• setState(int newState)</strong></font>  ：设置当前同步状态。   
@@ -269,8 +341,14 @@ CLH 队列锁即 Craig, Landin, and Hagersten (CLH) locks。 CLH 队列锁也是
 
 ### 6.6.3 实现一个自己的独占锁
 
+```java
+//后续补充
+```
+
 ### 6.6.4 源码分析
-从ReentrantLock说起，Lock接口的实现类，基本都是通过聚合了一个队列同步器的子类完成线程访问控制的。
+
+**从ReentrantLock说起，Lock接口的实现类，基本都是通过聚合了一个队列同步器的子类完成线程访问控制的。**
+
 ```java
     public void lock() {
         sync.lock();
@@ -290,6 +368,7 @@ public class ReentrantLock implements Lock, java.io.Serializable {
     abstract static class Sync extends AbstractQueuedSynchronizer {
         private static final long serialVersionUID = -5179523762034025860L;
 ```
+
 **上面两段代码就可以看出来：lock.lock本质上是在lock类中聚合一个AQS的实现类，然后调用lock和unlock都是调用这个AQS的实现类的方法来实现（unlock是调用sysn.release(1);）的。**
 
 
