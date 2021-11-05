@@ -146,3 +146,5 @@ public class TeacherDao implements  ITeacherDao{
 4. 在AOP编程中如何选择代理模式：**1.目标对象需要实现接口，用JDK代理  2.目标对象不需要实现接口，用Cglib代理**
 5. Cglib包的底层是通过使用<font color='red'><strong>字节码处理框架ASM来转换字节码并生成新的类</strong></font>
 :::
+
+#### rpc框架的远程调用使用的是代理模式

@@ -101,6 +101,7 @@ module.exports = {
                 text: '中间件',
                 ariLabel: '中间件',
                 items: [  //多级导航栏
+                    { text: 'netty', link: '/middleware/netty/' },
                     { text: 'nginx', link: '/middleware/nginx/' },
                     { text: 'gateway', link: '/middleware/gateway/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
