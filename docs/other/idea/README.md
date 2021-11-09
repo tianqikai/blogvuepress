@@ -43,6 +43,7 @@ ctrl+alt+v    // new ArrayList<String>(); 后按住快捷键即可自动补全
 new String("").var
 String("").new.var
 ```
+11. <Badge text="ctrl + h"/>  查看当前类的所有子类
 
 export JAVA_HOME=/usr/java/jdk1.8.0_211-amd64
 PATH=$PATH:$JAVA_HOME/bin
@@ -56,3 +57,13 @@ IDEA 如何自动导入（import）
 <a herf='https://blog.lupf.cn/articles/2020/12/03/1606959540262.html'>https://blog.lupf.cn/articles/2020/12/03/1606959540262.html</a>
 
 ##  idea也可以安装jclasslib插件 查看字节码文件 view ->Show ByteCode with jclasslib
+
+
+选择重写或实现方法（select methods to override/implements）
+Ctrl+O
+2.选择实现方法（select methods to implement）
+Ctrl+I
+3.生成构造方法、toString方法、重写或实现方法及版权（generate...）
+Alt+Insert
+4.包围（surround with）
+Ctrl+Alt+T  

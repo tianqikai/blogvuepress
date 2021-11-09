@@ -148,6 +148,7 @@ module.exports = {
                     { text: 'Nodejs', link: '/tool/Nodejs/' },
                 ]
             },
+            // { text: 'github', link: 'https://github.com/zeroonbush/blog.git' }
             { text: 'github', link: 'https://github.com/zeroonbush/blog.git' }
         ],
     }
