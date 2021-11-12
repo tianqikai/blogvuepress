@@ -286,16 +286,925 @@ RPC（Remote Procedure Call ——远程过程调用），它是一种通过网�
 8. 服务消费方得到最终结果。 RPC 框架的目标就是要中间步骤都封装起来，让我们进行远程方法调用的时候感觉到就像在本地调用一样。
 :::
 
-### 2.4.2 源代码实现查看github
+### 2.5 RPC客户端
 
-<a data-fancybox title="RPC 框架" href="./image/rpc03.jpg">![RPC 框架](./image/rpc03.jpg)</a>
+### 2.5.1 RpcClientReg
+```java
+package com.tqk.rpc.client;
 
-#### 客户端
-略
-#### 注册中心
-略
-#### 服务端
-略
--------------------
-<a data-fancybox title="源代码实现查看github" href="./image/rpc01.jpg"></a>
+import com.tqk.rpc.client.rpc.RpcClientFrameReg;
+import com.tqk.rpc.service.SendSms;
+import com.tqk.rpc.service.StockService;
+import com.tqk.rpc.vo.UserInfo;
 
+/**
+ *
+ * @author tianqikai
+ */
+public class RpcClientReg {
+    public static void main(String[] args) {
+        UserInfo userInfo = new UserInfo("tianqikai","18562328330");
+        //发送短信接口调用
+        SendSms sendSms = RpcClientFrameReg.getRemoteProxyObj(SendSms.class);
+        System.out.println("Send mail: "+ sendSms.sendMail(userInfo));
+        //变动库存服务接口调用
+        StockService stockService = RpcClientFrameReg.getRemoteProxyObj(StockService.class);
+        //增加库存
+        stockService.addStock("A001",1000);
+        //减少库存
+        stockService.deduceStock("B002",50);
+    }
+}
+
+```
+### 2.5.2 RpcClientFrameReg
+
+```java
+package com.tqk.rpc.client.rpc;
+
+import com.tqk.rpc.vo.RegisterServiceVo;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.Random;
+import java.util.Set;
+
+/**
+ *@author Mark老师   享学课堂 https://enjoy.ke.qq.com
+ *
+ *类说明：rpc框架的客户端代理部分
+ */
+public class RpcClientFrameReg {
+
+    //远程代理对象
+    public static <T> T getRemoteProxyObj(final Class<?> serviceInterface){
+        // 注册中心的连接地址
+        final InetSocketAddress addr = new InetSocketAddress("127.0.0.1",1234);
+        return (T) Proxy.newProxyInstance(serviceInterface.getClassLoader(),
+                new Class<?>[]{serviceInterface}
+                ,new DynProxy(serviceInterface,addr));
+    }
+
+
+    //动态代理类
+    private static class DynProxy implements InvocationHandler {
+
+        private final Class<?> serviceInterface;
+        private final InetSocketAddress addr;
+        private RegisterServiceVo[] serviceArray;/*远程服务在本地的缓存列表*/
+
+        public DynProxy(Class<?> serviceInterface, InetSocketAddress addr) {
+            this.serviceInterface = serviceInterface;
+            this.addr = addr;
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args)
+                throws Throwable {
+            Socket socket = null;
+            ObjectOutputStream output = null;
+            ObjectInputStream input = null;
+
+            /*检索远程服务并填充本地的缓存列表*/
+            if(serviceArray==null){
+                try{
+                    socket = new Socket();
+                    socket.connect(addr);
+                    output = new ObjectOutputStream(socket.getOutputStream());
+                    output.writeBoolean(true);
+                    output.writeUTF(serviceInterface.getName());
+                    output.flush();
+                    input = new ObjectInputStream(socket.getInputStream());
+                    Set<RegisterServiceVo> result = (Set<RegisterServiceVo>)input.readObject();
+                    serviceArray = new RegisterServiceVo[result.size()];
+                    result.toArray(serviceArray);
+                }finally {
+                    if (socket!=null) {
+                        socket.close();
+                    }
+                    if (output!=null) {
+                        output.close();
+                    }
+                    if (input!=null) {
+                        input.close();
+                    }
+                }
+
+            }
+
+            /*本地的缓存列表取得一个远端服务器的地址端口
+             * 可以考虑使用更复杂的算法，以实现服务器的负载均衡
+             * 这里简单化处理，用随机数挑选*/
+            Random r  = new Random();
+            int index = r.nextInt(serviceArray.length);
+            InetSocketAddress serviceAddr
+                    = new InetSocketAddress(serviceArray[index].getHost(),serviceArray[index].getPort());
+
+            try{
+                socket = new Socket();
+                socket.connect(serviceAddr);
+
+                output = new ObjectOutputStream(socket.getOutputStream());
+                output.writeUTF(serviceInterface.getName());//方法所在的类
+                System.out.println("方法的名:" +method.getName());
+                output.writeUTF(method.getName());//方法的名
+                output.writeObject(method.getParameterTypes());//方法的入参类型
+                output.writeObject(args);
+                output.flush();
+
+                input = new ObjectInputStream(socket.getInputStream());
+                return input.readObject();
+
+            }finally{
+                if (socket!=null) {
+                    socket.close();
+                }
+                if (output!=null) {
+                    output.close();
+                }
+                if (input!=null) {
+                    input.close();
+                }
+            }
+
+        }
+    }
+
+}
+
+```
+### 2.5.3 SendSms
+
+```java
+package com.tqk.rpc.service;
+
+
+import com.tqk.rpc.vo.UserInfo;
+
+/**
+ *
+ *类说明：短信息发送接口
+ */
+public interface SendSms {
+
+    boolean sendMail(UserInfo user);
+
+}
+```
+
+### 2.5.4 StockService
+```java
+package com.tqk.rpc.service;
+
+/**
+ *@author tianqikai
+ *类说明：变动库存服务接口
+ */
+public interface StockService {
+    /**
+     * 增加库存
+     * @param goodsId
+     * @param addAmout
+     */
+    void addStock(String goodsId, int addAmout);
+
+    /**
+     * 扣减库存
+     * @param goodsId
+     * @param deduceAmout
+     */
+    void deduceStock(String goodsId, int deduceAmout);
+}
+
+```
+### 2.5.5 RegisterServiceVo
+```java
+package com.tqk.rpc.vo;
+
+import java.io.Serializable;
+
+/**
+ * 类说明：注册中心注册服务的实体类
+ */
+public class RegisterServiceVo implements Serializable {
+    //服务提供者的ip地址
+    private final String host;
+    //服务提供者的端口
+    private final int port;
+
+    public RegisterServiceVo(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+}
+
+```
+### 2.5.6 UserInfo
+
+```java
+package com.tqk.rpc.vo;
+
+import java.io.Serializable;
+
+/**
+ *类说明：用户的实体类，已实现序列化
+ */
+public class UserInfo implements Serializable {
+
+    private final String name;
+    private final String phone;
+
+    public UserInfo(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+}
+
+```
+
+
+## 2.6 注册中心
+
+### 2.6.1 RegisterCenter
+```java
+package com.tqk.rpc.reg;
+
+import com.tqk.rpc.vo.RegisterServiceVo;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author tianqikai
+ * 类说明：服务注册中心，服务提供者在启动时需要在注册中心登记自己的信息
+ */
+public class RegisterCenter {
+    //key表示服务名，value代表服务提供者地址的集合
+    private static final Map<String,Set<RegisterServiceVo>> serviceHolder
+            = new HashMap<>();
+
+    //注册服务的端口号
+    private int port;
+
+    public RegisterCenter(int port) {
+        this.port = port;
+    }
+
+    //服务注册，考虑到可能有多个提供者同时注册，进行加锁
+    private static synchronized void registerSerive(String serviceName,
+                                                    String host,int port){
+        //获得当前服务的已有地址集合
+        Set<RegisterServiceVo> serviceVoSet = serviceHolder.get(serviceName);
+        if(serviceVoSet==null){
+            //已有地址集合为空，新增集合
+            serviceVoSet = new HashSet<>();
+            serviceHolder.put(serviceName,serviceVoSet);
+        }
+        //将新的服务提供者加入集合
+        serviceVoSet.add(new RegisterServiceVo(host,port));
+        System.out.println("服务已注册["+serviceName+"]，" +
+                "地址["+host+"]，端口["+port+"]");
+    }
+
+    //取出服务提供者
+    private static Set<RegisterServiceVo> getService(String serviceName){
+        return serviceHolder.get(serviceName);
+    }
+
+    //处理服务请求的任务
+    private static class ServerTask implements Runnable{
+        private Socket client = null;
+
+        public ServerTask(Socket client){
+            this.client = client;
+        }
+
+        @Override
+        public void run() {
+            try(ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream());
+                ObjectOutputStream outputStream = new ObjectOutputStream(client.getOutputStream());
+            ){
+
+                //检查当前请求是注册服务还是获得服务
+                boolean isGetService = inputStream.readBoolean();
+                /*获得服务提供者*/
+                if(isGetService){
+                    String serviceName = inputStream.readUTF();
+                    //取出服务提供者集合
+                    Set<RegisterServiceVo> result = getService(serviceName);
+                    //返回给客户端
+                    outputStream.writeObject(result);
+                    outputStream.flush();
+                    System.out.println("将已注册的服务["+serviceName+"提供给客户端");
+                }
+                /*注册服务*/
+                else{
+                    //取得新服务提供方的ip和端口
+                    String serviceName = inputStream.readUTF();
+                    String host = inputStream.readUTF();
+                    int port = inputStream.readInt();
+                    //在注册中心保存
+                    registerSerive(serviceName,host,port);
+                    System.out.println("["+serviceName+"] ["+host+"] ["+ port+"]服务注册成功");
+                    outputStream.writeBoolean(true);
+                    outputStream.flush();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    client.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //启动注册服务
+    public void startService() throws IOException {
+        ServerSocket serverSocket = new ServerSocket();
+        serverSocket.bind(new InetSocketAddress(port));
+        System.out.println("RegisterCenter server on:"+port+":运行");
+        try{
+            while(true){
+                new Thread(new ServerTask(serverSocket.accept())).start();
+            }
+        }finally {
+            serverSocket.close();
+        }
+    }
+
+    public static void main(String[] args) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    RegisterCenter serviceServer = new RegisterCenter(1234);
+                    //启动注册服务
+                    serviceServer.startService();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+
+```
+
+### 2.6.2 RegisterServiceVo
+```java
+package com.tqk.rpc.vo;
+
+import java.io.Serializable;
+
+/**
+ * @author Mark老师   享学课堂 https://enjoy.ke.qq.com
+ * 类说明：注册中心注册服务的实体类
+ */
+public class RegisterServiceVo implements Serializable {
+    //服务提供者的ip地址
+
+    private final String host;
+
+    //服务提供者的端口
+
+    private final int port;
+
+    public RegisterServiceVo(String host,int port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+}
+```
+
+
+## 2.7 服务端
+
+### 2.7.1 SmsRpcServerReg
+```java
+package com.tqk.rpc.server;
+
+import com.tqk.rpc.server.rpc.RpcServerFrameReg;
+import com.tqk.rpc.service.SendSms;
+import com.tqk.rpc.service.impl.SendSmsImpl;
+/**
+ *@author tianqikai
+ *
+ *类说明：rpc的服务端，提供短信服务
+ */
+public class SmsRpcServerReg {
+    public static void main(String[] args) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    RpcServerFrameReg serviceServer = new RpcServerFrameReg(9189);
+                    //向注册中心注册服务
+                    serviceServer.registerSerive(SendSms.class, SendSmsImpl.class);
+                    //启动rpc的服务端，短信服务
+                    serviceServer.startService();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+
+
+```
+### 2.7.2 StockRpcServerReg
+```java
+package com.tqk.rpc.server;
+
+
+import com.tqk.rpc.server.rpc.RpcServerFrameReg;
+import com.tqk.rpc.service.StockService;
+import com.tqk.rpc.service.impl.StockServiceImpl;
+
+/**
+ *@author tianqikai
+ *类说明：rpc的服务端，提库存供服务
+ */
+public class StockRpcServerReg {
+    public static void main(String[] args) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    RpcServerFrameReg serviceServer = new RpcServerFrameReg(9190);
+                    //向注册中心注册服务
+                    serviceServer.registerSerive(StockService.class, StockServiceImpl.class);
+                    //启动rpc的服务端，提库存供服务
+                    serviceServer.startService();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+
+```
+### 2.7.3 RpcServerFrameReg
+```java
+package com.tqk.rpc.server.rpc;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/**
+ *@author tianqikai
+ *类说明：rpc框架的服务端部分
+ */
+public class RpcServerFrameReg {
+
+    private static ExecutorService executorService
+= Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+    //服务在本地的注册中心，主要是接口名和实现类的对照
+    private static final Map<String,Class> serviceHolder
+            = new HashMap<>();
+
+    //服务的端口号
+    private int port;
+
+    public RpcServerFrameReg(int port) {
+        this.port = port;
+    }
+
+    //服务注册
+    public void registerSerive(Class<?> serviceInterface,Class impl) throws IOException {
+        Socket socket = null;
+        ObjectOutputStream output = null;
+        ObjectInputStream input = null;
+
+        /*向注册中心注册服务*/
+        try{
+            socket = new Socket();
+            //注册中心服务地址
+            socket.connect(new InetSocketAddress("127.0.0.1",1234));
+            output = new ObjectOutputStream(socket.getOutputStream());
+            output.writeBoolean(false);
+            output.writeUTF(serviceInterface.getName());
+            output.writeUTF("127.0.0.1");
+            output.writeInt(port);
+            output.flush();
+            input = new ObjectInputStream(socket.getInputStream());
+            if(input.readBoolean()){
+                serviceHolder.put(serviceInterface.getName(),impl);
+                System.out.println(serviceInterface.getName()+"服务注册成功");
+            }else{
+                System.out.println(serviceInterface.getName()+"服务注册失败");
+            };
+        }finally {
+            if (socket!=null) {
+                socket.close();
+            }
+            if (output!=null) {
+                output.close();
+            }
+            if (input!=null) {
+                input.close();
+            }
+        }
+    }
+    
+
+    //处理服务请求任务
+    private static class ServerTask implements Runnable{
+
+        private Socket client = null;
+
+        public ServerTask(Socket client){
+            this.client = client;
+        }
+
+        @Override
+        public void run() {
+
+            try(ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream());
+                ObjectOutputStream outputStream = new ObjectOutputStream(client.getOutputStream())){
+
+                //方法所在类名接口名
+                String serviceName = inputStream.readUTF();
+                System.out.println("serviceName:"+serviceName);
+                //方法的名字
+                String methodName = inputStream.readUTF();
+                System.out.println("methodName:"+methodName);
+                //方法的入参类型
+                Class<?>[] parmTypes = (Class<?>[]) inputStream.readObject();
+                System.out.println("parmTypes:"+parmTypes);
+                //方法入参的值
+                Object[] args = (Object[]) inputStream.readObject();
+
+                Class serviceClass = serviceHolder.get(serviceName);
+                if (serviceClass == null){
+                    throw new ClassNotFoundException(serviceName+" Not Found");
+                }
+
+                Method method = serviceClass.getMethod(methodName,parmTypes);
+                Object result = method.invoke(serviceClass.newInstance(),args);
+
+                outputStream.writeObject(result);
+                outputStream.flush();
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally {
+                try {
+                    client.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //启动RPC服务
+    public void startService() throws IOException{
+        ServerSocket serverSocket = new ServerSocket();
+        serverSocket.bind(new InetSocketAddress(port));
+        System.out.println("RPC server on:"+port+":运行");
+        try{
+            while(true){
+                executorService.execute(new ServerTask(serverSocket.accept()));
+            }
+        }finally {
+            serverSocket.close();
+        }
+    }
+
+}
+
+
+```
+### 2.7.4 SendSms
+```java
+package com.tqk.rpc.service;
+
+
+import com.tqk.rpc.vo.UserInfo;
+
+/**
+ *
+ *类说明：短信息发送接口
+ */
+public interface SendSms {
+
+    boolean sendMail(UserInfo user);
+
+}
+```
+### 2.7.5 StockService 
+```java
+package com.tqk.rpc.service;
+
+/**
+ *@author tianqikai
+ *类说明：变动库存服务接口
+ */
+public interface StockService {
+    /**
+     * 增加库存
+     * @param goodsId
+     * @param addAmout
+     */
+    void addStock(String goodsId, int addAmout);
+
+    /**
+     * 扣减库存
+     * @param goodsId
+     * @param deduceAmout
+     */
+    void deduceStock(String goodsId, int deduceAmout);
+}
+
+```
+### 2.7.6 SendSmsImpl
+```java
+package com.tqk.rpc.service.impl;
+
+
+import com.tqk.rpc.service.SendSms;
+import com.tqk.rpc.vo.UserInfo;
+
+/**
+ *@author tianqikai
+ *类说明：短信息发送服务的实现
+ */
+public class SendSmsImpl implements SendSms {
+
+    @Override
+    public boolean sendMail(UserInfo user) {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("已发送短信息给："+user.getName()+"到【"+user.getPhone()+"】");
+        return true;
+    }
+}
+
+```
+### 2.7.7 StockServiceImpl
+```java
+package com.tqk.rpc.service.impl;
+
+import com.tqk.dubbo.server.util.JsonUtil;
+import com.tqk.rpc.service.StockService;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ *@author tianqikai
+ *
+ *类说明：库存数量变动服务的实现
+ */
+public class StockServiceImpl implements StockService {
+
+	//存放库存数据
+    private static ConcurrentHashMap<String,Integer> goodsData =
+            new ConcurrentHashMap<String, Integer>();
+
+    static {
+        goodsData.put("A001",1000);
+        goodsData.put("B002",2000);
+        goodsData.put("C003",3000);
+        goodsData.put("D004",4000);
+    }
+
+    @Override
+    public synchronized void addStock(String goodsId, int addAmout) {
+        System.out.println("+++++++++++++++++增加商品："+goodsId+"的库存,数量为："+addAmout);
+        int amount = goodsData.get(goodsId)+addAmout;
+        goodsData.put(goodsId,amount);
+        System.out.println("+++++++++++++++++商品："+goodsId+"的库存,数量变为："+amount);
+    }
+
+    @Override
+    public synchronized void deduceStock(String goodsId, int deduceAmout) {
+        System.out.println("-------------------减少商品："+goodsId+"的库存,数量为："+ deduceAmout);
+        int amount = goodsData.get(goodsId)- deduceAmout;
+        goodsData.put(goodsId,amount);
+        System.out.println("-------------------商品："+goodsId+"的库存,数量变为："+amount);
+    }
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        String json="{\"args\":[\"A001\",1000],\"context\":\"\",\"ip\":\"\",\"methodName\":\"addStock\",\"parmTypes\":[\"java.lang.String\",\"int\"],\"port\":0,\"serverName\":\"com.tqk.rpc.service.StockService\",\"type\":\"3\"}";
+        MessageObject messageObject = JsonUtil.toBean(json, MessageObject.class);
+        System.out.println(messageObject.getServerName());
+        System.out.println(messageObject.getIp());
+        System.out.println(messageObject.getArgs());
+        System.out.println(messageObject.getMethodName());
+        Class stockService = Class.forName(messageObject.getServerName());
+        Method method = stockService.getMethod(messageObject.getMethodName(), messageObject.getParmTypes());
+        method.invoke(stockService.newInstance(),messageObject.getArgs());
+
+    }
+}
+class MessageObject {
+    private String type;
+    private String serverName;
+    private String ip;
+    private int port;
+    private String methodName;
+    private String context;
+    //方法的入参类型
+    private Class<?>[] parmTypes;
+    //方法入参的值
+    private Object[] args ;
+
+    @Override
+    public String toString() {
+        return "MessageObject{" +
+                "type='" + type + '\'' +
+                ", serverName='" + serverName + '\'' +
+                ", ip='" + ip + '\'' +
+                ", port=" + port +
+                ", methodName='" + methodName + '\'' +
+                ", context='" + context + '\'' +
+                ", parmTypes=" + Arrays.toString(parmTypes) +
+                ", args=" + Arrays.toString(args) +
+                '}';
+    }
+
+    public MessageObject() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    public Class<?>[] getParmTypes() {
+        return parmTypes;
+    }
+
+    public void setParmTypes(Class<?>[] parmTypes) {
+        this.parmTypes = parmTypes;
+    }
+
+    public Object[] getArgs() {
+        return args;
+    }
+
+    public void setArgs(Object[] args) {
+        this.args = args;
+    }
+}
+
+```
+### 2.7.8 RegisterServiceVo
+```java
+package com.tqk.rpc.vo;
+
+import java.io.Serializable;
+
+/**
+ * 类说明：注册中心注册服务的实体类
+ */
+public class RegisterServiceVo implements Serializable {
+    //服务提供者的ip地址
+    private final String host;
+    //服务提供者的端口
+    private final int port;
+
+    public RegisterServiceVo(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+}
+
+```
+### 2.7.9 UserInfo
+```java
+package com.tqk.rpc.vo;
+
+import java.io.Serializable;
+
+/**
+ *类说明：用户的实体类，已实现序列化
+ */
+public class UserInfo implements Serializable {
+
+    private final String name;
+    private final String phone;
+
+    public UserInfo(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+}
+
+```
