@@ -1,4 +1,4 @@
-# 14. Netty-RPC简单框架
+# 14. Netty实现RPC简单框架
 
 ## 14.1 RPC基本介绍
 
