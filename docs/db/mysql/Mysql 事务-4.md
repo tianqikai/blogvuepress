@@ -14,6 +14,34 @@
 Create table .... ENGINE=InnoDB； 
 Alter table table_name ENGINE=InnoDB;
 
+:::tip 事务语法
+1. 开启事务 
+```sql
+1、begin 
+2、START TRANSACTION（推荐） 
+3、begin work 
+```
+2. 事务回滚
+```sql
+rollback
+```
+3. 事务提交 
+```sql
+commit 
+```
+4. 还原点 savepoint (不常用)
+```sql
+show variables like '%autocommit%'; --自动提交事务是开启的 
+set autocommit=0; 
+insert into testdemo values(5,5,5); 
+savepoint s1; 
+insert into testdemo values(6,6,6); 
+savepoint s2; 
+insert into testdemo values(7,7,7); 
+savepoint s3; 
+select * from testdemo rollback to savepoint s2 rollback;
+```
+:::
 
 ## 5.3 事务特性
 
@@ -169,3 +197,50 @@ insert into account VALUES(4,'deer',500);
 --3. 回到第一个事务 
 commit;
 ```
+
+### 5.3.10 间隙锁（gap 锁）
+
+其实在 mysql 中，可重复读已经解决了幻读问题，借助的就是间隙锁
+
+间隙锁实质上是对索引前后的间隙上锁，不对索引本身上锁
+
+#### 实验 1： 
+
+```sql
+--查看是否是可重复读
+select @@tx_isolation;
+--创建表，并插入数据
+create table t_lock_1 (a int primary key); 
+insert into t_lock_1 values(10),(11),(13),(20),(40);
+-- 在一个session中开启事务 
+begin 
+select * from t_lock_1 where a <= 13 for update; 
+--在另外一个会话中 
+insert into t_lock_1 values(21) ;--成功 
+insert into t_lock_1 values(19);-- 阻塞 
+insert into t_lock_1 values(8);-- 阻塞 
+```
+
+**在 rr 隔离级别中者个会扫描到当前值（13）的下一个值（20）,并把这些数据（10，11,13,20）全部加锁**
+
+#### 实验：2
+
+```sql
+create table t_lock_2 (a int primary key,b int, key (b)); 
+insert into t_lock_2 values(1,1),(3,1),(5,3),(8,6),(10,8); 
+--会话 1 
+BEGIN 
+select * from t_lock_2 where b=3 for update;
+ 1 3 5 8 10 
+ 1 1 3 6 8 
+--会话 2 
+select * from t_lock_2 where a = 5 lock in share mode; -- 不可执行，因为 a=5 上有一把记录锁 
+insert into t_lock_2 values(4, 2); -- 不可以执行，因为 b=2 在(1, 3]内 
+insert into t_lock_2 values(6, 5); -- 不可以执行，因为 b=5 在(3, 6)内 
+insert into t_lock_2 values(2, 0); -- 可以执行，(2, 0)均不在锁住的范围内 
+insert into t_lock_2 values(6, 7); -- 可以执行，(6, 7)均不在锁住的范围内 
+insert into t_lock_2 values(9, 6); -- 可以执行 
+insert into t_lock_2 values(7, 6); -- 不可以执行 ? 为什么不行
+insert into t_lock_2 values(2, 6); -- 不可以执行 ? 为什么不行
+```
+**二级索引锁住的范围是 (1,3],[3，6) 主键索引只锁住了 a=5 的这条记录 [5]**
