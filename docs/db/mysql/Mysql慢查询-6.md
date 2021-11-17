@@ -1,8 +1,8 @@
-# 7. Mysql慢查询
+# 8. Mysql慢查询
 
 慢查询日志，顾名思义，就是查询慢的日志，是指 mysql 记录所有执行超过 long_query_time 参数设定的时间阈值的 SQL 语句的日志。该日志能为 SQL 语句的优化带来很好的帮助。默 认情况下，慢查询日志是关闭的，要使用慢查询日志功能，首先要开启慢查询日志功能。
 
-## 7.1 慢查询配置
+## 8.1 慢查询配置
 
 我们已经知道慢查询日志可以帮助定位可能存在问题的 SQL 语句，从而进行 SQL 语句层面的优化。但是默认值为关闭的，需要我们手动开启。
 
@@ -50,9 +50,9 @@ set global log_output='FILE,TABLE';
  :::
 
 
- ## 7.2 慢查询解读分析
+ ## 8.2 慢查询解读分析
 
-### 7.2.1 slow.log日志文件
+### 8.2.1 slow.log日志文件
 ```bash
 #日志文件目录
 root@8559b90888a5:/var/lib/mysql# pwd
@@ -81,7 +81,7 @@ SET timestamp：这 SQL 执行的具体时间
 最后一行：执行的 SQL 语句  
 ::: 
 
-### 7.2.2 mysqldumpslow语法
+### 8.2.2 mysqldumpslow语法
 :::tip 语法
 ```bash 
 mysqldumpslow -s r -t 10 slow-mysql.log 
