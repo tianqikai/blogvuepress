@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. 网络协议与网络编程 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.1404a2ef.css" as="style"><link rel="preload" href="/assets/js/app.20860f16.js" as="script"><link rel="preload" href="/assets/js/2.ac74a662.js" as="script"><link rel="preload" href="/assets/js/48.1d0ff620.js" as="script"><link rel="prefetch" href="/assets/js/10.3a6dd4be.js"><link rel="prefetch" href="/assets/js/100.fd209a58.js"><link rel="prefetch" href="/assets/js/101.9e44c8c9.js"><link rel="prefetch" href="/assets/js/102.b139287e.js"><link rel="prefetch" href="/assets/js/103.85240188.js"><link rel="prefetch" href="/assets/js/104.a2411e9b.js"><link rel="prefetch" href="/assets/js/105.ec8382ca.js"><link rel="prefetch" href="/assets/js/106.ad5c898b.js"><link rel="prefetch" href="/assets/js/107.199752aa.js"><link rel="prefetch" href="/assets/js/108.79dd4578.js"><link rel="prefetch" href="/assets/js/109.c9c7dd80.js"><link rel="prefetch" href="/assets/js/11.abb57436.js"><link rel="prefetch" href="/assets/js/110.cde62a48.js"><link rel="prefetch" href="/assets/js/111.cf5cb42d.js"><link rel="prefetch" href="/assets/js/112.146a61c2.js"><link rel="prefetch" href="/assets/js/113.7ee37e11.js"><link rel="prefetch" href="/assets/js/114.9b3f86c1.js"><link rel="prefetch" href="/assets/js/115.4d3cb222.js"><link rel="prefetch" href="/assets/js/116.dc786541.js"><link rel="prefetch" href="/assets/js/117.5d2b7a43.js"><link rel="prefetch" href="/assets/js/118.555d9623.js"><link rel="prefetch" href="/assets/js/119.bcc7d4c3.js"><link rel="prefetch" href="/assets/js/12.29aa0de4.js"><link rel="prefetch" href="/assets/js/120.2b1cc8ab.js"><link rel="prefetch" href="/assets/js/121.1827f130.js"><link rel="prefetch" href="/assets/js/122.4d72e0ad.js"><link rel="prefetch" href="/assets/js/123.ce840919.js"><link rel="prefetch" href="/assets/js/124.65e7083d.js"><link rel="prefetch" href="/assets/js/125.4f2a26e2.js"><link rel="prefetch" href="/assets/js/126.adeb4bd7.js"><link rel="prefetch" href="/assets/js/127.920474e5.js"><link rel="prefetch" href="/assets/js/128.b0c5f879.js"><link rel="prefetch" href="/assets/js/129.2909f7a5.js"><link rel="prefetch" href="/assets/js/13.4ea04c52.js"><link rel="prefetch" href="/assets/js/130.f62ae5a4.js"><link rel="prefetch" href="/assets/js/131.95387586.js"><link rel="prefetch" href="/assets/js/132.b33afbd8.js"><link rel="prefetch" href="/assets/js/133.da38ae51.js"><link rel="prefetch" href="/assets/js/134.9f9f82b1.js"><link rel="prefetch" href="/assets/js/135.aefb9603.js"><link rel="prefetch" href="/assets/js/136.d15b365f.js"><link rel="prefetch" href="/assets/js/137.6d300f50.js"><link rel="prefetch" href="/assets/js/138.8a56c8ed.js"><link rel="prefetch" href="/assets/js/139.783e6d81.js"><link rel="prefetch" href="/assets/js/14.e8146ffd.js"><link rel="prefetch" href="/assets/js/140.e9f101e5.js"><link rel="prefetch" href="/assets/js/141.69184413.js"><link rel="prefetch" href="/assets/js/142.ebad6810.js"><link rel="prefetch" href="/assets/js/143.0bec2570.js"><link rel="prefetch" href="/assets/js/144.141cc77e.js"><link rel="prefetch" href="/assets/js/145.ba04243e.js"><link rel="prefetch" href="/assets/js/146.84d4c103.js"><link rel="prefetch" href="/assets/js/147.45359c39.js"><link rel="prefetch" href="/assets/js/148.9320f6c6.js"><link rel="prefetch" href="/assets/js/149.acbdb3a8.js"><link rel="prefetch" href="/assets/js/15.92ffb898.js"><link rel="prefetch" href="/assets/js/150.89a68b22.js"><link rel="prefetch" href="/assets/js/151.055f0439.js"><link rel="prefetch" href="/assets/js/152.3fd5282f.js"><link rel="prefetch" href="/assets/js/153.d5fdc2fe.js"><link rel="prefetch" href="/assets/js/154.f73c50e1.js"><link rel="prefetch" href="/assets/js/155.bed831f7.js"><link rel="prefetch" href="/assets/js/156.b3ed2e41.js"><link rel="prefetch" href="/assets/js/157.b3f7df32.js"><link rel="prefetch" href="/assets/js/158.0e03d41c.js"><link rel="prefetch" href="/assets/js/159.54fd0be8.js"><link rel="prefetch" href="/assets/js/16.fa609857.js"><link rel="prefetch" href="/assets/js/160.fca21611.js"><link rel="prefetch" href="/assets/js/161.b1cd68aa.js"><link rel="prefetch" href="/assets/js/162.d0e9c43f.js"><link rel="prefetch" href="/assets/js/163.9004f0df.js"><link rel="prefetch" href="/assets/js/164.96189f49.js"><link rel="prefetch" href="/assets/js/165.7cd30d2e.js"><link rel="prefetch" href="/assets/js/166.5360db63.js"><link rel="prefetch" href="/assets/js/167.ef897b46.js"><link rel="prefetch" href="/assets/js/17.631a4a3d.js"><link rel="prefetch" href="/assets/js/18.f7f233f4.js"><link rel="prefetch" href="/assets/js/19.1d041b8d.js"><link rel="prefetch" href="/assets/js/20.b740ed31.js"><link rel="prefetch" href="/assets/js/21.8443775b.js"><link rel="prefetch" href="/assets/js/22.88937921.js"><link rel="prefetch" href="/assets/js/23.e40252e7.js"><link rel="prefetch" href="/assets/js/24.ca8ee3b0.js"><link rel="prefetch" href="/assets/js/25.85e99c48.js"><link rel="prefetch" href="/assets/js/26.91a01e17.js"><link rel="prefetch" href="/assets/js/27.f0878d57.js"><link rel="prefetch" href="/assets/js/28.88e8d379.js"><link rel="prefetch" href="/assets/js/29.760dd747.js"><link rel="prefetch" href="/assets/js/3.c5d2add3.js"><link rel="prefetch" href="/assets/js/30.30bdf688.js"><link rel="prefetch" href="/assets/js/31.04710129.js"><link rel="prefetch" href="/assets/js/32.4b370aaa.js"><link rel="prefetch" href="/assets/js/33.bbf3db92.js"><link rel="prefetch" href="/assets/js/34.2e03dfef.js"><link rel="prefetch" href="/assets/js/35.5b0ed3ea.js"><link rel="prefetch" href="/assets/js/36.0f4c5071.js"><link rel="prefetch" href="/assets/js/37.c4894618.js"><link rel="prefetch" href="/assets/js/38.79d8b940.js"><link rel="prefetch" href="/assets/js/39.9d234465.js"><link rel="prefetch" href="/assets/js/4.a4f75a07.js"><link rel="prefetch" href="/assets/js/40.1e15177a.js"><link rel="prefetch" href="/assets/js/41.fc0bf99c.js"><link rel="prefetch" href="/assets/js/42.455cc8eb.js"><link rel="prefetch" href="/assets/js/43.12175bbc.js"><link rel="prefetch" href="/assets/js/44.c4578c89.js"><link rel="prefetch" href="/assets/js/45.880d4790.js"><link rel="prefetch" href="/assets/js/46.c9ab4cca.js"><link rel="prefetch" href="/assets/js/47.95094b5f.js"><link rel="prefetch" href="/assets/js/49.4d98001c.js"><link rel="prefetch" href="/assets/js/5.7962db88.js"><link rel="prefetch" href="/assets/js/50.37d73e08.js"><link rel="prefetch" href="/assets/js/51.33272ffb.js"><link rel="prefetch" href="/assets/js/52.9be0a918.js"><link rel="prefetch" href="/assets/js/53.a14f560a.js"><link rel="prefetch" href="/assets/js/54.b2b0d320.js"><link rel="prefetch" href="/assets/js/55.e87d08c2.js"><link rel="prefetch" href="/assets/js/56.5d81f28c.js"><link rel="prefetch" href="/assets/js/57.c2689ea6.js"><link rel="prefetch" href="/assets/js/58.c249e2be.js"><link rel="prefetch" href="/assets/js/59.e55f70ab.js"><link rel="prefetch" href="/assets/js/6.c81e5570.js"><link rel="prefetch" href="/assets/js/60.189e28a1.js"><link rel="prefetch" href="/assets/js/61.ca950ed0.js"><link rel="prefetch" href="/assets/js/62.bc3cb5ba.js"><link rel="prefetch" href="/assets/js/63.37cb4c4c.js"><link rel="prefetch" href="/assets/js/64.6638e768.js"><link rel="prefetch" href="/assets/js/65.796f150d.js"><link rel="prefetch" href="/assets/js/66.f3cc6d01.js"><link rel="prefetch" href="/assets/js/67.dcfd9386.js"><link rel="prefetch" href="/assets/js/68.ff445130.js"><link rel="prefetch" href="/assets/js/69.c773feae.js"><link rel="prefetch" href="/assets/js/7.731de9d5.js"><link rel="prefetch" href="/assets/js/70.fdd0a0dd.js"><link rel="prefetch" href="/assets/js/71.ac571f19.js"><link rel="prefetch" href="/assets/js/72.327878ec.js"><link rel="prefetch" href="/assets/js/73.72469c48.js"><link rel="prefetch" href="/assets/js/74.bbf9fbef.js"><link rel="prefetch" href="/assets/js/75.2459cfdd.js"><link rel="prefetch" href="/assets/js/76.47f88bba.js"><link rel="prefetch" href="/assets/js/77.672ac7be.js"><link rel="prefetch" href="/assets/js/78.b25fc5d1.js"><link rel="prefetch" href="/assets/js/79.9006f304.js"><link rel="prefetch" href="/assets/js/8.65cff321.js"><link rel="prefetch" href="/assets/js/80.2361aab8.js"><link rel="prefetch" href="/assets/js/81.171f7d51.js"><link rel="prefetch" href="/assets/js/82.c8855203.js"><link rel="prefetch" href="/assets/js/83.13cc8880.js"><link rel="prefetch" href="/assets/js/84.71f4937e.js"><link rel="prefetch" href="/assets/js/85.ec1b5167.js"><link rel="prefetch" href="/assets/js/86.7e9d014a.js"><link rel="prefetch" href="/assets/js/87.0534b172.js"><link rel="prefetch" href="/assets/js/88.449b9fba.js"><link rel="prefetch" href="/assets/js/89.22baba13.js"><link rel="prefetch" href="/assets/js/9.7776c25d.js"><link rel="prefetch" href="/assets/js/90.9275a5a7.js"><link rel="prefetch" href="/assets/js/91.6479bf0a.js"><link rel="prefetch" href="/assets/js/92.ce196deb.js"><link rel="prefetch" href="/assets/js/93.65638b91.js"><link rel="prefetch" href="/assets/js/94.ebcb313d.js"><link rel="prefetch" href="/assets/js/95.2901a323.js"><link rel="prefetch" href="/assets/js/96.4e0dcfcb.js"><link rel="prefetch" href="/assets/js/97.0d5e72af.js"><link rel="prefetch" href="/assets/js/98.3d727174.js"><link rel="prefetch" href="/assets/js/99.3b32ce3f.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.1404a2ef.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link router-link-active">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link router-link-active">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Netty</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/netty/" aria-current="page" class="sidebar-link">Netty简介</a></li><li><a href="/middleware/netty/网络协议与网络编程-0.html" class="active sidebar-link">1. 网络协议与网络编程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-1-计算机网络体系结构" class="sidebar-link">1.1 计算机网络体系结构</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-1-1-osi-七层模型" class="sidebar-link">1.1.1 OSI 七层模型</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-1-2-tcp-ip-模型" class="sidebar-link">1.1.2 TCP/IP 模型</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-2-tcp-ip" class="sidebar-link">1.2 TCP/IP</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-2-1-tcp-三次握手" class="sidebar-link">1.2.1 TCP 三次握手</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-2-2-tcp-的三次握手的漏洞" class="sidebar-link">1.2.2 TCP 的三次握手的漏洞</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-2-3-tcp-四次挥手-分手" class="sidebar-link">1.2.3 TCP 四次挥手（分手）</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-2-4-tcp-的通讯原理" class="sidebar-link">1.2.4 TCP 的通讯原理</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-2-5-tcp-面试题" class="sidebar-link">1.2.5 TCP 面试题</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-3-http" class="sidebar-link">1.3 HTTP</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#_1-4-udp" class="sidebar-link">1.4 UDP</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/netty/网络协议与网络编程-0.html#udp和tcp协议之间区别" class="sidebar-link">UDP和TCP协议之间区别</a></li></ul></li></ul></li><li><a href="/middleware/netty/BIO网络编程-1.html" class="sidebar-link">2. 原生JDK网络编程 BIO</a></li><li><a href="/middleware/netty/NIO网络编程-2.html" class="sidebar-link">3. 原生 JDK 网络编程- NIO</a></li><li><a href="/middleware/netty/Netty基础介绍-3.html" class="sidebar-link">4. Netty基础介绍</a></li><li><a href="/middleware/netty/Netty异步模型-4.html" class="sidebar-link">5. Netty异步模型与HTTP服务</a></li><li><a href="/middleware/netty/Netty核心模块-5.html" class="sidebar-link">6. Netty核心模块</a></li><li><a href="/middleware/netty/Netty实现群聊系统-6.html" class="sidebar-link">7. Netty实现群聊系统</a></li><li><a href="/middleware/netty/Netty心跳检测机制-7.html" class="sidebar-link">8. Netty心跳检测机制案</a></li><li><a href="/middleware/netty/Netty实现WebSocket-8.html" class="sidebar-link">9. Netty实现WebSocket</a></li><li><a href="/middleware/netty/Netty编解码器-9.html" class="sidebar-link">10. Netty编解码</a></li><li><a href="/middleware/netty/Netty-RPC简单框架-e.html" class="sidebar-link">14. Netty实现RPC简单框架</a></li><li><a href="/middleware/netty/Netty编解码器与Handler调用机制-a.html" class="sidebar-link">11. Netty编解码</a></li><li><a href="/middleware/netty/TCP 粘包和拆包-b.html" class="sidebar-link">12. TCP粘包和拆包及解决方案</a></li><li><a href="/middleware/netty/业务任务加入异步线程池-c.html" class="sidebar-link">13. 业务任务加入异步线程池</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_1-网络协议与网络编程"><a href="#_1-网络协议与网络编程" class="header-anchor">#</a> 1. 网络协议与网络编程</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_1-1-计算机网络体系结构">1.1 计算机网络体系结构</a><ul><li><a href="#_1-1-1-osi-七层模型">1.1.1 OSI 七层模型</a></li><li><a href="#_1-1-2-tcp-ip-模型">1.1.2 TCP/IP 模型</a></li></ul></li><li><a href="#_1-2-tcp-ip">1.2 TCP/IP</a><ul><li><a href="#_1-2-1-tcp-三次握手">1.2.1 TCP 三次握手</a></li><li><a href="#_1-2-2-tcp-的三次握手的漏洞">1.2.2 TCP 的三次握手的漏洞</a></li><li><a href="#_1-2-3-tcp-四次挥手-分手">1.2.3 TCP 四次挥手（分手）</a></li><li><a href="#_1-2-4-tcp-的通讯原理">1.2.4 TCP 的通讯原理</a></li><li><a href="#_1-2-5-tcp-面试题">1.2.5 TCP 面试题</a></li></ul></li><li><a href="#_1-3-http">1.3 HTTP</a></li><li><a href="#_1-4-udp">1.4 UDP</a><ul><li><a href="#udp和tcp协议之间区别">UDP和TCP协议之间区别</a></li></ul></li></ul></div><p></p> <h2 id="_1-1-计算机网络体系结构"><a href="#_1-1-计算机网络体系结构" class="header-anchor">#</a> 1.1 计算机网络体系结构</h2> <h3 id="_1-1-1-osi-七层模型"><a href="#_1-1-1-osi-七层模型" class="header-anchor">#</a> 1.1.1 OSI 七层模型</h3> <p>开放系统互连参考模型 (Open System Interconnect 简称 OSI）是国际标准化 组织(ISO)和国际电报电话咨询委员会(CCITT)联合制定的开放系统互连参考模型， 为开放式互连信息系统提供了一种功能结构的框架。其目的是为异种计算机互连 提供一个共同的基础和标准框架，并为保持相关标准的一致性和兼容性提供共同 的参考。这里所说的开放系统，实质上指的是遵循 OSI 参考模型和相关协议能够 实现互连的具有各种应用目的的计算机系统。
+OSI 采用了分层的结构化技术，共分七层，<strong>物理层、数据链路层、网络层、 传输层、会话层、表示层、应用层</strong>。</p> <h3 id="_1-1-2-tcp-ip-模型"><a href="#_1-1-2-tcp-ip-模型" class="header-anchor">#</a> 1.1.2 TCP/IP 模型</h3> <p>OSI 模型比较复杂且学术化，所以我们实际使用的 TCP/IP 模型，共分 4 层， <strong>链路层、网络层、传输层、应用层</strong></p> <p><a data-fancybox="" title="TCP/IP 模型 " href="./image/tcpip.jpg"><img src="/assets/img/tcpip.2e320480.jpg" alt="TCP/IP 模型 "></a></p> <h2 id="_1-2-tcp-ip"><a href="#_1-2-tcp-ip" class="header-anchor">#</a> 1.2 TCP/IP</h2> <p>TCP 是面向连接的通信协议，通过三次握手建立连接，通讯完成时要拆除连接，由于 TCP 是面向连接的所以只能用于端到端的通讯。</p> <p>TCP 提供的是一种可靠的数据流服务，采用“带重传的肯定确认”技术来实现 传输的可靠性。TCP 还采用一种称为“滑动窗口”的方式进行流量控制，所谓窗口 实际表示接收能力，用以限制发送方的发送速度。</p> <p>如果 IP 数据包中有已经封好的 TCP 数据包，那么 IP 将把它们向‘上’传送到 TCP 层。TCP 将包排序并进行错误检查，同时实现虚电路间的连接。TCP 数据包 中包括序号和确认，所以未按照顺序收到的包可以被排序，而损坏的包可以被重传。</p> <p>TCP将它的信息送到更高层的应用程序，例如 Telnet 的服务程序和客户程序。 应用程序轮流将信息送回 TCP 层，TCP 层便将它们向下传送到 IP 层，设备驱动程 序和物理介质，最后到接收方。</p> <p>面向连接的服务（例如 Telnet、FTP、rlogin、X Windows 和 SMTP）需要高度 的可靠性，所以它们使用了 TCP。DNS 在某些情况下使用 TCP（发送和接收域名 数据库），但使用 UDP 传送有关单个主机的信息。</p> <h3 id="_1-2-1-tcp-三次握手"><a href="#_1-2-1-tcp-三次握手" class="header-anchor">#</a> 1.2.1 TCP 三次握手</h3> <p>TCP 提供面向有连接的通信传输。面向有连接是指在数据通信开始之前先做 好两端之间的准备工作。 所谓三次握手是指建立一个 TCP 连接时需要客户端和服务器端总共发送三个包以确认连接的建立。
+在 socket 编程中，这一过程由客户端执行 connect来触发。</p> <div class="custom-block tip"><p class="custom-block-title">三次握手</p> <p>**第一次握手：**客户端将标志位 SYN 置为 1，随机产生一个值 seq=J，并将该 数据包发送给服务器端，客户端进入 SYN_SENT 状态，等待服务器端确认。</p> <p>**第二次握手：**服务器端收到数据包后由标志位 SYN=1 知道客户端请求建立连 接，服务器端将标志位 SYN 和 ACK 都置为 1，ack=J+1，随机产生一个值 seq=K， 并将该数据包发送给客户端以确认连接请求，服务器端进入 SYN_RCVD 状态。</p> <p>**第三次握手：**客户端收到确认后，检查 ack 是否为 J+1，ACK 是否为 1，如果 正确则将标志位 ACK 置为 1，ack=K+1，并将该数据包发送给服务器端，服务器端检查 ack 是否为 K+1，ACK 是否为 1，如果正确则连接建立成功，客户端和服 务器端进入 ESTABLISHED 状态，完成三次握手，随后客户端与服务器端之间可以 开始传输数据了</p></div> <p><a data-fancybox="" title="TCP/IP 三次握手 " href="./image/tcp01.jpg"><img src="/assets/img/tcp01.a06ee751.jpg" alt="TCP/IP 三次握手 "></a></p> <h3 id="_1-2-2-tcp-的三次握手的漏洞"><a href="#_1-2-2-tcp-的三次握手的漏洞" class="header-anchor">#</a> 1.2.2 TCP 的三次握手的漏洞</h3> <p>但是在 TCP 三次握手中是有一个缺陷的，就是如果我们利用三次握手的缺陷 进行攻击。这个攻击就是 SYN 洪泛攻击。三次握手中有一个第二次握手，服务端 向客户端应道请求，应答请求是需要客户端 IP 的，服务端是需要知道客户端 IP 的，攻击者就伪造这个 IP，往服务器端狂发送第一次握手的内容，当然第一次握 手中的客户端 IP 地址是伪造的，从而服务端忙于进行第二次握手但是第二次握 手当然没有结果，所以导致服务器端被拖累死机。</p> <p>面对这种攻击有以下的解决方案，最好的方案是防火墙</p> <div class="custom-block tip"><p class="custom-block-title">策略</p> <p><strong>无效连接监视释放</strong><br>
+这种方法不停监视所有的连接，包括三次握手的，还有握手一次的，反正是所有的当达到一定(与)阈值时拆除这些连接，从而释放系统资源。这种方法对于所有的连接一视同仁，不管是正常的还是攻击的，所以这种方式不推荐。</p> <p><strong>延缓 TCB 分配方法</strong><br>
+一般的做完第一次握手之后，服务器就需要为该请求分配一个 TCB（连接控 制资源），通常这个资源需要 200 多个字节。延迟 TCB 的分配，当正常连接建 立起来后再分配 TCB 则可以有效地减轻服务器资源的消耗。</p> <p><strong>使用防火墙</strong><br>
+防火墙在确认了连接的有效性后，才向内部的服务器（Listener）发起 SYN 请求，</p> <p><strong>1、限制每个源IP的连接数</strong></p> <p><strong>2、对恶意连接的IP进行封禁</strong></p> <p><strong>3、主动清除残余连接</strong></p></div> <h3 id="_1-2-3-tcp-四次挥手-分手"><a href="#_1-2-3-tcp-四次挥手-分手" class="header-anchor">#</a> 1.2.3 TCP 四次挥手（分手）</h3> <p>四次挥手即终止 TCP 连接，就是指断开一个 TCP 连接时，需要客户端和服务 端总共发送 4 个包以确认连接的断开。在 socket 编程中，这一过程由客户端或 服务端任一方执行 <strong>close</strong>来触发。</p> <p>由于 TCP 连接是全双工的，因此每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个 FIN 来终止这一方向的连接，收到一 个 FIN 只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP 连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的 一方将执行主动关闭，而另一方则执行被动关闭。</p> <p><a data-fancybox="" title="TCP 四次挥手（分手） " href="./image/tcp02.jpg"><img src="/assets/img/tcp02.2c004032.jpg" alt="TCP/ 四次挥手（分手） "></a></p> <h3 id="_1-2-4-tcp-的通讯原理"><a href="#_1-2-4-tcp-的通讯原理" class="header-anchor">#</a> 1.2.4 TCP 的通讯原理</h3> <h4 id="socket-套接字"><a href="#socket-套接字" class="header-anchor">#</a> Socket 套接字</h4> <p>Socket 的原意是“插座”，在计算机通信领域，socket 被翻译为“套接字”， 它是计算机之间进行通信的一种约定或一种方式。通过 socket 这种约定，一台计算机可以接收其他计算机的数据，也可以向其他计算机发送数据。TCP 用主机 的 IP 地址加上主机上的端口号作为 TCP 连接的端点，这种端点就叫做套接字 （socket）。</p> <h4 id="tcp-缓冲区"><a href="#tcp-缓冲区" class="header-anchor">#</a> TCP 缓冲区</h4> <p>每个 TCP 的 Socket 的内核中都有一个发送缓冲区和一个接收缓冲区。现在 我们假设用 write()方法发送数据，使用 read()方法接收数据。
+<a data-fancybox="" title="Socket 套接字 " href="./image/tcp04.jpg"><img src="/assets/img/tcp04.6dfd127e.jpg" alt="Socket 套接字  "></a></p> <p>write()并不立即向网络中传输数据，而是先将数据写入缓冲区中，再由 TCP 协议将数据从缓冲区发送到目标机器。一旦将数据写入到缓冲区，函数就可以成 功返回，不管它们有没有到达目标机器，也不管它们何时被发送到网络，这些都 是 TCP 协议负责的事情。</p> <p>TCP 协议独立于 write()函数，数据有可能刚被写入缓冲区就发送到网络，也可能在缓冲区中不断积压，多次写入的数据被一次性发送到网络，这取决于当时的网络情况、当前线程是否空闲等诸多因素，不由程序员控制。</p> <p>read()也是如此，也从输入缓冲区中读取数据，而不是直接从网络中读取。</p> <p>总得来说，I/O 缓冲区在每个 TCP 套接字中单独存在；I/O 缓冲区在创建套 接字时自动生成；</p> <h3 id="_1-2-5-tcp-面试题"><a href="#_1-2-5-tcp-面试题" class="header-anchor">#</a> 1.2.5 TCP 面试题</h3> <h4 id="问题-为什么建立连接是三次握手-而关闭连接却是四次挥手呢"><a href="#问题-为什么建立连接是三次握手-而关闭连接却是四次挥手呢" class="header-anchor">#</a> 问题：为什么建立连接是三次握手，而关闭连接却是四次挥手呢？</h4> <h5 id="建立连接"><a href="#建立连接" class="header-anchor">#</a> 建立连接</h5> <p>两次握手无法建立可靠的连接<br>
+通过三次握手确认双方收发功能都正常，四次也可以但是显得比较多余。<br>
+因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。</p> <h5 id="关闭连接"><a href="#关闭连接" class="header-anchor">#</a> 关闭连接</h5> <p>当收到对方的FIN报文时，仅表示对方不再发送数据但还能接收收据，<strong>我们也未必把全部数据都发给了对方</strong>，所以我们可以立即close，也可以发送一些数据给对方后，再发送FIN报文给对方表示同意关闭连接。因此我们的<strong>ACK和FIN一般会分开发送</strong>。</p> <p>上面是一方主动关闭，另一方被动关闭的情况，实际中还会出现同时发起主动关闭的情况，具体流程如下图</p> <p><a data-fancybox="" title="TCP 四次挥手（分手） " href="./image/tcp03.jpg"><img src="/assets/img/tcp03.753e0fff.jpg" alt="TCP/ 四次挥手（分手） "></a></p> <p>为什么需要TIME_WAIT状态</p> <ol><li>可靠的终止TCP连接</li> <li><strong>保证让迟来的TCP报文段有足够的时间被识别并丢弃</strong></li></ol> <hr> <ol><li>为实现TCP这种全双工连接的可靠释放</li></ol> <p>这样可让TCP再次发送最后的ACK以防这个ACK丢失(另一端超时并重发最后的FIN)这种2MSL等待的另一个结果是这个TCP连接在2MSL等待期间，定义这个连接的插口(客户的IP地址和端口号，服务器的IP地址和端口号)不能再被使用。这个连接只能在2MSL结束后才能再被使用。</p> <ol start="2"><li>为使旧的数据包在网络因过期而消失</li></ol> <p>每个具体TCP实现必须选择一个报文段最大生存时间MSL。它是任何报文段被丢弃前在网络内的最长时间。</p> <h2 id="_1-3-http"><a href="#_1-3-http" class="header-anchor">#</a> 1.3 HTTP</h2> <p>HTTP 协议是 Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于 从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。</p> <h2 id="_1-4-udp"><a href="#_1-4-udp" class="header-anchor">#</a> 1.4 UDP</h2> <p>UDP 是面向无连接的通讯协议，UDP 数据包括目的端口号和源端口号信息， 由于通讯不需要连接，所以可以实现广播发送。</p> <p>UDP 通讯时不需要接收方确认，属于不可靠的传输，可能会出现丢包现象， 实际应用中要求程序员编程验证。</p> <h3 id="udp和tcp协议之间区别"><a href="#udp和tcp协议之间区别" class="header-anchor">#</a> UDP和TCP协议之间区别</h3> <ol><li><p>TCP面向连接 （如打电话要先拨号建立连接）; UDP是无连接 的，即发送数据之前不需要建立连接</p></li> <li><p>TCP提供可靠的服务。也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达;UDP尽最大努力交付，即不保证可靠交付
+Tcp通过校验和，重传控制，序号标识，滑动窗口、确认应答实现可靠传输。如丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制。</p></li> <li><p>UDP具有较好的实时性，工作效率比TCP高，适用于对高速传输和实时性有较高的通信或广播通信。</p></li> <li><p>每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信</p></li> <li><p>TCP对系统资源要求较多，UDP对系统资源要求较少。</p></li></ol></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/netty/" class="prev router-link-active">
+        Netty简介
+      </a></span> <span class="next"><a href="/middleware/netty/BIO网络编程-1.html">
+        2. 原生JDK网络编程 BIO
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.20860f16.js" defer></script><script src="/assets/js/2.ac74a662.js" defer></script><script src="/assets/js/48.1d0ff620.js" defer></script>
+  </body>
+</html>

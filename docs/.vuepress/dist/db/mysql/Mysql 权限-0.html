@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. Mysql 权限 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.1404a2ef.css" as="style"><link rel="preload" href="/assets/js/app.20860f16.js" as="script"><link rel="preload" href="/assets/js/2.ac74a662.js" as="script"><link rel="preload" href="/assets/js/34.2e03dfef.js" as="script"><link rel="prefetch" href="/assets/js/10.3a6dd4be.js"><link rel="prefetch" href="/assets/js/100.fd209a58.js"><link rel="prefetch" href="/assets/js/101.9e44c8c9.js"><link rel="prefetch" href="/assets/js/102.b139287e.js"><link rel="prefetch" href="/assets/js/103.85240188.js"><link rel="prefetch" href="/assets/js/104.a2411e9b.js"><link rel="prefetch" href="/assets/js/105.ec8382ca.js"><link rel="prefetch" href="/assets/js/106.ad5c898b.js"><link rel="prefetch" href="/assets/js/107.199752aa.js"><link rel="prefetch" href="/assets/js/108.79dd4578.js"><link rel="prefetch" href="/assets/js/109.c9c7dd80.js"><link rel="prefetch" href="/assets/js/11.abb57436.js"><link rel="prefetch" href="/assets/js/110.cde62a48.js"><link rel="prefetch" href="/assets/js/111.cf5cb42d.js"><link rel="prefetch" href="/assets/js/112.146a61c2.js"><link rel="prefetch" href="/assets/js/113.7ee37e11.js"><link rel="prefetch" href="/assets/js/114.9b3f86c1.js"><link rel="prefetch" href="/assets/js/115.4d3cb222.js"><link rel="prefetch" href="/assets/js/116.dc786541.js"><link rel="prefetch" href="/assets/js/117.5d2b7a43.js"><link rel="prefetch" href="/assets/js/118.555d9623.js"><link rel="prefetch" href="/assets/js/119.bcc7d4c3.js"><link rel="prefetch" href="/assets/js/12.29aa0de4.js"><link rel="prefetch" href="/assets/js/120.2b1cc8ab.js"><link rel="prefetch" href="/assets/js/121.1827f130.js"><link rel="prefetch" href="/assets/js/122.4d72e0ad.js"><link rel="prefetch" href="/assets/js/123.ce840919.js"><link rel="prefetch" href="/assets/js/124.65e7083d.js"><link rel="prefetch" href="/assets/js/125.4f2a26e2.js"><link rel="prefetch" href="/assets/js/126.adeb4bd7.js"><link rel="prefetch" href="/assets/js/127.920474e5.js"><link rel="prefetch" href="/assets/js/128.b0c5f879.js"><link rel="prefetch" href="/assets/js/129.2909f7a5.js"><link rel="prefetch" href="/assets/js/13.4ea04c52.js"><link rel="prefetch" href="/assets/js/130.f62ae5a4.js"><link rel="prefetch" href="/assets/js/131.95387586.js"><link rel="prefetch" href="/assets/js/132.b33afbd8.js"><link rel="prefetch" href="/assets/js/133.da38ae51.js"><link rel="prefetch" href="/assets/js/134.9f9f82b1.js"><link rel="prefetch" href="/assets/js/135.aefb9603.js"><link rel="prefetch" href="/assets/js/136.d15b365f.js"><link rel="prefetch" href="/assets/js/137.6d300f50.js"><link rel="prefetch" href="/assets/js/138.8a56c8ed.js"><link rel="prefetch" href="/assets/js/139.783e6d81.js"><link rel="prefetch" href="/assets/js/14.e8146ffd.js"><link rel="prefetch" href="/assets/js/140.e9f101e5.js"><link rel="prefetch" href="/assets/js/141.69184413.js"><link rel="prefetch" href="/assets/js/142.ebad6810.js"><link rel="prefetch" href="/assets/js/143.0bec2570.js"><link rel="prefetch" href="/assets/js/144.141cc77e.js"><link rel="prefetch" href="/assets/js/145.ba04243e.js"><link rel="prefetch" href="/assets/js/146.84d4c103.js"><link rel="prefetch" href="/assets/js/147.45359c39.js"><link rel="prefetch" href="/assets/js/148.9320f6c6.js"><link rel="prefetch" href="/assets/js/149.acbdb3a8.js"><link rel="prefetch" href="/assets/js/15.92ffb898.js"><link rel="prefetch" href="/assets/js/150.89a68b22.js"><link rel="prefetch" href="/assets/js/151.055f0439.js"><link rel="prefetch" href="/assets/js/152.3fd5282f.js"><link rel="prefetch" href="/assets/js/153.d5fdc2fe.js"><link rel="prefetch" href="/assets/js/154.f73c50e1.js"><link rel="prefetch" href="/assets/js/155.bed831f7.js"><link rel="prefetch" href="/assets/js/156.b3ed2e41.js"><link rel="prefetch" href="/assets/js/157.b3f7df32.js"><link rel="prefetch" href="/assets/js/158.0e03d41c.js"><link rel="prefetch" href="/assets/js/159.54fd0be8.js"><link rel="prefetch" href="/assets/js/16.fa609857.js"><link rel="prefetch" href="/assets/js/160.fca21611.js"><link rel="prefetch" href="/assets/js/161.b1cd68aa.js"><link rel="prefetch" href="/assets/js/162.d0e9c43f.js"><link rel="prefetch" href="/assets/js/163.9004f0df.js"><link rel="prefetch" href="/assets/js/164.96189f49.js"><link rel="prefetch" href="/assets/js/165.7cd30d2e.js"><link rel="prefetch" href="/assets/js/166.5360db63.js"><link rel="prefetch" href="/assets/js/167.ef897b46.js"><link rel="prefetch" href="/assets/js/17.631a4a3d.js"><link rel="prefetch" href="/assets/js/18.f7f233f4.js"><link rel="prefetch" href="/assets/js/19.1d041b8d.js"><link rel="prefetch" href="/assets/js/20.b740ed31.js"><link rel="prefetch" href="/assets/js/21.8443775b.js"><link rel="prefetch" href="/assets/js/22.88937921.js"><link rel="prefetch" href="/assets/js/23.e40252e7.js"><link rel="prefetch" href="/assets/js/24.ca8ee3b0.js"><link rel="prefetch" href="/assets/js/25.85e99c48.js"><link rel="prefetch" href="/assets/js/26.91a01e17.js"><link rel="prefetch" href="/assets/js/27.f0878d57.js"><link rel="prefetch" href="/assets/js/28.88e8d379.js"><link rel="prefetch" href="/assets/js/29.760dd747.js"><link rel="prefetch" href="/assets/js/3.c5d2add3.js"><link rel="prefetch" href="/assets/js/30.30bdf688.js"><link rel="prefetch" href="/assets/js/31.04710129.js"><link rel="prefetch" href="/assets/js/32.4b370aaa.js"><link rel="prefetch" href="/assets/js/33.bbf3db92.js"><link rel="prefetch" href="/assets/js/35.5b0ed3ea.js"><link rel="prefetch" href="/assets/js/36.0f4c5071.js"><link rel="prefetch" href="/assets/js/37.c4894618.js"><link rel="prefetch" href="/assets/js/38.79d8b940.js"><link rel="prefetch" href="/assets/js/39.9d234465.js"><link rel="prefetch" href="/assets/js/4.a4f75a07.js"><link rel="prefetch" href="/assets/js/40.1e15177a.js"><link rel="prefetch" href="/assets/js/41.fc0bf99c.js"><link rel="prefetch" href="/assets/js/42.455cc8eb.js"><link rel="prefetch" href="/assets/js/43.12175bbc.js"><link rel="prefetch" href="/assets/js/44.c4578c89.js"><link rel="prefetch" href="/assets/js/45.880d4790.js"><link rel="prefetch" href="/assets/js/46.c9ab4cca.js"><link rel="prefetch" href="/assets/js/47.95094b5f.js"><link rel="prefetch" href="/assets/js/48.1d0ff620.js"><link rel="prefetch" href="/assets/js/49.4d98001c.js"><link rel="prefetch" href="/assets/js/5.7962db88.js"><link rel="prefetch" href="/assets/js/50.37d73e08.js"><link rel="prefetch" href="/assets/js/51.33272ffb.js"><link rel="prefetch" href="/assets/js/52.9be0a918.js"><link rel="prefetch" href="/assets/js/53.a14f560a.js"><link rel="prefetch" href="/assets/js/54.b2b0d320.js"><link rel="prefetch" href="/assets/js/55.e87d08c2.js"><link rel="prefetch" href="/assets/js/56.5d81f28c.js"><link rel="prefetch" href="/assets/js/57.c2689ea6.js"><link rel="prefetch" href="/assets/js/58.c249e2be.js"><link rel="prefetch" href="/assets/js/59.e55f70ab.js"><link rel="prefetch" href="/assets/js/6.c81e5570.js"><link rel="prefetch" href="/assets/js/60.189e28a1.js"><link rel="prefetch" href="/assets/js/61.ca950ed0.js"><link rel="prefetch" href="/assets/js/62.bc3cb5ba.js"><link rel="prefetch" href="/assets/js/63.37cb4c4c.js"><link rel="prefetch" href="/assets/js/64.6638e768.js"><link rel="prefetch" href="/assets/js/65.796f150d.js"><link rel="prefetch" href="/assets/js/66.f3cc6d01.js"><link rel="prefetch" href="/assets/js/67.dcfd9386.js"><link rel="prefetch" href="/assets/js/68.ff445130.js"><link rel="prefetch" href="/assets/js/69.c773feae.js"><link rel="prefetch" href="/assets/js/7.731de9d5.js"><link rel="prefetch" href="/assets/js/70.fdd0a0dd.js"><link rel="prefetch" href="/assets/js/71.ac571f19.js"><link rel="prefetch" href="/assets/js/72.327878ec.js"><link rel="prefetch" href="/assets/js/73.72469c48.js"><link rel="prefetch" href="/assets/js/74.bbf9fbef.js"><link rel="prefetch" href="/assets/js/75.2459cfdd.js"><link rel="prefetch" href="/assets/js/76.47f88bba.js"><link rel="prefetch" href="/assets/js/77.672ac7be.js"><link rel="prefetch" href="/assets/js/78.b25fc5d1.js"><link rel="prefetch" href="/assets/js/79.9006f304.js"><link rel="prefetch" href="/assets/js/8.65cff321.js"><link rel="prefetch" href="/assets/js/80.2361aab8.js"><link rel="prefetch" href="/assets/js/81.171f7d51.js"><link rel="prefetch" href="/assets/js/82.c8855203.js"><link rel="prefetch" href="/assets/js/83.13cc8880.js"><link rel="prefetch" href="/assets/js/84.71f4937e.js"><link rel="prefetch" href="/assets/js/85.ec1b5167.js"><link rel="prefetch" href="/assets/js/86.7e9d014a.js"><link rel="prefetch" href="/assets/js/87.0534b172.js"><link rel="prefetch" href="/assets/js/88.449b9fba.js"><link rel="prefetch" href="/assets/js/89.22baba13.js"><link rel="prefetch" href="/assets/js/9.7776c25d.js"><link rel="prefetch" href="/assets/js/90.9275a5a7.js"><link rel="prefetch" href="/assets/js/91.6479bf0a.js"><link rel="prefetch" href="/assets/js/92.ce196deb.js"><link rel="prefetch" href="/assets/js/93.65638b91.js"><link rel="prefetch" href="/assets/js/94.ebcb313d.js"><link rel="prefetch" href="/assets/js/95.2901a323.js"><link rel="prefetch" href="/assets/js/96.4e0dcfcb.js"><link rel="prefetch" href="/assets/js/97.0d5e72af.js"><link rel="prefetch" href="/assets/js/98.3d727174.js"><link rel="prefetch" href="/assets/js/99.3b32ce3f.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.1404a2ef.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link router-link-active">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link router-link-active">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Mysql</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/db/mysql/" aria-current="page" class="sidebar-link">MYSQL学习</a></li><li><a href="/db/mysql/Mysql 权限-0.html" class="active sidebar-link">1. Mysql 权限</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-1-简单的mysql权限" class="sidebar-link">1.1 简单的MySql权限</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-1-1-设置root权限远程登陆" class="sidebar-link">1.1.1 设置root权限远程登陆</a></li><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-1-2-设置普通用户登陆" class="sidebar-link">1.1.2 设置普通用户登陆</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-2-用户标识" class="sidebar-link">1.2 用户标识</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-2-1-用户标识说明" class="sidebar-link">1.2.1 用户标识说明</a></li><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-2-2-用户权限所涉及的表" class="sidebar-link">1.2.2 用户权限所涉及的表</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-3-mysql-的角色" class="sidebar-link">1.3 Mysql 的角色</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-3-1-查看mysql5-7中的类似角色" class="sidebar-link">1.3.1 查看mysql5.7中的类似角色</a></li><li class="sidebar-sub-header"><a href="/db/mysql/Mysql 权限-0.html#_1-3-2-创建一个角色" class="sidebar-link">1.3.2 创建一个角色</a></li></ul></li></ul></li><li><a href="/db/mysql/MySql 数据类型-1.html" class="sidebar-link">2. MySql 数据类型</a></li><li><a href="/db/mysql/Mysql 架构-2.html" class="sidebar-link">3. Mysql 架构</a></li><li><a href="/db/mysql/Mysql 锁-3.html" class="sidebar-link">4. Mysql 锁</a></li><li><a href="/db/mysql/Mysql索引-4.html" class="sidebar-link">5. MYsql索引</a></li><li><a href="/db/mysql/Mysql 事务-5.html" class="sidebar-link">6. Mysql 事务</a></li><li><a href="/db/mysql/业务表设计-6.html" class="sidebar-link">7. 业务表设计</a></li><li><a href="/db/mysql/Mysql慢查询-7.html" class="sidebar-link">8. Mysql慢查询</a></li><li><a href="/db/mysql/Mysql执行计划-8.html" class="sidebar-link">9. Mysql执行计划</a></li><li><a href="/db/mysql/SQL优化-9.html" class="sidebar-link">9.SQL优化</a></li><li><a href="/db/mysql/Mysql高频面试题-9.html" class="sidebar-link">1. Mvcc的理解</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_1-mysql-权限"><a href="#_1-mysql-权限" class="header-anchor">#</a> 1. Mysql 权限</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_1-1-简单的mysql权限">1.1 简单的MySql权限</a><ul><li><a href="#_1-1-1-设置root权限远程登陆">1.1.1 设置root权限远程登陆</a></li><li><a href="#_1-1-2-设置普通用户登陆">1.1.2 设置普通用户登陆</a></li></ul></li><li><a href="#_1-2-用户标识">1.2 用户标识</a><ul><li><a href="#_1-2-1-用户标识说明">1.2.1 用户标识说明</a></li><li><a href="#_1-2-2-用户权限所涉及的表">1.2.2 用户权限所涉及的表</a></li></ul></li><li><a href="#_1-3-mysql-的角色">1.3 Mysql 的角色</a><ul><li><a href="#_1-3-1-查看mysql5-7中的类似角色">1.3.1 查看mysql5.7中的类似角色</a></li><li><a href="#_1-3-2-创建一个角色">1.3.2 创建一个角色</a></li></ul></li></ul></div><p></p> <h2 id="_1-1-简单的mysql权限"><a href="#_1-1-简单的mysql权限" class="header-anchor">#</a> 1.1 简单的MySql权限</h2> <p>预先准备使用的SQL语句</p> <div class="language-sql line-numbers-mode"><pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>account<span class="token punctuation">`</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">`</span>account<span class="token punctuation">`</span> <span class="token punctuation">(</span> <span class="token punctuation">`</span>id<span class="token punctuation">`</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span> <span class="token punctuation">`</span>name<span class="token punctuation">`</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span> <span class="token punctuation">`</span>balance<span class="token punctuation">`</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>id<span class="token punctuation">`</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">KEY</span> <span class="token punctuation">`</span>idx_balance<span class="token punctuation">`</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>balance<span class="token punctuation">`</span><span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
+
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token punctuation">`</span>account<span class="token punctuation">`</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">,</span> <span class="token string">'lilei'</span><span class="token punctuation">,</span> <span class="token string">'900'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token punctuation">`</span>account<span class="token punctuation">`</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">,</span> <span class="token string">'hanmei'</span><span class="token punctuation">,</span> <span class="token string">'100'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token punctuation">`</span>account<span class="token punctuation">`</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'3'</span><span class="token punctuation">,</span> <span class="token string">'lucy'</span><span class="token punctuation">,</span> <span class="token string">'250'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token punctuation">`</span>account<span class="token punctuation">`</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'5'</span><span class="token punctuation">,</span> <span class="token string">'tom'</span><span class="token punctuation">,</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_1-1-1-设置root权限远程登陆"><a href="#_1-1-1-设置root权限远程登陆" class="header-anchor">#</a> 1.1.1 设置root权限远程登陆</h3> <div class="language-sql line-numbers-mode"><pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token string">'root'</span><span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">WITH</span> mysql_native_password <span class="token keyword">BY</span> <span class="token string">'12345@tqk'</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><strong>该sql命令意思为可以通过所有网段<font color="#d71345">(@)</font>使用root用户登录mysql服务所有的数据库；</strong></p> <hr> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>mysql<span class="token operator">&gt;</span> <span class="token keyword">select</span> host,user from user<span class="token punctuation">;</span>
++-----------+---------------+
+<span class="token operator">|</span> <span class="token function">host</span>      <span class="token operator">|</span> user          <span class="token operator">|</span>
++-----------+---------------+
+<span class="token operator">|</span> %         <span class="token operator">|</span> root          <span class="token operator">|</span>
+<span class="token operator">|</span> localhost <span class="token operator">|</span> mysql.session <span class="token operator">|</span>
+<span class="token operator">|</span> localhost <span class="token operator">|</span> mysql.sys     <span class="token operator">|</span>
+<span class="token operator">|</span> localhost <span class="token operator">|</span> root          <span class="token operator">|</span>
++-----------+---------------+
+<span class="token number">4</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">&gt;</span> ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED WITH mysql_native_password BY <span class="token string">'12345@tqk'</span><span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">&gt;</span> <span class="token keyword">select</span> host,user from user<span class="token punctuation">;</span>
++-----------+---------------+
+<span class="token operator">|</span> <span class="token function">host</span>      <span class="token operator">|</span> user          <span class="token operator">|</span>
++-----------+---------------+
+<span class="token operator">|</span> %         <span class="token operator">|</span> root          <span class="token operator">|</span>
+<span class="token operator">|</span> localhost <span class="token operator">|</span> mysql.session <span class="token operator">|</span>
+<span class="token operator">|</span> localhost <span class="token operator">|</span> mysql.sys     <span class="token operator">|</span>
+<span class="token operator">|</span> localhost <span class="token operator">|</span> root          <span class="token operator">|</span>
++-----------+---------------+
+<span class="token number">4</span> rows <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">&gt;</span> flush privileges<span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><p><a data-fancybox="" title="MYSQL" href="./image/mysql01.jpg"><img src="/assets/img/mysql01.60b10ed8.jpg" alt="MYSQL"></a></p> <h3 id="_1-1-2-设置普通用户登陆"><a href="#_1-1-2-设置普通用户登陆" class="header-anchor">#</a> 1.1.2 设置普通用户登陆</h3> <p><strong>使用 Root 用户，执行</strong></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># grant '权限' on '作用域' to '用户';</span>
+
+mysql<span class="token operator">&gt;</span> grant SELECT on STD.* TO <span class="token string">'dev'</span>@<span class="token string">'113.124.224.%'</span> IDENTIFIED BY <span class="token string">'12345@tqk'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected, <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">&gt;</span> flush privileges<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>很简单的一句 sql，创建了一个 dev 的用户，密码为 12345@tqk，仅仅运行在网段为 <em><em>113.124.224.</em> <strong>的网段进行</strong>STD数据库用户查询操作</em>*</p> <div class="language-sql line-numbers-mode"><pre class="language-sql"><code><span class="token keyword">show</span> grants <span class="token keyword">for</span> <span class="token string">'dev'</span><span class="token variable">@'113.124.224.%'</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><a data-fancybox="" title="MYSQL" href="./image/mysql02.jpg"><img src="/assets/img/mysql02.b4a76f4a.jpg" alt="MYSQL"></a></p> <p>可以链接，也可以执行 select，这个时候无法进行DDL DMl操作
+<a data-fancybox="" title="MYSQL" href="./image/mysql03.jpg"><img src="/assets/img/mysql03.b4d30bc4.jpg" alt="MYSQL"></a></p> <h2 id="_1-2-用户标识"><a href="#_1-2-用户标识" class="header-anchor">#</a> 1.2 用户标识</h2> <h3 id="_1-2-1-用户标识说明"><a href="#_1-2-1-用户标识说明" class="header-anchor">#</a> 1.2.1 用户标识说明</h3> <p>上面一句简单的 SQL 堪称完美的解决了程序员新手的删库跑路的问题，</p> <p>这里有个小的知识点需要先具备，在 mysql 中的权限不是单纯的赋予给用户的，而是赋予给” <strong>用户+IP</strong>”的</p> <p>比如 dev 用户是否能登陆，用什么密码登陆，并且能访问什么数据库等都需要加上 IP，这样才算 一 个完整的用户标识 ， 换 句 话 说 'dev'@'192.168.0.168' 、 'dev'@'127.0.0.1' 与 'dev'@'localhost' 这 3 个是完全不同的用户标识（哪怕你本机的 ip 就是 192.168.0.168）。</p> <p><strong>作用： 登录，管理数据库逻辑对象</strong></p> <p><strong>定义： 用户名@'主机值'</strong></p> <p><strong>主机值可以是主机名或IP地址，主机值中允许使用通配符</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>root@'10.0.0.%'    
+root@'%'
+root@'10.0.0.51'
+root@'localhost'
+root@'db02'     # 主机名不能是数字开头
+root@'10.0.0.5%'
+root@'10.0.0.0/255.255.0.0' # 10.0 B类网络上任何主机
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h4 id="用户管理操作"><a href="#用户管理操作" class="header-anchor">#</a> 用户管理操作</h4> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#增：</span>
+mysql<span class="token operator">&gt;</span> create user dev@<span class="token string">'10.0.0.%'</span> identified by <span class="token string">'123'</span><span class="token punctuation">;</span>
+<span class="token comment">#查：</span>
+mysql<span class="token operator">&gt;</span> desc mysql.user<span class="token punctuation">;</span>    ----<span class="token operator">&gt;</span>  mysql5.7 开始新版的mysql数据库下的user表中已经没有password字段了保存密码的字段变成了authentication_string字段
+mysql<span class="token operator">&gt;</span> <span class="token keyword">select</span> user, host, authentication_string from mysql.user<span class="token punctuation">;</span>
+<span class="token comment">#改:</span>
+mysql<span class="token operator">&gt;</span> alter user dev@<span class="token string">'10.0.0.%'</span> identified by <span class="token string">'456'</span><span class="token punctuation">;</span>
+<span class="token comment">#删：</span>
+mysql<span class="token operator">&gt;</span> drop user dev@<span class="token string">'10.0.0.%'</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h4 id="权限管理操作"><a href="#权限管理操作" class="header-anchor">#</a> 权限管理操作</h4> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># grant '权限' on '作用域' to '用户';</span>
+mysql<span class="token operator">&gt;</span> grant all on *.* to <span class="token string">'test'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">常用权限介绍</p> <ol><li>select：可以从数据库中的表中查询数据</li> <li>insert：可以插入数据到数据库的表中</li> <li>update：可以对数据库中的表进行更新数据</li> <li>delete：可以从数据库中的表中删除数据</li> <li>alter：可以使用 alter table 来改变表的结构</li> <li>create：可以创建新的数据库或表的语句</li> <li>drop：能够删除现有数据库，表和视图</li> <li>grant option：可以向其它用户授予或移除权限</li> <li>index：可以创建和删除索引</li> <li>all或all privileges：代表指定权限等级的所有权限</li></ol></div> <h3 id="_1-2-2-用户权限所涉及的表"><a href="#_1-2-2-用户权限所涉及的表" class="header-anchor">#</a> 1.2.2 用户权限所涉及的表</h3> <p>mysql.user，mysql.db，mysql.table_priv，mysql_column_priv 你可以熟悉其中的 user 表，甚至手动的改过里面的数据（不合规范）</p> <div class="custom-block tip"><p class="custom-block-title">表和权限关系</p> <ol><li><strong>User</strong> 的一行记录代表一个用户标识</li> <li><strong>db</strong> 的一行记录代表对数据库的权限</li> <li><strong>table_priv</strong> 的一行记录代表对表的权限</li> <li><strong>column_priv</strong> 的一行记录代表对某一列的权限</li></ol></div> <p>创建的 sit 用户我不想让测试人员访问 balance 列,但是 id 和 name 列是可以访问的，这样的需求在工作中不是没有</p> <hr> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>mysql<span class="token operator">&gt;</span> grant SELECT on STD.* TO <span class="token string">'sit'</span>@<span class="token string">'113.124.224.%'</span> IDENTIFIED BY <span class="token string">'12345@tqk'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+
+mysql<span class="token operator">&gt;</span> grant select<span class="token punctuation">(</span>id,name<span class="token punctuation">)</span> on STD.account TO <span class="token string">'sit'</span>@<span class="token string">'113.124.224.%'</span> IDENTIFIED BY <span class="token string">'12345@tqk'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+Query OK, <span class="token number">0</span> rows affected, <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+mysql<span class="token operator">&gt;</span> REVOKE SELECT on STD.* from<span class="token string">'sit'</span>@<span class="token string">'113.124.224.%'</span>
+mysql<span class="token operator">&gt;</span> flush privileges<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>这时候可以在分别看下 table_priv，column_priv 的数据
+<a data-fancybox="" title="MYSQL" href="./image/mysql04.jpg"><img src="/assets/img/mysql04.30949e09.jpg" alt="MYSQL"></a></p> <p>再要查询所有记录？不好意思不让查而你查询id，name查询又是可以了
+<a data-fancybox="" title="MYSQL" href="./image/mysql06.jpg"><img src="/assets/img/mysql06.667dc678.jpg" alt="MYSQL"></a></p> <h2 id="_1-3-mysql-的角色"><a href="#_1-3-mysql-的角色" class="header-anchor">#</a> 1.3 Mysql 的角色</h2> <p>MySql 基于”用户+IP”的这种授权模式其实还是挺好用的，但如果你使用 Oracle、 PostgreSQL、SqlServer 你可能会发牢骚</p> <p>这样对于每个用户都要赋权的方式是不是太麻烦了，如果我用户多呢？有没有角色或者用户组这样的功能呢？ 好吧，你搓中了 mysql 的软肋，很痛，</p> <p>在 mysql5.7 开始才正式支持这个功能，而且连 mysql 官方把它叫做“Role Like”（不是角色，长得比较像而已，额~~~）？</p> <h3 id="_1-3-1-查看mysql5-7中的类似角色"><a href="#_1-3-1-查看mysql5-7中的类似角色" class="header-anchor">#</a> 1.3.1 查看mysql5.7中的类似角色</h3> <div class="language-sql line-numbers-mode"><pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">&quot;%proxy%&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><strong>check_proxy_users，mysql_native_password_proxy_users 这两个变量设置成 true 才行</strong></p> <div class="language-sql line-numbers-mode"><pre class="language-sql"><code><span class="token keyword">set</span> <span class="token keyword">GLOBAL</span> check_proxy_users <span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> 
+<span class="token keyword">set</span> <span class="token keyword">GLOBAL</span> mysql_native_password_proxy_users <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p><a data-fancybox="" title="MYSQL" href="./image/mysql05.jpg"><img src="/assets/img/mysql05.eb663acb.jpg" alt="MYSQL"></a></p> <h3 id="_1-3-2-创建一个角色"><a href="#_1-3-2-创建一个角色" class="header-anchor">#</a> 1.3.2 创建一个角色</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">### 无密码</span>
+create <span class="token environment constant">USER</span> <span class="token string">'tqk_role'</span><span class="token punctuation">;</span>
+grant select<span class="token punctuation">(</span>id,name<span class="token punctuation">)</span> on STD.account to <span class="token string">'tqk_role'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+
+create <span class="token environment constant">USER</span> <span class="token string">'tqk1'</span><span class="token punctuation">;</span>
+grant proxy on <span class="token string">'tqk_role'</span> to <span class="token string">'tqk1'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+
+<span class="token comment"># WITH GRANT OPTION 意思是可以让其他用户继承自己的权限的意思</span>
+<span class="token comment">### 有密码</span>
+create user <span class="token string">'tqk_role2'</span>@<span class="token string">'113.124.224.%'</span> identified by <span class="token string">'12345@tqk'</span><span class="token punctuation">;</span>
+<span class="token comment"># 将权限赋给角色</span>
+grant select<span class="token punctuation">(</span>id,name<span class="token punctuation">)</span> on STD.account TO <span class="token string">'tqk_role2'</span>@<span class="token string">'113.124.224.%'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+
+create <span class="token environment constant">USER</span> <span class="token string">'tqk2'</span>@<span class="token string">'113.124.224.%'</span> identified by <span class="token string">'12345@tqk'</span><span class="token punctuation">;</span>
+grant proxy on <span class="token string">'tqk_role2'</span>@<span class="token string">'113.124.224.%'</span>  to <span class="token string">'tqk2'</span>@<span class="token string">'113.124.224.%'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p><a data-fancybox="" title="MYSQL" href="./image/mysql07.jpg"><img src="/assets/img/mysql07.85998295.jpg" alt="MYSQL"></a></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/db/mysql/" class="prev router-link-active">
+        MYSQL学习
+      </a></span> <span class="next"><a href="/db/mysql/MySql 数据类型-1.html">
+        2. MySql 数据类型
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.20860f16.js" defer></script><script src="/assets/js/2.ac74a662.js" defer></script><script src="/assets/js/34.2e03dfef.js" defer></script>
+  </body>
+</html>

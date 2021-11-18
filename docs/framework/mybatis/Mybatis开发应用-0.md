@@ -1264,3 +1264,78 @@ collection 支持的属性以及属性的作用和 association 完全相同。my
 
 ## 1.10 缓存
 
+### 1.10.1 一级缓存
+
+一级缓存默认会启用，想要关闭一级缓存可以在 select 标签上配置<font color='red'><strong>flushCache=“true”</strong></font>；一
+级缓存存在于<font color='#d71345'><strong>SqlSession 的生命周期中</strong></font>，在同一个 SqlSession 中查询时， MyBatis 会把执
+行的方法和参数通过算法生成缓存的键值，将键值和查询结果存入一个 Map 对象中。如果同一个 SqlSession 中执行的方法和参数完全一致，那么通过算法会生成相同的键值，当Map 缓存对象中己经存在该键值时，则会返回缓存中的对象;任何的 INSERT 、UPDATE 、DELETE 操作都会清空一级缓存；
+
+
+```java
+	public void Test1LevelCache(){
+
+		
+		SqlSession session1 = sqlSessionFactory.openSession();
+		TUserMapper userMapper1 = session1.getMapper(TUserMapper.class);
+		String email = "qq.com";
+		Byte sex = 1;
+		List<TUser> list1 = userMapper1.selectByEmailAndSex2(email, sex);
+		System.out.println(list1.size());
+		
+		
+		//增删改操作会清空一级缓存和二级缓存
+//		TUser userInsert = new TUser();
+//		userInsert.setUserName("test1");
+//		userInsert.setRealName("realname1");
+//		userInsert.setEmail("myemail1");
+//		userMapper1.insert1(userInsert);
+		
+		
+		List<TUser> list2 = userMapper1.selectByEmailAndSex2(email, sex);
+		System.out.println(list2.toString());
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("email", email);
+		map.put("sex", sex);
+		
+//		List<TUser> list3 = userMapper1.selectByEmailAndSex1(map);
+//		System.out.println(list3.toString());
+//
+//
+		session1.close();
+//
+//
+		SqlSession session2 = sqlSessionFactory.openSession();
+		TUserMapper userMapper2 = session2.getMapper(TUserMapper.class);
+		List<TUser> list4 = userMapper2.selectByEmailAndSex2(email, sex);
+		System.out.println(list2.toString());
+		session2.close();
+	}
+```
+
+
+### 1.10.2 二级缓存
+
+二级缓存也叫应用缓存，<font color='#d71345'><strong>存在于 SqlSessionFactory 的生命周期中</strong></font>，可以理解为跨 sqlSession；
+缓存是以 namespace 为单位的，不同 namespace 下的操作互不影响。在 MyBatis 的核心配置
+文件中 cacheEnabled 参数是二级缓存的全局开关，默认值是 true，如果把这个参数设置为
+false，即使有后面的二级缓存配置，也不会生效；
+要开启二级缓存,你需要在你的 SQL Mapper 文件中添加配置：
+```xml
+<cache eviction=“LRU" flushInterval="60000" size="512" readOnly="true"/>
+```
+
+
+<font color='#87481f'><strong>开发建议</strong></font>：使用二级缓存容易出现脏读，建议避免使用二级缓存，在业务层使用可控制的缓存代替更好；
+
+
+### 1.10.3 缓存调用过程
+
+<a data-fancybox title="缓存调用过程" href="./image/mybatis03.jpg">![缓存调用过程](./image/mybatis03.jpg)</a>
+
+:::tip 调用过程解读：
+1. 每次与数据库的连接都会优先从缓存中获取数据
+2. 先查二级缓存，再查一级缓存
+3. 二级缓存以 namespace 为单位的，是 SqlSession 共享的，容易出现脏读，建议避免使用二级缓存
+4. 一级缓存是 SqlSession 独享的，建议开启；
+:::

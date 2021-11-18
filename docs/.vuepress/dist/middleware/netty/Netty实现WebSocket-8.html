@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>9. Netty实现WebSocket | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.1404a2ef.css" as="style"><link rel="preload" href="/assets/js/app.20860f16.js" as="script"><link rel="preload" href="/assets/js/2.ac74a662.js" as="script"><link rel="preload" href="/assets/js/98.3d727174.js" as="script"><link rel="prefetch" href="/assets/js/10.3a6dd4be.js"><link rel="prefetch" href="/assets/js/100.fd209a58.js"><link rel="prefetch" href="/assets/js/101.9e44c8c9.js"><link rel="prefetch" href="/assets/js/102.b139287e.js"><link rel="prefetch" href="/assets/js/103.85240188.js"><link rel="prefetch" href="/assets/js/104.a2411e9b.js"><link rel="prefetch" href="/assets/js/105.ec8382ca.js"><link rel="prefetch" href="/assets/js/106.ad5c898b.js"><link rel="prefetch" href="/assets/js/107.199752aa.js"><link rel="prefetch" href="/assets/js/108.79dd4578.js"><link rel="prefetch" href="/assets/js/109.c9c7dd80.js"><link rel="prefetch" href="/assets/js/11.abb57436.js"><link rel="prefetch" href="/assets/js/110.cde62a48.js"><link rel="prefetch" href="/assets/js/111.cf5cb42d.js"><link rel="prefetch" href="/assets/js/112.146a61c2.js"><link rel="prefetch" href="/assets/js/113.7ee37e11.js"><link rel="prefetch" href="/assets/js/114.9b3f86c1.js"><link rel="prefetch" href="/assets/js/115.4d3cb222.js"><link rel="prefetch" href="/assets/js/116.dc786541.js"><link rel="prefetch" href="/assets/js/117.5d2b7a43.js"><link rel="prefetch" href="/assets/js/118.555d9623.js"><link rel="prefetch" href="/assets/js/119.bcc7d4c3.js"><link rel="prefetch" href="/assets/js/12.29aa0de4.js"><link rel="prefetch" href="/assets/js/120.2b1cc8ab.js"><link rel="prefetch" href="/assets/js/121.1827f130.js"><link rel="prefetch" href="/assets/js/122.4d72e0ad.js"><link rel="prefetch" href="/assets/js/123.ce840919.js"><link rel="prefetch" href="/assets/js/124.65e7083d.js"><link rel="prefetch" href="/assets/js/125.4f2a26e2.js"><link rel="prefetch" href="/assets/js/126.adeb4bd7.js"><link rel="prefetch" href="/assets/js/127.920474e5.js"><link rel="prefetch" href="/assets/js/128.b0c5f879.js"><link rel="prefetch" href="/assets/js/129.2909f7a5.js"><link rel="prefetch" href="/assets/js/13.4ea04c52.js"><link rel="prefetch" href="/assets/js/130.f62ae5a4.js"><link rel="prefetch" href="/assets/js/131.95387586.js"><link rel="prefetch" href="/assets/js/132.b33afbd8.js"><link rel="prefetch" href="/assets/js/133.da38ae51.js"><link rel="prefetch" href="/assets/js/134.9f9f82b1.js"><link rel="prefetch" href="/assets/js/135.aefb9603.js"><link rel="prefetch" href="/assets/js/136.d15b365f.js"><link rel="prefetch" href="/assets/js/137.6d300f50.js"><link rel="prefetch" href="/assets/js/138.8a56c8ed.js"><link rel="prefetch" href="/assets/js/139.783e6d81.js"><link rel="prefetch" href="/assets/js/14.e8146ffd.js"><link rel="prefetch" href="/assets/js/140.e9f101e5.js"><link rel="prefetch" href="/assets/js/141.69184413.js"><link rel="prefetch" href="/assets/js/142.ebad6810.js"><link rel="prefetch" href="/assets/js/143.0bec2570.js"><link rel="prefetch" href="/assets/js/144.141cc77e.js"><link rel="prefetch" href="/assets/js/145.ba04243e.js"><link rel="prefetch" href="/assets/js/146.84d4c103.js"><link rel="prefetch" href="/assets/js/147.45359c39.js"><link rel="prefetch" href="/assets/js/148.9320f6c6.js"><link rel="prefetch" href="/assets/js/149.acbdb3a8.js"><link rel="prefetch" href="/assets/js/15.92ffb898.js"><link rel="prefetch" href="/assets/js/150.89a68b22.js"><link rel="prefetch" href="/assets/js/151.055f0439.js"><link rel="prefetch" href="/assets/js/152.3fd5282f.js"><link rel="prefetch" href="/assets/js/153.d5fdc2fe.js"><link rel="prefetch" href="/assets/js/154.f73c50e1.js"><link rel="prefetch" href="/assets/js/155.bed831f7.js"><link rel="prefetch" href="/assets/js/156.b3ed2e41.js"><link rel="prefetch" href="/assets/js/157.b3f7df32.js"><link rel="prefetch" href="/assets/js/158.0e03d41c.js"><link rel="prefetch" href="/assets/js/159.54fd0be8.js"><link rel="prefetch" href="/assets/js/16.fa609857.js"><link rel="prefetch" href="/assets/js/160.fca21611.js"><link rel="prefetch" href="/assets/js/161.b1cd68aa.js"><link rel="prefetch" href="/assets/js/162.d0e9c43f.js"><link rel="prefetch" href="/assets/js/163.9004f0df.js"><link rel="prefetch" href="/assets/js/164.96189f49.js"><link rel="prefetch" href="/assets/js/165.7cd30d2e.js"><link rel="prefetch" href="/assets/js/166.5360db63.js"><link rel="prefetch" href="/assets/js/167.ef897b46.js"><link rel="prefetch" href="/assets/js/17.631a4a3d.js"><link rel="prefetch" href="/assets/js/18.f7f233f4.js"><link rel="prefetch" href="/assets/js/19.1d041b8d.js"><link rel="prefetch" href="/assets/js/20.b740ed31.js"><link rel="prefetch" href="/assets/js/21.8443775b.js"><link rel="prefetch" href="/assets/js/22.88937921.js"><link rel="prefetch" href="/assets/js/23.e40252e7.js"><link rel="prefetch" href="/assets/js/24.ca8ee3b0.js"><link rel="prefetch" href="/assets/js/25.85e99c48.js"><link rel="prefetch" href="/assets/js/26.91a01e17.js"><link rel="prefetch" href="/assets/js/27.f0878d57.js"><link rel="prefetch" href="/assets/js/28.88e8d379.js"><link rel="prefetch" href="/assets/js/29.760dd747.js"><link rel="prefetch" href="/assets/js/3.c5d2add3.js"><link rel="prefetch" href="/assets/js/30.30bdf688.js"><link rel="prefetch" href="/assets/js/31.04710129.js"><link rel="prefetch" href="/assets/js/32.4b370aaa.js"><link rel="prefetch" href="/assets/js/33.bbf3db92.js"><link rel="prefetch" href="/assets/js/34.2e03dfef.js"><link rel="prefetch" href="/assets/js/35.5b0ed3ea.js"><link rel="prefetch" href="/assets/js/36.0f4c5071.js"><link rel="prefetch" href="/assets/js/37.c4894618.js"><link rel="prefetch" href="/assets/js/38.79d8b940.js"><link rel="prefetch" href="/assets/js/39.9d234465.js"><link rel="prefetch" href="/assets/js/4.a4f75a07.js"><link rel="prefetch" href="/assets/js/40.1e15177a.js"><link rel="prefetch" href="/assets/js/41.fc0bf99c.js"><link rel="prefetch" href="/assets/js/42.455cc8eb.js"><link rel="prefetch" href="/assets/js/43.12175bbc.js"><link rel="prefetch" href="/assets/js/44.c4578c89.js"><link rel="prefetch" href="/assets/js/45.880d4790.js"><link rel="prefetch" href="/assets/js/46.c9ab4cca.js"><link rel="prefetch" href="/assets/js/47.95094b5f.js"><link rel="prefetch" href="/assets/js/48.1d0ff620.js"><link rel="prefetch" href="/assets/js/49.4d98001c.js"><link rel="prefetch" href="/assets/js/5.7962db88.js"><link rel="prefetch" href="/assets/js/50.37d73e08.js"><link rel="prefetch" href="/assets/js/51.33272ffb.js"><link rel="prefetch" href="/assets/js/52.9be0a918.js"><link rel="prefetch" href="/assets/js/53.a14f560a.js"><link rel="prefetch" href="/assets/js/54.b2b0d320.js"><link rel="prefetch" href="/assets/js/55.e87d08c2.js"><link rel="prefetch" href="/assets/js/56.5d81f28c.js"><link rel="prefetch" href="/assets/js/57.c2689ea6.js"><link rel="prefetch" href="/assets/js/58.c249e2be.js"><link rel="prefetch" href="/assets/js/59.e55f70ab.js"><link rel="prefetch" href="/assets/js/6.c81e5570.js"><link rel="prefetch" href="/assets/js/60.189e28a1.js"><link rel="prefetch" href="/assets/js/61.ca950ed0.js"><link rel="prefetch" href="/assets/js/62.bc3cb5ba.js"><link rel="prefetch" href="/assets/js/63.37cb4c4c.js"><link rel="prefetch" href="/assets/js/64.6638e768.js"><link rel="prefetch" href="/assets/js/65.796f150d.js"><link rel="prefetch" href="/assets/js/66.f3cc6d01.js"><link rel="prefetch" href="/assets/js/67.dcfd9386.js"><link rel="prefetch" href="/assets/js/68.ff445130.js"><link rel="prefetch" href="/assets/js/69.c773feae.js"><link rel="prefetch" href="/assets/js/7.731de9d5.js"><link rel="prefetch" href="/assets/js/70.fdd0a0dd.js"><link rel="prefetch" href="/assets/js/71.ac571f19.js"><link rel="prefetch" href="/assets/js/72.327878ec.js"><link rel="prefetch" href="/assets/js/73.72469c48.js"><link rel="prefetch" href="/assets/js/74.bbf9fbef.js"><link rel="prefetch" href="/assets/js/75.2459cfdd.js"><link rel="prefetch" href="/assets/js/76.47f88bba.js"><link rel="prefetch" href="/assets/js/77.672ac7be.js"><link rel="prefetch" href="/assets/js/78.b25fc5d1.js"><link rel="prefetch" href="/assets/js/79.9006f304.js"><link rel="prefetch" href="/assets/js/8.65cff321.js"><link rel="prefetch" href="/assets/js/80.2361aab8.js"><link rel="prefetch" href="/assets/js/81.171f7d51.js"><link rel="prefetch" href="/assets/js/82.c8855203.js"><link rel="prefetch" href="/assets/js/83.13cc8880.js"><link rel="prefetch" href="/assets/js/84.71f4937e.js"><link rel="prefetch" href="/assets/js/85.ec1b5167.js"><link rel="prefetch" href="/assets/js/86.7e9d014a.js"><link rel="prefetch" href="/assets/js/87.0534b172.js"><link rel="prefetch" href="/assets/js/88.449b9fba.js"><link rel="prefetch" href="/assets/js/89.22baba13.js"><link rel="prefetch" href="/assets/js/9.7776c25d.js"><link rel="prefetch" href="/assets/js/90.9275a5a7.js"><link rel="prefetch" href="/assets/js/91.6479bf0a.js"><link rel="prefetch" href="/assets/js/92.ce196deb.js"><link rel="prefetch" href="/assets/js/93.65638b91.js"><link rel="prefetch" href="/assets/js/94.ebcb313d.js"><link rel="prefetch" href="/assets/js/95.2901a323.js"><link rel="prefetch" href="/assets/js/96.4e0dcfcb.js"><link rel="prefetch" href="/assets/js/97.0d5e72af.js"><link rel="prefetch" href="/assets/js/99.3b32ce3f.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.1404a2ef.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link router-link-active">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/db2/" class="nav-link">
+  DB2
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringCloud/" class="nav-link">
+  SpringCloud-Alibaba
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="中间件" class="dropdown-title"><span class="title">中间件</span> <span class="arrow down"></span></button> <button type="button" aria-label="中间件" class="mobile-dropdown-title"><span class="title">中间件</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link router-link-active">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/gateway/" class="nav-link">
+  gateway
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zuul/" class="nav-link">
+  zuul
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nocas/" class="nav-link">
+  nocas
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/seata/" class="nav-link">
+  seata
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/ActiveMQ/" class="nav-link">
+  ActiveMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/zeroonbush/blog.git" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Netty</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/netty/" aria-current="page" class="sidebar-link">Netty简介</a></li><li><a href="/middleware/netty/网络协议与网络编程-0.html" class="sidebar-link">1. 网络协议与网络编程</a></li><li><a href="/middleware/netty/BIO网络编程-1.html" class="sidebar-link">2. 原生JDK网络编程 BIO</a></li><li><a href="/middleware/netty/NIO网络编程-2.html" class="sidebar-link">3. 原生 JDK 网络编程- NIO</a></li><li><a href="/middleware/netty/Netty基础介绍-3.html" class="sidebar-link">4. Netty基础介绍</a></li><li><a href="/middleware/netty/Netty异步模型-4.html" class="sidebar-link">5. Netty异步模型与HTTP服务</a></li><li><a href="/middleware/netty/Netty核心模块-5.html" class="sidebar-link">6. Netty核心模块</a></li><li><a href="/middleware/netty/Netty实现群聊系统-6.html" class="sidebar-link">7. Netty实现群聊系统</a></li><li><a href="/middleware/netty/Netty心跳检测机制-7.html" class="sidebar-link">8. Netty心跳检测机制案</a></li><li><a href="/middleware/netty/Netty实现WebSocket-8.html" class="active sidebar-link">9. Netty实现WebSocket</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/netty/Netty实现WebSocket-8.html#_9-1-websockerserver" class="sidebar-link">9.1 WebSockerServer</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/Netty实现WebSocket-8.html#_9-2-websockerserverhandler" class="sidebar-link">9.2 WebSockerServerHandler</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/Netty实现WebSocket-8.html#_9-3-client-html" class="sidebar-link">9.3 Client.html</a></li><li class="sidebar-sub-header"><a href="/middleware/netty/Netty实现WebSocket-8.html#_9-4-示例验示结果" class="sidebar-link">9.4 示例验示结果</a></li></ul></li><li><a href="/middleware/netty/Netty编解码器-9.html" class="sidebar-link">10. Netty编解码</a></li><li><a href="/middleware/netty/Netty-RPC简单框架-e.html" class="sidebar-link">14. Netty实现RPC简单框架</a></li><li><a href="/middleware/netty/Netty编解码器与Handler调用机制-a.html" class="sidebar-link">11. Netty编解码</a></li><li><a href="/middleware/netty/TCP 粘包和拆包-b.html" class="sidebar-link">12. TCP粘包和拆包及解决方案</a></li><li><a href="/middleware/netty/业务任务加入异步线程池-c.html" class="sidebar-link">13. 业务任务加入异步线程池</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_9-netty实现websocket"><a href="#_9-netty实现websocket" class="header-anchor">#</a> 9. Netty实现WebSocket</h1> <div class="custom-block tip"><p class="custom-block-title">实例要求:</p> <ol><li>Http协议是无状态的, 浏览器和服务器间的请求响应一次，下一次会重新创建连接.</li> <li>要求：实现基于webSocket的长连接的全双工的交互</li> <li>改变Http协议多次请求的约束，实现长连接了， 服务器可以发送消息给浏览器</li> <li>客户端浏览器和服务器端会相互感知，比如服务器关闭了，浏览器会感知，同样浏览器关闭了，服务器会感知</li></ol></div> <h2 id="_9-1-websockerserver"><a href="#_9-1-websockerserver" class="header-anchor">#</a> 9.1 WebSockerServer</h2> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>websocket</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>bootstrap<span class="token punctuation">.</span></span><span class="token class-name">ServerBootstrap</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span></span><span class="token class-name">ChannelFuture</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span></span><span class="token class-name">ChannelInitializer</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span></span><span class="token class-name">ChannelPipeline</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>nio<span class="token punctuation">.</span></span><span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span></span><span class="token class-name">SocketChannel</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span>socket<span class="token punctuation">.</span>nio<span class="token punctuation">.</span></span><span class="token class-name">NioServerSocketChannel</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpObjectAggregator</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token class-name">HttpServerCodec</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>http<span class="token punctuation">.</span>websocketx<span class="token punctuation">.</span></span><span class="token class-name">WebSocketServerProtocolHandler</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>logging<span class="token punctuation">.</span></span><span class="token class-name">LogLevel</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>logging<span class="token punctuation">.</span></span><span class="token class-name">LoggingHandler</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span><span class="token class-name">ChunkedWriteHandler</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebSockerServer</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">{</span>
+        <span class="token class-name">NioEventLoopGroup</span> bossGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">NioEventLoopGroup</span> workerGroup <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NioEventLoopGroup</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name">ServerBootstrap</span> serverBootstrap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ServerBootstrap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            serverBootstrap<span class="token punctuation">.</span><span class="token function">group</span><span class="token punctuation">(</span>bossGroup<span class="token punctuation">,</span>workerGroup<span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token class-name">NioServerSocketChannel</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">handler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">LoggingHandler</span><span class="token punctuation">(</span><span class="token class-name">LogLevel</span><span class="token punctuation">.</span>INFO<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">childHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChannelInitializer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">SocketChannel</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token annotation punctuation">@Override</span>
+                        <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initChannel</span><span class="token punctuation">(</span><span class="token class-name">SocketChannel</span> ch<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+                            <span class="token class-name">ChannelPipeline</span> pipeline <span class="token operator">=</span> ch<span class="token punctuation">.</span><span class="token function">pipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                            <span class="token comment">//因为基于http协议，使用http的编码和解码器</span>
+                            pipeline<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HttpServerCodec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                            <span class="token comment">//是以块方式写，添加ChunkedWriteHandler处理器</span>
+                            pipeline<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChunkedWriteHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token comment">/*
+                            说明
+                            1. http数据在传输过程中是分段, HttpObjectAggregator ，就是可以将多个段聚合
+                            2. 这就就是为什么，当浏览器发送大量数据时，就会发出多次http请求
+                            */</span>
+                            pipeline<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HttpObjectAggregator</span><span class="token punctuation">(</span><span class="token number">8192</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token comment">/*
+                            说明
+                            1. 对应websocket ，它的数据是以 帧(frame) 形式传递
+                            2. 可以看到WebSocketFrame 下面有六个子类
+                            3. 浏览器请求时 ws://localhost:7000/hello 表示请求的uri
+                            4. WebSocketServerProtocolHandler 核心功能是将 http协议升级为 ws协议 , 保持长连接
+                            5. 是通过一个 状态码 101
+                             */</span>
+                            pipeline<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">WebSocketServerProtocolHandler</span><span class="token punctuation">(</span><span class="token string">&quot;/hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                            <span class="token comment">//自定义的handler ，处理业务逻辑</span>
+                            pipeline<span class="token punctuation">.</span><span class="token function">addLast</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">WebSockerServerHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token class-name">ChannelFuture</span> channelFuture <span class="token operator">=</span> serverBootstrap<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token number">7000</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            channelFuture<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">closeFuture</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            bossGroup<span class="token punctuation">.</span><span class="token function">shutdownGracefully</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            workerGroup<span class="token punctuation">.</span><span class="token function">shutdownGracefully</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br></div></div><h2 id="_9-2-websockerserverhandler"><a href="#_9-2-websockerserverhandler" class="header-anchor">#</a> 9.2 WebSockerServerHandler</h2> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>websocket</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span></span><span class="token class-name">ChannelHandlerContext</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>channel<span class="token punctuation">.</span></span><span class="token class-name">SimpleChannelInboundHandler</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">io<span class="token punctuation">.</span>netty<span class="token punctuation">.</span>handler<span class="token punctuation">.</span>codec<span class="token punctuation">.</span>http<span class="token punctuation">.</span>websocketx<span class="token punctuation">.</span></span><span class="token class-name">TextWebSocketFrame</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>time<span class="token punctuation">.</span></span><span class="token class-name">LocalDateTime</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebSockerServerHandler</span> <span class="token keyword">extends</span> <span class="token class-name">SimpleChannelInboundHandler</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextWebSocketFrame</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">channelRead0</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">,</span> <span class="token class-name">TextWebSocketFrame</span> msg<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;服务器收到消息 &quot;</span> <span class="token operator">+</span> msg<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//回复消息</span>
+        ctx<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeAndFlush</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TextWebSocketFrame</span><span class="token punctuation">(</span><span class="token string">&quot;服务器时间&quot;</span> <span class="token operator">+</span> <span class="token class-name">LocalDateTime</span><span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&quot; &quot;</span> <span class="token operator">+</span> msg<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//当web客户端连接后， 触发方法</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handlerAdded</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        <span class="token comment">//id 表示唯一的值，LongText 是唯一的 ShortText 不是唯一</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;handlerAdded 被调用&quot;</span> <span class="token operator">+</span> ctx<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">asLongText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;handlerAdded 被调用&quot;</span> <span class="token operator">+</span> ctx<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">asShortText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handlerRemoved</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;handlerRemoved 被调用&quot;</span> <span class="token operator">+</span> ctx<span class="token punctuation">.</span><span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">asLongText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">exceptionCaught</span><span class="token punctuation">(</span><span class="token class-name">ChannelHandlerContext</span> ctx<span class="token punctuation">,</span> <span class="token class-name">Throwable</span> cause<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;异常发生 &quot;</span> <span class="token operator">+</span> cause<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ctx<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//关闭连接</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br></div></div><h2 id="_9-3-client-html"><a href="#_9-3-client-html" class="header-anchor">#</a> 9.3 Client.html</h2> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>html lang<span class="token operator">=</span><span class="token string">&quot;en&quot;</span><span class="token operator">&gt;</span>
+<span class="token generics"><span class="token punctuation">&lt;</span>head<span class="token punctuation">&gt;</span></span>
+    <span class="token operator">&lt;</span>meta charset<span class="token operator">=</span><span class="token string">&quot;UTF-8&quot;</span><span class="token operator">&gt;</span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>title<span class="token punctuation">&gt;</span></span><span class="token class-name">Title</span><span class="token operator">&lt;</span><span class="token operator">/</span>title<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>head<span class="token operator">&gt;</span>
+<span class="token generics"><span class="token punctuation">&lt;</span>body<span class="token punctuation">&gt;</span></span>
+<span class="token generics"><span class="token punctuation">&lt;</span>script<span class="token punctuation">&gt;</span></span>
+    <span class="token keyword">var</span> socket<span class="token punctuation">;</span>
+    <span class="token comment">//判断当前浏览器是否支持websocket</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token class-name"><span class="token namespace">window<span class="token punctuation">.</span></span>WebSocket</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">//go on</span>
+        socket <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WebSocket</span><span class="token punctuation">(</span><span class="token string">&quot;ws://localhost:7000/hello&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//相当于channelReado, ev 收到服务器端回送的消息</span>
+        socket<span class="token punctuation">.</span>onmessage <span class="token operator">=</span> function <span class="token punctuation">(</span>ev<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> rt <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;responseText&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rt<span class="token punctuation">.</span>value <span class="token operator">=</span> rt<span class="token punctuation">.</span>value <span class="token operator">+</span> <span class="token string">&quot;\n&quot;</span> <span class="token operator">+</span> ev<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">//相当于连接开启(感知到连接开启)</span>
+        socket<span class="token punctuation">.</span>onopen <span class="token operator">=</span> function <span class="token punctuation">(</span>ev<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> rt <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;responseText&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rt<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token string">&quot;连接开启了..&quot;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">//相当于连接关闭(感知到连接关闭)</span>
+        socket<span class="token punctuation">.</span>onclose <span class="token operator">=</span> function <span class="token punctuation">(</span>ev<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            <span class="token keyword">var</span> rt <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;responseText&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rt<span class="token punctuation">.</span>value <span class="token operator">=</span> rt<span class="token punctuation">.</span>value <span class="token operator">+</span> <span class="token string">&quot;\n&quot;</span> <span class="token operator">+</span> <span class="token string">&quot;连接关闭了..&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;当前浏览器不支持websocket&quot;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//发送消息到服务器</span>
+    function <span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>window<span class="token punctuation">.</span>socket<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//先判断socket是否创建好</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>socket<span class="token punctuation">.</span>readyState <span class="token operator">==</span> <span class="token class-name">WebSocket</span><span class="token punctuation">.</span>OPEN<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">//通过socket 发送消息</span>
+            socket<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;连接没有开启&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>form onsubmit<span class="token operator">=</span><span class="token string">&quot;return false&quot;</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>textarea name<span class="token operator">=</span><span class="token string">&quot;message&quot;</span> style<span class="token operator">=</span><span class="token string">&quot;height: 300px; width: 300px&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>textarea<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">&quot;button&quot;</span> value<span class="token operator">=</span><span class="token string">&quot;发生消息&quot;</span> onclick<span class="token operator">=</span><span class="token string">&quot;send(this.form.message.value)&quot;</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>textarea id<span class="token operator">=</span><span class="token string">&quot;responseText&quot;</span> style<span class="token operator">=</span><span class="token string">&quot;height: 300px; width: 300px&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>textarea<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">&quot;button&quot;</span> value<span class="token operator">=</span><span class="token string">&quot;清空内容&quot;</span> onclick<span class="token operator">=</span><span class="token string">&quot;document.getElementById('responseText').value=''&quot;</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>form<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>body<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>html<span class="token operator">&gt;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br></div></div><h2 id="_9-4-示例验示结果"><a href="#_9-4-示例验示结果" class="header-anchor">#</a> 9.4 示例验示结果</h2> <p><a data-fancybox="" title="websocket" href="./image/websocket.jpg"><img src="/assets/img/websocket.1130f68a.jpg" alt="websocket"></a></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/netty/Netty心跳检测机制-7.html" class="prev">
+        8. Netty心跳检测机制案
+      </a></span> <span class="next"><a href="/middleware/netty/Netty编解码器-9.html">
+        10. Netty编解码
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.20860f16.js" defer></script><script src="/assets/js/2.ac74a662.js" defer></script><script src="/assets/js/98.3d727174.js" defer></script>
+  </body>
+</html>
