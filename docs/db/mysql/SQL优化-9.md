@@ -510,3 +510,24 @@ mysql> EXPLAIN select name,age from STD.staffs  where name='July' or name = 'z3'
 +----+-------------+--------+------------+-------+-----------------------+-----------------------+---------+------+------+----------+--------------------------+
 1 row in set, 1 warning (0.00 sec)
 ```
+
+
+## 9.11 insert 语句优化； 
+
+1. 提交前关闭自动提交 
+2. 尽量使用批量 insert 语句 
+3. 可以使用 MyISAM 存储引擎 
+
+### 9.11.1 LOAD DATA INFLIE 
+
+LOAD DATA INFLIE； 使用 LOAD DATA INFLIE ,比一般的 insert 语句快 20 倍 
+
+select * into OUTFILE 'D:\\product.txt' from product_info 
+load data INFILE 'D:\\product.txt' into table product_info 
+load data INFILE '/soft/product3.txt' into table product_info
+
+
+**show VARIABLES like 'secure_file_priv'** 
+1. secure_file_priv 为 NULL 时，表示限制 mysqld 不允许导入或导出。 
+2. secure_file_priv 为 /tmp 时，表示限制 mysqld 只能在/tmp 目录中执行导入导出，其他 目录不能执行。 
+3. secure_file_priv 没有值时，表示不限制 mysqld 在任意目录的导入导出。 secure_file_priv='' 

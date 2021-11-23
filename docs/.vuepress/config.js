@@ -115,6 +115,7 @@ module.exports = {
                         ariLabel:"MQ",
                         link:'/middleware/MQ/',
                         items:[
+                            { text: 'RabbitMQ', link: '/middleware/RabbitMQ/' },
                             { text: 'kafka', link: '/middleware/kafka/' },
                             { text: 'ActiveMQ', link: '/middleware/ActiveMQ/' },
                             { text: 'RocketMQ', link: '/middleware/RocketMQ/' },
