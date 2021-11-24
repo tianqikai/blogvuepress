@@ -1,5 +1,5 @@
 # 2. 原生 Java 客户端进行消息通信
-
+[[toc]]
 ## 2.1 Direct 交换器
 
 <a data-fancybox title="rabbitmq" href="./image/rabbitmq05.jpg">![rabbitmq](./image/rabbitmq05.jpg)</a>
@@ -419,6 +419,16 @@ public class FanoutProducer {
 <a data-fancybox title="rabbitmq" href="./image/rabbitmq10.jpg">![rabbitmq](./image/rabbitmq10.jpg)</a>
 
 通过使用“*”和“#”，使来自不同源头的消息到达同一个队列，”.”将路由键分为了几个标识符，**“*”匹配 1 个，“#”匹配一个或多个**。
+
+```sh
+tqk.key.abc.aaa
+tqk.key.a
+tqk.key.abc.ccc
+
+# 这时候如果使用 tqk.key.*  只能匹配到tqk.key.a 这一个
+
+# 如果使用tqk.key.#  可以匹配到上边三个
+````
 
 例子如下：
 

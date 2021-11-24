@@ -1,5 +1,5 @@
 # 1. RabbitMQ安装以及概述
-
+[[toc]]
 ## 1.1 RabbitMQ安装
 
 
@@ -10,6 +10,15 @@
 ```bash
 # 安装依赖
 yum -y install gcc glibc-devel make ncurses-devel openssl-devel xmlto perl wget gtk2-devel binutils-devel
+
+## 如果出现安装时error: db5 error(-30973) from dbenv->failchk: BDB0087 DB_RUNRECOVERY: Fatal error, run database reco
+## 操作如下步骤
+cd var/lib/rpm
+ls -lrt
+rm -rf __db.00*  #--删除掉__db.00开头的数据库文件
+ls -lrt
+rpm --rebuilddb   #--重建rpm数据库
+
 # 下载安装包 erlang官网
 wget http://erlang.org/download/otp_src_22.0.tar.gz
 
@@ -247,3 +256,18 @@ rabbitmq 里创建用户，必须要被指派给至少一个 vhost，并且只�
 **通过使用"*"和"#"通配符进行处理，使来自不同源头的消息到达同一个队列，"."将路由键分为了几个标识符，"*"匹配 1 个，"#"匹配一个 或多个**
 <a data-fancybox title="rabbitmq" href="./image/rabbitmq07.jpg">![rabbitmq](./image/rabbitmq07.jpg)</a>
 
+
+## 1.3 延时插件安装
+
+```shell
+#下载延时插件:
+https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/tag/v3.8.0
+
+cd /usr/local/rabbitmq/plugins
+
+#上传插件: 
+rz rabbitmq_delayed_message_exchange-3.8.0.ez
+
+#启动延时插件: 
+rabbitmq-plugins enable rabbitmq_delayed_message_exchange
+```
