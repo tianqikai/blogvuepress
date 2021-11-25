@@ -75,9 +75,9 @@ tar -xvf rabbitmq-server-generic-unix-3.7.15.tar
 #移走
 mv rabbitmq_server-3.7.15 /usr/local/
  
-
+cd /usr/local/
 #改名
-mv /usr/local/rabbitmq_server-3.7.15  rabbitmq
+mv /usr/local/rabbitmq_server-3.7.15  /usr/local/rabbitmq
  
 #配置环境变量
 echo 'export PATH=$PATH:/usr/local/rabbitmq/sbin' >> /etc/profile
