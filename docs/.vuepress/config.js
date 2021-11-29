@@ -69,6 +69,7 @@ module.exports = {
                     { text: 'JVM', link: '/base/JVM/' },
                     { text: 'Javascript', link: '/base/es6/' },
                     { text: 'Shell脚本', link: '/base/shell/' },
+                    { text: 'go语言', link: '/base/golang/' },
                     { text: 'Python', link: '/base/python/' },
                     { text: 'C语言', link: '/base/c/' },
                 ]
@@ -117,7 +118,7 @@ module.exports = {
                         items:[
                             { text: 'RabbitMQ', link: '/middleware/RabbitMQ/' },
                             { text: 'kafka', link: '/middleware/kafka/' },
-                            { text: 'ActiveMQ', link: '/middleware/ActiveMQ/' },
+                            // { text: 'ActiveMQ', link: '/middleware/ActiveMQ/' },
                             { text: 'RocketMQ', link: '/middleware/RocketMQ/' },
                         ]
                     },

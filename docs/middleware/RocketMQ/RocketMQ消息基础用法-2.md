@@ -1,11 +1,24 @@
 #  3 RocketMQ消息基础用法
 [[toc]]
+
+
+## 前言
+
+:::tip Topic与Tag
+1. Topic：消息主题，通过 Topic 对不同的业务消息进行分类。
+
+2. Tag：消息标签，用来进一步区分某个 Topic 下的消息分类，消息队列 RocketMQ 允许消费者按照 Tag 对消息进行过滤，确保消费者最终只消费到他关注的消息类型。
+
+Topic 与 Tag 都是业务上用来归类的标识，区分在于 Topic 是一级分类，而 Tag 可以说是二级分类，关系如图所示。
+
+<a data-fancybox title="RocketMQ" href="./image/rocketmq02.jpg">![RocketMQ](./image/rocketmq02.jpg)</a>
+:::
+
 ##  3.1 普通消息
 
 ###  3.1.1 普通消息的整个流程
 
-:::tip 普通消息的整个流程
-**导入 MQ 客户端依赖**  
+:::tip 导入 MQ 客户端依赖 
 ```xml
  <dependency> 
  <groupId>org.apache.rocketmq</groupId> 
@@ -13,25 +26,29 @@
  <version>4.8.0</version> 
  </dependency> 
 ```
+:::
+
 -----------------
 
-**消息发送者步骤**     
+:::tip 消息发送者步骤   
  1. 创建消息生产者 producer，并指定生产者组名 
  2. 指定 Nameserver 地址 
  3. 启动 producer 
  4. 创建消息对象，指定 Topic、Tag 和消息体 
  5. 发送消息 
  6. 关闭生产者 producer   
+:::
 
- -------------
+-------------
 
-**消息消费者步骤**   
+:::tip 消息消费者步骤
  1. 创建消费者 Consumer，指定消费者组名 
  2. 指定 Nameserver 地址 
  3. 订阅主题 Topic 和 Tag 
  4. 设置回调函数，处理消息 
  5. 启动消费者 consumer
 :::
+
 
 ### 3.1.2普通消息的发送方式
 
@@ -82,11 +99,12 @@ SendStatus:SEND_OK  (MsgId):7F000001373418B4AAC24CC515940007  (queueId):2  (valu
 SendStatus:SEND_OK  (MsgId):7F000001373418B4AAC24CC515B70008  (queueId):3  (value):Hello RocketMQ 8
 SendStatus:SEND_OK  (MsgId):7F000001373418B4AAC24CC515DE0009  (queueId):0  (value):Hello RocketMQ 9
 ```
-▶ Message ID 消息的全局唯一标识（内部机制的 ID 生成是使用机器 IP 和消息偏移量的组成，所以有可能重复，如果是幂等性还是最好考虑 Key），由消息队列 MQ 系统自动生成，唯一标识某条消息。   
 
-▶ SendStatus 发送的标识, 成功，失败等  
+▶ <font color='red'>Message ID</font> 消息的全局唯一标识（内部机制的 ID 生成是使用机器 IP 和消息偏移量的组成，所以有可能重复，如果是幂等性还是最好考虑 Key），由消息队列 MQ 系统自动生成，唯一标识某条消息。   
 
-▶ Queue 相当于是 Topic 的分区；用于并行发送和接收消息  
+▶ <font color='red'>SendStatus</font> 发送的标识, 成功，失败等  
+
+▶ <font color='red'>Queue</font> 相当于是 Topic 的分区；用于并行发送和接收消息  
 :::
 
 ### 3.1.4 发送异步消息
@@ -136,7 +154,6 @@ public class AsyncProducer {
 消息发送方在发送了一条消息后，不等接收方发回响应，接着进行第二条消息发送。发送方通过回调接口的方式接收服务器响应，并对响应结果进行处理  
 
 <a data-fancybox title="RocketMQ" href="./image/rocketmq28.jpg">![RocketMQ](./image/rocketmq28.jpg)</a>
-
 
 ### 3.1.5 单向发送
 
@@ -323,7 +340,534 @@ public class BroadcastComuser {
 
 **客户端在被停止期间发送至服务端的消息将会被自动跳过，请谨慎选择。**
 
-##  3.2 顺序消息
+## 3.2 消息发送时的重要方法/属性
+
+### 3.2.1 属性
+
+**org.apache.rocketmq.example.details. ProducerDetails类中**
+```java
+    //todo producerGroup：生产者所属组(针对 事务消息 高可用)
+    DefaultMQProducer producer=new DefaultMQProducer("produce_details");
+    //todo 默认主题在每一个Broker队列数量(对于新创建主题有效)
+    producer.setDefaultTopicQueueNums(8);
+    //todo 发送消息默认超时时间，默认3s (3000ms)
+    producer.setSendMsgTimeout(3000);
+    //todo 消息体超过该值则启用压缩，默认4k
+    producer.setCompressMsgBodyOverHowmuch(4*1024);
+    //todo 异步方式发送消息重试次数，默认为2，总共执行3次
+    producer.setRetryTimesWhenSendAsyncFailed(2);
+    //todo 同步方式发送消息重试次数，默认为2，总共执行3次
+    producer.setRetryTimesWhenSendFailed(2);
+    //todo 消息重试时选择另外一个Broker时（消息没有存储成功是否发送到另外一个broker），默认为false
+    producer.setRetryAnotherBrokerWhenNotStoreOK(false);
+    //todo 允许发送的最大消息长度，默认为4M
+    producer.setMaxMessageSize(1024 * 1024 * 4);
+    //todo 设置NameServer的地址
+    producer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
+```
+
+### 3.2.2 方法
+
+**org.apache.rocketmq.example.details. ProducerDetails类中**
+
+```java
+    //todo 设置NameServer的地址
+    producer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
+    // todo 启动Producer实例
+    producer.start();
+    //todo 0 查找该主题下所有消息队列
+    List<MessageQueue> MessageQueue = producer.fetchPublishMessageQueues("TopicTest");
+    for (int i = 0; i < MessageQueue.size(); i++) {
+        System.out.println(MessageQueue.get(i).getQueueId());
+    }
+
+    //todo  如果不再发送消息，关闭Producer实例。
+    producer.shutdown();
+```
+
+#### 3.2.2.1 单向发送
+
+```java
+    // 创建消息，并指定Topic，Tag和消息体
+    Message msg = new Message("DetailsOneway", "TagA", "OrderID888",
+            "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
+
+    //todo 单向发送
+    //todo 1.1发送单向消息
+    producer.sendOneway(msg);
+    //todo 1.2指定队列单向发送消息(使用select方法)
+    producer.sendOneway(msg, new MessageQueueSelector() {
+        @Override
+        public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
+            return mqs.get(0);
+        }
+    },null);
+    //todo 1.3指定队列单向发送消息(根据之前查找出来的主题)
+    producer.sendOneway(msg,messageQueue.get(1));
+```
+#### 3.2.2.2 同步发送
+```java
+    //todo 同步发送
+    // 创建消息，并指定Topic，Tag和消息体
+    Message nowMsg = new Message("DetailsNow", "TagA", "OrderID888",
+            "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
+    //todo 2.1同步发送消息
+    SendResult sendResult0 = producer.send(nowMsg);
+    //todo 2.1同步超时发送消息(属性设置：sendMsgTimeout 发送消息默认超时时间，默认3s (3000ms) )
+    SendResult sendResult1 = producer.send(nowMsg,1000*3);
+    //todo 2.2指定队列同步发送消息(使用select方法)
+    SendResult sendResult2 = producer.send(nowMsg, new MessageQueueSelector() {
+        @Override
+        public MessageQueue select(List<MessageQueue> list, Message message, Object o) {
+            return messageQueueNow.get(0);
+        }
+    },null);
+    producer.send(nowMsg,messageQueueNow.get(3));
+```
+#### 3.2.2.3 异步发送
+```java
+    //todo 异步发送
+    // 创建消息，并指定Topic，Tag和消息体
+    Message asynMsg = new Message("DetailsAsyn", "TagA", "OrderID888",
+            "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
+    List<MessageQueue> messageQueueAsyn = producer.fetchPublishMessageQueues("DetailsAsyn");
+
+    //todo 3.1异步发送消息
+    producer.send(asynMsg, new SendCallback() {
+        @Override
+        public void onSuccess(SendResult sendResult) {
+            System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
+        }
+        @Override
+        public void onException(Throwable e) {
+            System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
+        }
+    });
+    //todo 3.1异步超时发送消息
+    producer.send(asynMsg, new SendCallback() {
+        @Override
+        public void onSuccess(SendResult sendResult) {
+            System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
+        }
+        @Override
+        public void onException(Throwable e) {
+            System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
+        }
+    },1000*3);
+    //todo 3.2选择指定队列异步发送消息(根据之前查找出来的主题队列信息)
+    producer.send(asynMsg,messageQueueAsyn.get(0),
+            new SendCallback() {
+                @Override
+                public void onSuccess(SendResult sendResult) {
+                    System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
+                }
+                @Override
+                public void onException(Throwable e) {
+                    System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
+                }
+            });
+    //todo 3.3选择指定队列异步发送消息(使用select方法)
+    producer.send(asynMsg,new MessageQueueSelector() {
+                @Override
+                public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
+                    return messageQueueAsyn.get(5);
+                }
+            },
+            new SendCallback() {
+                @Override
+                public void onSuccess(SendResult sendResult) {
+                    System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
+                }
+                @Override
+                public void onException(Throwable e) {
+                    System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
+                }
+            });
+```
+
+
+## 3.3 消息消费时的重要方法/属性
+
+### 3.3.1 消息消费时属性
+:::tip 消息发送的属性
+1. 消费者组
+<font color='red'><strong>private String consumerGroup;</strong></font>	 
+
+2. 消息消费模式
+<font color='red'><strong>private MessageModel messageModel = MessageModel.CLUSTERING;</strong></font>	
+
+3. 指定消费开始偏移量（最大偏移量、最小偏移量、启动时间戳）开始消费
+<font color='red'><strong>private ConsumeFromWhere consumeFromWhere = ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET;</strong></font>
+
+ConsumeFromTimestamp模式下只会在订阅组（消费者群组）第一次启动的时候，过滤掉小于当前系统时间戳的消息，后续如果进程停掉或者崩溃，但是又生产了新消息。下次启动消费者时，会继续消费停掉期间新生产的消息。后续行为和ConsumeFromLastOffset类似
+
+4. 消费者最小线程数量
+<font color='red'><strong>private int consumeThreadMin = 20;</strong></font>
+
+5. 消费者最大线程数量
+<font color='red'><strong>private int consumeThreadMax = 20;</strong></font>
+
+6. <font color='#fdb933'><strong>推模式下任务间隔时间</strong></font>
+<font color='red'><strong>private long pullInterval = 0;</strong></font>
+
+7. <font color='#fdb933'><strong>推模式下任务拉取的条数,默认32条</strong></font>
+<font color='red'><strong>private int pullBatchSize = 32;</strong></font>
+
+8. <font color='blue'><strong>消息重试次数,-1代表16次</strong></font>
+<font color='red'><strong>private int maxReconsumeTimes = -1;</strong></font>
+
+9. 消息消费超时时间
+<font color='red'><strong>private long consumeTimeout = 15;</strong></font>
+
+:::
+```java
+    //todo 属性
+    //todo consumerGroup：消费者组
+    DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("king");
+    //todo 指定Namesrv地址信息.
+    consumer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
+    //todo 消息消费模式（默认集群消费）
+    consumer.setMessageModel(MessageModel.CLUSTERING);
+    //todo 指定消费开始偏移量（上次消费偏移量、最大偏移量、最小偏移量、启动时间戳）开始消费
+    consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
+
+    //todo 消费者最小线程数量(默认20)
+    consumer.setConsumeThreadMin(20);
+    //todo 消费者最大线程数量(默认20)
+    consumer.setConsumeThreadMax(20);
+    //todo 推模式下任务间隔时间(推模式也是基于不断的轮训拉取的封装)
+    consumer.setPullInterval(0);
+    //todo 推模式下任务拉取的条数,默认32条(一批批拉)
+    consumer.setPullBatchSize(32);
+    //todo 消息重试次数,-1代表16次 （超过 次数成为死信消息）
+    consumer.setMaxReconsumeTimes(-1);
+    //todo 消息消费超时时间(消息可能阻塞正在使用的线程的最大时间：以分钟为单位)
+    consumer.setConsumeTimeout(15);
+
+    //todo 获取消费者对主题分配了那些消息队列
+    Set<MessageQueue> MessageQueueSet  = consumer.fetchSubscribeMessageQueues("DetailsAsyn");
+```
+
+### 3.3.2 消息消费时方法
+```java
+// todo  订阅消息，并指定队列选择器
+void subscribe(final String topic, final MessageSelector selector)
+
+// todo 取消消息订阅
+void unsubscribe(final String topic)
+
+// todo 获取消费者对主题分配了那些消息队列
+Set<MessageQueue> fetchSubscribeMessageQueues(final String topic)
+
+// todo 注册并发事件监听器
+void registerMessageListener(final MessageListenerConcurrently messageListener)
+
+// todo 注册顺序消息事件监听器
+void registerMessageListener(final MessageListenerOrderly messageListener)
+```
+**示例**
+```java
+//todo 方法-订阅
+//todo 基于主题订阅消息，消息过滤使用表达式
+consumer.subscribe("TopicTest", "*"); //tag  tagA|TagB|TagC
+//todo 基于主题订阅消息，消息过滤使用表达式
+consumer.subscribe("TopicTest",MessageSelector.bySql("a between 0 and 3"));
+//todo 基于主题订阅消息，消息过滤使用表达式
+consumer.subscribe("TopicTest",MessageSelector.byTag("tagA|TagB"));
+//todo 取消消息订阅
+consumer.unsubscribe("TopicTest");
+```
+
+```java
+package com.tqk.rocketmqdemo.details;
+
+import com.tqk.rocketmqdemo.myenum.TqkEnum;
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.MessageSelector;
+import org.apache.rocketmq.client.consumer.listener.*;
+import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.common.message.MessageQueue;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * 消息消费时的细节
+ */
+public class ComuserDetails {
+    public static void main(String[] args) throws Exception {
+        //todo 属性
+        //todo consumerGroup：消费者组
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("tqk001");
+        //todo 指定Namesrv地址信息.
+        consumer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
+        //todo 消息消费模式（默认集群消费）
+        consumer.setMessageModel(MessageModel.CLUSTERING);
+        //todo 指定消费开始偏移量（上次消费偏移量、最大偏移量、最小偏移量、启动时间戳）开始消费
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
+
+        //todo 消费者最小线程数量(默认20)
+        consumer.setConsumeThreadMin(20);
+        //todo 消费者最大线程数量(默认20)
+        consumer.setConsumeThreadMax(20);
+        //todo 推模式下任务间隔时间(推模式也是基于不断的轮训拉取的封装)
+        consumer.setPullInterval(0);
+        //todo 推模式下任务拉取的条数,默认32条(一批批拉)
+        consumer.setPullBatchSize(32);
+        //todo 消息重试次数,-1代表16次 （超过 次数成为死信消息）
+        consumer.setMaxReconsumeTimes(-1);
+        //todo 消息消费超时时间(消息可能阻塞正在使用的线程的最大时间：以分钟为单位)
+        consumer.setConsumeTimeout(15);
+
+        //todo 获取消费者对主题分配了那些消息队列
+//        Set<MessageQueue> MessageQueueSet  = consumer.fetchSubscribeMessageQueues("DetailsAsyn");
+//        Iterator iterator = MessageQueueSet.iterator();
+//        while(iterator.hasNext()){
+//            MessageQueue MessageQueue =(MessageQueue)iterator.next();
+//            System.out.println(MessageQueue.getQueueId());
+//        }
+        //todo 方法-订阅
+        //todo 基于主题订阅消息，消息过滤使用表达式
+        consumer.subscribe("DetailsAsyn", "*"); //tag  tagA|TagB|TagC
+        //todo 基于主题订阅消息，消息过滤使用表达式
+//        consumer.subscribe("TopicTest",MessageSelector.bySql("a between 0 and 3"));
+        //todo 基于主题订阅消息，消息过滤使用表达式
+//        consumer.subscribe("TopicTest",MessageSelector.byTag("tagA|TagB"));
+        //todo 取消消息订阅
+//        consumer.unsubscribe("TopicTest");
+
+        //todo 注册监听器
+        //todo 注册并发事件监听器
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
+                                                            ConsumeConcurrentlyContext context) {
+                try {
+                    for(MessageExt msg : msgs) {
+                        String topic = msg.getTopic();
+                        String msgBody = new String(msg.getBody(), "utf-8");
+                        String tags = msg.getTags();
+                        System.out.println("收到消息：" + " topic :" + topic + " ,tags : " + tags + " ,msg : " + msgBody);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    //没有成功  -- 到重试队列中来
+                    System.out.println("没有成功  -- 到重试队列中来");
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+
+                }
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                //todo
+            }
+        });
+
+        //todo 注册顺序消息事件监听器
+        consumer.registerMessageListener(new MessageListenerOrderly() {
+            Random random = new Random();
+            @Override
+            public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
+                context.setAutoCommit(true);
+                for (MessageExt msg : msgs) {
+                    // 可以看到每个queue有唯一的consume线程来消费, 订单对每个queue(分区)有序
+                    System.out.println("consumeThread=" + Thread.currentThread().getName() + " queueId=" + msg.getQueueId() + ", content:" + new String(msg.getBody()));
+                }
+                try {
+                    //模拟业务逻辑处理中...
+                    TimeUnit.MILLISECONDS.sleep(random.nextInt(300));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    //todo 这个点要注意：意思是先等一会，一会儿再处理这批消息，而不是放到重试队列里
+                    return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
+                }
+                return ConsumeOrderlyStatus.SUCCESS;
+            }
+        });
+        //启动消息者
+        consumer.start();
+        System.out.printf("Consumer Started.%n");
+    }
+}
+
+```
+
+### 3.3.3 消费确认(ACK)
+
+**业务实现消费回调的时候**
+
+当且仅当此回调函数返回<font color='red'><strong>ConsumeConcurrentlyStatus.CONSUME_SUCCESS</strong></font>，RocketMQ才会认为这批消息（默认是1条）是消费完成
+
+中途断电，抛出异常等都不会认为成功——即都会重新投递,返回<font color='red'><strong>ConsumeConcurrentlyStatus.RECONSUME_LATER</strong></font>，RocketMQ就会认为这批消息消费失败了。
+
+
+-----------------
+
+如果业务的回调没有处理好而抛出异常，会认为是消费失败<font color='red'><strong>ConsumeConcurrentlyStatus.RECONSUME_LATER</strong></font>处理。
+
+为了保证消息是肯定被至少消费成功一次，RocketMQ会把这批消息重发回Broker（topic不是原topic而是这个消费组的RETRY topic），在延迟的某个时间点（默认是10秒，业务可设置）后，再次投递到这个ConsumerGroup。
+
+而如果一直这样重复消费都持续失败到一定次数**默认16次**，就会投递到<font color='red'><strong>DLQ死信队列</strong></font>。应用可以监控死信队列来做人工干预。
+
+另外如果使用<font color='red'><strong>顺序消费的回调MessageListenerOrderly</strong></font>时，由于顺序消费是要前者消费成功才能继续消费，所以没有RECONSUME_LATER的这个状态，只有<font color='red'><strong>SUSPEND_CURRENT_QUEUE_A_MOMENT</strong></font>来暂停队列的其余消费，直到原消息不断重试成功为止才能继续消费
+
+### 3.3.4 拉模式
+**代码上使用 DefaultMQPullConsumer**
+
+1. 获取 MessageQueues 并遍历（一个 Topic 包括多个 MessageQueue），如果是特殊情况，也可以选择指定的 MessageQueue 来读取消息 
+
+2. 维护 Offsetstore,从一个 MessageQueue 里拉取消息时，要传入 Offset 参数，随着不断的读取消息，Offset 会不断增长。这个时候就需要用户把 Offset 存储起来，根据实际的情况存入内存、写入磁盘或者数据库中。 
+
+3. 根据不同的消息状态做不同的处理。 拉取消息的请求后，会返回：FOUND（获取到消息），NO_MATCHED_MSG（没有匹配的消息），NO_NEW_MSG（没有新消息），OFFSET_ILLEGAL（非 法偏移量）四种状态，其中必要重要的是 FOUND（获取到消息）和 NO_NEW_MSG（没有新消息）。 
+
+**总结**：这种模式下用户需要自己处理 Queue,并且自己保存偏移量，所以这种方式太过灵活，往往我们业务的关注重点不在内部消息的处理上，所以 一般情况下我们会使用推模式
+```java
+package com.tqk.pullandpush;
+
+import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
+import org.apache.rocketmq.client.consumer.PullResult;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.common.message.MessageQueue;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * 消费者-拉模式
+ */
+
+public class PullConsumer {
+    private static final Map<MessageQueue, Long> OFFSE_TABLE = new HashMap<MessageQueue, Long>();
+
+    public static void main(String[] args) throws MQClientException {
+        //拉模式
+        DefaultMQPullConsumer consumer = new DefaultMQPullConsumer("pullconsumer");
+        consumer.setNamesrvAddr("110.42.146.236:9876");
+        //consumer.setBrokerSuspendMaxTimeMillis(1000);
+
+        System.out.println("ms:"+consumer.getBrokerSuspendMaxTimeMillis());
+        consumer.start();
+
+        //1.获取MessageQueues并遍历（一个Topic包括多个MessageQueue  默认4个）
+        Set<MessageQueue> mqs = consumer.fetchSubscribeMessageQueues("Topictqk001");
+        for (MessageQueue mq : mqs) {
+            System.out.println("queueID:"+ mq.getQueueId());
+            //获取偏移量
+            long Offset = consumer.fetchConsumeOffset(mq,true);
+
+            System.out.printf("Consume from the queue: %s%n", mq);
+            SINGLE_MQ:
+            while (true) { //拉模式，必须无限循环
+                try {
+                    PullResult pullResult =
+                        consumer.pullBlockIfNotFound(mq, null, getMessageQueueOffset(mq), 32);
+                    System.out.printf("%s%n",pullResult);
+                    //2.维护Offsetstore（这里存入一个Map）
+                    putMessageQueueOffset(mq, pullResult.getNextBeginOffset());
+
+                    //3.根据不同的消息状态做不同的处理
+                    switch (pullResult.getPullStatus()) {
+                        case FOUND: //获取到消息
+                            for (int i=0;i<pullResult.getMsgFoundList().size();i++) {
+                                System.out.printf("%s%n", new String(pullResult.getMsgFoundList().get(i).getBody()));
+                            }
+                            break;
+                        case NO_MATCHED_MSG: //没有匹配的消息
+                            break;
+                        case NO_NEW_MSG:  //没有新消息
+                            break SINGLE_MQ;
+                        case OFFSET_ILLEGAL: //非法偏移量
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        consumer.shutdown();
+    }
+
+    private static long getMessageQueueOffset(MessageQueue mq) {
+        Long offset = OFFSE_TABLE.get(mq);
+        if (offset != null)
+            return offset;
+
+        return 0;
+    }
+
+    private static void putMessageQueueOffset(MessageQueue mq, long offset) {
+        OFFSE_TABLE.put(mq, offset);
+    }
+
+}
+
+```
+
+### 3.3.4 推模式
+**代码上使用 DefaultMQPushConsumer**
+
+Push 方式是 Server 端接收到消息后，主动把消息推给 Client 端，实时性高，但是使用 Push 方式主动推送也存在一些问题：比如加大 Server 端的工作 量，其次 Client 端的处理能力各不相同，如果 Client 不能及时处理 Server 推过来的消息，会造成各种潜在的问题。
+
+```java
+package com.tqk.pullandpush;
+
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
+import org.apache.rocketmq.common.message.MessageExt;
+
+import java.util.List;
+
+/**
+ * 消费者-推模式
+ */
+
+public class PushConsumerA {
+
+    public static void main(String[] args) throws InterruptedException, MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("group1");
+        consumer.subscribe("TopicTest", "*");
+        consumer.setNamesrvAddr("110.42.146.236:9876");
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);//每次从最后一次消费的地址
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+                System.out.printf("queueID:%d:%s:Messages:%s %n",  msgs.get(0).getQueueId(),Thread.currentThread().getName(), new String(msgs.get(0).getBody()));
+                //业务处理
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS; //提交成功
+                //return ConsumeConcurrentlyStatus.RECONSUME_LATER; //稍后再试（次数过多。就会变成死信  对应到消费组。）
+            }
+        });
+        consumer.start();
+        System.out.printf("ConsumerPartOrder Started.%n");
+    }
+}
+
+```
+
+### 3.3.5 流量控制
+
+**Push 模式基于拉取**，消费者会判断获取但还**未处理的消息个数、消息总大小、Offset 的跨度** 3 个维度来控制，如果任一值超过设定的大小就隔一段时间再拉取消息，从而达到流量控制的目的。 
+
+两种情况会限流，限流的做法是放弃本次拉取消息的动作，并且这个队列的下一次拉取任务将在 50 毫秒后才加入到拉取任务队列。 
+
+1. 当前的 ProcessQueue（一个主题有多个队列，每一个队列会对应有一个 ProcessQueue 来处理消息）正在处理的消息数量>1000 
+
+2. 队列中最大最小偏移量差距>2000，这个是为了避免一条消息堵塞，消息进度无法向前推进，可能造成大量消息重复消费
+
+
+##  3.4 顺序消息
 
 消息有序指的是可以按照消息的发送顺序来消费(FIFO)。RocketMQ可以严格的保证消息有序，可以分为**分区有序**或者**全局有序**。  
 
@@ -333,7 +877,7 @@ public class BroadcastComuser {
 
 <a data-fancybox title="RocketMQ" href="./image/rocketmq32.jpg">![RocketMQ](./image/rocketmq32.jpg)</a>
 
-###  3.2.1 顺序消息生产
+###  3.4.1 顺序消息生产
 一个订单的顺序流程是：创建、付款、推送、完成。订单号相同的消息会被先后发送到同一个队列中，下面是订单进行分区有序的示例代码
 
 ```java
@@ -521,7 +1065,7 @@ public class ProducerInOrder {
 应该返回suspend_current_queue_a_moment,意思是先等一会，一会儿再处理这批消息，而不是放到重试队列里。
 （具体实现的话，需要后续的源码分析中--集群消费时保证消费的有序性章节）
 
-###  3.2.2 顺序消息消费
+###  3.4.2 顺序消息消费
 消费时，同一个OrderId获取到的肯定是同一个队列。从而确保一个订单中处理的顺序。
 
 ```java
@@ -585,393 +1129,15 @@ public class ConsumerInOrder {
 
 ```
 
-##  3.3 消息发送时的重要方法/属性
+## 3.5 延时消息
 
-### 3.3.1 属性
-
-**org.apache.rocketmq.example.details. ProducerDetails类中**
-```java
-    //todo producerGroup：生产者所属组(针对 事务消息 高可用)
-    DefaultMQProducer producer=new DefaultMQProducer("produce_details");
-    //todo 默认主题在每一个Broker队列数量(对于新创建主题有效)
-    producer.setDefaultTopicQueueNums(8);
-    //todo 发送消息默认超时时间，默认3s (3000ms)
-    producer.setSendMsgTimeout(3000);
-    //todo 消息体超过该值则启用压缩，默认4k
-    producer.setCompressMsgBodyOverHowmuch(4*1024);
-    //todo 异步方式发送消息重试次数，默认为2，总共执行3次
-    producer.setRetryTimesWhenSendAsyncFailed(2);
-    //todo 同步方式发送消息重试次数，默认为2，总共执行3次
-    producer.setRetryTimesWhenSendFailed(2);
-    //todo 消息重试时选择另外一个Broker时（消息没有存储成功是否发送到另外一个broker），默认为false
-    producer.setRetryAnotherBrokerWhenNotStoreOK(false);
-    //todo 允许发送的最大消息长度，默认为4M
-    producer.setMaxMessageSize(1024 * 1024 * 4);
-    //todo 设置NameServer的地址
-    producer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
-```
-
-### 3.3.2 方法
-
-**org.apache.rocketmq.example.details. ProducerDetails类中**
-
-```java
-    //todo 设置NameServer的地址
-    producer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
-    // todo 启动Producer实例
-    producer.start();
-    //todo 0 查找该主题下所有消息队列
-    List<MessageQueue> MessageQueue = producer.fetchPublishMessageQueues("TopicTest");
-    for (int i = 0; i < MessageQueue.size(); i++) {
-        System.out.println(MessageQueue.get(i).getQueueId());
-    }
-
-    //todo  如果不再发送消息，关闭Producer实例。
-    producer.shutdown();
-```
-
-#### 3.3.2.1 单向发送
-
-```java
-    // 创建消息，并指定Topic，Tag和消息体
-    Message msg = new Message("DetailsOneway", "TagA", "OrderID888",
-            "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
-
-    //todo 单向发送
-    //todo 1.1发送单向消息
-    producer.sendOneway(msg);
-    //todo 1.2指定队列单向发送消息(使用select方法)
-    producer.sendOneway(msg, new MessageQueueSelector() {
-        @Override
-        public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
-            return mqs.get(0);
-        }
-    },null);
-    //todo 1.3指定队列单向发送消息(根据之前查找出来的主题)
-    producer.sendOneway(msg,messageQueue.get(1));
-```
-#### 3.3.2.2 同步发送
-```java
-    //todo 同步发送
-    // 创建消息，并指定Topic，Tag和消息体
-    Message nowMsg = new Message("DetailsNow", "TagA", "OrderID888",
-            "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
-    //todo 2.1同步发送消息
-    SendResult sendResult0 = producer.send(nowMsg);
-    //todo 2.1同步超时发送消息(属性设置：sendMsgTimeout 发送消息默认超时时间，默认3s (3000ms) )
-    SendResult sendResult1 = producer.send(nowMsg,1000*3);
-    //todo 2.2指定队列同步发送消息(使用select方法)
-    SendResult sendResult2 = producer.send(nowMsg, new MessageQueueSelector() {
-        @Override
-        public MessageQueue select(List<MessageQueue> list, Message message, Object o) {
-            return messageQueueNow.get(0);
-        }
-    },null);
-    producer.send(nowMsg,messageQueueNow.get(3));
-```
-#### 3.3.2.3 异步发送
-```java
-    //todo 异步发送
-    // 创建消息，并指定Topic，Tag和消息体
-    Message asynMsg = new Message("DetailsAsyn", "TagA", "OrderID888",
-            "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
-    List<MessageQueue> messageQueueAsyn = producer.fetchPublishMessageQueues("DetailsAsyn");
-
-    //todo 3.1异步发送消息
-    producer.send(asynMsg, new SendCallback() {
-        @Override
-        public void onSuccess(SendResult sendResult) {
-            System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
-        }
-        @Override
-        public void onException(Throwable e) {
-            System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
-        }
-    });
-    //todo 3.1异步超时发送消息
-    producer.send(asynMsg, new SendCallback() {
-        @Override
-        public void onSuccess(SendResult sendResult) {
-            System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
-        }
-        @Override
-        public void onException(Throwable e) {
-            System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
-        }
-    },1000*3);
-    //todo 3.2选择指定队列异步发送消息(根据之前查找出来的主题队列信息)
-    producer.send(asynMsg,messageQueueAsyn.get(0),
-            new SendCallback() {
-                @Override
-                public void onSuccess(SendResult sendResult) {
-                    System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
-                }
-                @Override
-                public void onException(Throwable e) {
-                    System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
-                }
-            });
-    //todo 3.3选择指定队列异步发送消息(使用select方法)
-    producer.send(asynMsg,new MessageQueueSelector() {
-                @Override
-                public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
-                    return messageQueueAsyn.get(5);
-                }
-            },
-            new SendCallback() {
-                @Override
-                public void onSuccess(SendResult sendResult) {
-                    System.out.printf("%-10d OK %s %n", index, sendResult.getMsgId());
-                }
-                @Override
-                public void onException(Throwable e) {
-                    System.out.printf("%-10d Exception %s %n", index, e);e.printStackTrace();
-                }
-            });
-```
-
-
-## 3.4 消息消费时的重要方法/属性
-
-### 3.4.1 消息消费时属性
-
-```java
-    //todo 属性
-    //todo consumerGroup：消费者组
-    DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("king");
-    //todo 指定Namesrv地址信息.
-    consumer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
-    //todo 消息消费模式（默认集群消费）
-    consumer.setMessageModel(MessageModel.CLUSTERING);
-    //todo 指定消费开始偏移量（上次消费偏移量、最大偏移量、最小偏移量、启动时间戳）开始消费
-    consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
-
-    //todo 消费者最小线程数量(默认20)
-    consumer.setConsumeThreadMin(20);
-    //todo 消费者最大线程数量(默认20)
-    consumer.setConsumeThreadMax(20);
-    //todo 推模式下任务间隔时间(推模式也是基于不断的轮训拉取的封装)
-    consumer.setPullInterval(0);
-    //todo 推模式下任务拉取的条数,默认32条(一批批拉)
-    consumer.setPullBatchSize(32);
-    //todo 消息重试次数,-1代表16次 （超过 次数成为死信消息）
-    consumer.setMaxReconsumeTimes(-1);
-    //todo 消息消费超时时间(消息可能阻塞正在使用的线程的最大时间：以分钟为单位)
-    consumer.setConsumeTimeout(15);
-
-    //todo 获取消费者对主题分配了那些消息队列
-    Set<MessageQueue> MessageQueueSet  = consumer.fetchSubscribeMessageQueues("DetailsAsyn");
-```
-
-:::tip 消息发送的属性
-1. 消费者组
-<font color='red'><strong>private String consumerGroup;</strong></font>	 
-
-2. 消息消费模式
-<font color='red'><strong>private MessageModel messageModel = MessageModel.CLUSTERING;</strong></font>	
-
-3. 指定消费开始偏移量（最大偏移量、最小偏移量、启动时间戳）开始消费
-<font color='red'><strong>private ConsumeFromWhere consumeFromWhere = ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET;</strong></font>
-
-ConsumeFromTimestamp模式下只会在订阅组（消费者群组）第一次启动的时候，过滤掉小于当前系统时间戳的消息，后续如果进程停掉或者崩溃，但是又生产了新消息。下次启动消费者时，会继续消费停掉期间新生产的消息。后续行为和ConsumeFromLastOffset类似
-
-4. 消费者最小线程数量
-<font color='red'><strong>private int consumeThreadMin = 20;</strong></font>
-
-5. 消费者最大线程数量
-<font color='red'><strong>private int consumeThreadMax = 20;</strong></font>
-
-6. 推模式下任务间隔时间
-<font color='red'><strong>private long pullInterval = 0;</strong></font>
-
-7. 推模式下任务拉取的条数,默认32条
-<font color='red'><strong>private int pullBatchSize = 32;</strong></font>
-
-8. 消息重试次数,-1代表16次
-<font color='red'><strong>private int maxReconsumeTimes = -1;</strong></font>
-
-9. 消息消费超时时间
-<font color='red'><strong>private long consumeTimeout = 15;</strong></font>
-
-:::
-
-### 3.4.2 消息消费时方法
-```java
-// todo  订阅消息，并指定队列选择器
-void subscribe(final String topic, final MessageSelector selector)
-
-// todo 取消消息订阅
-void unsubscribe(final String topic)
-
-// todo 获取消费者对主题分配了那些消息队列
-Set<MessageQueue> fetchSubscribeMessageQueues(final String topic)
-
-// todo 注册并发事件监听器
-void registerMessageListener(final MessageListenerConcurrently messageListener)
-
-// todo 注册顺序消息事件监听器
-void registerMessageListener(final MessageListenerOrderly messageListener)
-```
-**示例**
-```java
-//todo 方法-订阅
-//todo 基于主题订阅消息，消息过滤使用表达式
-consumer.subscribe("TopicTest", "*"); //tag  tagA|TagB|TagC
-//todo 基于主题订阅消息，消息过滤使用表达式
-consumer.subscribe("TopicTest",MessageSelector.bySql("a between 0 and 3"));
-//todo 基于主题订阅消息，消息过滤使用表达式
-consumer.subscribe("TopicTest",MessageSelector.byTag("tagA|TagB"));
-//todo 取消消息订阅
-consumer.unsubscribe("TopicTest");
-```
-
-```java
-package com.tqk.rocketmqdemo.details;
-
-import com.tqk.rocketmqdemo.myenum.TqkEnum;
-import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.MessageSelector;
-import org.apache.rocketmq.client.consumer.listener.*;
-import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
-import org.apache.rocketmq.common.message.Message;
-import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.common.message.MessageQueue;
-import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-/**
- * 消息消费时的细节
- */
-public class ComuserDetails {
-    public static void main(String[] args) throws Exception {
-        //todo 属性
-        //todo consumerGroup：消费者组
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("tqk001");
-        //todo 指定Namesrv地址信息.
-        consumer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());
-        //todo 消息消费模式（默认集群消费）
-        consumer.setMessageModel(MessageModel.CLUSTERING);
-        //todo 指定消费开始偏移量（上次消费偏移量、最大偏移量、最小偏移量、启动时间戳）开始消费
-        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
-
-        //todo 消费者最小线程数量(默认20)
-        consumer.setConsumeThreadMin(20);
-        //todo 消费者最大线程数量(默认20)
-        consumer.setConsumeThreadMax(20);
-        //todo 推模式下任务间隔时间(推模式也是基于不断的轮训拉取的封装)
-        consumer.setPullInterval(0);
-        //todo 推模式下任务拉取的条数,默认32条(一批批拉)
-        consumer.setPullBatchSize(32);
-        //todo 消息重试次数,-1代表16次 （超过 次数成为死信消息）
-        consumer.setMaxReconsumeTimes(-1);
-        //todo 消息消费超时时间(消息可能阻塞正在使用的线程的最大时间：以分钟为单位)
-        consumer.setConsumeTimeout(15);
-
-        //todo 获取消费者对主题分配了那些消息队列
-//        Set<MessageQueue> MessageQueueSet  = consumer.fetchSubscribeMessageQueues("DetailsAsyn");
-//        Iterator iterator = MessageQueueSet.iterator();
-//        while(iterator.hasNext()){
-//            MessageQueue MessageQueue =(MessageQueue)iterator.next();
-//            System.out.println(MessageQueue.getQueueId());
-//        }
-        //todo 方法-订阅
-        //todo 基于主题订阅消息，消息过滤使用表达式
-        consumer.subscribe("DetailsAsyn", "*"); //tag  tagA|TagB|TagC
-        //todo 基于主题订阅消息，消息过滤使用表达式
-//        consumer.subscribe("TopicTest",MessageSelector.bySql("a between 0 and 3"));
-        //todo 基于主题订阅消息，消息过滤使用表达式
-//        consumer.subscribe("TopicTest",MessageSelector.byTag("tagA|TagB"));
-        //todo 取消消息订阅
-//        consumer.unsubscribe("TopicTest");
-
-        //todo 注册监听器
-        //todo 注册并发事件监听器
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
-            @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
-                                                            ConsumeConcurrentlyContext context) {
-                try {
-                    for(MessageExt msg : msgs) {
-                        String topic = msg.getTopic();
-                        String msgBody = new String(msg.getBody(), "utf-8");
-                        String tags = msg.getTags();
-                        System.out.println("收到消息：" + " topic :" + topic + " ,tags : " + tags + " ,msg : " + msgBody);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    //没有成功  -- 到重试队列中来
-                    System.out.println("没有成功  -- 到重试队列中来");
-                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
-
-                }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-                //todo
-            }
-        });
-
-        //todo 注册顺序消息事件监听器
-        consumer.registerMessageListener(new MessageListenerOrderly() {
-            Random random = new Random();
-            @Override
-            public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
-                context.setAutoCommit(true);
-                for (MessageExt msg : msgs) {
-                    // 可以看到每个queue有唯一的consume线程来消费, 订单对每个queue(分区)有序
-                    System.out.println("consumeThread=" + Thread.currentThread().getName() + " queueId=" + msg.getQueueId() + ", content:" + new String(msg.getBody()));
-                }
-                try {
-                    //模拟业务逻辑处理中...
-                    TimeUnit.MILLISECONDS.sleep(random.nextInt(300));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    //todo 这个点要注意：意思是先等一会，一会儿再处理这批消息，而不是放到重试队列里
-                    return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
-                }
-                return ConsumeOrderlyStatus.SUCCESS;
-            }
-        });
-        //启动消息者
-        consumer.start();
-        System.out.printf("Consumer Started.%n");
-    }
-}
-
-```
-
-### 3.4.3 消费确认(ACK)
-
-**业务实现消费回调的时候**
-
-当且仅当此回调函数返回<font color='red'><strong>ConsumeConcurrentlyStatus.CONSUME_SUCCESS</strong></font>，
-
-RocketMQ才会认为这批消息（默认是1条）是消费完成的中途断电，抛出异常等都不会认为成功——即都会重新投递。
-
-返回<font color='red'><strong>ConsumeConcurrentlyStatus.RECONSUME_LATER</strong></font>，RocketMQ就会认为这批消息消费失败了。
-
-如果业务的回调没有处理好而抛出异常，会认为是消费失败<font color='red'><strong>ConsumeConcurrentlyStatus.RECONSUME_LATER</strong></font>处理。
-
-为了保证消息是肯定被至少消费成功一次，RocketMQ会把这批消息重发回Broker（topic不是原topic而是这个消费组的RETRY topic），在延迟的某个时间点（默认是10秒，业务可设置）后，再次投递到这个ConsumerGroup。
-
-而如果一直这样重复消费都持续失败到一定次数（默认16次），就会投递到<font color='red'><strong>DLQ死信队列</strong></font>。应用可以监控死信队列来做人工干预。
-
-另外如果使用<font color='red'><strong>顺序消费的回调MessageListenerOrderly</strong></font>时，由于顺序消费是要前者消费成功才能继续消费，所以没有RECONSUME_LATER的这个状态，只有<font color='red'><strong>SUSPEND_CURRENT_QUEUE_A_MOMENT</strong></font>来暂停队列的其余消费，直到原消息不断重试成功为止才能继续消费
-
-
-
-## 3.4 延时消息
-
-### 3.4.1 概念介绍
+### 3.5.1 概念介绍
 延时消息：Producer 将消息发送到消息队列 RocketMQ 服务端，但并不期望这条消息立马投递，而是延迟一定时间后才投递到 Consumer 进行消费，该消息即延时消息。
 
-### 3.4.2 适用场景
+### 3.5.2 适用场景
 消息生产和消费有时间窗口要求：比如在电商交易中超时未支付关闭订单的场景，在订单创建时会发送一条延时消息。这条消息将会在 30 分钟以后投递给消费者，消费者收到此消息后需要判断对应的订单是否已完成支付。 如支付未完成，则关闭订单。如已完成支付则忽略。
 
-### 3.4.3 使用方式
+### 3.5.3 使用方式
 Apache RocketMQ目前只支持固定精度的定时消息，因为如果要支持任意的时间精度，在 Broker 层面，必须要做消息排序，如果再涉及到持久化，那么消息排序要不可避免的产生巨大性能开销。（阿里云RocketMQ提供了任意时刻的定时消息功能，Apache的RocketMQ并没有,阿里并没有开源）
 发送延时消息时需要设定一个延时时间长度，消息将从当前发送时间点开始延迟固定时间之后才开始投递。
 延迟消息是根据延迟队列的level来的，延迟队列默认是
@@ -980,10 +1146,10 @@ msg.setDelayTimeLevel(3)代表延迟10秒
 **源码中：org/apache/rocketmq/store/config/MessageStoreConfig.java**
 
 是这18个等级（秒（s）、分（m）、小时（h）），level为1，表示延迟1秒后消费，level为5表示延迟1分钟后消费，level为18表示延迟2个小时消费。生产消息跟普通的生产消息类似，只需要在消息上设置延迟队列的level即可。消费消息跟普通的消费消息一致。
-### 3.4.4 代码演示
+### 3.5.4 代码演示
 **com.tqk.rocketmqdemo.scheduled包中**
 
-#### 3.4.4.1 生产者
+#### 3.5.4.1 生产者
 
 ```java
 /**
@@ -1013,7 +1179,7 @@ public class ScheduledMessageProducer {
 }
 ```
 
-#### 3.4.4.2 消费者
+#### 3.5.4.2 消费者
 
 ```java
 public class ScheduledMessageConsumer {
@@ -1053,12 +1219,12 @@ public class ScheduledMessageConsumer {
 }
 ```
 
-## 3.5 批量消息
+## 3.6 批量消息
 
 批量发送消息能显著提高传递小消息的性能。限制是这些批量消息应该有相同的topic，相同的waitStoreMsgOK（集群时会细讲），而且不能是延时消息。此外，这一批消息的总大小不应超过4MB。
 
 
-## 3.5.1 批量消息生产者
+## 3.6.1 批量消息生产者
 
 ```java
 /**
@@ -1124,7 +1290,7 @@ public class BatchComuser {
     }
 }
 ```
-## 3.5.2 批量切分
+## 3.6.2 批量切分
 
 如果消息的总长度可能大于4MB时，这时候最好把消息进行分割，我们需要发送10万元素的数组，这个量很大，怎么快速发送完。同时每一次批量发送的消息大小不能超过4M
 具体见代码
@@ -1235,9 +1401,9 @@ class ListSplitter implements Iterator<List<Message>> {
 
 ```
 
-## 3.6 过滤消息
+## 3.7 过滤消息
 
-### 3.6.1 Tag过滤
+### 3.7.1 Tag过滤
 
 在大多数情况下，TAG是一个简单而有用的设计，其可以来选择您想要的消息。
 ```java
@@ -1248,7 +1414,7 @@ class ListSplitter implements Iterator<List<Message>> {
 
 消费者将接收包含TAGA或TAGB或TAGC的消息。但是限制是一个消息只能有一个标签，这对于复杂的场景可能不起作用。在这种情况下，可以使用SQL表达式筛选消息。SQL特性可以通过发送消息时的属性来进行计算。
 
-### 3.6.2 Sql过滤
+### 3.7.2 Sql过滤
 
 **SQL基本语法**
 RocketMQ定义了一些基本语法来支持这个特性。你也可以很容易地扩展它。  
@@ -1297,7 +1463,7 @@ public class SqlFilterProducer {
     }
 }
 ```
-#### 3.6.2.2 消息消费者（使用SQL筛选）  
+#### 3.7.2.2 消息消费者（使用SQL筛选）  
 
 **用MessageSelector.bySql来使用sql筛选消息**  
 
@@ -1363,25 +1529,25 @@ enablePropertyFilter=true
 ```
 
 
-## 3.7 事务消息
+## 3.8 事务消息
 
 <a data-fancybox title="RocketMQ" href="./image/rocketmq34.jpg">![RocketMQ](./image/rocketmq34.jpg)</a>
 
 其中分为两个流程：**正常事务消息的发送及提交、事务消息的补偿流程**
 
-### 3.7.1 正常事务流程
+### 3.8.1 正常事务流程
 (1) 发送消息（half消息）：图中步骤1。  
 (2) 服务端响应消息写入结果：图中步骤2。  
 (3) 根据发送结果执行本地事务（如果写入失败，此时half消息对业务不可见，本地逻辑不执行）：图中步骤3。  
 (4) 根据本地事务状态执行Commit或者Rollback（Commit操作生成消息索引，消息对消费者可见）：图中步骤4  
 
-### 3.7.2 事务补偿流程
+### 3.8.2 事务补偿流程
 (1) 对没有Commit/Rollback的事务消息（pending状态的消息），从服务端发起一次“回查”：图中步骤5。  
 (2) Producer收到回查消息，检查回查消息对应的本地事务的状态：图中步骤6。  
 (3) 根据本地事务状态，重新Commit或者Rollback：：图中步骤6。  
 其中，补偿阶段用于解决消息Commit或者Rollback发生超时或者失败的情况。  
 
-### 3.7.3 事务消息状态
+### 3.8.3 事务消息状态
 
 :::tip 事务消息共有三种状态  
 <font color='red'>※ TransactionStatus.CommitTransaction: 提交状态</font>，它允许消费者消费此消息（完成图中了1，2,3,4步，第4步是Commit）。    
@@ -1389,7 +1555,7 @@ enablePropertyFilter=true
 <font color='red'>※ TransactionStatus.Unknown: 中间状态</font>，它代表需要检查消息队列来确定状态（完成图中了1，2,3步, 但是没有4或者没有7，无法Commit或Rollback）。    
 :::
 
-### 3.7.4 创建事务性生产者
+### 3.8.4 创建事务性生产者
 
 使用 TransactionMQProducer类创建生产者，并指定唯一的 ProducerGroup，就可以设置自定义线程池来处理这些检查请求。执行本地事务后、需要根据执行结果对消息队列进行回复。
 
@@ -1458,7 +1624,7 @@ public class TransactionProducer {
 }
 ```
 
-### 3.7.5 实现事务的监听接口
+### 3.8.5 实现事务的监听接口
 
 当发送半消息成功时，我们使用 executeLocalTransaction 方法来执行本地事务（步骤3）。它返回前一节中提到的三个事务状态之一。checkLocalTranscation 方法用于检查本地事务状态（步骤5），并回应消息队列的检查请求。它也是返回前一节中提到的三个事务状态之一。  
 
@@ -1532,11 +1698,11 @@ public class TransactionListenerImpl implements TransactionListener {
 ```
 
 
-### 3.7.6 使用场景
+### 3.8.6 使用场景
 用户提交订单后，扣减库存成功、扣减优惠券成功、使用余额成功，但是在确认订单操作失败，需要对库存、库存、余额进行回退。如何保证数据的完整性？
 可以使用RocketMQ的分布式事务保证在下单失败后系统数据的完整性
 
-### 3.7.7 使用限制
+### 3.8.7 使用限制
 
 1. 事务消息不支持延时消息和批量消息。
 2. 事务回查的间隔时间：BrokerConfig. transactionCheckInterval  通过Broker的配置文件设置好。
@@ -1550,7 +1716,7 @@ public class TransactionListenerImpl implements TransactionListener {
 
 
 
-## 3.8 分布式事务
+## 3.9 分布式事务
 
 <a data-fancybox title="RocketMQ" href="./image/rocketmq35.jpg">![RocketMQ](./image/rocketmq35.jpg)</a>
 

@@ -40,9 +40,16 @@
 
 消息队列 RocketMQ 是阿里巴巴集团基于高可用分布式集群技术，自主研发的云正式商用的专业消息中间件，既可为分布式应用系统提供异步解耦 和削峰填谷的能力，同时也具备互联网应用所需的海量消息堆积、高吞吐、可靠重试等特性，是阿里巴巴双 11 使用的核心产品。 RocketMQ 的设计<font color='red'><strong>基于主题的发布与订阅模式</strong></font>，其核心功能包括<font color='red'><strong>消息发送、消息存储(Broker)、消息消费</strong></font>，整体设计追求简单与性能第一。
 
+
+<a data-fancybox title="RocketMQ" href="./image/rocketmq01.jpg">![RocketMQ](./image/rocketmq01.jpg)</a>
+
+-----------------------
+
 <a data-fancybox title="RocketMQ" href="./image/rocketmq24.jpg">![RocketMQ](./image/rocketmq24.jpg)</a>
 
 ###  2.2.1 NameServer 
+
+<font color='red'><strong>NameServer为producer和consumer提供路由信息，同时还有提供服务的注册和服务的剔除</strong></font>
 
 NameServer 是整个 RocketMQ 的“大脑”，它是 RocketMQ 的服务注册中心,所以 RocketMQ 需要先启动 NameServer 再启动 Rocket 中的 Broker。
 
@@ -63,7 +70,7 @@ NameServer 与每台 Broker 服务保持长连接，并间隔 30S 检查 Broker 
 ###  2.2.5 主机(Broker) 
 RocketMQ 的核心，用于暂存和传输消息。
 
-### 2.2.2 物理架构中的整体运转 
+### 2.2.6 物理架构中的整体运转 
 
 :::tip 物理架构中的整体运转
 1. NameServer 先启动 
