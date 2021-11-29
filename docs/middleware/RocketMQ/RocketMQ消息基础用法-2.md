@@ -195,150 +195,6 @@ public class OnewayProducer {
 
 <a data-fancybox title="RocketMQ" href="./image/rocketmq30.jpg">![RocketMQ](./image/rocketmq30.jpg)</a>
 
-### 3.1.7 普通消息的消费方式
-
-<a data-fancybox title="RocketMQ" href="./image/rocketmq26.jpg">![RocketMQ](./image/rocketmq26.jpg)</a>
-
-### 3.1.8 集群消费 
-
-<a data-fancybox title="RocketMQ" href="./image/rocketmq32.jpg">![RocketMQ](./image/rocketmq32.jpg)</a>
-
-
-消费者的一种消费模式。一个 Consumer Group 中的各个 Consumer 实例分摊去消费消息，即一条消息只会投递到一个 Consumer Group 下面的一个实例。
-
-实际上，每个 Consumer 是平均分摊 Message Queue 的去做拉取消费。例如某个 Topic 有 3 条 Q，其中一个 Consumer Group 有 3 个实例（可能是 3 个进程，或者 3 台机器），那么每个实例只消费其中的 1 条 Q。 
-
-而由 Producer 发送消息的时候是轮询所有的 Q,所以消息会平均散落在不同的 Q 上，可以认为 Q 上的消息是平均的。那么实例也就平均地消费消息了。 
-
-这种模式下，消费进度(Consumer Offset)的存储会持久化到 Broker。
-
-**代码演示**
-
-```java
-/**
- * 集群消费
- */
-public class BalanceComuser {
-    public static void main(String[] args) throws Exception {
-        // 实例化消息生产者,指定组名
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("tianqikai");
-        // 指定Namesrv地址信息.
-        consumer.setNamesrvAddr("110.42.146.236:9876");
-        // 订阅Topic
-        consumer.setMaxReconsumeTimes(1);
-        consumer.subscribe("TopicTest", "*"); //tag  tagA|TagB|TagC
-        //负载均衡模式消费
-        consumer.setMessageModel(MessageModel.CLUSTERING);
-        // 注册回调函数，处理消息
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
-            @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
-                try {
-                    for(MessageExt msg : msgs) {
-                        String topic = msg.getTopic();
-                        String msgBody = new String(msg.getBody(), "utf-8");
-                        String tags = msg.getTags();
-                        System.out.println("收到消息：" + " topic :" + topic + " ,tags : " + tags + " ,msg : " + msgBody);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
-
-                }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-            }
-        });
-        //启动消息者
-        consumer.start();
-        System.out.printf("Consumer Started.%n");
-    }
-}
-
-```
-
-
-### 3.1.9 广播消费 
-
-
-消费者的一种消费模式。消息将对一个 Consumer Group 下的各个 Consumer 实例都投递一遍。即使这些 Consumer 属于同一个 Consumer Group， 消息也会被 Consumer Group 中的每个 Consumer 都消费一次。 
-<a data-fancybox title="RocketMQ" href="./image/rocketmq33.jpg">![RocketMQ](./image/rocketmq33.jpg)</a>
-
-实际上，是一个消费组下的每个消费者实例都获取到了 topic 下面的每个 Message Queue 去拉取消费。所以消息会投递到每个消费者实例。 
-
-这种模式下，消费进度(Consumer Offset)会存储持久化到实例本地。 
-
-**代码演示**
-
-```java
-/**
- * 广播模式消费
- */
-public class BroadcastComuser {
-    public static void main(String[] args) throws Exception {
-        // 实例化消息生产者,指定组名
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("B-test");
-        // 指定Namesrv地址信息.
-        consumer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());//
-        // 订阅Topic
-        consumer.subscribe("TopicTest", "*");
-        //广播模式消费
-        consumer.setMessageModel(MessageModel.BROADCASTING);
-        // 如果非第一次启动，那么按照上次消费的位置继续消费
-        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
-        // 注册回调函数，处理消息
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
-            @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
-                                             ConsumeConcurrentlyContext context) {
-                try {
-                    for(MessageExt msg : msgs) {
-                        String topic = msg.getTopic();
-                        String msgBody = new String(msg.getBody(), "utf-8");
-                        String tags = msg.getTags();
-                        System.out.println("收到消息：" + " topic :" + topic + " ,tags : " + tags + " ,msg : " + msgBody);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
-
-                }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-            }
-        });
-        //启动消息者
-        consumer.start();
-        System.out.printf("Consumer Started.%n");
-    }
-}
-```
-### 3.1.10 消息消费时的权衡 
-
-#### 3.1.10.1 集群模式：
-
-适用场景&注意事项 
-
-消费端集群化部署，每条消息只需要被处理一次。 
-
-由于消费进度在服务端维护，可靠性更高。 集群消费模式下，每一条消息都只会被分发到一台机器上处理。
-如果需要被集群下的每一台机器都处理，请使用广播模式。 
-
-**集群消费模式下，不保证每一次失败重投的消息路由到同一台机器上，因此处理消息时不应该做任何确定性假设。** 
-
-#### 3.1.10.2 广播模式：
-
-适用场景&注意事项 
-
-广播消费模式下不支持顺序消息。 
-
-广播消费模式下不支持重置消费位点。  
-每条消息都需要被相同逻辑的多台机器处理。   
-消费进度在客户端维护，出现重复的概率稍大于集群模式。   
-
-广播模式下，消息队列 RocketMQ 保证每条消息至少被每台客户端消费一次，但是并**不会对消费失败的消息进行失败重投，因此业务方需要关注消费失败的情况**。 
-
-广播模式下，**客户端每一次重启都会从最新消息消费**。
-
-**客户端在被停止期间发送至服务端的消息将会被自动跳过，请谨慎选择。**
 
 ## 3.2 消息发送时的重要方法/属性
 
@@ -696,7 +552,7 @@ public class ComuserDetails {
 
 ```
 
-### 3.3.3 消费确认(ACK)
+### 3.3.3 消费确认-ACK与消息重试
 
 **业务实现消费回调的时候**
 
@@ -704,7 +560,48 @@ public class ComuserDetails {
 
 中途断电，抛出异常等都不会认为成功——即都会重新投递,返回<font color='red'><strong>ConsumeConcurrentlyStatus.RECONSUME_LATER</strong></font>，RocketMQ就会认为这批消息消费失败了。
 
+```java
+package com.tqk.retry;
 
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
+import org.apache.rocketmq.common.message.MessageExt;
+
+import java.util.List;
+
+/**
+ * 消费失败--》重复消费
+ * 消费者-消息重试
+ */
+
+public class RetryConsumer {
+
+    public static void main(String[] args) throws InterruptedException, MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("Retrygroup");
+        consumer.subscribe("TopicRetry", "*");
+        consumer.setNamesrvAddr("110.42.146.236:9876");
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);//每次从最后一次消费的地址
+        consumer.setMaxReconsumeTimes(3);//重试次数（默认15）
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+                System.out.printf("queueID:%d:%s:Messages:%s %n",  msgs.get(0).getQueueId(),Thread.currentThread().getName(), new String(msgs.get(0).getBody()));
+                // try 有异常  失败了 RECONSUME_LATER （消费-> 扣款，->余额不足，）
+                //这里返回RECONSUME_LATER，这个消息会重新发送到Broker中的RETRY topic
+                //return ConsumeConcurrentlyStatus.RECONSUME_LATER; //稍后再试（次数过多。就会变成死信  对应到消费组。）
+//                return ConsumeConcurrentlyStatus.SUCCESS;
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+            }
+        });
+        consumer.start();
+        System.out.printf("ConsumerPartOrder Started.%n");
+    }
+}
+```
 -----------------
 
 如果业务的回调没有处理好而抛出异常，会认为是消费失败<font color='red'><strong>ConsumeConcurrentlyStatus.RECONSUME_LATER</strong></font>处理。
@@ -715,7 +612,94 @@ public class ComuserDetails {
 
 另外如果使用<font color='red'><strong>顺序消费的回调MessageListenerOrderly</strong></font>时，由于顺序消费是要前者消费成功才能继续消费，所以没有RECONSUME_LATER的这个状态，只有<font color='red'><strong>SUSPEND_CURRENT_QUEUE_A_MOMENT</strong></font>来暂停队列的其余消费，直到原消息不断重试成功为止才能继续消费
 
-### 3.3.4 拉模式
+####  批量消息 ACK 机制
+RocketMQ 是以 consumer group+queue 为单位是管理消费进度的，以一个 consumer offset 标记这个这个消费组在这条 queue 上的消费进度。 如果某已存在的消费组出现了新消费实例的时候，依靠这个组的消费进度，就可以判断第一次是从哪里开始拉取的。 每次消息成功后，本地的消费进度会被更新，然后由定时器定时同步到 broker，以此持久化消费进度。 但是每次记录消费进度的时候，**只会把一批消息中最小的 offset 值为消费进度值**
+
+<a data-fancybox title="RocketMQ" href="./image/chongfuxiaofei.jpg">![RocketMQ](./image/chongfuxiaofei.jpg)</a>
+
+这钟方式和传统的一条 message 单独 ack 的方式有本质的区别。性能上提升的同时，会带来一个潜在的重复问题——由于消费进度只是记录了一个下标，就 可能出现拉取了 100 条消息如 2101-2200 的消息，后面 99 条都消费结束了，只有 2101 消费一直没有结束的情况。
+
+### 3.3.4 消息队列负载与重新分布机制 
+
+在集群消费模式中，往往会有很多个消费者，对应消费一个主题(topic)，一个主题中有很多个消费者队列(queue),我们要考虑的问题是，集群内多个消费者是如何负载主题下的多个消费者队列，并且如果有新的消费者加入是，消息队列又会如何重新分布。 
+
+从源码的角度上看，RocketMQ 消息队列重新分布是由 RebalanceService 线程来实现的，一个 MQClientInstance 持有一个 RebalanceService 实现，并且 随着 MQClientInstance 的启动而启动。 备注：（MQClientInstance 是生产者和消费者中最大的一个实例，作为生产者或者消费者引用 RocketMQ 客户端，在一个 JVM 中所有消费者，生产者 都持有同一个 MQClientInstance，MQClientInstance 只会启动一次） RocketMQ 默认提供 5 中分配算法 如果有 8 个消息队列(q1,q2,q3,q4,q5,q6,q7,q8)，有 3 个消费者(c1,c2,c3)
+
+1. **平均分配（AllocateMessageQueueAveragely）**
+ c1:q1,q2,q3 
+ c2:q4,q5,q6 
+ c3:q7,q8, 
+ 
+2. **平均轮询分配（AllocateMessageQueueAveragelyByCircle)** 
+ c1:q1,q4,q7 
+ c2:q2,q5,q8 
+ c3:q3,q6 
+ 
+3. 一直性 Hash（AllocateMessageQueueConsistentHash） 不推荐使用，因为消息队列负载均衡信息不容易跟踪 
+ 
+4. 根据配置（AllocateMessageQueueByConfig） 为每一个消费者配置固定的消费队列 
+ 
+5. 根据 Broker 部署机房名（AllocateMessageQueueByMachineRoom） 对每一个消费者负载不同 Broker 上的队列 
+
+一般尽量使用“平均分配”“平均轮询分配”，因为分配算法比较直观。无论哪种算法，遵循的原则是一个消费者可以分配多个消息队列，同一个 消息队列只会分配一个消费者，所以如果消费者个数大于消息队列数量，则有些消费者无法消费消息。 
+
+RebalanceService 每隔 20S 进行一次队列负载每次进行队列重新负载时会查询出当前所有的消费者，并且对消息队列、消费者列表进行排序。因为在一个 JVM 中只会有一个 pullRequestQueue 对 象。具体可见源码中 PullMessageService
+
+```java
+package com.tqk.AllocateMessageQueueAveragely;
+
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
+import org.apache.rocketmq.client.consumer.rebalance.AllocateMessageQueueAveragely;
+import org.apache.rocketmq.common.message.MessageExt;
+
+import java.util.List;
+
+public class BalanceComuser3 {
+    public static void main(String[] args) throws Exception {
+        // 实例化消息生产者,指定组名
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("tianqikai");
+        // 指定Namesrv地址信息.
+        consumer.setNamesrvAddr("110.42.146.236:9876");
+        // 订阅Topic
+        consumer.setMaxReconsumeTimes(1);
+        consumer.subscribe("TopicBalance", "*"); //tag  tagA|TagB|TagC
+        //负载均衡模式消费
+//        consumer.setMessageModel(MessageModel.CLUSTERING);
+//        平均分配（AllocateMessageQueueAveragely）
+//        平均轮询分配（AllocateMessageQueueAveragelyByCircle）
+        consumer.setAllocateMessageQueueStrategy(new AllocateMessageQueueAveragely());
+        // 注册回调函数，处理消息
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+                try {
+                    for(MessageExt msg : msgs) {
+                        String topic = msg.getTopic();
+                        String msgBody = new String(msg.getBody(), "utf-8");
+                        String tags = msg.getTags();
+                        System.out.println("收到消息：" + " topic :" + topic + " ,tags : " + tags + " ,msg : " + msgBody);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+
+                }
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            }
+        });
+        //启动消息者
+        consumer.start();
+        System.out.printf("Consumer Started.%n");
+    }
+}
+```
+
+### 3.3.5 拉模式
+
+
 **代码上使用 DefaultMQPullConsumer**
 
 1. 获取 MessageQueues 并遍历（一个 Topic 包括多个 MessageQueue），如果是特殊情况，也可以选择指定的 MessageQueue 来读取消息 
@@ -811,7 +795,7 @@ public class PullConsumer {
 
 ```
 
-### 3.3.4 推模式
+### 3.3.6 推模式
 **代码上使用 DefaultMQPushConsumer**
 
 Push 方式是 Server 端接收到消息后，主动把消息推给 Client 端，实时性高，但是使用 Push 方式主动推送也存在一些问题：比如加大 Server 端的工作 量，其次 Client 端的处理能力各不相同，如果 Client 不能及时处理 Server 推过来的消息，会造成各种潜在的问题。
@@ -856,7 +840,7 @@ public class PushConsumerA {
 
 ```
 
-### 3.3.5 流量控制
+### 3.3.7 流量控制
 
 **Push 模式基于拉取**，消费者会判断获取但还**未处理的消息个数、消息总大小、Offset 的跨度** 3 个维度来控制，如果任一值超过设定的大小就隔一段时间再拉取消息，从而达到流量控制的目的。 
 
@@ -866,6 +850,153 @@ public class PushConsumerA {
 
 2. 队列中最大最小偏移量差距>2000，这个是为了避免一条消息堵塞，消息进度无法向前推进，可能造成大量消息重复消费
 
+------------------------
+
+### 3.3.8 普通消息的消费方式
+
+<a data-fancybox title="RocketMQ" href="./image/rocketmq26.jpg">![RocketMQ](./image/rocketmq26.jpg)</a>
+
+### 3.3.9 集群消费 
+
+<a data-fancybox title="RocketMQ" href="./image/rocketmq32.jpg">![RocketMQ](./image/rocketmq32.jpg)</a>
+
+
+消费者的一种消费模式。一个 Consumer Group 中的各个 Consumer 实例分摊去消费消息，即一条消息只会投递到一个 Consumer Group 下面的一个实例。
+实际上，每个 Consumer 是平均分摊 Message Queue 的去做拉取消费。例如某个 Topic 有 3 条 Q，其中一个 Consumer Group 有 3 个实例（可能是 3 个进程，或者 3 台机器），那么每个实例只消费其中的 1 条 Q。 
+
+而由 Producer 发送消息的时候是轮询所有的 Q,所以消息会平均散落在不同的 Q 上，可以认为 Q 上的消息是平均的。那么实例也就平均地消费消息了。 
+这种模式下，消费进度(Consumer Offset)的存储会持久化到 Broker。
+
+
+
+适用场景&注意事项 
+
+消费端集群化部署，每条消息只需要被处理一次。 
+
+由于消费进度在服务端维护，可靠性更高。 集群消费模式下，每一条消息都只会被分发到一台机器上处理。
+如果需要被集群下的每一台机器都处理，请使用广播模式。 
+
+**集群消费模式下，不保证每一次失败重投的消息路由到同一台机器上，因此处理消息时不应该做任何确定性假设。** 
+
+**代码演示**
+
+```java
+/**
+ * 集群消费
+ */
+public class BalanceComuser {
+    public static void main(String[] args) throws Exception {
+        // 实例化消息生产者,指定组名
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("tianqikai");
+        // 指定Namesrv地址信息.
+        consumer.setNamesrvAddr("110.42.146.236:9876");
+        // 订阅Topic
+        consumer.setMaxReconsumeTimes(1);
+        consumer.subscribe("TopicTest", "*"); //tag  tagA|TagB|TagC
+        //负载均衡模式消费
+        consumer.setMessageModel(MessageModel.CLUSTERING);
+        // 注册回调函数，处理消息
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+                try {
+                    for(MessageExt msg : msgs) {
+                        String topic = msg.getTopic();
+                        String msgBody = new String(msg.getBody(), "utf-8");
+                        String tags = msg.getTags();
+                        System.out.println("收到消息：" + " topic :" + topic + " ,tags : " + tags + " ,msg : " + msgBody);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+
+                }
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            }
+        });
+        //启动消息者
+        consumer.start();
+        System.out.printf("Consumer Started.%n");
+    }
+}
+
+```
+
+
+### 3.3.10 广播消费 
+
+
+消费者的一种消费模式。消息将对一个 Consumer Group 下的各个 Consumer 实例都投递一遍。即使这些 Consumer 属于同一个 Consumer Group， 消息也会被 Consumer Group 中的每个 Consumer 都消费一次。 
+<a data-fancybox title="RocketMQ" href="./image/rocketmq33.jpg">![RocketMQ](./image/rocketmq33.jpg)</a>
+
+实际上，是一个消费组下的每个消费者实例都获取到了 topic 下面的每个 Message Queue 去拉取消费。所以消息会投递到每个消费者实例。 
+这种模式下，**消费进度(Consumer Offset)会存储持久化到实例本地**。 
+
+
+
+**适用场景&注意事项**
+
+广播消费模式下不支持顺序消息。 
+
+广播消费模式下不支持重置消费位点。  
+每条消息都需要被相同逻辑的多台机器处理。   
+消费进度在客户端维护，出现重复的概率稍大于集群模式。   
+
+广播模式下，消息队列 RocketMQ 保证每条消息至少被每台客户端消费一次，但是并**不会对消费失败的消息进行失败重投，因此业务方需要关注消费失败的情况**。 
+
+广播模式下，**客户端每一次重启都会从最新消息消费**。
+
+**客户端在被停止期间发送至服务端的消息将会被自动跳过，请谨慎选择。**
+
+
+**代码演示**
+
+```java
+/**
+ * 广播模式消费
+ */
+public class BroadcastComuser {
+    public static void main(String[] args) throws Exception {
+        // 实例化消息生产者,指定组名
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("B-test");
+        // 指定Namesrv地址信息.
+        consumer.setNamesrvAddr(TqkEnum.IPPORT.getMsg());//
+        // 订阅Topic
+        consumer.subscribe("TopicTest", "*");
+        //广播模式消费
+        consumer.setMessageModel(MessageModel.BROADCASTING);
+        // 如果非第一次启动，那么按照上次消费的位置继续消费
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+        // 注册回调函数，处理消息
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
+                                             ConsumeConcurrentlyContext context) {
+                try {
+                    for(MessageExt msg : msgs) {
+                        String topic = msg.getTopic();
+                        String msgBody = new String(msg.getBody(), "utf-8");
+                        String tags = msg.getTags();
+                        System.out.println("收到消息：" + " topic :" + topic + " ,tags : " + tags + " ,msg : " + msgBody);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+
+                }
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            }
+        });
+        //启动消息者
+        consumer.start();
+        System.out.printf("Consumer Started.%n");
+    }
+}
+```
+
+
+
+----------------------
 
 ##  3.4 顺序消息
 
@@ -875,9 +1006,68 @@ public class PushConsumerA {
 
 当发送和消费参与的queue只有一个，则是**全局有序**；如果多个queue参与，则为**分区有序**，即相对每个queue，消息都是有序的。
 
-<a data-fancybox title="RocketMQ" href="./image/rocketmq32.jpg">![RocketMQ](./image/rocketmq32.jpg)</a>
+<a data-fancybox title="RocketMQ" href="./image/youxu.jpg">![RocketMQ](./image/youxu.jpg)</a>
 
-###  3.4.1 顺序消息生产
+<!-- <a data-fancybox title="RocketMQ" href="./image/rocketmq32.jpg">![RocketMQ](./image/rocketmq32.jpg)</a> -->
+
+###  3.4.1 全局顺序消息 
+
+RocketMQ 在默认情况下不保证顺序，要保证全局顺序，需要把 Topic 的读写队列数设置为 1，然后生产者和消费者的并发设置也是 1。所以这样的话 高并发，高吞吐量的功能完全用不上。
+
+#### 适用场景
+适用于性能要求不高，所有的消息严格按照 FIFO 原则来发布和消费的场景。
+
+#### 示例
+要确保全局顺序消息，需要先把 Topic 的读写队列数设置为 1，然后生产者和消费者的并发设置也是 1。
+在证券处理中，以人民币兑换美元为 Topic，在价格相同的情况下，先出价者优先处理，则可以按照 FIFO 的方式发布和消费全局顺序消息。
+
+```java
+package com.tqk.myenum.ordermessage.all;
+
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
+import org.apache.rocketmq.common.message.MessageExt;
+
+import java.util.List;
+
+/**
+ * 全局有序
+ * 消费者-推模式
+ */
+
+public class ConsumerAllOrder {
+
+    public static void main(String[] args) throws InterruptedException, MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("AllOrderGroup");
+        consumer.subscribe("AllOrder", "*");
+        consumer.setNamesrvAddr("110.42.146.236:9876");
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);//每次从最后一次消费的地址
+
+        consumer.registerMessageListener(new MessageListenerOrderly() {
+            @Override
+            public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
+                System.out.printf("%s:Messages:%s %n", Thread.currentThread().getName(), new String(msgs.get(0).getBody()));
+                return ConsumeOrderlyStatus.SUCCESS;
+            }
+        });
+        consumer.start();
+        System.out.printf("ConsumerPartOrder Started.%n");
+    }
+}
+
+```
+------------
+
+###  3.4.2 部分顺序消息 
+
+对于指定的一个 Topic，所有消息根据 Sharding Key 进行区块分区。同一个分区内的消息按照严格的 FIFO 顺序进行发布和消费。Sharding Key 是顺 序消息中用来区分不同分区的关键字段，和普通消息的 Key 是完全不同的概念
+
+
+####  3.4.2.1 部分顺序消息生产
 一个订单的顺序流程是：创建、付款、推送、完成。订单号相同的消息会被先后发送到同一个队列中，下面是订单进行分区有序的示例代码
 
 ```java
@@ -942,6 +1132,8 @@ public class ProducerInOrder {
                       20210406002L
                       20210406003L
                      */
+                    //rocketmq默认创建四个队列
+                    //进行取模，让订单号相同的消息发送到同一个队列
                     long index = id % mqs.size();
                     return mqs.get((int) index);
                 }
@@ -1065,7 +1257,7 @@ public class ProducerInOrder {
 应该返回suspend_current_queue_a_moment,意思是先等一会，一会儿再处理这批消息，而不是放到重试队列里。
 （具体实现的话，需要后续的源码分析中--集群消费时保证消费的有序性章节）
 
-###  3.4.2 顺序消息消费
+####  3.4.2.2 顺序消息消费
 消费时，同一个OrderId获取到的肯定是同一个队列。从而确保一个订单中处理的顺序。
 
 ```java
@@ -1715,74 +1907,3 @@ public class TransactionListenerImpl implements TransactionListener {
 
 
 
-
-## 3.9 分布式事务
-
-<a data-fancybox title="RocketMQ" href="./image/rocketmq35.jpg">![RocketMQ](./image/rocketmq35.jpg)</a>
-
-业务场景：用户A转账100元给用户B，这个业务比较简单，具体的步骤：
-1. 用户A的账户先扣除100元 
-2. 再把用户B的账户加100元
-如果在同一个数据库中进行，事务可以保证这两步操作，要么同时成功，要么同时不成功。这样就保证了转账的数据一致性。  
-但是在微服务架构中，因为各个服务都是独立的模块，都是远程调用，都没法在同一个事务中，都会遇到事务问题。  
-因为各个服务都是独立的模块，都是远程调用，都没法在同一个事务中，都会遇到事务问题。  
-
-------------
-
-<a data-fancybox title="RocketMQ" href="./image/rocketmq36.jpg">![RocketMQ](./image/rocketmq36.jpg)</a>
-
-消息中间件的方式，把扣款业务和加钱业务异步化，扣款成功后，发送“扣款成功消息”到消息中间件；加钱业务订阅“扣款成功消息”，再对用户B加钱（系统怎么知道给用户B加钱呢？是消息体里面包含了源账户和目标账户ID，以及钱数）
-
-----------
-
-**场景一：先扣款后向MQ发消息**  
-先扣款再发送消息，万一发送消息失败了，那用户B就没法加钱
-
----------------
-
-**场景二：先向MQ发像消息，后扣款**  
-扣款成功消息发送成功，但用户A扣款失败，可加钱业务订阅到了消息，用户B加了钱
-问题所在，也就是没法保证扣款和发送消息，同时成功，或同时失败；导致数据不一致。
-
-----------------
-
-<a data-fancybox title="RocketMQ" href="./image/rocketmq37.jpg">![RocketMQ](./image/rocketmq37.jpg)</a>
-
-
-RocketMq消息中间件把消息分为两个阶段：半事务阶段和确认阶段阶段
-
-**半事务阶段：**  
-该阶段主要发一个消息到rocketmq，但该消息只储存在commitlog中，但consumeQueue中不可见，也就是消费端（订阅端）无法看到此消息
-
-**commit/rollback阶段（确认阶段）：**  
-该阶段主要是把prepared消息保存到consumeQueue中，即让消费端可以看到此消息，也就是可以消费此消息。如果是rollback就不保存。
-
-**整个流程：**  
-1. A在扣款之前，先发送半事务消息
-2. 发送预备消息成功后，执行本地扣款事务
-3. 扣款成功后，再发送确认消息
-4. B消息端（加钱业务）可以看到确认消息，消费此消息，进行加钱
-注意：上面的确认消息可以为commit消息，可以被订阅者消费；也可以是Rollback消息，即执行本地扣款事务失败后，提交rollback消息，即删除那个预备消息，订阅者无法消费
-
------------------
-
-异常1：如果发送半事务消息失败，下面的流程不会走下去；这个是正常的  
-异常2：如果发送半事务消息成功，但执行本地事务失败；这个也没有问题，因为此预备消息不会被消费端订阅到，消费端不会执行业务。  
-异常3：如果发送半事务消息成功，执行本地事务成功，但发送确认消息失败；这个就有问题了，因为用户A扣款成功了，但加钱业务没有订阅到确认消息，无法加钱。这里出现了数据不一致。  
-
---------------
-
-RocketMq如何解决上面的问题，核心思路就是【事务回查】，也就是RocketMq会定时遍历commitlog中的半事务消息。
-异常3，发送半事务消息成功，本地扣款事务成功，但发送确认消息失败；因为RocketMq会进行回查半事务消息，在回查后发现业务已经扣款成功了，就补发“发送commit确认消息”；这样加钱业务就可以订阅此消息了。
-这个思路其实把异常2也解决了，如果本地事务没有执行成功，RocketMQ回查业务，发现没有执行成功，就会发送RollBack确认消息，把消息进行删除。
-
-
-同时还要注意的点是，<font color='red'>**RocketMQ不能保障消息的重复，所以在消费端一定要做幂等性处理。**</font>  
-除此之外，如果消费端发生消费失败，同时也需要做重试，如果重试多次，消息会进入死信队列，这个时候也需要进行特殊的处理。（一般就是把A已经处理完的业务进行回退）
-
-<a data-fancybox title="RocketMQ" href="./image/rocketmq38.jpg">![RocketMQ](./image/rocketmq38.jpg)</a>
-
-
-如果本地事务执行了很多张表，那是不是我们要把那些表都要进行判断是否执行成功呢？这样是不是太麻烦了，而且和业务很耦合。
-好的方案是设计一张Transaction表，将业务表和Transaction绑定在同一个本地事务中，如果扣款本地事务成功时，Transaction中应当已经记录该TransactionId的状态为「已完成」。当RocketMq事务回查时，只需要检查对应的TransactionId的状态是否是「已完成」就好，而不用关心具体的业务数据。
-如果是银行业务，对数据要求性极高，一般A与B需要进行手动对账，手动补偿。
