@@ -171,7 +171,7 @@ TUser{id=202, userName='mark', realName='毛毛', sex=1, mobile='18695988747', e
 TUser{id=203, userName='tqk', realName='田起凯', sex=1, mobile='18562328330', email='xxoo@163.com', note='0', positionId=null, position=null, jobs=null, healthReports=null, roles=null}
 ```
 
-## 1.3 resultType与resultMap之间的选择
+## 1.3 resultType与resultMap间的选择
 
 ### 1.3.1 resultType
 
@@ -225,6 +225,8 @@ TUser{id=203, userName='tqk', realName='田起凯', sex=1, mobile='18562328330',
     <setting name="mapUnderscoreToCamelCase" value="true" />
 ```
 :::
+
+
 #### 代码演示
 
 ```xml
@@ -259,6 +261,9 @@ TUser{id=203, userName='tqk', realName='田起凯', sex=1, mobile='18562328330',
 		where a.position_id = b.id
 	</select>
 ```
+
+--------------
+
 ```java
 	@Test
 	//知识点：resultMap
@@ -277,6 +282,7 @@ TUser{id=203, userName='tqk', realName='田起凯', sex=1, mobile='18562328330',
 		}
 	}
 ```
+---------------
 
 ```
 lison: 总经理
@@ -287,9 +293,11 @@ tqk: 总经理
 
 
 **autoMappingBehavior**
+
 mybatis核心配置文件中settings中配置,指定 MyBatis 应如何自动映射列到字段或属性。 NONE 表示取消自动映射；PARTIAL 只会自动映射没有定义嵌套结果集映射的结果集。 FULL 会自动映射任意复杂的结果集（无论是否嵌套）。默认是partial，这是一种全局设置
 
-**autoMapping**
+**autoMapping**  
+
 在resultMap或者association,collections中使用，是一个局部开关，开启后会自动设置嵌套查询中的属性，局部开关优先级大于全部开关，当全部开关开启FULL映射时，局部开关关闭，这时候仍然不会进行映射。
 
 
@@ -346,7 +354,8 @@ mybatis核心配置文件中settings中配置,指定 MyBatis 应如何自动映�
 		where a.email like CONCAT('%', #{email}, '%') and
 		a.sex =	#{sex}
 	</select>
-```
+``` 
+
 
 ```java
 // 多参数查询
@@ -382,7 +391,7 @@ mybatis核心配置文件中settings中配置,指定 MyBatis 应如何自动映�
 
 ## 1.5 获取自增主键
 
-### 1.5.1 通过 insert/update 标签相关属性
+### 1.5.1 通过insert/update标签属性
 
 #### useGeneratedKeys
 **（仅对 insert 和 update 有用）**这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 
@@ -771,7 +780,7 @@ sql.xml 配置参数使用：<font color='red'><strong>#{}，#param#</strong></f
 	}
 ```
 
-### 使用 foreach 拼装 in 条件
+### 1.7.4 使用 foreach 拼装 in 条件
 
 ```xml
 	<select id="selectForeach4In" resultMap="BaseResultMap">
@@ -806,7 +815,7 @@ sql.xml 配置参数使用：<font color='red'><strong>#{}，#param#</strong></f
 ```
 
 
-### 通过 Mybatis批量的操作
+### 1.7.5 通过 Mybatis批量的操作
 
 #### 通 过 foreach 动 态 拼 装 SQL 语 句 ， 参 考 代 码 见 ：
 
@@ -879,6 +888,7 @@ MyBatis Generator：MyBatis 的开发团队提供了一个很强大的代码生�
 重 复 操 作 ； MyBatis Generator 的 核 心 就 是 配 置 文 件 ， 完 整 的 配 置 文 件 见 ：
 
 ### db.properties
+
 ```xml
 jdbc_driver=com.mysql.jdbc.Driver
 jdbc_url=jdbc:mysql://49.233.34.168:6699/STD?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
@@ -887,7 +897,7 @@ jdbc_password=12345@tqk
 project_src =E:/vue/Mybatis/Mybatis-Generator/src/main/java
 project_mapper_xml =E:/vue/Mybatis/Mybatis-Generator/src/main/resources/sqlmapper
 class_path=E:/vue/Mybatis/Mybatis-Generator/src/main/resources/mysql-connector-java-5.1.18.jar
-```
+``` 
 ### generatorConfig.xml
 
 ```xml
@@ -963,7 +973,9 @@ class_path=E:/vue/Mybatis/Mybatis-Generator/src/main/resources/mysql-connector-j
 	</context>
 </generatorConfiguration>
 ```
+
 ### MyatisGenerator
+
 ```java
 package com.tqk.mybatis.generator;
 
@@ -1062,6 +1074,7 @@ public class MyatisGenerator {
 		}
 	}
 ```
+
 ### 1.9.2 一对一关联嵌套查询方式
 
 **association 标签**嵌套查询方式 
@@ -1078,7 +1091,7 @@ public class MyatisGenerator {
 这个问题会导致成百上千的 SQL 语句被执行。这通常不是期望的。
 
 解决“N+1 查询问题”的办法就是开启懒加载、按需加载数据，开启懒加载配置：
-在<select>节点上配置“fetchType=lazy” 在 MyBatis 核心配置文件中加入如下配置：
+在select节点上配置“fetchType=lazy” 在 MyBatis 核心配置文件中加入如下配置：
 
 ```xml
 <!-- 开启懒加载 ，当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需
@@ -1321,6 +1334,7 @@ collection 支持的属性以及属性的作用和 association 完全相同。my
 文件中 cacheEnabled 参数是二级缓存的全局开关，默认值是 true，如果把这个参数设置为
 false，即使有后面的二级缓存配置，也不会生效；
 要开启二级缓存,你需要在你的 SQL Mapper 文件中添加配置：
+
 ```xml
 <cache eviction=“LRU" flushInterval="60000" size="512" readOnly="true"/>
 ```

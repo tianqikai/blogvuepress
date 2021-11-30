@@ -1,11 +1,13 @@
+# Mybatis源码下载编译
 
-Mybatis源码分析（一）: 下载Mybatis源码安装并导入IDEA
-https://zhuanlan.zhihu.com/p/145101691
+**Mybatis源码分析: 下载Mybatis源码安装并导入IDEA**
+
+<a text='Mybatis源码下载编译' herf="https://zhuanlan.zhihu.com/p/145101691">https://zhuanlan.zhihu.com/p/145101691</a>
 
 
 
 按上述文档进行执行，其中子项目中需要改一下插件配置
-pom.xml
+**pom.xml**
 
 ```xml
       <plugin>
@@ -24,6 +26,14 @@ pom.xml
 ```
 
 ```sh
+# 需要执行的命令
+mvn clean 
+mvn install
+
+mvn clean install -DskipTests=true
+
+# ------------------------
+
 [INFO] Excluding org.apache.ant:ant-launcher:jar:1.10.3 from the shaded jar.
 [INFO] Replacing original artifact with shaded artifact.
 [INFO] Replacing E:\mybatis源码\mybatis-3-mybatis-3.5.3\target\mybatis-3.5.3.jar with E:\mybatis源码\mybatis-3-mybatis-3.5.3\target\mybatis-3.5.3-shaded.jar
