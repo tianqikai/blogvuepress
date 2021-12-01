@@ -151,7 +151,7 @@ module.exports = {
                 ]
             },
             // { text: 'github', link: 'https://github.com/zeroonbush/blog.git' }
-            { text: 'github', link: 'https://github.com/zeroonbush/blog.git' }
+            { text: 'github', link: 'https://github.com/tianqikai/blogvuepress' }
         ],
     }
 }
