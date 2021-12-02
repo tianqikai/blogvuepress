@@ -95,7 +95,16 @@ module.exports = {
                     { text: 'Springboot', link: '/framework/springboot/' },
                     { text: 'Dubbo', link: '/framework/dubbo/' },
                     { text: 'Vue', link: '/framework/vue/' },
-                    { text: 'SpringCloud-Alibaba', link: '/framework/SpringCloud/' }
+                    { text: 'SpringCloud', link: '/framework/SpringCloud/' },
+                    { text: 'Nacos', link: '/framework/nacos' },
+                    { text: 'gateway', link: '/framework/gateway' },
+                    {   text: 'SpringCloudAlibaba',
+                        // ariLabel:"SpringCloudAlibaba",
+                        link:'/framework/SpringCloudAlibaba/',
+                        items:[
+                            { text: 'Nacos', link: '/framework/Nacos' },
+                        ]
+                    },
                 ]
             },
             {

@@ -1,5 +1,5 @@
 # 3 Spring之底层架构核心概念
-
+[[toc]]
 ## 3.1 BeanDefinition
 
 ### 3.1.1 BeanDefinition属性
@@ -205,39 +205,55 @@ public MessageSource messageSource() {
 有了这个Bean，你可以在你任意想要进行国际化的地方使用该MessageSource。
 同时，因为ApplicationContext也拥有国家化的功能，所以可以直接这么用：
 ```java
-context.getMessage("test", null, new Locale("en_CN"))
+public class MessageSourcDemo {
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext appcationContext = new AnnotationConfigApplicationContext(MainConfig.class);
+		String message = appcationContext.getMessage("test", null, new Locale("en_CN"));
+		System.out.println(message);
+	}
+}
 ```
 
 ### 3.4.4 资源加载
-ApplicationContext还拥有资源加载的功能，比如，可以直接利用ApplicationContext获取某个文件的内容：
+***ApplicationContext还拥有资源加载的功能，比如，可以直接利用ApplicationContext获取某个文件的内容：***
 
 ```java
-AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+public class ResourceDemo {
+	public static void main(String[] args) throws IOException {
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-Resource resource = context.getResource("file://D:\\IdeaProjects\\spring-framework-5.3.10\\tuling\\src\\main\\java\\com\\zhouyu\\service\\UserService.java");
-System.out.println(resource.contentLength());
+		Resource resource = context.getResource("file://E:\\vue\\Spring\\tuling\\src\\main\\java\\com\\tqk\\bean\\test\\ResourceDemo.java");
+		System.out.println(resource.contentLength());
+		System.out.println(resource.getURL());
+		System.out.println(resource.getFilename());
+	}
+}
 ```
 
-你可以想想，如果你不使用ApplicationContext，而是自己来实现这个功能，就比较费时间了。
-还比如你可以：
+***你可以想想，如果你不使用ApplicationContext，而是自己来实现这个功能，就比较费时间了。还比如你可以：***
 
 ```java
-AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+public class ResourceDemo {
+	public static void main(String[] args) throws IOException {
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-Resource resource = context.getResource("file://D:\\IdeaProjects\\spring-framework-5.3.10\\tuling\\src\\main\\java\\com\\zhouyu\\service\\UserService.java");
-System.out.println(resource.contentLength());
-System.out.println(resource.getFilename());
+		Resource resource = context.getResource("file://E:\\vue\\Spring\\tuling\\src\\main\\java\\com\\tqk\\bean\\test\\ResourceDemo.java");
+		System.out.println(resource.contentLength());
+		System.out.println(resource.getURL());
+		System.out.println(resource.getFilename());
 
-Resource resource1 = context.getResource("https://www.baidu.com");
-System.out.println(resource1.contentLength());
-System.out.println(resource1.getURL());
-
-Resource resource2 = context.getResource("classpath:spring.xml");
-System.out.println(resource2.contentLength());
-System.out.println(resource2.getURL());
+		Resource resource1 = context.getResource("https://www.baidu.com");
+		System.out.println(resource1.contentLength());
+		System.out.println(resource1.getURL());
+		//todo 类加载扫描时会用，读取配置文件时会用
+		Resource resource2 = context.getResource("classpath:spring.xml");
+		System.out.println(resource2.contentLength());
+		System.out.println(resource2.getURL());
+	}
+}
 ```
 
-还可以一次性获取多个：
+***还可以一次性获取多个：***
 
 ```java
 Resource[] resources = context.getResources("classpath:com/zhouyu/*.class");
@@ -251,26 +267,32 @@ for (Resource resource : resources) {
 ### 3.4.5 获取运行时环境
 
 ```java
-AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+public class EnvironmentDemo {
 
-Map<String, Object> systemEnvironment = context.getEnvironment().getSystemEnvironment();
-System.out.println(systemEnvironment);
+	public static void main(String[] args) {
 
-System.out.println("=======");
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainConfig.class);
 
-Map<String, Object> systemProperties = context.getEnvironment().getSystemProperties();
-System.out.println(systemProperties);
+		Map<String, Object> systemEnvironment = context.getEnvironment().getSystemEnvironment();
+		System.out.println(systemEnvironment);
+		System.out.println("================================================");
 
-System.out.println("=======");
+		Map<String, Object> systemProperties = context.getEnvironment().getSystemProperties();
+		System.out.println(systemProperties);
 
-MutablePropertySources propertySources = context.getEnvironment().getPropertySources();
-System.out.println(propertySources);
+		System.out.println("====================================");
 
-System.out.println("=======");
+		MutablePropertySources propertySources = context.getEnvironment().getPropertySources();
+		System.out.println(propertySources);
 
-System.out.println(context.getEnvironment().getProperty("NO_PROXY"));
-System.out.println(context.getEnvironment().getProperty("sun.jnu.encoding"));
-System.out.println(context.getEnvironment().getProperty("zhouyu"));
+		System.out.println("===================================");
+
+		System.out.println(context.getEnvironment().getProperty("NO_PROXY"));
+		System.out.println(context.getEnvironment().getProperty("sun.jnu.encoding"));
+		System.out.println("======读取配置文件属性=============================");
+		System.out.println(context.getEnvironment().getProperty("tianqikai"));
+	}
+}
 ```
 _____________
 
@@ -280,6 +302,7 @@ _____________
 @PropertySource("classpath:spring.properties")
 ```
 来使得某个properties文件中的参数添加到运行时环境中
+
 ### 3.4.6 事件发布
 先定义一个事件监听器
 ```java
@@ -293,8 +316,459 @@ public ApplicationListener applicationListener() {
 	};
 }
 ```
-
 发布一个事件
 ```java
 context.publishEvent("kkk");
 ```
+_________________________
+
+```java
+package com.tqk.bean.test.lister;
+
+import org.springframework.context.ApplicationEvent;
+
+/**
+ * 创建一个邮件事件
+ * @author tianqikai
+ */
+public class EmailEvent extends ApplicationEvent {
+	private String address;
+	private String text;
+	public EmailEvent(Object source, String address, String text){
+		super(source);
+		this.address = address;
+		this.text = text;
+	}
+	public EmailEvent(Object source) {
+		super(source);
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+}
+```
+
+```java
+package com.tqk.bean.test.lister;
+
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
+
+/**
+ * 创建一个监听事件
+ * @author tianqikai
+ */
+@Component
+public class EmailNotifier implements ApplicationListener {
+
+	@Override
+	public void onApplicationEvent(ApplicationEvent event) {
+		if (event instanceof EmailEvent) {
+			EmailEvent emailEvent = (EmailEvent)event;
+			System.out.println("邮件地址：" + emailEvent.getAddress());
+			System.out.println("邮件内容：" + emailEvent.getText());
+			System.out.println("容器本身事件：" + event);
+		}
+	}
+}
+```
+
+
+```java
+/**
+ * 主动触发该事件
+ * @author tianqikai 
+ */
+public class SpringTest {
+	public static void main(String args[]) {
+		AnnotationConfigApplicationContext appcationContext = new AnnotationConfigApplicationContext(MainConfig.class);
+		//创建一个ApplicationEvent对象
+		EmailEvent event = new EmailEvent("hello", "abc@163.com", "This is a test");
+		//主动触发该事件
+		appcationContext.publishEvent(event);
+	}
+}
+```
+
+------------------------------
+
+## 3.5 类型转化
+在Spring源码中，有可能需要把String转成其他类型，所以在Spring源码中提供了一些技术来更方便的做对象的类型转化，关于类型转化的应用场景， 后续看源码的过程中会遇到很多。
+
+### 3.5.1 PropertyEditor
+
+这其实是JDK中提供的类型转化工具类
+
+```java
+package com.tqk.bean.zhuanhuanqi;
+
+import com.tqk.bean.User;
+
+import java.beans.PropertyEditor;
+import java.beans.PropertyEditorSupport;
+
+/**
+ * 定义类型转换器
+ * @author tianqikai
+ */
+public class StringToUserPropertyEditor extends PropertyEditorSupport implements PropertyEditor {
+
+	@Override
+	public void setAsText(String text) throws IllegalArgumentException {
+		User user = new User();
+		user.setName(text);
+		this.setValue(user);
+	}
+}
+```
+
+
+**如何向Spring中注册PropertyEditor**
+```java
+	@Bean
+	public CustomEditorConfigurer customEditorConfigurer() {
+		CustomEditorConfigurer customEditorConfigurer = new CustomEditorConfigurer();
+		Map<Class<?>, Class<? extends PropertyEditor>> propertyEditorMap = new HashMap<>();
+
+		//todo 表示StringToUserPropertyEditor可以将String转化成User类型，
+		//todo 在Spring源码中，如果发现当前对象是String，而需要的类型是User，就会使用该PropertyEditor来做类型转化
+		propertyEditorMap.put(User.class, StringToUserPropertyEditor.class);
+		customEditorConfigurer.setCustomEditors(propertyEditorMap);
+		return customEditorConfigurer;
+	}
+```
+------------------
+
+```java
+package com.tqk.bean.zhuanhuanqi;
+
+import com.tqk.bean.User;
+import com.tqk.config.MainConfig;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+/**
+ * @author tianqikai
+ */
+public class Test {
+	public static void main(String[] args) {
+		StringToUserPropertyEditor propertyEditor = new StringToUserPropertyEditor();
+		propertyEditor.setAsText("1");
+		User value = (User) propertyEditor.getValue();
+		System.out.println(value);
+		System.out.println(value.getName());
+
+		System.out.println("===================");
+		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfig.class);
+		UserServer userServer = (UserServer) applicationContext.getBean("userServer");
+		userServer.test();
+	}
+}
+
+```
+
+### 3.5.2 ConversionService
+
+***Spring中提供的类型转化服务，它比PropertyEditor更强大***
+
+```java
+public class StringToUserConverter implements ConditionalGenericConverter {
+
+	@Override
+	public boolean matches(TypeDescriptor sourceType, TypeDescriptor targetType) {
+		return sourceType.getType().equals(String.class) && targetType.getType().equals(User.class);
+	}
+
+	@Override
+	public Set<ConvertiblePair> getConvertibleTypes() {
+		return Collections.singleton(new ConvertiblePair(String.class, User.class));
+	}
+
+	@Override
+	public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
+		User user = new User();
+		user.setName((String)source);
+		return user;
+	}
+}
+```
+
+***向Spring中注册ConversionService***
+```java
+@Bean
+public ConversionServiceFactoryBean conversionService() {
+	ConversionServiceFactoryBean conversionServiceFactoryBean = new ConversionServiceFactoryBean();
+	conversionServiceFactoryBean.setConverters(Collections.singleton(new StringToUserConverter()));
+
+	return conversionServiceFactoryBean;
+}
+```
+
+```java
+package com.tqk.bean.zhuanhuanqi;
+
+import com.tqk.bean.User;
+import com.tqk.config.MainConfig;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.convert.support.DefaultConversionService;
+
+public class TestTwo {
+	public static void main(String[] args) {
+		DefaultConversionService conversionService = new DefaultConversionService();
+		conversionService.addConverter(new StringToUserConverter());
+		User value = conversionService.convert("123456", User.class);
+		System.out.println(value);
+
+		System.out.println("===================");
+		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainConfig.class);
+		UserServer userServer = (UserServer) applicationContext.getBean("userServer");
+		userServer.test();
+	}
+}
+```
+
+### 3.5.3 TypeConverter
+**整合了PropertyEditor和ConversionService的功能，是Spring内部用的**
+
+```java
+SimpleTypeConverter typeConverter = new SimpleTypeConverter();
+typeConverter.registerCustomEditor(User.class, new StringToUserPropertyEditor());
+//typeConverter.setConversionService(conversionService);
+User value = typeConverter.convertIfNecessary("1", User.class);
+System.out.println(value);
+```
+
+		
+## 3.6 OrderComparator
+
+OrderComparator是Spring所提供的一种比较器，可以用来根据@Order注解或实现Ordered接口来执行值进行笔记，从而可以进行排序。
+
+```java
+public class A implements Ordered {
+
+	@Override
+	public int getOrder() {
+		return 3;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
+}
+
+public class B implements Ordered {
+
+	@Override
+	public int getOrder() {
+		return 2;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
+}
+
+/**
+ * @author tianqikai
+ */
+@Order
+public class C {
+	public int getOrder() {
+		return 4;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
+}
+```
+
+```java
+package com.tqk.bean.test.paixu;
+
+import org.springframework.core.OrderComparator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args) {
+		A a = new A(); // order=3
+		B b = new B(); // order=2
+		C c = new C(); // order=4
+
+		OrderComparator comparator = new OrderComparator();
+		System.out.println(comparator.compare(a, b));  // 1
+
+		List list = new ArrayList<>();
+		list.add(a);
+		list.add(b);
+		list.add(c);
+
+		// 按order值升序排序
+		list.sort(comparator);
+
+		System.out.println(list);  // B，A
+	}
+}
+```
+
+
+## 3.7 BeanPostProcessor
+
+**BeanPostProcess表示Bena的后置处理器**，我们可以定义一个或多个BeanPostProcessor，比如通过一下代码定义一个BeanPostProcessor
+
+```java
+@Component
+public class ZhouyuBeanPostProcessor implements BeanPostProcessor {
+
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		if ("userService".equals(beanName)) {
+			System.out.println("初始化前");
+		}
+
+		return bean;
+	}
+
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+		if ("userService".equals(beanName)) {
+			System.out.println("初始化后");
+		}
+
+		return bean;
+	}
+}
+```
+
+<font color='red'>一个BeanPostProcessor可以在任意一个Bean的初始化之前以及初始化之后去额外的做一些用户自定义的逻辑，当然，我们可以通过判断beanName来进行针对性处理（针对某个Bean，或某部分Bean）</font>
+
+## 3.8 BeanFactoryPostProcessor
+
+BeanFactoryPostProcessor表示Bean工厂的后置处理器，其实和BeanPostProcessor类似，BeanPostProcessor是干涉Bean的创建过程，BeanFactoryPostProcessor是干涉BeanFactory的创建过程。比如，我们可以这样定义一个BeanFactoryPostProcessor
+
+```java
+@Component
+public class ZhouyuBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+
+	@Override
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+		System.out.println("加工beanFactory");
+	}
+}
+```
+
+我们可以在postProcessBeanFactory()方法中对BeanFactory进行加工
+
+## 3.9 FactoryBean
+上面提到，我们可以通过BeanPostPorcessor来干涉Spring创建Bean的过程，但是如果我们想一个Bean完完全全由我们来创造，也是可以的，比如通过FactoryBean：
+
+```java
+@Component
+public class ZhouyuFactoryBean implements FactoryBean {
+
+	@Override
+	public Object getObject() throws Exception {
+		UserService userService = new UserService();
+
+		return userService;
+	}
+
+	@Override
+	public Class<?> getObjectType() {
+		return UserService.class;
+	}
+}
+```
+
+
+通过上面这段代码，我们自己创造了一个UserService对象，并且它将成为Bean。但是通过这种方式创造出来的UserService的Bean，只会经过初始化后，其他Spring的生命周期步骤是不会经过的，比如依赖注入。
+
+有同学可能会想到，通过@Bean也可以自己生成一个对象作为Bean，那么和FactoryBean的区别是什么呢？其实在很多场景下他俩是可以替换的，但是站在原理层面来说的，区别很明显，**@Bean定义的Bean是会经过完整的Bean生命周期的**
+
+## 3.10 ExcludeFilter和IncludeFilter
+
+这两个Filter是Spring扫描过程中用来过滤的。**ExcludeFilter表示排除过滤器**，**IncludeFilter表示包含过滤器**。
+
+比如以下配置，表示扫描com.zhouyu这个包下面的所有类，但是排除UserService类，也就是就算它上面有@Component注解也不会成为Bean。
+
+```java
+@ComponentScan(value = "com.zhouyu",
+		excludeFilters = {@ComponentScan.Filter(
+            	type = FilterType.ASSIGNABLE_TYPE, 
+            	classes = UserService.class)}.)
+public class AppConfig {
+}
+```
+再比如以下配置，就算UserService类上没有@Component注解，它也会被扫描成为一个Bean。
+```java
+@ComponentScan(value = "com.zhouyu",
+		includeFilters = {@ComponentScan.Filter(
+            	type = FilterType.ASSIGNABLE_TYPE, 
+            	classes = UserService.class)})
+public class AppConfig {
+}
+```
+
+:::tip FilterType分为：
+1. ANNOTATION：表示是否包含某个注解
+2. ASSIGNABLE_TYPE：表示是否是某个类
+3. ASPECTJ：表示否是符合某个Aspectj表达式
+4. REGEX：表示是否符合某个正则表达式
+5. CUSTOM：自定义
+:::
+
+在Spring的扫描逻辑中，默认会添加一个AnnotationTypeFilter给includeFilters，表示默认情况下Spring扫描过程中会认为类上有@Component注解的就是Bean
+
+
+## 3.11 MetadataReader、ClassMetadata、AnnotationMetadata
+
+在Spring中需要去解析类的信息，比如**类名、类中的方法、类上的注解，这些都可以称之为类的元数据**，所以Spring中对类的元数据做了抽象，并提供了一些工具类。
+
+<font color='#8552a1'><strong>MetadataReader表示类的元数据读取器，默认实现类为SimpleMetadataReader</strong></font>。比如
+
+```java
+public class Test {
+
+	public static void main(String[] args) throws IOException {
+		SimpleMetadataReaderFactory simpleMetadataReaderFactory = new SimpleMetadataReaderFactory();
+		
+        // 构造一个MetadataReader
+        MetadataReader metadataReader = simpleMetadataReaderFactory.getMetadataReader("com.zhouyu.service.UserService");
+		
+        // 得到一个ClassMetadata，并获取了类名
+        ClassMetadata classMetadata = metadataReader.getClassMetadata();
+	
+        System.out.println(classMetadata.getClassName());
+        
+        // 获取一个AnnotationMetadata，并获取类上的注解信息
+        AnnotationMetadata annotationMetadata = metadataReader.getAnnotationMetadata();
+		for (String annotationType : annotationMetadata.getAnnotationTypes()) {
+			System.out.println(annotationType);
+		}
+
+	}
+}
+```
+
+需要注意的是，SimpleMetadataReader去解析类时，**使用的ASM技术**。
+
+为什么要使用ASM技术，Spring启动的时候需要去扫描，如果指定的包路径比较宽泛，那么扫描的类是非常多的，那如果在Spring启动时就把这些类全部加载进JVM了，这样不太好，所以使用了ASM技术。​
