@@ -9,7 +9,7 @@ autoNext: Spring底层核心原理解析-0
 
 <a href='https://www.yuque.com/books/share/5f19528d-d89b-4b69-a7bd-9f436a2dd734/bs9d13#WmUQ6'>参考 https://www.yuque.com/books/share/5f19528d-d89b-4b69-a7bd-9f436a2dd734/bs9d13#WmUQ6</a>
 
-## Spring体系架构（基于4.x）
+## Spring体系架构
 
 <a data-fancybox title="Spring体系架构" href="./image/Spring01.jpg">![Spring体系架构](./image/Spring01.jpg)</a>
 
