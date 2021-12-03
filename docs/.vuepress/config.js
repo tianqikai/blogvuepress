@@ -95,14 +95,20 @@ module.exports = {
                     { text: 'Springboot', link: '/framework/springboot/' },
                     { text: 'Dubbo', link: '/framework/dubbo/' },
                     { text: 'Vue', link: '/framework/vue/' },
-                    { text: 'SpringCloud', link: '/framework/SpringCloud/' },
-                    { text: 'Nacos', link: '/framework/nacos' },
-                    { text: 'gateway', link: '/framework/gateway' },
+                    { text: 'SpringCloud', 
+                        ariLabel:"SpringCloud",
+                        link: '/framework/SpringCloud/',
+                        items:[
+                            { text: 'Eureka', link: '/framework/SpringCloud/Eureka/' },
+                            { text: 'gateway', link: '/framework/SpringCloud/gateway/' },
+                        ]
+                    },
                     {   text: 'SpringCloudAlibaba',
-                        // ariLabel:"SpringCloudAlibaba",
+                        ariLabel:"SpringCloudAlibaba",
                         link:'/framework/SpringCloudAlibaba/',
                         items:[
-                            { text: 'Nacos', link: '/framework/Nacos' },
+                            { text: 'Nacos', link: '/framework/nacos/' },
+                            { text: 'gateway', link: '/framework/gateway/' },
                         ]
                     },
                 ]

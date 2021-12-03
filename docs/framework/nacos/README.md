@@ -1,6 +1,6 @@
 ---
-autoNext: Mybatis开发应用-0
+autoNext: Nacos入门学习-0
 ---
-# Mabatis学习
+# 微服务注册中心-Nacos
 
 [[toc]]
