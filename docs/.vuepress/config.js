@@ -101,6 +101,17 @@ module.exports = {
                         items:[
                             { text: 'Eureka', link: '/framework/SpringCloud/Eureka/' },
                             { text: 'Consul', link: '/framework/SpringCloud/Consul/' },
+                            { text: 'Feign', link: '/framework/SpringCloud/Feign/' },
+                            { text: 'Hystrix服务容错', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Sentinel服务哨兵', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Zuul服务网关', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Gateway服务网关', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Sleuth链路追踪', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Stream消息驱动', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Config配置中心', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Bus消息总线', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Consul配置中心', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Apollo配置中心', link: '/framework/SpringCloud/Hystrix/' },  
                         ]
                     },
                     {   text: 'SpringCloudAlibaba',
