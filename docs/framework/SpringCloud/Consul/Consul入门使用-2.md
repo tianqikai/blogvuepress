@@ -157,10 +157,13 @@ management:
 _______
 
 
+### 3.1.3 服务启动后
+
+<a data-fancybox title=" 服务启动后" href="./image/consul05.jpg">![服务启动后](./image/consul05.jpg)</a>
 
 ## 3.2 客户端
 
-### 3.1.1 Maven依赖
+### 3.2.1 Maven依赖
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -224,7 +227,7 @@ _______
 
 
 
-### 3.1.2 配置文件
+### 3.2.2 配置文件
 ```yml
 server:
   port: 9090 # 端口
@@ -249,3 +252,7 @@ spring:
 ```
 _______
 
+
+### 3.2.3 客户端访问
+
+<a data-fancybox title=" 客户端访问" href="./image/consul06.jpg">![客户端访问](./image/consul06.jpg)</a>
