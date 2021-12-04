@@ -100,7 +100,7 @@ module.exports = {
                         link: '/framework/SpringCloud/',
                         items:[
                             { text: 'Eureka', link: '/framework/SpringCloud/Eureka/' },
-                            { text: 'gateway', link: '/framework/SpringCloud/gateway/' },
+                            { text: 'Consul', link: '/framework/SpringCloud/Consul/' },
                         ]
                     },
                     {   text: 'SpringCloudAlibaba',
