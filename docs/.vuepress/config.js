@@ -102,7 +102,7 @@ module.exports = {
                             { text: 'Eureka', link: '/framework/SpringCloud/Eureka/' },
                             { text: 'Consul', link: '/framework/SpringCloud/Consul/' },
                             { text: 'Feign', link: '/framework/SpringCloud/Feign/' },
-                            { text: 'Hystrix服务容错', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Hystrix', link: '/framework/SpringCloud/Hystrix/' },
                             { text: 'Sentinel服务哨兵', link: '/framework/SpringCloud/Hystrix/' },
                             { text: 'Zuul服务网关', link: '/framework/SpringCloud/Hystrix/' },
                             { text: 'Gateway服务网关', link: '/framework/SpringCloud/Hystrix/' },
