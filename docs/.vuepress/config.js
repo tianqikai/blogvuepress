@@ -119,7 +119,7 @@ module.exports = {
                         link:'/framework/SpringCloudAlibaba/',
                         items:[
                             { text: 'Nacos', link: '/framework/nacos/' },
-                            { text: 'gateway', link: '/framework/gateway/' },
+                            { text: 'Sentinel', link: '/framework/SpringCloudAlibaba/Sentinel/' },
                         ]
                     },
                 ]
