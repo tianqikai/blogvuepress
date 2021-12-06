@@ -348,7 +348,119 @@ http://192.168.0.105:9090/order/1
 
 **配置类依赖参考前面的章节**
 
-### 3.7.1 熔断降级处理类
+```yml
+feign:
+  # feign 开启 sentinel 支持
+  sentinel:
+    enabled: true
+```
 
+### 3.7.1 熔断降级处理类
+```java
+package com.tqk.service;
+
+
+import com.tqk.pojo.Product;
+import feign.hystrix.FallbackFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 服务熔断降级处理可以捕获异常
+ * @author tianqikai
+ */
+@Component
+public class ProductServiceFallbackFactory implements FallbackFactory<ProductService> {
+
+    //todo  获取日志，在需要捕获异常的方法中进行处理
+    Logger logger = LoggerFactory.getLogger(ProductServiceFallbackFactory.class);
+
+    @Override
+    public ProductService create(Throwable throwable) {
+        return new ProductService() {
+            @Override
+            public List<Product> selectProductList() {
+                logger.error("product-service 服务的 selectProductById 方法出现异常，异常信息如下："
+                        + throwable);
+                System.out.println("TQK托底数据");
+                ArrayList<Product> productArrayList = new ArrayList<>();
+                productArrayList.add(new Product(1, "TQK服务熔断降级处理-托底数据", 1, 2666D));
+                return productArrayList;
+            }
+
+            @Override
+            public Product selectProductById(Integer id) {
+//                logger.error("product-service 服务的 selectProductById 方法出现异常，异常信息如下："
+//                        + throwable);
+//                System.out.println("TQK托底数据");
+//                return new Product(id, "TQK托底数据", 1, 2666D);
+                return null;
+            }
+
+            @Override
+            public Product queryProductById(Integer id) {
+                return null;
+            }
+
+            @Override
+            public Map<Object, Object> createProduct(Product user) {
+                return null;
+            }
+
+            @Override
+            public Product selectProductByPojo(Product product) {
+                return null;
+            }
+
+
+        };
+    }
+
+}
+```
 
 ### 3.7.2 消费服务类
+
+```java
+@FeignClient(value = "service-provider", fallbackFactory = ProductServiceFallbackFactory.class)
+public interface ProductService {
+
+
+    /**
+     * com.alibaba.cloud.sentinel.feign.SentinelContractHolder.parseAndValidateMetadata(Ljava/lang/Class；)L
+     *
+     * 看了一下代码，问题的表现是从Sentinel抛出，本质是由于feign核心接口方法命名纠正拼写错误导致
+     *
+     * Hoxton.SR1 中，fegin.context接口方法的定义为parseAndValidatateMetadata
+     * Hoxton.SR3 中，fegin.context接口方法的定义为parseAndValidateMetadata
+     *
+     * 很明显是为了纠正拼写错误。
+     *
+     * 解决办法
+     * 将Spring Cloud Hoxton.SR3 降级为 Spring Cloud Hoxton.SR1
+     * 暂时自己修改SentinelContractHolder
+     * 暂时先不使用Hoxton，等Spring Cloud Alibaba v2.2.1.RELEASE发布之后再进行版本升级
+     * ————————————————
+     * 版权声明：本文为CSDN博主「码匠君」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/Pointer_v/article/details/104989935
+     *
+     */
+
+    /**
+     * 查询商品列表
+     *
+     * @return
+     */
+    // 配置需要调用的服务地址及参数
+    @GetMapping("/product/list")
+    List<Product> selectProductList();
+```
+
+### 3.7.3 测试
+
+<a data-fancybox title=" Sentinel" href="./image/Sentinel11.jpg">![Sentinel](./image/Sentinel11.jpg)</a>
