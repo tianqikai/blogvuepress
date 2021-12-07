@@ -104,7 +104,7 @@ module.exports = {
                             { text: 'Feign', link: '/framework/SpringCloud/Feign/' },
                             { text: 'Hystrix', link: '/framework/SpringCloud/Hystrix/' },
                             { text: 'Zuul', link: '/framework/SpringCloud/zuul/' },
-                            { text: 'Gateway服务网关', link: '/framework/SpringCloud/Hystrix/' },
+                            { text: 'Gateway', link: '/framework/SpringCloud/gateway/' },
                             { text: 'Sleuth链路追踪', link: '/framework/SpringCloud/Hystrix/' },
                             { text: 'Stream消息驱动', link: '/framework/SpringCloud/Hystrix/' },
                             { text: 'Config配置中心', link: '/framework/SpringCloud/Hystrix/' },
@@ -129,7 +129,7 @@ module.exports = {
                 items: [  //多级导航栏
                     { text: 'netty', link: '/middleware/netty/' },
                     { text: 'nginx', link: '/middleware/nginx/' },
-                    // { text: 'gateway', link: '/middleware/gateway/' },
+                    { text: 'gateway', link: '/middleware/gateway/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
                     { text: 'nocas', link: '/middleware/nocas/' },
                     { text: 'seata', link: '/middleware/seata/' },
