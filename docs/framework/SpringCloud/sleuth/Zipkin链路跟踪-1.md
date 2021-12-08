@@ -95,3 +95,186 @@ spring:
 
 
 <a data-fancybox title="Zipkin" href="./image/zipkin04.jpg">![Zipkin](./image/zipkin04.jpg)</a>
+
+
+## 1.5 追踪数据持久化->MySQL
+
+Zipkin Server 默认存储追踪数据至内存中，这种方式并不适合生产环境，一旦 Server 关闭重启或者服务崩溃，就会导致历史数据消失。Zipkin 支持修改存储策略使用其他存储组件，支持 MySQL，Elasticsearch 等
+
+### 1.5.1 MySQL部署
+
+打开 MySQL 数据库，创建 zipkin 库，执行以下 SQL 脚本。
+```sql
+--
+-- Copyright 2015-2019 The OpenZipkin Authors
+--
+-- Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+-- in compliance with the License. You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software distributed under the License
+-- is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+-- or implied. See the License for the specific language governing permissions and limitations under
+-- the License.
+--
+
+CREATE TABLE IF NOT EXISTS zipkin_spans (
+  `trace_id_high` BIGINT NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+  `trace_id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `remote_service_name` VARCHAR(255),
+  `parent_id` BIGINT,
+  `debug` BIT(1),
+  `start_ts` BIGINT COMMENT 'Span.timestamp(): epoch micros used for endTs query and to implement TTL',
+  `duration` BIGINT COMMENT 'Span.duration(): micros used for minDuration and maxDuration query',
+  PRIMARY KEY (`trace_id_high`, `trace_id`, `id`)
+) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE zipkin_spans ADD INDEX(`trace_id_high`, `trace_id`) COMMENT 'for getTracesByIds';
+ALTER TABLE zipkin_spans ADD INDEX(`name`) COMMENT 'for getTraces and getSpanNames';
+ALTER TABLE zipkin_spans ADD INDEX(`remote_service_name`) COMMENT 'for getTraces and getRemoteServiceNames';
+ALTER TABLE zipkin_spans ADD INDEX(`start_ts`) COMMENT 'for getTraces ordering and range';
+
+CREATE TABLE IF NOT EXISTS zipkin_annotations (
+  `trace_id_high` BIGINT NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+  `trace_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.trace_id',
+  `span_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.id',
+  `a_key` VARCHAR(255) NOT NULL COMMENT 'BinaryAnnotation.key or Annotation.value if type == -1',
+  `a_value` BLOB COMMENT 'BinaryAnnotation.value(), which must be smaller than 64KB',
+  `a_type` INT NOT NULL COMMENT 'BinaryAnnotation.type() or -1 if Annotation',
+  `a_timestamp` BIGINT COMMENT 'Used to implement TTL; Annotation.timestamp or zipkin_spans.timestamp',
+  `endpoint_ipv4` INT COMMENT 'Null when Binary/Annotation.endpoint is null',
+  `endpoint_ipv6` BINARY(16) COMMENT 'Null when Binary/Annotation.endpoint is null, or no IPv6 address',
+  `endpoint_port` SMALLINT COMMENT 'Null when Binary/Annotation.endpoint is null',
+  `endpoint_service_name` VARCHAR(255) COMMENT 'Null when Binary/Annotation.endpoint is null'
+) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+
+ALTER TABLE zipkin_annotations ADD UNIQUE KEY(`trace_id_high`, `trace_id`, `span_id`, `a_key`, `a_timestamp`) COMMENT 'Ignore insert on duplicate';
+ALTER TABLE zipkin_annotations ADD INDEX(`trace_id_high`, `trace_id`, `span_id`) COMMENT 'for joining with zipkin_spans';
+ALTER TABLE zipkin_annotations ADD INDEX(`trace_id_high`, `trace_id`) COMMENT 'for getTraces/ByIds';
+ALTER TABLE zipkin_annotations ADD INDEX(`endpoint_service_name`) COMMENT 'for getTraces and getServiceNames';
+ALTER TABLE zipkin_annotations ADD INDEX(`a_type`) COMMENT 'for getTraces and autocomplete values';
+ALTER TABLE zipkin_annotations ADD INDEX(`a_key`) COMMENT 'for getTraces and autocomplete values';
+ALTER TABLE zipkin_annotations ADD INDEX(`trace_id`, `span_id`, `a_key`) COMMENT 'for dependencies job';
+
+CREATE TABLE IF NOT EXISTS zipkin_dependencies (
+  `day` DATE NOT NULL,
+  `parent` VARCHAR(255) NOT NULL,
+  `child` VARCHAR(255) NOT NULL,
+  `call_count` BIGINT,
+  `error_count` BIGINT,
+  PRIMARY KEY (`day`, `parent`, `child`)
+) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+```
+官网地址：<a herf='https://github.com/openzipkin/zipkin/blob/master/zipkin-storage/mysql-v1/src/main/resources/mysql.sql'>https://github.com/openzipkin/zipkin/blob/master/zipkin-storage/mysql-v1/src/main/resources/mysql.sql</a>
+
+### 1.5.2 部署 Zipkin 服务端
+
+添加启动参数，重新部署服务端：
+
+```sh
+java -jar zipkin-server-2.20.1-exec.jar --STORAGE_TYPE=mysql --MYSQL_HOST=49.233.34.168 --MYSQL_TCP_PORT=6699 --MYSQL_USER=root --MYSQL_PASS=12345@tqk --MYSQL_DB=zipkin
+```
+
+官网地址：<a herf='https://github.com/openzipkin/zipkin/blob/master/zipkin-server/src/main/resources/zipkin-server-shared.yml'>https://github.com/openzipkin/zipkin/blob/master/zipkin-server/src/main/resources/zipkin-server-shared.yml</a>
+
+
+### 1.5.3 测试
+
+访问：[http://localhost:12345/service-consumer/order/1] 结果如下：
+
+<a data-fancybox title="Zipkin" href="./image/zipkin05.jpg">![Zipkin](./image/zipkin05.jpg)</a>
+
+-----------------------------
+
+**在 MySQL 模式下，每次启动服务端时，服务端会从数据库加载链路信息展示至 Web 界面**
+
+
+## 1.6 Zipkin基于MQ存储链路信息至MySQL
+
+**这里我们演示使用的是RabbitMQ，最好使用kafka**
+
+```cpp
+[http://110.42.146.236:15672/#/]
+
+user: tqk001
+Password 12345@tqk
+```
+____________________________________________________________________________
+
+
+### 1.6.1 部署 Zipkin 服务端
+
+添加启动参数，重新部署服务端：
+
+```shell
+java -jar zipkin-server-2.20.1-exec.jar --STORAGE_TYPE=mysql --MYSQL_HOST=49.233.34.168 --MYSQL_TCP_PORT=6699 --MYSQL_USER=root --MYSQL_PASS=12345@tqk --MYSQL_DB=zipkin --RABBIT_ADDRESSES=110.42.146.236:5672 --RABBIT_USER=tqk001 --RABBIT_PASSWORD=12345@tqk --RABBIT_VIRTUAL_HOST=/ --RABBIT_QUEUE=zipkin
+```
+<a data-fancybox title="Zipkin" href="./image/zipkin09.jpg">![Zipkin](./image/zipkin09.jpg)</a>
+
+启动完毕之后查看 RabbitMq查看zipkin已否已建好
+
+官网地址：[https://github.com/openzipkin/zipkin/blob/master/zipkin-server/src/main/resources/zipkin-server-shared.yml]
+<a data-fancybox title="Zipkin" href="./image/zipkin06.jpg">![Zipkin](./image/zipkin06.jpg)</a>
+
+
+
+启动参数中包含 MySQL 和 RabbitMQ 的配置，实现基于 MQ 并存储链路信息至 MySQL，如下图:
+### 1.6.2 客户端添加依赖
+```xml
+    <!-- 消息队列通用依赖 -->
+    <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-rabbit</artifactId>
+    </dependency>
+```
+
+### 1.6.3 客户端配置文件
+```yml
+spring:
+  application:
+    name: service-provider # 应用名称(集群下相同)
+  zipkin:
+    base-url: http://localhost:9411/ # 服务端地址
+    sender:
+      type: rabbit
+    rabbitmq:
+      queue: zipkin         # 队列名称
+  rabbitmq:
+    host: 110.42.146.236       # 服务器 IP
+    port: 5672            # 服务器端口
+    username: tqk001         # 用户名
+    password: 12345@tqk         # 密码
+    virtual-host: /         # 虚拟主机地址
+    listener:
+      direct:
+        retry:
+          enabled: true       # 是否开启发布重试
+          max-attempts: 5      # 最大重试次数
+          initial-interval: 5000   # 重试间隔时间（单位毫秒）
+      simple:
+        retry:
+          enabled: true       # 是否开启消费者重试
+          max-attempts: 5      # 最大重试次数
+          initial-interval: 5000   # 重试间隔时间（单位毫秒）
+  sleuth:
+    sampler:
+      probability: 1.0        # 收集数据百分比，默认 0.1（10%）
+```
+
+### 1.6.4 测试
+先关闭 Zipkin 服务端，
+[http://localhost:12345/service-consumer/order/1]
+
+**客户端已将链路追踪数据写入队列当中**
+<a data-fancybox title="Zipkin" href="./image/zipkin04.jpg">![Zipkin](./image/zipkin04.jpg)</a>
+
+**启动 Zipkin 服务端后，队列中消息被消费**
+<a data-fancybox title="Zipkin" href="./image/zipkin04.jpg">![Zipkin](./image/zipkin04.jpg)</a>
+
+**链路追踪数据被存储至 MySQL**
+
+## 1.7 Zipkin基于MQ存储链路信息至ELK
+
