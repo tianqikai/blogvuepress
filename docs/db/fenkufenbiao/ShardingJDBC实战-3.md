@@ -65,8 +65,10 @@ ShardingJDBC的整个实战完成后，可以看到，整个分库分表的核�
 
 ### 4.3.3 StandardShardingStrategy
 
-只支持单分片键的标准分片策略。
+只支持单分片键的标准分片策略
+
 :::tip 配置参数
+
 1. standard.sharding-column 分片键；
 
 2. standard.precise-algorithm-class-name 精确分片算法类名；
@@ -77,23 +79,24 @@ ShardingJDBC的整个实战完成后，可以看到，整个分库分表的核�
 -----------------------------
 
 :::tip 实现方式
-
 1. shardingColumn指定分片算法。
 
 2. preciseAlgorithmClassName 指向一个实现了
 io.shardingsphere.api.algorithm.sharding.standard.PreciseShardingAl
 
-3. gorithm接口的java类名，提供按照 = 或者 IN 逻辑的精确分片 示例：
+3. gorithm接口的java类名，提供按照 = 或者 IN 逻辑的精确分片 
+示例：
 com.roy.shardingDemo.algorithm.MyPreciseShardingAlgorithm
 
 4. rangeAlgorithmClassName 指向一个实现了
 io.shardingsphere.api.algorithm.sharding.standard.RangeShardingAlg
 
-5. orithm接口的java类名，提供按照Between 条件进行的范围分片。示例：
+5. orithm接口的java类名，提供按照Between 条件进行的范围分片。
+示例：
 com.roy.shardingDemo.algorithm.MyRangeShardingAlgorithm
 :::
 
-说明：
+**说明**：  
 其中**精确分片算法是必须提供的**，而范围分片算法则是可选的。
 
 ### 4.3.4 ComplexShardingStrategy
@@ -116,6 +119,7 @@ com.roy.shardingDemo.algorithm.MyRangeShardingAlgorithm
 **示例：**
 com.roy.shardingDemo.algorithm.MyComplexKeysShardingAlgorithm
 
+---------------
 
 ### 4.3.5 HintShardingStrategy
 
@@ -131,18 +135,17 @@ hint.algorithm-class-name 分片算法实现类。
 :::
 
 :::tip 实现方式：
-1. algorithmClassName指向一个实现了org.apache.shardingsphere.api.sharding.hint.HintShardingAlgorithm
-接口的java类名。 示例：com.roy.shardingDemo.algorithm.MyHintShardingAlgorithm
+1. algorithmClassName指向一个实现了org.apache.shardingsphere.api.sharding.hint.HintShardingAlgorithm接口的java类名。 示例：com.roy.shardingDemo.algorithm.MyHintShardingAlgorithm
 
 
-在这个算法类中，同样是需要分片键的。而分片键的指定是通过
+2. 在这个算法类中，同样是需要分片键的。而分片键的指定是通过
 HintManager.addDatabaseShardingValue方法(分库)和
 HintManager.addTableShardingValue(分表)来指定。
 
-使用时要注意，这个分片键是线程隔离的，只在当前线程有效，所以通常建
+3. 使用时要注意，这个分片键是线程隔离的，只在当前线程有效，所以通常建
 议使用之后立即关闭，或者用try资源方式打开。
 
-而Hint分片策略并没有完全按照SQL解析树来构建分片策略，是绕开
+4. 而Hint分片策略并没有完全按照SQL解析树来构建分片策略，是绕开
 了SQL解析的，所有对某些比较复杂的语句，Hint分片策略性能有可
 能会比较好(情况太多了，无法一一分析)。
 :::
