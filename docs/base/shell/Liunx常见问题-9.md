@@ -43,3 +43,21 @@ sudo apt-get install manpages-posix-dev
 
 https://www.cnblogs.com/kingsonfu/p/11683494.html
 https://blog.csdn.net/inthat/article/details/108802061
+
+## 9.4 Linux开启ipv4转发
+
+
+```sh
+#查看iptables防火墙规则：
+iptables -nL
+
+#放通相应规则：
+iptables -I INPUT -p tcp --dport 3310 -j ACCEPT
+
+#保存配置：
+service iptables save
+
+#另，您反馈为docker起的mysql，辛苦您确认下是否有开启ipv4转发功能。
+#Linux开启ipv4转发：
+https://blog.frognew.com/2017/02/linux-ipv4-ip-forward.html
+```
