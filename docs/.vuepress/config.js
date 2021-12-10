@@ -82,7 +82,7 @@ module.exports = {
                     { text: 'Redis', link: '/db/redis/' },
                     { text: 'Mongdb', link: '/db/mongdb/' },
                     { text: 'Oracle', link: '/db/oracle/' },
-                    { text: 'DB2', link: '/db/db2/' }
+                    { text: '分库分表', link: '/db/fenkufenbiao/' }
                 ]
             },
             {
@@ -129,9 +129,7 @@ module.exports = {
                 items: [  //多级导航栏
                     { text: 'netty', link: '/middleware/netty/' },
                     { text: 'nginx', link: '/middleware/nginx/' },
-                    { text: 'gateway', link: '/middleware/gateway/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
-                    { text: 'nocas', link: '/middleware/nocas/' },
                     { text: 'seata', link: '/middleware/seata/' },
                     { text: 'docker', link: '/middleware/docker/' },
                     { text: 'kubernetes', link: '/middleware/kubernetes/' },
