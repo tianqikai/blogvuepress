@@ -106,10 +106,10 @@ module.exports = {
                             { text: 'Zuul', link: '/framework/SpringCloud/zuul/' },
                             { text: 'Gateway', link: '/framework/SpringCloud/gateway/' },
                             { text: 'Sleuth链路追踪', link: '/framework/SpringCloud/sleuth/' },
-                            { text: 'Stream消息驱动', link: '/framework/SpringCloud/Stream/' },
-                            { text: 'Config配置中心', link: '/framework/SpringCloud/Config/' },
-                            { text: 'Bus消息总线', link: '/framework/SpringCloud/Bus/' },
-                            { text: 'Consul配置中心', link: '/framework/SpringCloud/Consul/' },
+                            // { text: 'Stream消息驱动', link: '/framework/SpringCloud/Stream/' },
+                            // { text: 'Config配置中心', link: '/framework/SpringCloud/Config/' },
+                            // { text: 'Bus消息总线', link: '/framework/SpringCloud/Bus/' },
+                            // { text: 'Consul配置中心', link: '/framework/SpringCloud/Consul/' },
                             { text: 'Apollo配置中心', link: '/framework/SpringCloud/Apollo/' },  
                         ]
                     },
@@ -117,8 +117,9 @@ module.exports = {
                         ariLabel:"SpringCloudAlibaba",
                         link:'/framework/SpringCloudAlibaba/',
                         items:[
-                            { text: 'Nacos', link: '/framework/nacos/' },
+                            { text: 'Nacos', link: '/framework/SpringCloudAlibaba/nacos/' },
                             { text: 'Sentinel', link: '/framework/SpringCloudAlibaba/Sentinel/' },
+                            { text: 'seata', link: '/framework/SpringCloudAlibaba/seata/' },
                         ]
                     },
                 ]
@@ -130,7 +131,6 @@ module.exports = {
                     { text: 'netty', link: '/middleware/netty/' },
                     { text: 'nginx', link: '/middleware/nginx/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
-                    { text: 'seata', link: '/middleware/seata/' },
                     { text: 'docker', link: '/middleware/docker/' },
                     { text: 'kubernetes', link: '/middleware/kubernetes/' },
                     { text: 'Elasticsearch', link: '/middleware/Elasticsearch/' },
