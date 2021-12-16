@@ -23,10 +23,68 @@
 5. 可重入
 :::
 
-## 3.2 自定义实现redis锁
+## 3.2 简单redis锁
 
+**简单的秒杀可以这样设计** 
 
-###  3.2.1 RedisLock
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+@RestController
+public class IndexController {
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @RequestMapping("/deduct_stock")
+    public String deductStock() {
+        String lockKey = "product_101";
+        String clientId = UUID.randomUUID().toString();
+        //todo 加锁操作 如果product_101不存在，加锁处理，有效时间30秒-》防止服务挂了，没有释放掉锁--setnx命令
+        Boolean result = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, clientId, 30, TimeUnit.SECONDS);
+        //todo 可以优化，自旋一段时间--牺牲性能
+        if (!result) {
+            //todo 优化提示 ”访问量过大，请稍后再试“
+            return "error_code";
+        }
+        try {
+            //todo  jedis.get("stock")
+            int stock = Integer.parseInt(stringRedisTemplate.opsForValue().get("stock"));
+            if (stock > 0) {
+                int realStock = stock - 1;
+                //todo  jedis.set(key,value)
+                stringRedisTemplate.opsForValue().set("stock", realStock + "");
+                System.out.println("扣减成功，剩余库存:" + realStock);
+            } else {
+                System.out.println("扣减失败，库存不足");
+            }
+        } finally {
+            //todo 判断当前锁是否存在，存在则删除掉
+            /*可以使用lua脚本，原子操作
+                if redis.call("get",KEYS[1]) == ARGV[1] then 
+                    return redis.call("del",KEYS[1]) 
+                else 
+                    return 0 
+                end
+            */
+            if (clientId.equals(stringRedisTemplate.opsForValue().get(lockKey))) {
+                stringRedisTemplate.delete(lockKey);
+            }
+        }
+        return "end";
+    }
+}
+```
+
+## 3.3 基于Lock自定义实现redis锁
+
+###  3.3.1 RedisLock
+
 ```java
 package com.tqk.redis.lock;
 
@@ -132,7 +190,7 @@ public class RedisLock implements Lock {
 }
 ```
 
-### 3.2.2 unlock.lua
+### 3.3.2 unlock.lua
 
 ```lua
 if redis.call("get",KEYS[1]) == ARGV[1] then 
@@ -143,9 +201,10 @@ end
 ```
 
 
-### 3.2.3 LockController
+### 3.3.3 LockController
 
 ```java
+
 package com.tqk.redis.controller;
 
 import io.swagger.annotations.Api;
@@ -223,7 +282,7 @@ public class LockController {
 }
 ```
 
-### 3.2.4 RedisConfig
+### 3.3.4 RedisConfig
 
 ```java
 package com.tqk.redis.config;
@@ -257,15 +316,156 @@ public class RedisConfig {
     }
 }
 ```
-### 3.2.5 如何实现锁的续期
+
+### 3.3.5 如何实现锁的续期
 
 Redis分布式锁过期了，但业务还没有处理完，需要对锁进行续期处理；
 
-怎么续期呢？项目中启动一个WatchDog，每隔一段时间（比如10s）为当前分布式锁延期，延期时就是每隔10s重新设置当前key值得过期时间
+怎么续期呢？项目中启动一个WatchDog，锁的有效时间是30秒，每隔一段时间（比如10s）为当前分布式锁延期，延期时就是每隔10s重新设置当前key值得过期时间
 
 
-## 3.3 Redisson分布式锁
+## 3.4 Redisson分布式锁
 
 <a data-fancybox title="Redisson分布式锁" href="./image/Redisson.jpg">![Redisson分布式锁](./image/Redisson.jpg)</a>
 
-后续补充
+### 3.4.1 依赖
+
+```xml
+    <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson</artifactId>
+        <version>3.6.5</version>
+    </dependency>
+```
+
+
+### 3.4.2 Redisson分布式锁
+
+```java
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author tianqikai
+ */
+@RestController
+public class RedissionController {
+    @Autowired
+    Redisson  redisson ;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @RequestMapping("/redissionLock")
+    public String redissionLock() {
+        String lockKey = "product_101";
+        RLock redissonLock = redisson.getLock(lockKey);
+        try {
+            //todo setnx 加锁 setIfAbsent(lockKey, clientId, 30, TimeUnit.SECONDS);
+            //todo 默认有效期30秒 可以实现自动续期
+            redissonLock.lock();
+            //todo jedis.get("stock") 获取库存
+            int stock = Integer.parseInt(stringRedisTemplate.opsForValue().get("stock"));
+
+            if (stock > 0) {
+                int realStock = stock - 1;
+                //todo jedis.set(key,value)
+                stringRedisTemplate.opsForValue().set("stock", realStock + "");
+                System.out.println("扣减成功，剩余库存:" + realStock);
+            } else {
+                System.out.println("扣减失败，库存不足");
+            }
+        } finally {
+            //todo 释放锁
+            redissonLock.unlock();
+        }
+        return null;
+    }
+}
+```
+
+## 3.5 Redlock锁(不建议使用)
+
+<a data-fancybox title="Redlock锁" href="./image/redis14.jpg">![Redlock锁](./image/redis14.jpg)</a>
+
+------------------------------------------------------------------------------------------------------
+
+**Redlock锁相当于是一个zookeeper集群模式，半数加锁成功才能成功**
+
+<a data-fancybox title="Redlock锁" href="./image/redis13.jpg">![Redlock锁](./image/redis13.jpg)</a>
+
+```java
+import org.redisson.Redisson;
+import org.redisson.RedissonRedLock;
+import org.redisson.api.RLock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author tianqikai
+ */
+@RestController
+public class RedLockController {
+    @Autowired
+    private Redisson redisson;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @RequestMapping("/redlock")
+    public String redlock() {
+        String lockKey = "product_001";
+        //todo 这里需要自己实例化不同redis实例的redisson客户端连接，这里只是伪代码用一个redisson客户端简化了
+        //todo 应该是连接多个redis进行加锁处理,每一个redisson连接一个redis
+        RLock lock1 = redisson.getLock(lockKey);
+        RLock lock2 = redisson.getLock(lockKey);
+        RLock lock3 = redisson.getLock(lockKey);
+
+        /**
+         * 根据多个 RLock 对象构建 RedissonRedLock （最核心的差别就在这里）
+         */
+        RedissonRedLock redLock = new RedissonRedLock(lock1, lock2, lock3);
+        try {
+            /**
+             * waitTimeout 尝试获取锁的最大等待时间，超过这个值，则认为获取锁失败
+             * leaseTime   锁的持有时间,超过这个时间锁会自动失效（值应设置为大于业务处理的时间，确保在锁有效期内业务能处理完）
+             */
+            boolean res = redLock.tryLock(10, 30, TimeUnit.SECONDS);
+            if (res) {
+                //成功获得锁，在这里处理业务
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("lock fail");
+        } finally {
+            //无论如何, 最后都要解锁
+            redLock.unlock();
+        }
+
+        return "end";
+    }
+}
+
+```
+
+## 3.6 高并发分段锁
+
+**并发小于10w不建议使用，没有必要**
+
+**分段加锁思想** 假如你现在iphone有1000个库存，那么你完全可以给拆成20个库存段，要是你愿意，可以在数据库的表里建20个库存字段，每个库存段是50件库存，比如stock_01对应50件库存，stock_02对应50件库存。类似这样的，也可以在redis之类的地方放20个库存key。
+
+接着，1000个/s 请求，用一个简单的随机算法，每个请求都是随机在20个分段库存里，选择一个进行加锁。
+
+每个下单请求锁了一个库存分段，然后在业务逻辑里面，就对数据库或者是Redis中的那个分段库存进行操作即可，包括查库存 -> 判断库存是否充足 -> 扣减库存。
+
+相当于一个20毫秒，可以并发处理掉20个下单请求，那么1秒，也就可以依次处理掉20 * 50 = 1000个对iphone的下单请求了。
+
+一旦对某个数据做了分段处理之后，有一个坑一定要注意：就是如果某个下单请求，咔嚓加锁，然后发现这个分段库存里的库存不足了，此时咋办？
+这时你得自动释放锁，然后立马换下一个分段库存，再次尝试加锁后尝试处理。 这个过程一定要实现
+
+**具体的分段的数量和锁的数量要和CPU核数匹配，并不是锁越多越好**

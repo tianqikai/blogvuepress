@@ -67,3 +67,6 @@ Ctrl+I
 Alt+Insert
 4.包围（surround with）
 Ctrl+Alt+T  
+
+## jar包冲突
+[https://blog.csdn.net/zhanggonglalala/article/details/88953345]

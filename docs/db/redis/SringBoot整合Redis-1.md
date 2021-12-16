@@ -769,7 +769,7 @@ public class UserServiceImpl implements UserService {
 
 ```
 
-### 2.4.7 测试类
+### 2.2.7 测试类
 
 ```java
 package com.tqk.redisbootcache;
@@ -822,9 +822,9 @@ class RedisBootCacheApplicationTests {
 
 ```
 
-## 2.5 RedisTemplate整合Lua脚本应用
+## 2.3 RedisTemplate整合Lua脚本应用
 
-### 2.5.1 Demo1
+### 2.3.1 Demo1
 
 ```java
 package com.tqk.redisboot;

@@ -52,12 +52,13 @@ AT模式的核心是对业务无侵入，是一种改进后的两阶段提交，
 
 ### 2.4.1 第一阶段
 
-业务数据和回滚日志记录在同一个本地事务中提交，释放本地锁和连接资源。核心在于对业务sql进行解析，转换成undolog，并同时入库，这是怎么做的呢？先抛出一个概念DataSourceProxy代理数据源，通过名字大家大概也能基本猜到是什么个操作，后面做具体分析 
+业务数据和回滚日志记录在同一个本地事务中提交，释放本地锁和连接资源。核心在于对业务sql进行解析，转换成undolog，并同时入库，这是怎么做的呢？
 
-参考官方文档： [https://seata.io/zh-cn/docs/dev/mode/at-mode.html]
+先抛出一个概念DataSourceProxy代理数据源，通过名字大家大概也能基本猜到是什么个操作，后面做具体分析 
 
-<a data-fancybox title=" 分布式事务" href="./image/seata09.jpg">![分布式事务](./image/seata09.jpg)</a>
+参考官方文档： 
 
+<a  href='https://seata.io/zh-cn/docs/dev/mode/at-mode.html'>[https://seata.io/zh-cn/docs/dev/mode/at-mode.html]</a>
 
 ### 2.4.2 第二阶段
 
