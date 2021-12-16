@@ -1,5 +1,5 @@
 ---
-autoNext: k8s安装部署-0
+autoNext: K8s组件介绍-0
 ---
 # kubernetes 容器管理
 
