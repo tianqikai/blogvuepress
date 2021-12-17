@@ -65,6 +65,7 @@
 #vi /etc/sysconfig/network-scripts/ifcfg-ens* （*根据实际情况不同，本文为ens33）
 
 ```bash
+#vi /etc/sysconfig/network-scripts/ifcfg-ens
 TYPE=Ethernet
 PROXY_METHOD=none
 BROWSER_ONLY=no
@@ -111,7 +112,7 @@ nameserver 192.168.222.2
 ```
 
 
-3）设置主机名
+- 设置主机名
 
 #vi /etc/sysconfig/network
 ```bash
@@ -132,14 +133,43 @@ k8s-Master
 
 - 上述文件配置成功后，重启虚拟机或使用**service network restart**命令重启网卡。
 
-```
+```sh
 service network restart
 ```
 
-5. 设置VMnet8在Windows上的IP属性，如下图。（打开控制面板-->网络和Internet，在右侧点击【更改适配器设置】，进入“网络连接”页面）
+- 设置VMnet8在Windows上的IP属性，如下图。（打开控制面板-->网络和Internet，在右侧点击【更改适配器设置】，进入“网络连接”页面）
 ![vmware12.png](./vmware12.png)
 
 
-6. 配置完上述步骤后就可以成功使用Xshell连接Linux虚拟机了
+- 配置完上述步骤后就可以成功使用Xshell连接Linux虚拟机了
 
 ![vmware13.png](./vmware13.png)
+
+
+## 检查是否可以上网。
+
+```sh
+ping 114.114.114.114
+```
+
+- 如果不可以，调试通。通了之后下一步：
+
+- 然后检查DNS设置是否正常。
+
+```sh
+ping www.baidu.com
+```
+
+- 不正常的话，设置DNS，如下：
+
+```bash
+#vi /etc/resolv.conf
+nameserver 223.5.5.5
+nameserver 223.6.6.6
+#nameserver 114.114.114.144
+#nameserver 114.114.115.115
+
+#保存后。
+#重启服务或者机器，再次ping baidu.或者下面连接。通了即可以。
+#ping mirrorlist.centos.org
+```
