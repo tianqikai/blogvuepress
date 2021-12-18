@@ -1,4 +1,4 @@
-# 5. K8s核心技术-Controller
+# 6. K8s核心技术Controller
 
 - 什么是Controller
 - Pod和Controller的关系
@@ -8,11 +8,11 @@
 - 升级回滚
 - 弹性伸缩
 
-## 5.1 什么是Controller
+## 6.1 什么是Controller
 
 Controller是在集群上管理和运行容器的对象，Controller是实际存在的，Pod是虚拟机的
 
-## 5.2 Pod和Controller的关系
+## 6.2 Pod和Controller的关系
 
 Pod是通过Controller实现应用的运维，比如弹性伸缩，滚动升级等
 
@@ -20,7 +20,7 @@ Pod 和 Controller之间是通过label标签来建立关系，同时Controller�
 
 ![image-20201116092431237](./images/image-20201116092431237.png)
 
-## 5.3 Deployment控制器应用
+## 6.3 Deployment控制器应用
 
 - Deployment控制器可以部署无状态应用
 - 管理Pod和ReplicaSet
@@ -31,9 +31,9 @@ Deployment表示用户对K8S集群的一次更新操作。Deployment是一个比
 
 这样一个复合操作用一个RS是不好描述的，所以用一个更通用的Deployment来描述。以K8S的发展方向，未来对所有长期伺服型的业务的管理，都会通过Deployment来管理。
 
-## 5.4 Deployment部署应用
+## 6.4 Deployment部署应用
 
-### 5.4.1 创建yaml配置文件
+### 6.4.1 创建yaml配置文件
 之前我们也使用Deployment部署过应用，如下代码所示
 
 ```bash
@@ -81,7 +81,7 @@ status: {}
 
 ![image-20201116093638951](./images/image-20201116093638951.png)
 
-### 5.4.2 使用YAML创建Pod
+### 6.4.2 使用YAML创建Pod
 
 通过刚刚的代码，我们已经生成了YAML文件，下面我们就可以使用该配置文件快速创建Pod镜像了
 
@@ -115,7 +115,7 @@ service/web1         NodePort    10.107.26.157   <none>        80:30257/TCP   4m
 - --name：名称
 - --type：类型
 
-### 5.4.3 导出对应的配置文件
+### 6.4.3 导出对应的配置文件
 
 - 创建pod并导出yaml文件
 ```bash
@@ -189,13 +189,13 @@ kubectl get pods,svc
 
 ![image-20201116104131968](./images/image-20201116104131968.png)
 
-## 5.5 升级回滚和弹性伸缩
+## 6.5 升级回滚和弹性伸缩
 
 - 升级：  假设从版本为1.14 升级到 1.15 ，这就叫应用的升级【升级可以保证服务不中断】
 - 回滚：从版本1.15 变成 1.14，这就叫应用的回滚
 - 弹性伸缩：我们根据不同的业务场景，来改变Pod的数量对外提供服务，这就是弹性伸缩
 
-### 5.5.1 应用升级和回滚
+### 6.5.1 应用升级和回滚
 
 首先我们先创建一个 1.14版本的Pod
 
@@ -300,7 +300,7 @@ kubectl rollout status deployment web
 kubectl rollout undo deployment web --to-revision=2
 ```
 
-### 5.5.2 弹性伸缩
+### 6.5.2 弹性伸缩
 
 弹性伸缩，也就是我们通过命令一下创建多个副本
 

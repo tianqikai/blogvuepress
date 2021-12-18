@@ -36,11 +36,12 @@
 
 ## Service常用类型
 
-Service常用类型有三种
+:::tip Service常用类型有三种
 
-- ClusterIp：集群内部访问
-- NodePort：对外访问应用使用
-- LoadBalancer：对外访问应用使用，公有云
+- <font color='red'><strong>ClusterIp</strong></font>：集群内部访问
+- <font color='red'><strong>NodePort</strong></font>：对外访问应用使用
+- <font color='red'><strong>LoadBalancer</strong></font>：对外访问应用使用，公有云
+:::
 
 ### 举例
 
