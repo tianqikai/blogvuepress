@@ -140,9 +140,9 @@ helm repo remove stable
 
 ## 12.7 helm基本命令
 
-- chart install
-- chart upgrade
-- chart rollback
+- <font color='red'>chart install</font> 安装
+- <font color='red'>chart upgrade</font> 升级
+- <font color='red'>chart rollback</font> 回滚
 
 ## 12.8 使用helm快速部署应用
 
@@ -166,7 +166,6 @@ aliyun/weave-scope	0.9.2        	1.6.5      	A Helm chart for the Weave Scope cl
 
 - 搜索完成后，使用命令进行安装
 
-weave通过在docker集群的每个主机上启动虚拟的路由器，将主机作为路由器，形成互联互通的网络拓扑，在此基础上，实现容器的跨主机通信。其主机网络拓扑参见下图：
 
 ```bash
 helm install ui aliyun/weave-scope
@@ -230,7 +229,27 @@ kubectl edit svc ui-weave-scope
 
 ![image-20201118205147631](./images/image-20201118205147631.png)
 
-- 然后我们通过 ip + 32185 即可访问
+- [http://192.168.222.3:30450/]
+
+![weavescope](./images/weavescope.jpg)
+
+### 12.8.3 卸载
+
+```bash
+helm uninstall  XXX
+``` 
+-----------
+
+```BASH
+[root@k8smaster prometheus]# helm list
+NAME    	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART            	APP VERSION
+tqk-ui  	default  	1       	2021-12-18 16:58:51.634012358 +0800 CST	deployed	weave-scope-1.1.8	1.12.0     
+tqk001  	default  	1       	2021-12-18 17:38:47.65203576 +0800 CST 	deployed	mychart-0.1.0    	1.16.0     
+ui      	default  	1       	2021-12-18 16:51:22.307924558 +0800 CST	deployed	weave-scope-1.1.8	1.12.0     
+web2    	default  	1       	2021-12-18 20:07:59.919598183 +0800 CST	deployed	mychart-0.1.0    	1.16.0     
+web2-tqk	default  	1       	2021-12-18 20:00:04.172652762 +0800 CST	failed  	mychart-0.1.0    	1.16.0     
+[root@k8smaster prometheus]# helm uninstall tqk-ui
+```
 
 ## 12.9 如何自己创建Chart
 
@@ -337,13 +356,17 @@ replicas: 1
 
 ### 12.10.2 获取变量和值
 
-我们通过表达式形式 使用全局变量  `{{.Values.变量名称}} `
-
-例如： `{{.Release.Name}}`
+```yaml
+#我们通过表达式形式 使用全局变量  
+{{.Values.变量名称}}
+#例如： 
+{{.Release.Name}}
+```
 
 ![image-20201118214413203](./images/image-20201118214413203.png)
 
 - deployment.yaml
+
 ```yml
 apiVersion: apps/v1
 kind: Deployment
@@ -371,6 +394,7 @@ spec:
         resources: {}
 status: {}
 ```
+---------------------
 
 - service.yaml 
 
@@ -394,6 +418,7 @@ spec:
 status:
   loadBalancer: {}
 ```
+
 ### 12.10.3 安装应用
 
 在我们修改完上述的信息后，就可以尝试的创建应用了
@@ -527,13 +552,14 @@ helm install  web2-tqk mychart
 ## 12.11 安装问题
 
 ### 问题一
---在使用helm安装应用的时候报如下错误：
+- 在使用helm安装应用的时候报如下错误：
+
 ```bash
 [root@k8smaster bin]# helm install testweave testrepo/weave-scope
 Error: INSTALLATION FAILED: unable to build kubernetes objects from release manifest: [unable to recognize "": no matches for kind "DaemonSet" in version "extensions/v1beta1", unable to recognize "": no matches for kind "Deployment" in version "apps/v1beta1"]
 ```
---更换一个helm源即可：
+- 更换一个helm源即可：
 
 ```bash
 helm repo add apphub https://apphub.aliyuncs.com
-```
+``` 
