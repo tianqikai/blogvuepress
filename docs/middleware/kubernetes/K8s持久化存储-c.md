@@ -190,15 +190,19 @@ index.html
 
 所以这里就需要用到 pv  和 pvc的概念了，方便我们配置和管理我们的 ip 地址等元信息
 
-PV：持久化存储，对存储的资源进行抽象，对外提供可以调用的地方【生产者】
+**PV：持久化存储，对存储的资源进行抽象，对外提供可以调用的地方[生产者]**
 
-PVC：用于调用，不需要关心内部实现细节【消费者】
+**PVC：用于调用，不需要关心内部实现细节[消费者]**
+
+-----------------------------------------------
 
 PV 和 PVC 使得 K8S 集群具备了存储的逻辑抽象能力。使得在配置Pod的逻辑里可以忽略对实际后台存储
-技术的配置，而把这项配置的工作交给PV的配置者，即集群的管理者。存储的PV和PVC的这种关系，跟
-计算的Node和Pod的关系是非常类似的；PV和Node是资源的提供者，根据集群的基础设施变化而变
-化，由K8s集群管理员配置；而PVC和Pod是资源的使用者，根据业务服务的需求变化而变化，由K8s集
-群的使用者即服务的管理员来配置。
+技术的配置，而把这项配置的工作交给PV的配置者，即集群的管理者。
+
+存储的PV和PVC的这种关系，跟计算的Node和Pod的关系是非常类似的；**PV和Node是资源的提供者**，根据集群的基础设施变化而变
+化，由K8s集群管理员配置；
+
+而PVC和Pod是资源的使用者，根据业务服务的需求变化而变化，由K8s集群的使用者即服务的管理员来配置。
 
 ### 13.3.1 实现流程
 
@@ -208,28 +212,92 @@ PV 和 PVC 使得 K8S 集群具备了存储的逻辑抽象能力。使得在配�
 
 ### 13.3.2 举例
 
-创建一个 pvc.yaml
-
+- 创建一个 pvc.yaml
 ![image-20201119101753419](./images/image-20201119101753419.png)
 
-第一部分是定义一个 deployment，做一个部署
+- 第一部分是定义一个 deployment，做一个部署
 
 - 副本数：3
 - 挂载路径
 - 调用：是通过pvc的模式
 
-然后定义pvc
+- 然后定义pvc
 
 ![image-20201119101843498](./images/image-20201119101843498.png)
 
-然后在创建一个 `pv.yaml`
+- 完整pvc.yaml文件
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dep1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: wwwroot
+          mountPath: /usr/share/nginx/html
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: wwwroot
+        persistentVolumeClaim:
+          claimName: my-pvc
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteMany  #访问类型也和pv对应，不然绑定失败
+  resources:
+    requests:
+      storage: 5Gi #请求大小，必须小于 pv
+```
+--------------------
+
+- 然后在创建一个 `pv.yaml`
 
 ![image-20201119101957777](./images/image-20201119101957777.png)
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /data/nfs
+    server: 192.168.222.6
+```
 
-然后就可以创建pod了
+- 然后就可以创建pod了
 
 ```bash
-kubectl apply -f pv.yaml
+[root@master1 pv]# kubectl delete  -f nfs-nginx.yaml
+deployment.apps "nginx-dep1" deleted
+[root@master1 pv]# kubectl apply -f pvc.yaml
+deployment.apps/nginx-dep1 created
+persistentvolumeclaim/my-pvc created
+[root@master1 pv]# kubectl apply -f pv.yaml
+persistentvolume/my-pv created
+
 ```
 
 然后我们就可以通过下面命令，查看我们的 pv  和 pvc之间的绑定关系
