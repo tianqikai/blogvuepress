@@ -296,6 +296,7 @@ mountd
 在防火墙对其放行
 > firewall-cmd --add-service=mountd
 #### 或者直接关闭防火墙
+
 ```
 systemctl stop firewalld
 systemctl disable firewalld
