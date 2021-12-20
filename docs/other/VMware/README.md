@@ -122,10 +122,10 @@ NETWORKING=yes
 HOSTNAME=k8s-Master
 
 ```
-#vim /etc/hostname
+#vi /etc/hostname
 
 ```
-#vim /etc/hostname
+#vi /etc/hostname
 localhost.localdomain
 k8s-Master
 ```

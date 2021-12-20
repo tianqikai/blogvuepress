@@ -296,6 +296,14 @@ kubeadm join 192.168.222.3:6443 --token xcl63i.8ucjiwg0js5dsln2 \
 ```bash
 #主节点执行
 kubeadm token create --print-join-command
+
+kubeadm token create
+# 查看
+kubeadm token list
+
+#2. 生成一个永不过期的 token
+
+kubeadm token create --ttl 0
 ```
 
 - 当我们把两个节点都加入进来后，我们就可以去Master节点 执行下面命令查看情况

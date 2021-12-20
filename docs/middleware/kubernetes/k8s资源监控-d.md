@@ -165,7 +165,7 @@ kubectl get pods -n kube-system
 
 ![image-20201120093213576](images/image-20201120093213576.png)
 
-在我们部署完成后，即可看到 prometheus 的 pod了，然后通过下面命令，能够看到对应的端口
+- 在我们部署完成后，即可看到 prometheus 的 pod了，然后通过下面命令，能够看到对应的端口
 
 ```bash
 kubectl get svc -n kube-system
@@ -173,7 +173,7 @@ kubectl get svc -n kube-system
 
 ![image-20201121091348752](images/image-20201121091348752.png)
 
-通过这个，我们可以看到 `prometheus` 对外暴露的端口为 30003，访问页面即可对应的图形化界面
+- 通过这个，我们可以看到 `prometheus` 对外暴露的端口为 30003，访问页面即可对应的图形化界面
 
 ```bash
 http://192.168.222.3:30003
@@ -189,13 +189,13 @@ http://192.168.222.3:30003
 kubectl create -f grafana-deploy.yaml
 ```
 
-然后执行完后，发现下面的问题
+- 然后执行完后，发现下面的问题
 
 ```bash
 error: unable to recognize "grafana-deploy.yaml": no matches for kind "Deployment" in version "extensions/v1beta1"
 ```
 
-我们需要修改如下内容
+- 我们需要修改如下内容
 
 ```bash
 # 修改
@@ -210,7 +210,7 @@ spec:
       component: core
 ```
 
--修改完成后，我们继续执行上述代码
+- 修改完成后，我们继续执行上述代码
 
 ```bash
 # 创建deployment
@@ -221,11 +221,11 @@ kubectl create -f grafana-svc.yaml
 kubectl create -f grafana-ing.yaml
 ```
 
-我们能看到，我们的grafana正在
+- 我们能看到，我们的grafana正在
 
 ![image-20201120110426534](images/image-20201120110426534.png)
 
-### 配置数据源
+### 14.2.2 配置数据源
 
 下面我们需要开始打开 Grafana，然后配置数据源，导入数据显示模板
 
@@ -256,26 +256,35 @@ http://192.168.222.3:31856
 
 进入后，我们就需要配置 prometheus 的数据源
 
-![image-20201121092012018](images/image-20201121092012018.png)
+```bash
+[root@k8smaster grafana]# kubectl get svc -n kube-system
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                  AGE
+grafana         NodePort    10.99.3.17     <none>        3000:31856/TCP           22s
+kube-dns        ClusterIP   10.96.0.10     <none>        53/UDP,53/TCP,9153/TCP   40h
+node-exporter   NodePort    10.96.249.35   <none>        9100:31672/TCP           13m
+prometheus      NodePort    10.98.41.106   <none>        9090:30003/TCP           5m42s
+```
 
- 和 对应的IP【这里IP是我们的ClusterIP】
+和 对应的IP【这里IP是我们的ClusterIP】
+![pormetheus01.jpg](images/pormetheus01.jpg)
 
-![image-20201121092053215](images/image-20201121092053215.png)
 
-### 设置显示数据的模板
+<!-- ![image-20201121092053215](images/image-20201121092053215.png) -->
 
-选择Dashboard，导入我们的模板
+### 14.2.3 设置显示数据的模板
+
+- 选择Dashboard，导入我们的模板
 
 ![image-20201121092312118](images/image-20201121092312118.png)
 
-然后输入 315 号模板
+- 然后输入 315 号模板
 
 ![image-20201121092418180](images/image-20201121092418180.png)
 
-然后选择 prometheus数据源 mydb，导入即可
+- 然后选择 prometheus数据源 mydb，导入即可
 
-![image-20201121092443266](images/image-20201121092443266.png)
+![pormetheus02.jpg](images/pormetheus02.jpg)
 
-导入后的效果如下所示
+- 导入后的效果如下所示
 
 ![image-20201121092610154](images/image-20201121092610154.png)

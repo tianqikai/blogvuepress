@@ -1,6 +1,6 @@
 # 13. K8s持久化存储
 
-## 前言
+## 13.1 前言
 
 之前我们有提到数据卷：`emptydir` ，是本地存储，pod重启，数据就不存在了，需要对数据持久化存储
 
@@ -8,26 +8,26 @@
 
 - nfs：网络存储【通过一台服务器来存储】
 
-## 步骤
+## 13.2 安装步骤
 
-### 持久化服务器上操作
+### 13.2.1 持久化服务器安装
 
 - 找一台新的服务器nfs服务端，安装nfs
 - 设置挂载路径
 
-使用命令安装nfs
+- 使用命令安装nfs
 
 ```bash
 yum install -y nfs-utils
 ```
 
-首先创建存放数据的目录
+- 首先创建存放数据的目录
 
 ```bash
 mkdir -p /data/nfs
 ```
 
-设置挂载路径
+- 设置挂载路径
 
 ```bash
 # 打开文件
@@ -35,35 +35,58 @@ vim /etc/exports
 # 添加如下内容
 /data/nfs *(rw,no_root_squash)
 ```
+#### 启动nfs服务端
+
+下面我们回到**nfs服务端**，启动我们的nfs服务
+
+```bash
+# 启动服务
+systemctl start rpcbind && systemctl enable rpcbind
+systemctl start nfs && systemctl enable nfs
+
+# ------实际操作
+[root@localhost ~]# systemctl status nfs
+● nfs-server.service - NFS server and services
+   Loaded: loaded (/usr/lib/systemd/system/nfs-server.service; enabled; vendor preset: disabled)
+  Drop-In: /run/systemd/generator/nfs-server.service.d
+           └─order-with-mounts.conf
+   Active: active (exited) since 一 2021-12-20 10:04:25 CST; 1min 46s ago
+ Main PID: 7419 (code=exited, status=0/SUCCESS)
+   CGroup: /system.slice/nfs-server.service
+
+12月 20 10:04:25 localhost.localdomain systemd[1]: Starting NFS server and services...
+12月 20 10:04:25 localhost.localdomain systemd[1]: Started NFS server and services.
+
+```
+
+![image-20201119082047766](./images/image-20201119082047766.png)
 
 执行完成后，即部署完我们的持久化服务器
 
-### Node节点上操作
+### 13.2.2 Node节点上操作
 
-然后需要在k8s集群node节点上安装nfs，这里需要在 node1 和 node2节点上安装
+然后需要在k8s集群**node节点上安装nfs**，这里需要在 **node1 和 node2节点**上安装
 
 ```bash
 yum install -y nfs-utils
 ```
 
 执行完成后，会自动帮我们挂载上
+--------------------
 
-### 启动nfs服务端
-
-下面我们回到nfs服务端，启动我们的nfs服务
+- 每个node查询NFS服务器,检查是否挂载成功
 
 ```bash
-# 启动服务
-systemctl start nfs
-# 或者使用以下命令进行启动
-service nfs-server start
+showmount -e nfs-ip
+# ---------------------
+[root@localhost ~]# showmount -e 192.168.222.6
+Export list for 192.168.222.6:
+/data/nfs *
 ```
 
-![image-20201119082047766](./images/image-20201119082047766.png)
+### 13.2.3 K8s集群部署应用
 
-### K8s集群部署应用
-
-最后我们在k8s集群上部署应用，使用nfs持久化存储
+- 最后我们在k8s集群**master**上部署应用，使用nfs持久化存储
 
 ```bash
 # 创建一个pv文件
@@ -72,24 +95,64 @@ mkdir pv
 cd pv
 ```
 
-然后创建一个yaml文件  `nfs-nginx.yaml`
-
+- 然后创建一个yaml文件  `nfs-nginx.yaml`
+```yaml
+cat >/root/pv/nfs-nginx.yaml<<EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dep1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: wwwroot
+          mountPath: /usr/share/nginx/html
+        ports:
+        - containerPort: 80
+      volumes:
+        - name: wwwroot
+          nfs:
+            server: 192.168.222.6
+            path: /data/nfs
+EOF
+```
 ![image-20201119082317625](./images/image-20201119082317625.png)
 
 通过这个方式，就挂载到了刚刚我们的nfs数据节点下的 /data/nfs 目录
 
 最后就变成了：  /usr/share/nginx/html    ->  192.168.44.134/data/nfs   内容是对应的
 
-我们通过这个 yaml文件，创建一个pod
+- 我们通过这个 yaml文件，创建一个pod
 
 ```bash
 kubectl apply -f nfs-nginx.yaml
 ```
 
-创建完成后，我们也可以查看日志
+- 创建完成后，我们也可以查看日志
 
 ```bash
 kubectl describe pod nginx-dep1
+```
+
+```log
+  Type    Reason     Age        From               Message
+  ----    ------     ----       ----               -------
+  Normal  Scheduled  <unknown>  default-scheduler  Successfully assigned default/nginx-dep1-dbd9d8594-4mgns to node1
+  Normal  Pulling    23s        kubelet, node1     Pulling image "nginx"
+  Normal  Pulled     6s         kubelet, node1     Successfully pulled image "nginx"
+  Normal  Created    6s         kubelet, node1     Created container nginx
+  Normal  Started    6s         kubelet, node1     Started container nginx
 ```
 
 ![image-20201119083444454](./images/image-20201119083444454.png)
@@ -98,13 +161,25 @@ kubectl describe pod nginx-dep1
 
 ![image-20201119083514247](./images/image-20201119083514247.png)
 
+### 13.2.4 测试
+
 下面我们就可以进行测试了，比如现在nfs服务节点上添加数据，然后在看数据是否存在 pod中
 
 ```bash
 # 进入pod中查看
-kubectl exec -it nginx-dep1 bash
-```
+kubectl exec -it nginx-dep1-dbd9d8594-4mgns bash
 
+root@nginx-dep1-dbd9d8594-4mgns:/# cd /usr/share/nginx/html
+root@nginx-dep1-dbd9d8594-4mgns:/usr/share/nginx/html# ls -lrt
+total 0
+# nfs服务器上创建一个文件index.html 再次查看
+# [root@localhost nfs]# pwd
+# /data/nfs
+# [root@localhost nfs]# vi index.html
+
+root@nginx-dep1-dbd9d8594-4mgns:/usr/share/nginx/html# ls
+index.html
+```
 ![image-20201119095847548](./images/image-20201119095847548.png)
 
 ## PV和PVC
@@ -176,3 +251,53 @@ kubect exec -it nginx-dep1 bash
 ![image-20201119102448226](./images/image-20201119102448226.png)
 
 也同样能看到刚刚的内容，其实这种操作和之前我们的nfs是一样的，只是多了一层pvc绑定pv的操作
+
+
+## 安装部署问题
+
+### 在客户端尝试查询NFS服务器可挂载目录不通
+
+```bash
+[root@localhost ~]# showmount -e 192.168.222.6
+clnt_create: RPC: Port mapper failure - Unable to receive: errno 113 (No route to host)
+[root@localhost ~]# showmount -e 192.168.222.6
+rpc mount export: RPC: Unable to receive; errno = No route to host
+[root@localhost ~]# showmount -e 192.168.222.6
+Export list for 192.168.222.6:
+/data/nfs *
+```
+- 得到错误提示为
+
+> clnt_create: RPC: Port mapper failure - Unable to receive: errno 113 (No route to host)
+
+
+
+- 寻思是服务器防火墙导致的使用
+
+> firewall-cmd --get-service | grep -E (nfs|rpc)
+- 查询发现有相关服务nfs和rpc-bind 故在防火墙对服务予以放行
+
+```bash
+firewall-cmd --add-service=nfs
+firewall-cmd --add-service=rpc-bind
+```
+- 在客户端再次尝试showmount命令得到不一样的错误提示
+
+> rpc mount export: RPC: Unable to receive; errno = No route to host
+
+网上搜了下关键字"RPC: Unable to receive firewalld"
+发现有文章描述NFS服务依赖服务有
+```
+portmap
+nfsd
+mountd
+```
+再使用firewall-cmd --get-service查询到预设服务中有mountd
+在防火墙对其放行
+> firewall-cmd --add-service=mountd
+#### 或者直接关闭防火墙
+```
+systemctl stop firewalld
+systemctl disable firewalld
+```
+————————————————————————————————————————————————————————————
