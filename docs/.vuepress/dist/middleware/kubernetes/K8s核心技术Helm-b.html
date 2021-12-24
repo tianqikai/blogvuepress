@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>12. K8s核心技术Helm | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.a86c1f59.js" as="script"><link rel="preload" href="/assets/js/2.572fbcb7.js" as="script"><link rel="preload" href="/assets/js/9.5f162f90.js" as="script"><link rel="prefetch" href="/assets/js/10.8de04070.js"><link rel="prefetch" href="/assets/js/100.95c60bcc.js"><link rel="prefetch" href="/assets/js/101.66aaacb7.js"><link rel="prefetch" href="/assets/js/102.06cfb9b6.js"><link rel="prefetch" href="/assets/js/103.f2c99fdc.js"><link rel="prefetch" href="/assets/js/104.e6165e64.js"><link rel="prefetch" href="/assets/js/105.757306c7.js"><link rel="prefetch" href="/assets/js/106.c2c7e8d5.js"><link rel="prefetch" href="/assets/js/107.a12c9e45.js"><link rel="prefetch" href="/assets/js/108.af6bf755.js"><link rel="prefetch" href="/assets/js/109.e95af487.js"><link rel="prefetch" href="/assets/js/11.323cce65.js"><link rel="prefetch" href="/assets/js/110.d55414b7.js"><link rel="prefetch" href="/assets/js/111.0e568416.js"><link rel="prefetch" href="/assets/js/112.24068f5c.js"><link rel="prefetch" href="/assets/js/113.11a3ed5d.js"><link rel="prefetch" href="/assets/js/114.b7a21a5c.js"><link rel="prefetch" href="/assets/js/115.8a8b7953.js"><link rel="prefetch" href="/assets/js/116.5847ef55.js"><link rel="prefetch" href="/assets/js/117.0ba1b0af.js"><link rel="prefetch" href="/assets/js/118.64e334e6.js"><link rel="prefetch" href="/assets/js/119.a5859784.js"><link rel="prefetch" href="/assets/js/12.c83e3c87.js"><link rel="prefetch" href="/assets/js/120.857f02ab.js"><link rel="prefetch" href="/assets/js/121.df5a5733.js"><link rel="prefetch" href="/assets/js/122.6f87eff8.js"><link rel="prefetch" href="/assets/js/123.2a9af6f7.js"><link rel="prefetch" href="/assets/js/124.1fcc27ae.js"><link rel="prefetch" href="/assets/js/125.bf8fd16c.js"><link rel="prefetch" href="/assets/js/126.2104d4c1.js"><link rel="prefetch" href="/assets/js/127.4b6c4988.js"><link rel="prefetch" href="/assets/js/128.a802cc4c.js"><link rel="prefetch" href="/assets/js/129.c99f7efa.js"><link rel="prefetch" href="/assets/js/13.9013091b.js"><link rel="prefetch" href="/assets/js/130.0861503e.js"><link rel="prefetch" href="/assets/js/131.b26f57dc.js"><link rel="prefetch" href="/assets/js/132.fe7c29b3.js"><link rel="prefetch" href="/assets/js/133.7461fcc3.js"><link rel="prefetch" href="/assets/js/134.a857d18e.js"><link rel="prefetch" href="/assets/js/135.51d933ef.js"><link rel="prefetch" href="/assets/js/136.bbd6d5c1.js"><link rel="prefetch" href="/assets/js/137.19bd53e8.js"><link rel="prefetch" href="/assets/js/138.701e8f3a.js"><link rel="prefetch" href="/assets/js/139.c5128cb6.js"><link rel="prefetch" href="/assets/js/14.932e0778.js"><link rel="prefetch" href="/assets/js/140.6c972a8d.js"><link rel="prefetch" href="/assets/js/141.1d6633ab.js"><link rel="prefetch" href="/assets/js/142.efed1127.js"><link rel="prefetch" href="/assets/js/143.b27f42b8.js"><link rel="prefetch" href="/assets/js/144.f31ebd51.js"><link rel="prefetch" href="/assets/js/145.f8c2b775.js"><link rel="prefetch" href="/assets/js/146.b219bc33.js"><link rel="prefetch" href="/assets/js/147.d8118e9f.js"><link rel="prefetch" href="/assets/js/148.6b1cba56.js"><link rel="prefetch" href="/assets/js/149.a47f6457.js"><link rel="prefetch" href="/assets/js/15.04b4b708.js"><link rel="prefetch" href="/assets/js/150.6455c79e.js"><link rel="prefetch" href="/assets/js/151.ba4699a4.js"><link rel="prefetch" href="/assets/js/152.76b2df89.js"><link rel="prefetch" href="/assets/js/153.63a35950.js"><link rel="prefetch" href="/assets/js/154.de8cadf7.js"><link rel="prefetch" href="/assets/js/155.728a2868.js"><link rel="prefetch" href="/assets/js/156.e7c79791.js"><link rel="prefetch" href="/assets/js/157.43a31655.js"><link rel="prefetch" href="/assets/js/158.d71759b1.js"><link rel="prefetch" href="/assets/js/159.82fb8b40.js"><link rel="prefetch" href="/assets/js/16.c7e977c7.js"><link rel="prefetch" href="/assets/js/160.2fbfe95f.js"><link rel="prefetch" href="/assets/js/161.0a45983e.js"><link rel="prefetch" href="/assets/js/162.34afe2d7.js"><link rel="prefetch" href="/assets/js/163.80e9e5fd.js"><link rel="prefetch" href="/assets/js/164.64eac1eb.js"><link rel="prefetch" href="/assets/js/165.814458b0.js"><link rel="prefetch" href="/assets/js/166.66ebdce1.js"><link rel="prefetch" href="/assets/js/167.9a721e1f.js"><link rel="prefetch" href="/assets/js/168.cf53b343.js"><link rel="prefetch" href="/assets/js/169.9602ea8d.js"><link rel="prefetch" href="/assets/js/17.bf149089.js"><link rel="prefetch" href="/assets/js/170.2b63d7d3.js"><link rel="prefetch" href="/assets/js/171.9b8de16f.js"><link rel="prefetch" href="/assets/js/172.08c6417f.js"><link rel="prefetch" href="/assets/js/173.f4c6ef29.js"><link rel="prefetch" href="/assets/js/174.20f62f8b.js"><link rel="prefetch" href="/assets/js/175.29849dda.js"><link rel="prefetch" href="/assets/js/176.ac876a4e.js"><link rel="prefetch" href="/assets/js/177.0e998ca1.js"><link rel="prefetch" href="/assets/js/178.3ba3620d.js"><link rel="prefetch" href="/assets/js/179.2fd4422d.js"><link rel="prefetch" href="/assets/js/18.2f7a7cd1.js"><link rel="prefetch" href="/assets/js/180.c8b3c0df.js"><link rel="prefetch" href="/assets/js/181.3c84430a.js"><link rel="prefetch" href="/assets/js/182.581e3779.js"><link rel="prefetch" href="/assets/js/183.25c352d0.js"><link rel="prefetch" href="/assets/js/184.7b1393d7.js"><link rel="prefetch" href="/assets/js/185.0667ae17.js"><link rel="prefetch" href="/assets/js/186.f8a31fc5.js"><link rel="prefetch" href="/assets/js/187.7271a1e3.js"><link rel="prefetch" href="/assets/js/188.f6525f8c.js"><link rel="prefetch" href="/assets/js/189.60f4b285.js"><link rel="prefetch" href="/assets/js/19.414b88d3.js"><link rel="prefetch" href="/assets/js/190.196e7072.js"><link rel="prefetch" href="/assets/js/191.fc6622ef.js"><link rel="prefetch" href="/assets/js/192.a4ca4789.js"><link rel="prefetch" href="/assets/js/193.bf683ffc.js"><link rel="prefetch" href="/assets/js/194.0f896182.js"><link rel="prefetch" href="/assets/js/195.291fcd52.js"><link rel="prefetch" href="/assets/js/196.3d54fbfe.js"><link rel="prefetch" href="/assets/js/197.43503dc3.js"><link rel="prefetch" href="/assets/js/198.3c25a6a0.js"><link rel="prefetch" href="/assets/js/199.0186d807.js"><link rel="prefetch" href="/assets/js/20.52a18ee0.js"><link rel="prefetch" href="/assets/js/200.a2d1bd7b.js"><link rel="prefetch" href="/assets/js/201.e66a5e9d.js"><link rel="prefetch" href="/assets/js/202.c18a80fd.js"><link rel="prefetch" href="/assets/js/203.fa7739e9.js"><link rel="prefetch" href="/assets/js/204.19ad0ee8.js"><link rel="prefetch" href="/assets/js/205.29d77299.js"><link rel="prefetch" href="/assets/js/206.8e0e135b.js"><link rel="prefetch" href="/assets/js/207.6aeed711.js"><link rel="prefetch" href="/assets/js/208.55850a7b.js"><link rel="prefetch" href="/assets/js/209.e47aaa64.js"><link rel="prefetch" href="/assets/js/21.22842a0f.js"><link rel="prefetch" href="/assets/js/210.9e12678a.js"><link rel="prefetch" href="/assets/js/211.361efbe3.js"><link rel="prefetch" href="/assets/js/212.cd28b79d.js"><link rel="prefetch" href="/assets/js/213.0385731c.js"><link rel="prefetch" href="/assets/js/214.8422df25.js"><link rel="prefetch" href="/assets/js/215.63219b00.js"><link rel="prefetch" href="/assets/js/216.02d008b5.js"><link rel="prefetch" href="/assets/js/217.40b9c7fb.js"><link rel="prefetch" href="/assets/js/218.3bdde972.js"><link rel="prefetch" href="/assets/js/219.c5433a99.js"><link rel="prefetch" href="/assets/js/22.a21b7c0e.js"><link rel="prefetch" href="/assets/js/220.0c354022.js"><link rel="prefetch" href="/assets/js/221.ddf22c5e.js"><link rel="prefetch" href="/assets/js/222.7678fe1e.js"><link rel="prefetch" href="/assets/js/223.6c5962cc.js"><link rel="prefetch" href="/assets/js/224.f7e36bf3.js"><link rel="prefetch" href="/assets/js/225.725b6fcf.js"><link rel="prefetch" href="/assets/js/226.5e9d7eec.js"><link rel="prefetch" href="/assets/js/227.b060aa31.js"><link rel="prefetch" href="/assets/js/228.a3eba3b6.js"><link rel="prefetch" href="/assets/js/229.486bd794.js"><link rel="prefetch" href="/assets/js/23.5f9d0976.js"><link rel="prefetch" href="/assets/js/230.5a7c0a55.js"><link rel="prefetch" href="/assets/js/231.7c6620a5.js"><link rel="prefetch" href="/assets/js/232.cc58a96c.js"><link rel="prefetch" href="/assets/js/233.daf6c78a.js"><link rel="prefetch" href="/assets/js/234.7193ae71.js"><link rel="prefetch" href="/assets/js/235.cd42c17c.js"><link rel="prefetch" href="/assets/js/236.9c046bb9.js"><link rel="prefetch" href="/assets/js/237.d0a60f1b.js"><link rel="prefetch" href="/assets/js/238.91fc6a5f.js"><link rel="prefetch" href="/assets/js/239.64e7c2b7.js"><link rel="prefetch" href="/assets/js/24.c810eb09.js"><link rel="prefetch" href="/assets/js/240.7570cd7f.js"><link rel="prefetch" href="/assets/js/241.9ccd2364.js"><link rel="prefetch" href="/assets/js/242.3ce7ba91.js"><link rel="prefetch" href="/assets/js/243.101634ca.js"><link rel="prefetch" href="/assets/js/244.bcd75b66.js"><link rel="prefetch" href="/assets/js/245.35236282.js"><link rel="prefetch" href="/assets/js/246.067edc5b.js"><link rel="prefetch" href="/assets/js/247.b4c7f756.js"><link rel="prefetch" href="/assets/js/248.ece4f86b.js"><link rel="prefetch" href="/assets/js/249.988d23f8.js"><link rel="prefetch" href="/assets/js/25.13c59344.js"><link rel="prefetch" href="/assets/js/250.c51d6266.js"><link rel="prefetch" href="/assets/js/251.3bdf26a3.js"><link rel="prefetch" href="/assets/js/252.7db45b10.js"><link rel="prefetch" href="/assets/js/253.49b64f22.js"><link rel="prefetch" href="/assets/js/254.35933a61.js"><link rel="prefetch" href="/assets/js/255.09c9d6b6.js"><link rel="prefetch" href="/assets/js/256.3ec90e6f.js"><link rel="prefetch" href="/assets/js/257.bc178194.js"><link rel="prefetch" href="/assets/js/258.17d8c2de.js"><link rel="prefetch" href="/assets/js/259.03417ccc.js"><link rel="prefetch" href="/assets/js/26.e0294a3b.js"><link rel="prefetch" href="/assets/js/260.216a2f51.js"><link rel="prefetch" href="/assets/js/261.871c216b.js"><link rel="prefetch" href="/assets/js/262.56efbf44.js"><link rel="prefetch" href="/assets/js/263.122c5634.js"><link rel="prefetch" href="/assets/js/264.e9e1d4f6.js"><link rel="prefetch" href="/assets/js/265.56ddac52.js"><link rel="prefetch" href="/assets/js/266.5726ebe6.js"><link rel="prefetch" href="/assets/js/267.5e1c37d4.js"><link rel="prefetch" href="/assets/js/268.82d4a6c1.js"><link rel="prefetch" href="/assets/js/269.ff31fe86.js"><link rel="prefetch" href="/assets/js/27.35fc009c.js"><link rel="prefetch" href="/assets/js/270.6109e3ea.js"><link rel="prefetch" href="/assets/js/271.c6c91d5b.js"><link rel="prefetch" href="/assets/js/272.a8859d64.js"><link rel="prefetch" href="/assets/js/273.f1c310b9.js"><link rel="prefetch" href="/assets/js/274.f47ab8e0.js"><link rel="prefetch" href="/assets/js/275.1deb3270.js"><link rel="prefetch" href="/assets/js/276.8c7ee165.js"><link rel="prefetch" href="/assets/js/277.9954c4e9.js"><link rel="prefetch" href="/assets/js/278.cf66e2ed.js"><link rel="prefetch" href="/assets/js/279.83405e57.js"><link rel="prefetch" href="/assets/js/28.f3c87fa4.js"><link rel="prefetch" href="/assets/js/280.73124214.js"><link rel="prefetch" href="/assets/js/281.1bf94d5a.js"><link rel="prefetch" href="/assets/js/29.87738507.js"><link rel="prefetch" href="/assets/js/3.9ddafd63.js"><link rel="prefetch" href="/assets/js/30.9a33d360.js"><link rel="prefetch" href="/assets/js/31.760d306e.js"><link rel="prefetch" href="/assets/js/32.729df4d8.js"><link rel="prefetch" href="/assets/js/33.870a94f6.js"><link rel="prefetch" href="/assets/js/34.a06cf942.js"><link rel="prefetch" href="/assets/js/35.a7120b36.js"><link rel="prefetch" href="/assets/js/36.9b151665.js"><link rel="prefetch" href="/assets/js/37.7747739c.js"><link rel="prefetch" href="/assets/js/38.c0d80251.js"><link rel="prefetch" href="/assets/js/39.085aa663.js"><link rel="prefetch" href="/assets/js/4.b1166e63.js"><link rel="prefetch" href="/assets/js/40.128118ea.js"><link rel="prefetch" href="/assets/js/41.deda7589.js"><link rel="prefetch" href="/assets/js/42.1f799c3f.js"><link rel="prefetch" href="/assets/js/43.ce0cf301.js"><link rel="prefetch" href="/assets/js/44.c349236e.js"><link rel="prefetch" href="/assets/js/45.4e9cb319.js"><link rel="prefetch" href="/assets/js/46.c7a05043.js"><link rel="prefetch" href="/assets/js/47.f97ee979.js"><link rel="prefetch" href="/assets/js/48.3a5a97e9.js"><link rel="prefetch" href="/assets/js/49.ac08632a.js"><link rel="prefetch" href="/assets/js/5.093e58d7.js"><link rel="prefetch" href="/assets/js/50.27d273f3.js"><link rel="prefetch" href="/assets/js/51.66cc8321.js"><link rel="prefetch" href="/assets/js/52.d161537d.js"><link rel="prefetch" href="/assets/js/53.d140f908.js"><link rel="prefetch" href="/assets/js/54.0235ceff.js"><link rel="prefetch" href="/assets/js/55.a55594c1.js"><link rel="prefetch" href="/assets/js/56.1f22204a.js"><link rel="prefetch" href="/assets/js/57.a0a26849.js"><link rel="prefetch" href="/assets/js/58.d7345235.js"><link rel="prefetch" href="/assets/js/59.81a8a316.js"><link rel="prefetch" href="/assets/js/6.59f3b7b6.js"><link rel="prefetch" href="/assets/js/60.c2b813c0.js"><link rel="prefetch" href="/assets/js/61.9972e78e.js"><link rel="prefetch" href="/assets/js/62.99b67f22.js"><link rel="prefetch" href="/assets/js/63.b469a857.js"><link rel="prefetch" href="/assets/js/64.0ca6f6c1.js"><link rel="prefetch" href="/assets/js/65.b8540b0f.js"><link rel="prefetch" href="/assets/js/66.4980be30.js"><link rel="prefetch" href="/assets/js/67.8278463d.js"><link rel="prefetch" href="/assets/js/68.907a24bc.js"><link rel="prefetch" href="/assets/js/69.fb4558bc.js"><link rel="prefetch" href="/assets/js/7.f7e8ebdc.js"><link rel="prefetch" href="/assets/js/70.622bf466.js"><link rel="prefetch" href="/assets/js/71.5e0ee530.js"><link rel="prefetch" href="/assets/js/72.eb23a35d.js"><link rel="prefetch" href="/assets/js/73.40abfa0b.js"><link rel="prefetch" href="/assets/js/74.4094b61b.js"><link rel="prefetch" href="/assets/js/75.5c3b5a4c.js"><link rel="prefetch" href="/assets/js/76.efbc2228.js"><link rel="prefetch" href="/assets/js/77.e8c7c1df.js"><link rel="prefetch" href="/assets/js/78.1dbc6bec.js"><link rel="prefetch" href="/assets/js/79.cacffcfa.js"><link rel="prefetch" href="/assets/js/8.ba73daac.js"><link rel="prefetch" href="/assets/js/80.4adb6bc0.js"><link rel="prefetch" href="/assets/js/81.ec01b0eb.js"><link rel="prefetch" href="/assets/js/82.fa60abc7.js"><link rel="prefetch" href="/assets/js/83.adc499ef.js"><link rel="prefetch" href="/assets/js/84.6a9a7f25.js"><link rel="prefetch" href="/assets/js/85.dd78c411.js"><link rel="prefetch" href="/assets/js/86.b2755e09.js"><link rel="prefetch" href="/assets/js/87.14216b7f.js"><link rel="prefetch" href="/assets/js/88.25ad2b2e.js"><link rel="prefetch" href="/assets/js/89.4434e71b.js"><link rel="prefetch" href="/assets/js/90.135b0f44.js"><link rel="prefetch" href="/assets/js/91.9fff7f99.js"><link rel="prefetch" href="/assets/js/92.fd8650e0.js"><link rel="prefetch" href="/assets/js/93.97e850e6.js"><link rel="prefetch" href="/assets/js/94.44278b7b.js"><link rel="prefetch" href="/assets/js/95.f7ef3696.js"><link rel="prefetch" href="/assets/js/96.e3c08b5c.js"><link rel="prefetch" href="/assets/js/97.60754372.js"><link rel="prefetch" href="/assets/js/98.d5cfbfb5.js"><link rel="prefetch" href="/assets/js/99.90f3c1fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link router-link-active">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link router-link-active">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Kubernetes</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/kubernetes/" aria-current="page" class="sidebar-link">kubernetes 容器管理</a></li><li><a href="/middleware/kubernetes/K8s组件介绍-0.html" class="sidebar-link">1. K8s组件介绍</a></li><li><a href="/middleware/kubernetes/kubeadm方式搭建K8S集群-1.html" class="sidebar-link">2. kubeadm方式搭建K8S集群</a></li><li><a href="/middleware/kubernetes/集群管理工具kubectl-2.html" class="sidebar-link">3. K8s集群管理工具kubectl</a></li><li><a href="/middleware/kubernetes/K8s集群YAML文件详解-3.html" class="sidebar-link">4. K8s集群YAML文件详解</a></li><li><a href="/middleware/kubernetes/K8s核心技术Pod-4.html" class="sidebar-link">5. K8s核心技术Pod</a></li><li><a href="/middleware/kubernetes/K8s核心技术Controller-5.html" class="sidebar-link">6. K8s核心技术Controller</a></li><li><a href="/middleware/kubernetes/K8s核心技术Service-6.html" class="sidebar-link">7. K8s核心技术Service</a></li><li><a href="/middleware/kubernetes/K8s控制器Statefulset-7.html" class="sidebar-link">8. K8s核心技术--其他控制器</a></li><li><a href="/middleware/kubernetes/K8s配置管理-8.html" class="sidebar-link">9. K8s配置管理</a></li><li><a href="/middleware/kubernetes/K8s集群安全机制-9.html" class="sidebar-link">10. K8s集群安全机制</a></li><li><a href="/middleware/kubernetes/K8s核心技术Ingress-a.html" class="sidebar-link">11. K8s核心技术Ingress</a></li><li><a href="/middleware/kubernetes/K8s核心技术Helm-b.html" class="active sidebar-link">12. K8s核心技术Helm</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-1-为什么引入helm" class="sidebar-link">12.1 为什么引入Helm</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-2-helm介绍" class="sidebar-link">12.2 Helm介绍</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-3-helm组件及架构" class="sidebar-link">12.3 Helm组件及架构</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-4-helm-v3变化" class="sidebar-link">12.4 Helm v3变化</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-5-helm配置" class="sidebar-link">12.5 helm配置</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-6-helm仓库" class="sidebar-link">12.6 helm仓库</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-7-helm基本命令" class="sidebar-link">12.7 helm基本命令</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-8-使用helm快速部署应用" class="sidebar-link">12.8 使用helm快速部署应用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-8-1-使用命令搜索应用" class="sidebar-link">12.8.1 使用命令搜索应用</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-8-2-根据搜索内容选择安装" class="sidebar-link">12.8.2 根据搜索内容选择安装</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-8-3-卸载" class="sidebar-link">12.8.3 卸载</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-9-如何自己创建chart" class="sidebar-link">12.9 如何自己创建Chart</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-9-1-目录格式" class="sidebar-link">12.9.1 目录格式</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-9-2-templates文件夹创建两个文件" class="sidebar-link">12.9.2 templates文件夹创建两个文件</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-9-3-安装mychart" class="sidebar-link">12.9.3 安装mychart</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-9-4-应用升级" class="sidebar-link">12.9.4 应用升级</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-10-chart模板使用" class="sidebar-link">12.10 chart模板使用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-10-1-定义变量和值" class="sidebar-link">12.10.1 定义变量和值</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-10-2-获取变量和值" class="sidebar-link">12.10.2 获取变量和值</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-10-3-安装应用" class="sidebar-link">12.10.3 安装应用</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#_12-11-安装问题" class="sidebar-link">12.11 安装问题</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Helm-b.html#问题一" class="sidebar-link">问题一</a></li></ul></li></ul></li><li><a href="/middleware/kubernetes/K8s持久化存储-c.html" class="sidebar-link">13. K8s持久化存储</a></li><li><a href="/middleware/kubernetes/k8s资源监控-d.html" class="sidebar-link">14. K8s集群资源监控</a></li><li><a href="/middleware/kubernetes/k8s高可用集群-e.html" class="sidebar-link">15. K8s高可用集群搭建</a></li><li><a href="/middleware/kubernetes/k8s配置默认存储类-f.html" class="sidebar-link">Kubernetes配置默认存储类</a></li><li><a href="/middleware/kubernetes/K8s容器交付-f.html" class="sidebar-link">16. K8s容器交付</a></li><li><a href="/middleware/kubernetes/kubesphere可视化-g.html" class="sidebar-link">16. K8s安装--kubesphere</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_12-k8s核心技术helm"><a href="#_12-k8s核心技术helm" class="header-anchor">#</a> 12. K8s核心技术Helm</h1> <p>Helm就是一个包管理工具【类似于npm】</p> <p><img src="/assets/img/892532-20180224212352306-705544441.255b790b.png" alt="img"></p> <h2 id="_12-1-为什么引入helm"><a href="#_12-1-为什么引入helm" class="header-anchor">#</a> 12.1 为什么引入Helm</h2> <p>首先在原来项目中都是基于yaml文件来进行部署发布的，而目前项目大部分微服务化或者模块化，会分成很多个组件来部署，每个组件可能对应一个deployment.yaml,一个service.yaml,一个Ingress.yaml还可能存在各种依赖关系，这样一个项目如果有5个组件，很可能就有15个不同的yaml文件，这些yaml分散存放，如果某天进行项目恢复的话，很难知道部署顺序，依赖关系等，而所有这些包括</p> <ul><li>基于yaml配置的集中存放</li> <li>基于项目的打包</li> <li>组件间的依赖</li></ul> <p>但是这种方式部署，会有什么问题呢？</p> <ul><li>如果使用之前部署单一应用，少数服务的应用，比较合适</li> <li>但如果部署微服务项目，可能有几十个服务，每个服务都有一套yaml文件，需要维护大量的yaml文件，版本管理特别不方便</li></ul> <hr> <p>Helm的引入，就是为了解决这个问题</p> <ul><li>使用Helm可以把这些YAML文件作为整体管理</li> <li>实现YAML文件高效复用</li> <li>使用helm应用级别的版本管理</li></ul> <h2 id="_12-2-helm介绍"><a href="#_12-2-helm介绍" class="header-anchor">#</a> 12.2 Helm介绍</h2> <p>Helm是一个Kubernetes的包管理工具，就像Linux下的包管理器，如yum/apt等，可以很方便的将之前打包好的yaml文件部署到kubernetes上。</p> <p>Helm有三个重要概念</p> <ul><li>helm：一个命令行客户端工具，主要用于Kubernetes应用chart的创建、打包、发布和管理</li> <li>Chart：应用描述，一系列用于描述k8s资源相关文件的集合</li> <li>Release：基于Chart的部署实体，一个chart被Helm运行后将会生成对应的release，将在K8S中创建出真实的运行资源对象。也就是应用级别的版本管理</li> <li>Repository：用于发布和存储Chart的仓库</li></ul> <h2 id="_12-3-helm组件及架构"><a href="#_12-3-helm组件及架构" class="header-anchor">#</a> 12.3 Helm组件及架构</h2> <p>Helm采用客户端/服务端架构，有如下组件组成</p> <ul><li>Helm CLI是Helm客户端，可以在本地执行</li> <li>Tiller是服务器端组件，在Kubernetes集群上运行，并管理Kubernetes应用程序</li> <li>Repository是Chart仓库，Helm客户端通过HTTP协议来访问仓库中Chart索引文件和压缩包</li></ul> <p><img src="/assets/img/image-20201119095458328.f3a3e938.png" alt="image-20201119095458328"></p> <h2 id="_12-4-helm-v3变化"><a href="#_12-4-helm-v3变化" class="header-anchor">#</a> 12.4 Helm v3变化</h2> <p>2019年11月13日，Helm团队发布了Helm v3的第一个稳定版本</p> <p>该版本主要变化如下</p> <ul><li><p>架构变化</p> <ul><li>最明显的变化是Tiller的删除</li> <li>V3版本删除Tiller</li> <li>relesase可以在不同命名空间重用</li></ul></li></ul> <p>V3之前</p> <p><img src="/assets/img/image-20201118171523403.62a41656.png" alt="image-20201118171523403"></p> <p>V3版本</p> <p><img src="/assets/img/image-20201118171956054.9d9e6355.png" alt="image-20201118171956054"></p> <h2 id="_12-5-helm配置"><a href="#_12-5-helm配置" class="header-anchor">#</a> 12.5 helm配置</h2> <p>首先我们需要去 <a href="https://helm.sh/docs/intro/quickstart/" target="_blank" rel="noopener noreferrer">官网下载<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <ul><li><p>第一步，<a href="https://github.com/helm/helm/releases" target="_blank" rel="noopener noreferrer">下载helm<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>安装压缩文件，上传到linux系统中</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">wget</span> https://get.helm.sh/helm-v3.2.4-linux-amd64.tar.gz
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div></li> <li><p>第二步，解压helm压缩文件，把解压后的helm目录复制到 usr/bin 目录中</p></li> <li><p>使用命令：helm</p></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 下载版本注意版本后缀amd还是arm</span>
+<span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># tar -zxvf helm-v3.5.3-linux-amd64.tar.gz </span>
+linux-amd64/
+linux-amd64/helm
+linux-amd64/LICENSE
+linux-amd64/README.md
+<span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment">#  mv linux-amd64/helm /usr/bin/helm</span>
+<span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># helm version</span>
+version.BuildInfo<span class="token punctuation">{</span>Version:<span class="token string">&quot;v3.5.3&quot;</span>, GitCommit:<span class="token string">&quot;041ce5a2c17a58be0fcd5f5e16fb3e7e95fea622&quot;</span>, GitTreeState:<span class="token string">&quot;dirty&quot;</span>, GoVersion:<span class="token string">&quot;go1.15.8&quot;</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p><strong>我们都知道yum需要配置yum源，那么helm就要配置helm源</strong></p> <h2 id="_12-6-helm仓库"><a href="#_12-6-helm仓库" class="header-anchor">#</a> 12.6 helm仓库</h2> <ul><li>添加仓库</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm repo <span class="token function">add</span> 仓库名  仓库地址 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>例如</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 配置微软源</span>
+helm repo <span class="token function">add</span> stable http://mirror.azure.cn/kubernetes/charts
+<span class="token comment"># 配置阿里源</span>
+helm repo <span class="token function">add</span> aliyun https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+<span class="token comment"># 配置google源</span>
+helm repo <span class="token function">add</span> google https://kubernetes-charts.storage.googleapis.com/
+<span class="token comment"># 更新</span>
+helm repo update
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><ul><li>然后可以查看我们添加的仓库地址</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看全部</span>
+helm repo list
+<span class="token comment"># 查看某个</span>
+helm search repo stable
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># helm search repo aliyun</span>
+NAME                          	CHART VERSION	APP VERSION  	DESCRIPTION                                       
+aliyun/acs-engine-autoscaler  	<span class="token number">2.1</span>.3        	<span class="token number">2.1</span>.1        	Scales worker nodes within agent pools            
+aliyun/aerospike              	<span class="token number">0.1</span>.7        	v3.14.1.2    	A Helm chart <span class="token keyword">for</span> <span class="token for-or-select variable">Aerospike</span> <span class="token keyword">in</span> Kubernetes          
+aliyun/anchore-engine         	<span class="token number">0.1</span>.3        	<span class="token number">0.1</span>.6        	Anchore container analysis and policy evaluatio<span class="token punctuation">..</span>.
+aliyun/artifactory            	<span class="token number">7.0</span>.3        	<span class="token number">5.8</span>.4        	Universal Repository Manager supporting all maj<span class="token punctuation">..</span>.
+aliyun/artifactory-ha         	<span class="token number">0.1</span>.0        	<span class="token number">5.8</span>.4        	Universal Repository Manager supporting all maj<span class="token punctuation">..</span>.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><ul><li>或者可以删除我们添加的源</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm repo remove stable
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="_12-7-helm基本命令"><a href="#_12-7-helm基本命令" class="header-anchor">#</a> 12.7 helm基本命令</h2> <ul><li><font color="red">chart install</font> 安装</li> <li><font color="red">chart upgrade</font> 升级</li> <li><font color="red">chart rollback</font> 回滚</li></ul> <h2 id="_12-8-使用helm快速部署应用"><a href="#_12-8-使用helm快速部署应用" class="header-anchor">#</a> 12.8 使用helm快速部署应用</h2> <h3 id="_12-8-1-使用命令搜索应用"><a href="#_12-8-1-使用命令搜索应用" class="header-anchor">#</a> 12.8.1 使用命令搜索应用</h3> <p>首先我们使用命令，搜索我们需要安装的应用</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 搜索 weave仓库</span>
+helm search repo weave
+
+<span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># helm search repo weave</span>
+NAME              	CHART VERSION	APP VERSION	DESCRIPTION                                       
+aliyun/weave-cloud	<span class="token number">0.1</span>.2        	           	Weave Cloud is a add-on to Kubernetes <span class="token function">which</span> pro<span class="token punctuation">..</span>.
+aliyun/weave-scope	<span class="token number">0.9</span>.2        	<span class="token number">1.6</span>.5      	A Helm chart <span class="token keyword">for</span> the Weave Scope cluster visual<span class="token punctuation">..</span>.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><img src="data:image/png;base64,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" alt="image-20201118200603643"></p> <h3 id="_12-8-2-根据搜索内容选择安装"><a href="#_12-8-2-根据搜索内容选择安装" class="header-anchor">#</a> 12.8.2 根据搜索内容选择安装</h3> <ul><li>搜索完成后，使用命令进行安装</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm <span class="token function">install</span> ui aliyun/weave-scope
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># helm install ui apphub/weave-scope</span>
+NAME: ui
+LAST DEPLOYED: Sat Dec <span class="token number">18</span> <span class="token number">16</span>:51:22 <span class="token number">2021</span>
+NAMESPACE: default
+STATUS: deployed
+REVISION: <span class="token number">1</span>
+NOTES:
+You should now be able to access the Scope frontend <span class="token keyword">in</span> your web browser, by
+using kubectl port-forward:
+
+kubectl -n default port-forward <span class="token variable"><span class="token variable">$(</span>kubectl -n default get endpoints <span class="token punctuation">\</span>
+ui-weave-scope -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">'{.subsets[0].addresses[0].targetRef.name}'</span><span class="token variable">)</span></span> <span class="token number">8080</span>:4040
+
+<span class="token keyword">then</span> browsing to http://localhost:8080/.
+For <span class="token function">more</span> details on using Weave Scope, see the Weave Scope documentation:
+
+https://www.weave.works/docs/scope/latest/introducing/
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div> <ul><li>安装完成后，通过下面命令即可查看</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm list
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="/assets/img/image-20201118203727585.1286a29a.png" alt="image-20201118203727585"></p> <ul><li>同时可以通过下面命令，查看更新具体的信息</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm status ui
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>但是我们通过查看 svc状态，发现没有对象暴露端口</li></ul> <p><img src="/assets/img/image-20201118205031343.2815e9ad.png" alt="image-20201118205031343"></p> <ul><li>所以我们需要修改service的yaml文件，添加NodePort</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#打开yaml文件进行修改</span>
+kubectl edit svc ui-weave-scope
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p><img src="/assets/img/image-20201118205129431.fc8ff4db.png" alt="image-20201118205129431"></p> <ul><li>这样就可以对外暴露端口了</li></ul> <p><img src="/assets/img/image-20201118205147631.33067a71.png" alt="image-20201118205147631"></p> <ul><li>[http://192.168.222.3:30450/]</li></ul> <p><img src="/assets/img/weavescope.083ebf63.jpg" alt="weavescope"></p> <h3 id="_12-8-3-卸载"><a href="#_12-8-3-卸载" class="header-anchor">#</a> 12.8.3 卸载</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm uninstall  XXX
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><hr> <div class="language-BASH line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster prometheus<span class="token punctuation">]</span><span class="token comment"># helm list</span>
+NAME    	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART            	APP VERSION
+tqk-ui  	default  	<span class="token number">1</span>       	<span class="token number">2021</span>-12-18 <span class="token number">16</span>:58:51.634012358 +0800 CST	deployed	weave-scope-1.1.8	<span class="token number">1.12</span>.0     
+tqk001  	default  	<span class="token number">1</span>       	<span class="token number">2021</span>-12-18 <span class="token number">17</span>:38:47.65203576 +0800 CST 	deployed	mychart-0.1.0    	<span class="token number">1.16</span>.0     
+ui      	default  	<span class="token number">1</span>       	<span class="token number">2021</span>-12-18 <span class="token number">16</span>:51:22.307924558 +0800 CST	deployed	weave-scope-1.1.8	<span class="token number">1.12</span>.0     
+web2    	default  	<span class="token number">1</span>       	<span class="token number">2021</span>-12-18 <span class="token number">20</span>:07:59.919598183 +0800 CST	deployed	mychart-0.1.0    	<span class="token number">1.16</span>.0     
+web2-tqk	default  	<span class="token number">1</span>       	<span class="token number">2021</span>-12-18 <span class="token number">20</span>:00:04.172652762 +0800 CST	failed  	mychart-0.1.0    	<span class="token number">1.16</span>.0     
+<span class="token punctuation">[</span>root@k8smaster prometheus<span class="token punctuation">]</span><span class="token comment"># helm uninstall tqk-ui</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h2 id="_12-9-如何自己创建chart"><a href="#_12-9-如何自己创建chart" class="header-anchor">#</a> 12.9 如何自己创建Chart</h2> <ul><li>使用命令，自己创建Chart</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm create mychart
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>创建完成后，我们就能看到在当前文件夹下，创建了一个 mychart目录</li></ul> <p><img src="/assets/img/image-20201118210755621.49e731a0.png" alt="image-20201118210755621"></p> <h3 id="_12-9-1-目录格式"><a href="#_12-9-1-目录格式" class="header-anchor">#</a> 12.9.1 目录格式</h3> <ul><li>templates：编写yaml文件存放到这个目录</li> <li>values.yaml：存放的是全局的yaml文件</li> <li>chart.yaml：当前chart属性配置信息</li></ul> <h3 id="_12-9-2-templates文件夹创建两个文件"><a href="#_12-9-2-templates文件夹创建两个文件" class="header-anchor">#</a> 12.9.2 templates文件夹创建两个文件</h3> <p>我们创建以下两个</p> <ul><li>deployment.yaml</li> <li>service.yaml</li></ul> <p>我们可以通过下面命令创建出yaml文件</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token builtin class-name">cd</span> templates/
+<span class="token comment"># 导出deployment.yaml</span>
+kubectl create deployment tqk001 --image<span class="token operator">=</span>nginx --dry-run -o yaml <span class="token operator">&gt;</span> deployment.yaml
+<span class="token comment"># 创建 tqk001 pod</span>
+kubectl apply -f deployment.yaml
+<span class="token comment"># 导出service.yaml 【可能需要创建 deployment，不然会报错】--对外暴露端口</span>
+kubectl expose deployment tqk001 --port<span class="token operator">=</span><span class="token number">80</span> --target-port<span class="token operator">=</span><span class="token number">80</span> --type<span class="token operator">=</span>NodePort --dry-run -o yaml <span class="token operator">&gt;</span> service.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_12-9-3-安装mychart"><a href="#_12-9-3-安装mychart" class="header-anchor">#</a> 12.9.3 安装mychart</h3> <p>执行命令创建</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm <span class="token function">install</span> webserver-ng mychart
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># kubectl delete -f ./mychart/templates/deployment.yaml </span>
+deployment.apps <span class="token string">&quot;tqk001&quot;</span> deleted
+<span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># helm install tqk001 mychart</span>
+NAME: tqk001
+LAST DEPLOYED: Sat Dec <span class="token number">18</span> <span class="token number">17</span>:38:47 <span class="token number">2021</span>
+NAMESPACE: default
+STATUS: deployed
+REVISION: <span class="token number">1</span>
+NOTES:
+<span class="token number">1</span>. Get the application URL by running these commands:
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">POD_NAME</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>kubectl get pods --namespace default -l <span class="token string">&quot;app.kubernetes.io/name=mychart,app.kubernetes.io/instance=tqk001&quot;</span> -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">&quot;{.items[0].metadata.name}&quot;</span><span class="token variable">)</span></span>
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">CONTAINER_PORT</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>kubectl get pod --namespace default $POD_NAME -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">&quot;{.spec.containers[0].ports[0].containerPort}&quot;</span><span class="token variable">)</span></span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;Visit http://127.0.0.1:8080 to use your application&quot;</span>
+  kubectl --namespace default port-forward <span class="token variable">$POD_NAME</span> <span class="token number">8080</span>:<span class="token variable">$CONTAINER_PORT</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p><img src="/assets/img/image-20201118213120916.486b52ec.png" alt="image-20201118213120916"></p> <h3 id="_12-9-4-应用升级"><a href="#_12-9-4-应用升级" class="header-anchor">#</a> 12.9.4 应用升级</h3> <p>当我们修改了mychart中的东西后，就可以进行升级操作</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm upgrade tqk001 mychart
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="_12-10-chart模板使用"><a href="#_12-10-chart模板使用" class="header-anchor">#</a> 12.10 chart模板使用</h2> <p>通过传递参数，动态渲染模板，yaml内容动态从传入参数生成</p> <p><img src="/assets/img/image-20201118213630083.8361df66.png" alt="image-20201118213630083"></p> <p>刚刚我们创建mychart的时候，看到有values.yaml文件，这个文件就是一些全局的变量，然后在templates中能取到变量的值，下面我们可以利用这个，来完成动态模板</p> <ul><li>在values.yaml定义变量和值</li> <li>具体yaml文件，获取定义变量值</li> <li>yaml文件中大体有几个地方不同
+<ul><li>image</li> <li>tag</li> <li>label</li> <li>port</li> <li>replicas</li></ul></li></ul> <h3 id="_12-10-1-定义变量和值"><a href="#_12-10-1-定义变量和值" class="header-anchor">#</a> 12.10.1 定义变量和值</h3> <p>在values.yaml定义变量和值</p> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">image</span><span class="token punctuation">:</span> nginx
+<span class="token key atrule">repository</span><span class="token punctuation">:</span> nginx16
+<span class="token key atrule">tag</span><span class="token punctuation">:</span> <span class="token number">1.16</span>
+<span class="token key atrule">label</span><span class="token punctuation">:</span> nginx
+<span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+<span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><img src="/assets/img/image-20201118214050899.6677bf27.png" alt="image-20201118214050899"></p> <h3 id="_12-10-2-获取变量和值"><a href="#_12-10-2-获取变量和值" class="header-anchor">#</a> 12.10.2 获取变量和值</h3> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token comment">#我们通过表达式形式 使用全局变量  </span>
+<span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.变量名称<span class="token punctuation">}</span><span class="token punctuation">}</span>
+<span class="token comment">#例如： </span>
+<span class="token punctuation">{</span><span class="token punctuation">{</span>.Release.Name<span class="token punctuation">}</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p><img src="/assets/img/image-20201118214413203.dbe4edde.png" alt="image-20201118214413203"></p> <ul><li>deployment.yaml</li></ul> <div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Release.Name<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">-</span>tqk
+  <span class="token key atrule">creationTimestamp</span><span class="token punctuation">:</span> <span class="token null important">null</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.label<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.label<span class="token punctuation">}</span><span class="token punctuation">}</span>
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.label<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token key atrule">strategy</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">creationTimestamp</span><span class="token punctuation">:</span> <span class="token null important">null</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.label<span class="token punctuation">}</span><span class="token punctuation">}</span>
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
+        <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token key atrule">status</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><hr> <ul><li>service.yaml</li></ul> <div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Release.Name<span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token punctuation">-</span>tqk
+  <span class="token key atrule">creationTimestamp</span><span class="token punctuation">:</span> <span class="token null important">null</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.label<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.label<span class="token punctuation">}</span><span class="token punctuation">}</span>
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.port<span class="token punctuation">}</span><span class="token punctuation">}</span>
+    <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+    <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.port<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">{</span>.Values.label<span class="token punctuation">}</span><span class="token punctuation">}</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> NodePort
+<span class="token key atrule">status</span><span class="token punctuation">:</span>
+  <span class="token key atrule">loadBalancer</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h3 id="_12-10-3-安装应用"><a href="#_12-10-3-安装应用" class="header-anchor">#</a> 12.10.3 安装应用</h3> <p>在我们修改完上述的信息后，就可以尝试的创建应用了</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># helm install  web2 mychart</span>
+NAME: web2
+LAST DEPLOYED: Sat Dec <span class="token number">18</span> <span class="token number">20</span>:07:59 <span class="token number">2021</span>
+NAMESPACE: default
+STATUS: deployed
+REVISION: <span class="token number">1</span>
+NOTES:
+<span class="token number">1</span>. Get the application URL by running these commands:
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">POD_NAME</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>kubectl get pods --namespace default -l <span class="token string">&quot;app.kubernetes.io/name=mychart,app.kubernetes.io/instance=web2&quot;</span> -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">&quot;{.items[0].metadata.name}&quot;</span><span class="token variable">)</span></span>
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">CONTAINER_PORT</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>kubectl get pod --namespace default $POD_NAME -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">&quot;{.spec.containers[0].ports[0].containerPort}&quot;</span><span class="token variable">)</span></span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;Visit http://127.0.0.1:8080 to use your application&quot;</span>
+  kubectl --namespace default port-forward <span class="token variable">$POD_NAME</span> <span class="token number">8080</span>:<span class="token variable">$CONTAINER_PORT</span>
+<span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># kubectl get pods</span>
+NAME                                                READY   STATUS      RESTARTS   AGE
+mypod                                               <span class="token number">0</span>/1     Completed   <span class="token number">0</span>          11h
+nginx-f89759699-xffhv                               <span class="token number">1</span>/1     Running     <span class="token number">0</span>          33h
+nginx16-756c7d47b6-m9vp2                            <span class="token number">1</span>/1     Running     <span class="token number">0</span>          24s
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster helm<span class="token punctuation">]</span><span class="token comment"># helm install --dry-run web2-tqk mychart</span>
+NAME: web2-tqk
+LAST DEPLOYED: Sat Dec <span class="token number">18</span> <span class="token number">19</span>:58:59 <span class="token number">2021</span>
+NAMESPACE: default
+STATUS: pending-install
+REVISION: <span class="token number">1</span>
+HOOKS:
+---
+<span class="token comment"># Source: mychart/templates/tests/test-connection.yaml</span>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: <span class="token string">&quot;web2-tqk-mychart-test-connection&quot;</span>
+  labels:
+    helm.sh/chart: mychart-0.1.0
+    app.kubernetes.io/name: mychart
+    app.kubernetes.io/instance: web2-tqk
+    app.kubernetes.io/version: <span class="token string">&quot;1.16.0&quot;</span>
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    <span class="token string">&quot;helm.sh/hook&quot;</span><span class="token builtin class-name">:</span> <span class="token builtin class-name">test</span>
+spec:
+  containers:
+    - name: <span class="token function">wget</span>
+      image: busybox
+      command: <span class="token punctuation">[</span><span class="token string">'wget'</span><span class="token punctuation">]</span>
+      args: <span class="token punctuation">[</span><span class="token string">'web2-tqk-mychart:80'</span><span class="token punctuation">]</span>
+  restartPolicy: Never
+MANIFEST:
+---
+<span class="token comment"># Source: mychart/templates/serviceaccount.yaml</span>
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: web2-tqk-mychart
+  labels:
+    helm.sh/chart: mychart-0.1.0
+    app.kubernetes.io/name: mychart
+    app.kubernetes.io/instance: web2-tqk
+    app.kubernetes.io/version: <span class="token string">&quot;1.16.0&quot;</span>
+    app.kubernetes.io/managed-by: Helm
+---
+<span class="token comment"># Source: mychart/templates/service.yaml</span>
+apiVersion: v1
+kind: Service
+metadata:
+  name: web2-tqk -tqk 
+  creationTimestamp: null
+  labels:
+    app: nginx.1.16
+  name: nginx.1.16
+spec:
+  ports:
+  - port: <span class="token number">80</span>
+    protocol: TCP
+    targetPort: <span class="token number">80</span> 
+  selector:
+    app: nginx.1.16
+  type: NodePort
+status:
+  loadBalancer: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+---
+<span class="token comment"># Source: mychart/templates/deployment.yaml</span>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web2-tqk-tqk
+  creationTimestamp: null
+  labels:
+    app: nginx.1.16
+  name: nginx.1.16
+spec:
+  replicas: <span class="token number">1</span>
+  selector:
+    matchLabels:
+      app: nginx.1.16
+  strategy: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx.1.16
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+status: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+NOTES:
+<span class="token number">1</span>. Get the application URL by running these commands:
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">POD_NAME</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>kubectl get pods --namespace default -l <span class="token string">&quot;app.kubernetes.io/name=mychart,app.kubernetes.io/instance=web2-tqk&quot;</span> -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">&quot;{.items[0].metadata.name}&quot;</span><span class="token variable">)</span></span>
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">CONTAINER_PORT</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>kubectl get pod --namespace default $POD_NAME -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">&quot;{.spec.containers[0].ports[0].containerPort}&quot;</span><span class="token variable">)</span></span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;Visit http://127.0.0.1:8080 to use your application&quot;</span>
+  kubectl --namespace default port-forward <span class="token variable">$POD_NAME</span> <span class="token number">8080</span>:<span class="token variable">$CONTAINER_PORT</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br></div></div><div class="language-bah line-numbers-mode"><pre class="language-text"><code>helm install  web2-tqk mychart
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="/assets/img/image-20201118214727058.c3e757ee.png" alt="image-20201118214727058"></p> <h2 id="_12-11-安装问题"><a href="#_12-11-安装问题" class="header-anchor">#</a> 12.11 安装问题</h2> <h3 id="问题一"><a href="#问题一" class="header-anchor">#</a> 问题一</h3> <ul><li>在使用helm安装应用的时候报如下错误：</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster bin<span class="token punctuation">]</span><span class="token comment"># helm install testweave testrepo/weave-scope</span>
+Error: INSTALLATION FAILED: unable to build kubernetes objects from release manifest: <span class="token punctuation">[</span>unable to recognize <span class="token string">&quot;&quot;</span><span class="token builtin class-name">:</span> no matches <span class="token keyword">for</span> kind <span class="token string">&quot;DaemonSet&quot;</span> <span class="token keyword">in</span> version <span class="token string">&quot;extensions/v1beta1&quot;</span>, unable to recognize <span class="token string">&quot;&quot;</span><span class="token builtin class-name">:</span> no matches <span class="token keyword">for</span> kind <span class="token string">&quot;Deployment&quot;</span> <span class="token keyword">in</span> version <span class="token string">&quot;apps/v1beta1&quot;</span><span class="token punctuation">]</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ul><li>更换一个helm源即可：</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>helm repo <span class="token function">add</span> apphub https://apphub.aliyuncs.com
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/kubernetes/K8s核心技术Ingress-a.html" class="prev">
+        11. K8s核心技术Ingress
+      </a></span> <span class="next"><a href="/middleware/kubernetes/K8s持久化存储-c.html">
+        13. K8s持久化存储
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a86c1f59.js" defer></script><script src="/assets/js/2.572fbcb7.js" defer></script><script src="/assets/js/9.5f162f90.js" defer></script>
+  </body>
+</html>

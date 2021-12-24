@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>7. Redis缓存设计与调优 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.a86c1f59.js" as="script"><link rel="preload" href="/assets/js/2.572fbcb7.js" as="script"><link rel="preload" href="/assets/js/45.4e9cb319.js" as="script"><link rel="prefetch" href="/assets/js/10.8de04070.js"><link rel="prefetch" href="/assets/js/100.95c60bcc.js"><link rel="prefetch" href="/assets/js/101.66aaacb7.js"><link rel="prefetch" href="/assets/js/102.06cfb9b6.js"><link rel="prefetch" href="/assets/js/103.f2c99fdc.js"><link rel="prefetch" href="/assets/js/104.e6165e64.js"><link rel="prefetch" href="/assets/js/105.757306c7.js"><link rel="prefetch" href="/assets/js/106.c2c7e8d5.js"><link rel="prefetch" href="/assets/js/107.a12c9e45.js"><link rel="prefetch" href="/assets/js/108.af6bf755.js"><link rel="prefetch" href="/assets/js/109.e95af487.js"><link rel="prefetch" href="/assets/js/11.323cce65.js"><link rel="prefetch" href="/assets/js/110.d55414b7.js"><link rel="prefetch" href="/assets/js/111.0e568416.js"><link rel="prefetch" href="/assets/js/112.24068f5c.js"><link rel="prefetch" href="/assets/js/113.11a3ed5d.js"><link rel="prefetch" href="/assets/js/114.b7a21a5c.js"><link rel="prefetch" href="/assets/js/115.8a8b7953.js"><link rel="prefetch" href="/assets/js/116.5847ef55.js"><link rel="prefetch" href="/assets/js/117.0ba1b0af.js"><link rel="prefetch" href="/assets/js/118.64e334e6.js"><link rel="prefetch" href="/assets/js/119.a5859784.js"><link rel="prefetch" href="/assets/js/12.c83e3c87.js"><link rel="prefetch" href="/assets/js/120.857f02ab.js"><link rel="prefetch" href="/assets/js/121.df5a5733.js"><link rel="prefetch" href="/assets/js/122.6f87eff8.js"><link rel="prefetch" href="/assets/js/123.2a9af6f7.js"><link rel="prefetch" href="/assets/js/124.1fcc27ae.js"><link rel="prefetch" href="/assets/js/125.bf8fd16c.js"><link rel="prefetch" href="/assets/js/126.2104d4c1.js"><link rel="prefetch" href="/assets/js/127.4b6c4988.js"><link rel="prefetch" href="/assets/js/128.a802cc4c.js"><link rel="prefetch" href="/assets/js/129.c99f7efa.js"><link rel="prefetch" href="/assets/js/13.9013091b.js"><link rel="prefetch" href="/assets/js/130.0861503e.js"><link rel="prefetch" href="/assets/js/131.b26f57dc.js"><link rel="prefetch" href="/assets/js/132.fe7c29b3.js"><link rel="prefetch" href="/assets/js/133.7461fcc3.js"><link rel="prefetch" href="/assets/js/134.a857d18e.js"><link rel="prefetch" href="/assets/js/135.51d933ef.js"><link rel="prefetch" href="/assets/js/136.bbd6d5c1.js"><link rel="prefetch" href="/assets/js/137.19bd53e8.js"><link rel="prefetch" href="/assets/js/138.701e8f3a.js"><link rel="prefetch" href="/assets/js/139.c5128cb6.js"><link rel="prefetch" href="/assets/js/14.932e0778.js"><link rel="prefetch" href="/assets/js/140.6c972a8d.js"><link rel="prefetch" href="/assets/js/141.1d6633ab.js"><link rel="prefetch" href="/assets/js/142.efed1127.js"><link rel="prefetch" href="/assets/js/143.b27f42b8.js"><link rel="prefetch" href="/assets/js/144.f31ebd51.js"><link rel="prefetch" href="/assets/js/145.f8c2b775.js"><link rel="prefetch" href="/assets/js/146.b219bc33.js"><link rel="prefetch" href="/assets/js/147.d8118e9f.js"><link rel="prefetch" href="/assets/js/148.6b1cba56.js"><link rel="prefetch" href="/assets/js/149.a47f6457.js"><link rel="prefetch" href="/assets/js/15.04b4b708.js"><link rel="prefetch" href="/assets/js/150.6455c79e.js"><link rel="prefetch" href="/assets/js/151.ba4699a4.js"><link rel="prefetch" href="/assets/js/152.76b2df89.js"><link rel="prefetch" href="/assets/js/153.63a35950.js"><link rel="prefetch" href="/assets/js/154.de8cadf7.js"><link rel="prefetch" href="/assets/js/155.728a2868.js"><link rel="prefetch" href="/assets/js/156.e7c79791.js"><link rel="prefetch" href="/assets/js/157.43a31655.js"><link rel="prefetch" href="/assets/js/158.d71759b1.js"><link rel="prefetch" href="/assets/js/159.82fb8b40.js"><link rel="prefetch" href="/assets/js/16.c7e977c7.js"><link rel="prefetch" href="/assets/js/160.2fbfe95f.js"><link rel="prefetch" href="/assets/js/161.0a45983e.js"><link rel="prefetch" href="/assets/js/162.34afe2d7.js"><link rel="prefetch" href="/assets/js/163.80e9e5fd.js"><link rel="prefetch" href="/assets/js/164.64eac1eb.js"><link rel="prefetch" href="/assets/js/165.814458b0.js"><link rel="prefetch" href="/assets/js/166.66ebdce1.js"><link rel="prefetch" href="/assets/js/167.9a721e1f.js"><link rel="prefetch" href="/assets/js/168.cf53b343.js"><link rel="prefetch" href="/assets/js/169.9602ea8d.js"><link rel="prefetch" href="/assets/js/17.bf149089.js"><link rel="prefetch" href="/assets/js/170.2b63d7d3.js"><link rel="prefetch" href="/assets/js/171.9b8de16f.js"><link rel="prefetch" href="/assets/js/172.08c6417f.js"><link rel="prefetch" href="/assets/js/173.f4c6ef29.js"><link rel="prefetch" href="/assets/js/174.20f62f8b.js"><link rel="prefetch" href="/assets/js/175.29849dda.js"><link rel="prefetch" href="/assets/js/176.ac876a4e.js"><link rel="prefetch" href="/assets/js/177.0e998ca1.js"><link rel="prefetch" href="/assets/js/178.3ba3620d.js"><link rel="prefetch" href="/assets/js/179.2fd4422d.js"><link rel="prefetch" href="/assets/js/18.2f7a7cd1.js"><link rel="prefetch" href="/assets/js/180.c8b3c0df.js"><link rel="prefetch" href="/assets/js/181.3c84430a.js"><link rel="prefetch" href="/assets/js/182.581e3779.js"><link rel="prefetch" href="/assets/js/183.25c352d0.js"><link rel="prefetch" href="/assets/js/184.7b1393d7.js"><link rel="prefetch" href="/assets/js/185.0667ae17.js"><link rel="prefetch" href="/assets/js/186.f8a31fc5.js"><link rel="prefetch" href="/assets/js/187.7271a1e3.js"><link rel="prefetch" href="/assets/js/188.f6525f8c.js"><link rel="prefetch" href="/assets/js/189.60f4b285.js"><link rel="prefetch" href="/assets/js/19.414b88d3.js"><link rel="prefetch" href="/assets/js/190.196e7072.js"><link rel="prefetch" href="/assets/js/191.fc6622ef.js"><link rel="prefetch" href="/assets/js/192.a4ca4789.js"><link rel="prefetch" href="/assets/js/193.bf683ffc.js"><link rel="prefetch" href="/assets/js/194.0f896182.js"><link rel="prefetch" href="/assets/js/195.291fcd52.js"><link rel="prefetch" href="/assets/js/196.3d54fbfe.js"><link rel="prefetch" href="/assets/js/197.43503dc3.js"><link rel="prefetch" href="/assets/js/198.3c25a6a0.js"><link rel="prefetch" href="/assets/js/199.0186d807.js"><link rel="prefetch" href="/assets/js/20.52a18ee0.js"><link rel="prefetch" href="/assets/js/200.a2d1bd7b.js"><link rel="prefetch" href="/assets/js/201.e66a5e9d.js"><link rel="prefetch" href="/assets/js/202.c18a80fd.js"><link rel="prefetch" href="/assets/js/203.fa7739e9.js"><link rel="prefetch" href="/assets/js/204.19ad0ee8.js"><link rel="prefetch" href="/assets/js/205.29d77299.js"><link rel="prefetch" href="/assets/js/206.8e0e135b.js"><link rel="prefetch" href="/assets/js/207.6aeed711.js"><link rel="prefetch" href="/assets/js/208.55850a7b.js"><link rel="prefetch" href="/assets/js/209.e47aaa64.js"><link rel="prefetch" href="/assets/js/21.22842a0f.js"><link rel="prefetch" href="/assets/js/210.9e12678a.js"><link rel="prefetch" href="/assets/js/211.361efbe3.js"><link rel="prefetch" href="/assets/js/212.cd28b79d.js"><link rel="prefetch" href="/assets/js/213.0385731c.js"><link rel="prefetch" href="/assets/js/214.8422df25.js"><link rel="prefetch" href="/assets/js/215.63219b00.js"><link rel="prefetch" href="/assets/js/216.02d008b5.js"><link rel="prefetch" href="/assets/js/217.40b9c7fb.js"><link rel="prefetch" href="/assets/js/218.3bdde972.js"><link rel="prefetch" href="/assets/js/219.c5433a99.js"><link rel="prefetch" href="/assets/js/22.a21b7c0e.js"><link rel="prefetch" href="/assets/js/220.0c354022.js"><link rel="prefetch" href="/assets/js/221.ddf22c5e.js"><link rel="prefetch" href="/assets/js/222.7678fe1e.js"><link rel="prefetch" href="/assets/js/223.6c5962cc.js"><link rel="prefetch" href="/assets/js/224.f7e36bf3.js"><link rel="prefetch" href="/assets/js/225.725b6fcf.js"><link rel="prefetch" href="/assets/js/226.5e9d7eec.js"><link rel="prefetch" href="/assets/js/227.b060aa31.js"><link rel="prefetch" href="/assets/js/228.a3eba3b6.js"><link rel="prefetch" href="/assets/js/229.486bd794.js"><link rel="prefetch" href="/assets/js/23.5f9d0976.js"><link rel="prefetch" href="/assets/js/230.5a7c0a55.js"><link rel="prefetch" href="/assets/js/231.7c6620a5.js"><link rel="prefetch" href="/assets/js/232.cc58a96c.js"><link rel="prefetch" href="/assets/js/233.daf6c78a.js"><link rel="prefetch" href="/assets/js/234.7193ae71.js"><link rel="prefetch" href="/assets/js/235.cd42c17c.js"><link rel="prefetch" href="/assets/js/236.9c046bb9.js"><link rel="prefetch" href="/assets/js/237.d0a60f1b.js"><link rel="prefetch" href="/assets/js/238.91fc6a5f.js"><link rel="prefetch" href="/assets/js/239.64e7c2b7.js"><link rel="prefetch" href="/assets/js/24.c810eb09.js"><link rel="prefetch" href="/assets/js/240.7570cd7f.js"><link rel="prefetch" href="/assets/js/241.9ccd2364.js"><link rel="prefetch" href="/assets/js/242.3ce7ba91.js"><link rel="prefetch" href="/assets/js/243.101634ca.js"><link rel="prefetch" href="/assets/js/244.bcd75b66.js"><link rel="prefetch" href="/assets/js/245.35236282.js"><link rel="prefetch" href="/assets/js/246.067edc5b.js"><link rel="prefetch" href="/assets/js/247.b4c7f756.js"><link rel="prefetch" href="/assets/js/248.ece4f86b.js"><link rel="prefetch" href="/assets/js/249.988d23f8.js"><link rel="prefetch" href="/assets/js/25.13c59344.js"><link rel="prefetch" href="/assets/js/250.c51d6266.js"><link rel="prefetch" href="/assets/js/251.3bdf26a3.js"><link rel="prefetch" href="/assets/js/252.7db45b10.js"><link rel="prefetch" href="/assets/js/253.49b64f22.js"><link rel="prefetch" href="/assets/js/254.35933a61.js"><link rel="prefetch" href="/assets/js/255.09c9d6b6.js"><link rel="prefetch" href="/assets/js/256.3ec90e6f.js"><link rel="prefetch" href="/assets/js/257.bc178194.js"><link rel="prefetch" href="/assets/js/258.17d8c2de.js"><link rel="prefetch" href="/assets/js/259.03417ccc.js"><link rel="prefetch" href="/assets/js/26.e0294a3b.js"><link rel="prefetch" href="/assets/js/260.216a2f51.js"><link rel="prefetch" href="/assets/js/261.871c216b.js"><link rel="prefetch" href="/assets/js/262.56efbf44.js"><link rel="prefetch" href="/assets/js/263.122c5634.js"><link rel="prefetch" href="/assets/js/264.e9e1d4f6.js"><link rel="prefetch" href="/assets/js/265.56ddac52.js"><link rel="prefetch" href="/assets/js/266.5726ebe6.js"><link rel="prefetch" href="/assets/js/267.5e1c37d4.js"><link rel="prefetch" href="/assets/js/268.82d4a6c1.js"><link rel="prefetch" href="/assets/js/269.ff31fe86.js"><link rel="prefetch" href="/assets/js/27.35fc009c.js"><link rel="prefetch" href="/assets/js/270.6109e3ea.js"><link rel="prefetch" href="/assets/js/271.c6c91d5b.js"><link rel="prefetch" href="/assets/js/272.a8859d64.js"><link rel="prefetch" href="/assets/js/273.f1c310b9.js"><link rel="prefetch" href="/assets/js/274.f47ab8e0.js"><link rel="prefetch" href="/assets/js/275.1deb3270.js"><link rel="prefetch" href="/assets/js/276.8c7ee165.js"><link rel="prefetch" href="/assets/js/277.9954c4e9.js"><link rel="prefetch" href="/assets/js/278.cf66e2ed.js"><link rel="prefetch" href="/assets/js/279.83405e57.js"><link rel="prefetch" href="/assets/js/28.f3c87fa4.js"><link rel="prefetch" href="/assets/js/280.73124214.js"><link rel="prefetch" href="/assets/js/281.1bf94d5a.js"><link rel="prefetch" href="/assets/js/29.87738507.js"><link rel="prefetch" href="/assets/js/3.9ddafd63.js"><link rel="prefetch" href="/assets/js/30.9a33d360.js"><link rel="prefetch" href="/assets/js/31.760d306e.js"><link rel="prefetch" href="/assets/js/32.729df4d8.js"><link rel="prefetch" href="/assets/js/33.870a94f6.js"><link rel="prefetch" href="/assets/js/34.a06cf942.js"><link rel="prefetch" href="/assets/js/35.a7120b36.js"><link rel="prefetch" href="/assets/js/36.9b151665.js"><link rel="prefetch" href="/assets/js/37.7747739c.js"><link rel="prefetch" href="/assets/js/38.c0d80251.js"><link rel="prefetch" href="/assets/js/39.085aa663.js"><link rel="prefetch" href="/assets/js/4.b1166e63.js"><link rel="prefetch" href="/assets/js/40.128118ea.js"><link rel="prefetch" href="/assets/js/41.deda7589.js"><link rel="prefetch" href="/assets/js/42.1f799c3f.js"><link rel="prefetch" href="/assets/js/43.ce0cf301.js"><link rel="prefetch" href="/assets/js/44.c349236e.js"><link rel="prefetch" href="/assets/js/46.c7a05043.js"><link rel="prefetch" href="/assets/js/47.f97ee979.js"><link rel="prefetch" href="/assets/js/48.3a5a97e9.js"><link rel="prefetch" href="/assets/js/49.ac08632a.js"><link rel="prefetch" href="/assets/js/5.093e58d7.js"><link rel="prefetch" href="/assets/js/50.27d273f3.js"><link rel="prefetch" href="/assets/js/51.66cc8321.js"><link rel="prefetch" href="/assets/js/52.d161537d.js"><link rel="prefetch" href="/assets/js/53.d140f908.js"><link rel="prefetch" href="/assets/js/54.0235ceff.js"><link rel="prefetch" href="/assets/js/55.a55594c1.js"><link rel="prefetch" href="/assets/js/56.1f22204a.js"><link rel="prefetch" href="/assets/js/57.a0a26849.js"><link rel="prefetch" href="/assets/js/58.d7345235.js"><link rel="prefetch" href="/assets/js/59.81a8a316.js"><link rel="prefetch" href="/assets/js/6.59f3b7b6.js"><link rel="prefetch" href="/assets/js/60.c2b813c0.js"><link rel="prefetch" href="/assets/js/61.9972e78e.js"><link rel="prefetch" href="/assets/js/62.99b67f22.js"><link rel="prefetch" href="/assets/js/63.b469a857.js"><link rel="prefetch" href="/assets/js/64.0ca6f6c1.js"><link rel="prefetch" href="/assets/js/65.b8540b0f.js"><link rel="prefetch" href="/assets/js/66.4980be30.js"><link rel="prefetch" href="/assets/js/67.8278463d.js"><link rel="prefetch" href="/assets/js/68.907a24bc.js"><link rel="prefetch" href="/assets/js/69.fb4558bc.js"><link rel="prefetch" href="/assets/js/7.f7e8ebdc.js"><link rel="prefetch" href="/assets/js/70.622bf466.js"><link rel="prefetch" href="/assets/js/71.5e0ee530.js"><link rel="prefetch" href="/assets/js/72.eb23a35d.js"><link rel="prefetch" href="/assets/js/73.40abfa0b.js"><link rel="prefetch" href="/assets/js/74.4094b61b.js"><link rel="prefetch" href="/assets/js/75.5c3b5a4c.js"><link rel="prefetch" href="/assets/js/76.efbc2228.js"><link rel="prefetch" href="/assets/js/77.e8c7c1df.js"><link rel="prefetch" href="/assets/js/78.1dbc6bec.js"><link rel="prefetch" href="/assets/js/79.cacffcfa.js"><link rel="prefetch" href="/assets/js/8.ba73daac.js"><link rel="prefetch" href="/assets/js/80.4adb6bc0.js"><link rel="prefetch" href="/assets/js/81.ec01b0eb.js"><link rel="prefetch" href="/assets/js/82.fa60abc7.js"><link rel="prefetch" href="/assets/js/83.adc499ef.js"><link rel="prefetch" href="/assets/js/84.6a9a7f25.js"><link rel="prefetch" href="/assets/js/85.dd78c411.js"><link rel="prefetch" href="/assets/js/86.b2755e09.js"><link rel="prefetch" href="/assets/js/87.14216b7f.js"><link rel="prefetch" href="/assets/js/88.25ad2b2e.js"><link rel="prefetch" href="/assets/js/89.4434e71b.js"><link rel="prefetch" href="/assets/js/9.5f162f90.js"><link rel="prefetch" href="/assets/js/90.135b0f44.js"><link rel="prefetch" href="/assets/js/91.9fff7f99.js"><link rel="prefetch" href="/assets/js/92.fd8650e0.js"><link rel="prefetch" href="/assets/js/93.97e850e6.js"><link rel="prefetch" href="/assets/js/94.44278b7b.js"><link rel="prefetch" href="/assets/js/95.f7ef3696.js"><link rel="prefetch" href="/assets/js/96.e3c08b5c.js"><link rel="prefetch" href="/assets/js/97.60754372.js"><link rel="prefetch" href="/assets/js/98.d5cfbfb5.js"><link rel="prefetch" href="/assets/js/99.90f3c1fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link router-link-active">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link router-link-active">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Redis</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/db/redis/Redis基础知识-0.html" class="sidebar-link">1. Redis基础知识</a></li><li><a href="/db/redis/SringBoot整合Redis-1.html" class="sidebar-link">2. SringBoot整合Redis</a></li><li><a href="/db/redis/Redis分布式锁-2.html" class="sidebar-link">3. Redis分布式锁</a></li><li><a href="/db/redis/Redis实战案例-3.html" class="sidebar-link">4. Redis实战案例</a></li><li><a href="/db/redis/Redis慢查询和事务-4.html" class="sidebar-link">5. Redis慢查询和事务</a></li><li><a href="/db/redis/Redis高可用集群-5.html" class="sidebar-link">6. Redis高可用集群</a></li><li><a href="/db/redis/Redis性能优化-6.html" class="active sidebar-link">7. Redis缓存设计与调优</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-1-缓存雪崩" class="sidebar-link">7.1 缓存雪崩</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-1-1-热点缓存key重建优化" class="sidebar-link">7.1.1 热点缓存key重建优化</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-2-缓存穿透" class="sidebar-link">7.2 缓存穿透</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-2-1-缓存空对象" class="sidebar-link">7.2.1 缓存空对象</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-2-2-布隆过滤器" class="sidebar-link">7.2.2 布隆过滤器</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-3-缓存失效-击穿" class="sidebar-link">7.3 缓存失效(击穿)</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-4-缓存与数据库双写不一致" class="sidebar-link">7.4 缓存与数据库双写不一致</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-4-1-双写不一致情况" class="sidebar-link">7.4.1 双写不一致情况</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-4-2-读写并发不一致" class="sidebar-link">7.4.2 读写并发不一致</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-4-3-延时双删-不建议用" class="sidebar-link">7.4.3 延时双删（不建议用）</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-4-5-分布式锁处理" class="sidebar-link">7.4.5 分布式锁处理</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-4-6-canal处理" class="sidebar-link">7.4.6 canal处理</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/redis/Redis性能优化-6.html#_7-5-redis开发规范" class="sidebar-link">7.5 Redis开发规范</a></li></ul></li><li><a href="/db/redis/Redis订阅与发布-6.html" class="sidebar-link">7. Redis订阅与发布</a></li><li><a href="/db/redis/缓存使用案例1-f.html" class="sidebar-link">1. 使用缓存的经典场景</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_7-redis缓存设计与调优"><a href="#_7-redis缓存设计与调优" class="header-anchor">#</a> 7. Redis缓存设计与调优</h1> <p><a data-fancybox="" title="Redis缓存设计与调优" href="./image/redis15.jpg"><img src="/assets/img/redis15.29f20ce8.jpg" alt="Redis缓存设计与调优"></a></p> <h2 id="_7-1-缓存雪崩"><a href="#_7-1-缓存雪崩" class="header-anchor">#</a> 7.1 缓存雪崩</h2> <p>缓存雪崩指的是缓存层支撑不住或宕掉后，流量会像奔逃的野牛一样，打向后端存储层。
+由于缓存层承载着大量请求， 有效地保护了存储层，</p> <p>但是如果缓存层由于某些原因不能提供服务(比如超大并  发过来， 缓存层支撑不住， 或者由于缓存设计不好， 类似大量请求访问bigkey， 导致缓存能支撑的并发急剧下降)， 于是大量请求都会打到存储层， 存储层的调用量会暴增， 造成存储层也会级联宕机的情况。</p> <hr> <p>前提:为节约内存,Redis 一般会做定期清除操作</p> <ol><li>当查询 key=james 的值,此时 Redis 没有数据</li> <li>如果有 5000 个用户并发来查询 key=james,全到 Mysql 里去查, Mysql 会挂掉,导致雪崩;
+<a data-fancybox="" title="缓存雪崩" href="./image/redis03.jpg"><img src="/assets/img/redis03.3f60978d.jpg" alt="缓存雪崩"></a></li></ol> <p><strong>总结一句话：在高并发下，大量缓存key在同一时间失效，大量请求直接落在数据库上，导致数据库宕机</strong></p> <p>预防和解决缓存雪崩问题， 可以从以下三个方面进行着手。</p> <ol><li>保证缓存层服务高可用性， 比如<strong>使用Redis Sentinel或Redis Cluster</strong>。</li> <li>依赖隔离组件为后端限流熔断并降级。  比如使用<strong>Sentinel或Hystrix限流降级组件</strong>。</li></ol> <div class="custom-block tip"><p class="custom-block-title">解决方案</p> <ol><li><p>若是集群部署，可将热点数据均匀分布在不同的Redis库中也能够避免key全部失效问题</p></li> <li><p>设置热点数据永远不过期</p></li> <li><p>跑定时任务，在缓存失效前刷进新的缓存</p></li> <li><p><strong>加互斥锁</strong> <a data-fancybox="" title="加互斥锁" href="./image/redis04.jpg"><img src="/assets/img/redis04.3ac01518.jpg" alt="加互斥锁"></a></p></li></ol></div> <p>预防和解决缓存雪崩问题， 可以从以下三个方面进行着手。</p> <ol><li><p>保证缓存层服务高可用性， 比如使用Redis Sentinel或Redis Cluster。</p></li> <li><p>依赖隔离组件为后端限流熔断并降级。  比如使用Sentinel或Hystrix限流降级组件。</p></li></ol> <p>比如服务降级， 我们可以针对不同的数据采取不同的处理方式。<br>
+当业务应用访问的是非核心数据（例如电商商 品属性， 用户信息等）  时， 暂时停止从缓存中查询这些数据， 而是直接返回预定义的默认降级信息、空值或是错误提示信息；</p> <p>当业务应用访问的是核心数据（例如电商商品库存）时， 仍然允许查询缓存， 如果缓存缺失， 也可以继续通过数据库读取。</p> <ol start="3"><li>提前演练。   在项目上线前， 演练缓存层宕掉后， 应用以及后端的负载情况以及可能出现的问题， 在此基 础上做一些预案设定</li></ol> <h3 id="_7-1-1-热点缓存key重建优化"><a href="#_7-1-1-热点缓存key重建优化" class="header-anchor">#</a> 7.1.1 热点缓存key重建优化</h3> <p>开发人员使用“缓存+过期时间”的策略既可以加速数据读写， 又保证数据的定期更新， 这种模式基本能够满足绝大部分需求。   但是有两个问题如果同时出现， 可能就会对应用造成致命的危害：</p> <ol><li>当前key是一个热点key （例如一个热门的娱乐新闻） ， 并发量非常大。</li> <li>重建缓存不能在短时间完成， 可能是一个复杂计算， 例如复杂的SQL、   多次IO、   多个依赖等。</li></ol> <p>在缓存失效的瞬间， 有大量线程来重建缓存， 造成后端负载加大， 甚至可能会让应用崩溃。</p> <p>要解决这个问题主要就是要避免大量线程同时重建缓存。
+我们可以利用<strong>互斥锁来解决</strong>， 此方法只允许一个线程重建缓存， 其他线程等待重建缓存的线程执行完， 重新从缓存获取数据即可。</p> <p><strong>示例伪代码：</strong></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code> <span class="token class-name">String</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">// 从Redis中获取数据</span>
+  <span class="token class-name">String</span> value <span class="token operator">=</span> redis<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 如果value为空， 则开始重构缓存</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>value <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 只允许一个线程重建缓存， 使用nx， 并设置过期时间ex</span>
+        <span class="token class-name">String</span> mutexKey <span class="token operator">=</span> <span class="token string">&quot;mutext:key:&quot;</span> <span class="token operator">+</span> key<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>redis<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>mutexKey<span class="token punctuation">,</span> <span class="token string">&quot;1&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;ex 180&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;nx&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment">// 从数据源获取数据</span>
+            value <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 回写Redis， 并设置过期时间</span>
+            redis<span class="token punctuation">.</span><span class="token function">setex</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> timeout<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token number">13</span>   <span class="token comment">// 删除key_mutex</span>
+            redis<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>mutexKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token comment">// 其他线程休息50毫秒后重试</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">return</span> value<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h2 id="_7-2-缓存穿透"><a href="#_7-2-缓存穿透" class="header-anchor">#</a> 7.2 缓存穿透</h2> <p>缓存穿透是指查询一个根本不存在的数据， 缓存层和存储层都不会命中， 通常出于容错的考虑， 如果从存储 层查不到数据则不写入缓存层。 缓存穿透将导致不存在的数据每次请求都要到存储层去查询， 失去了缓存保护后端存储的意义。比如:黑客模拟一个不存在的订单号 xxxx</p> <ol><li>Redis 中无此值 -- 自身业务代码或者数据出现问题。</li> <li>Mysql 中也无此值, 但一直被查询--一些恶意攻击、 爬虫等造成大量空命中。</li></ol> <p><a data-fancybox="" title="缓存穿透" href="./image/redis05.jpg"><img src="/assets/img/redis05.d6bc319a.jpg" alt="缓存穿透"></a></p> <div class="custom-block tip"><p class="custom-block-title">解决方案</p> <ol><li><p>对查询不存在的订单，在第一次查询数据库查询不到时，设置一个临时redis键值对 values为null(对于大量无效订单，可能对redis造成影响)</p></li> <li><p>对订单表所有数据查询出来放到布隆过滤器, 经过布隆过滤器处理的数据很小(只存 0 或 1)<br>
+每次查订单表前,先到过滤器里查询当前订单号状态是0还是1, 0的话代表数据库没有数据, 直接拒绝查询</p></li> <li><p>对订单号进行校验，不合法的进行拦截</p></li> <li><p>封杀该IP地址</p></li></ol></div> <h3 id="_7-2-1-缓存空对象"><a href="#_7-2-1-缓存空对象" class="header-anchor">#</a> 7.2.1 缓存空对象</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token class-name">String</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+    <span class="token comment">// 从缓存中获取数据 </span>
+    <span class="token class-name">String</span> cacheValue <span class="token operator">=</span> cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token comment">// 缓存为空 </span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isBlank</span><span class="token punctuation">(</span>cacheValue<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+        <span class="token comment">// 从存储中获取 </span>
+        <span class="token class-name">String</span> storageValue <span class="token operator">=</span> storage<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        cache<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> storageValue<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment">// 如果存储数据为空， 需要设置一个过期时间(300秒)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>storageValue <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+            cache<span class="token punctuation">.</span><span class="token function">expire</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token punctuation">}</span> 
+        <span class="token keyword">return</span> storageValue<span class="token punctuation">;</span> 
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> 
+                <span class="token comment">// 缓存非空 </span>
+                <span class="token keyword">return</span> cacheValue<span class="token punctuation">;</span> 
+            <span class="token punctuation">}</span> 
+    <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h3 id="_7-2-2-布隆过滤器"><a href="#_7-2-2-布隆过滤器" class="header-anchor">#</a> 7.2.2 布隆过滤器</h3> <p>对于恶意攻击，向服务器请求大量不存在的数据造成的缓存穿透，还可以用布隆过滤器先做一次过滤，对于不 存在的数据布隆过滤器一般都能够过滤掉，不让请求再往后端发送。<strong>当布隆过滤器说某个值存在时，这个值可能不存在；当它说不存在时，那就肯定不存在</strong>。
+<a data-fancybox="" title="布隆过滤器" href="./image/redis21.jpg"><img src="/assets/img/redis21.65357f2e.jpg" alt="布隆过滤器"></a></p> <p>布隆过滤器就是<strong>一个大型的位数组和几个不一样的无偏 hash 函数</strong>。所谓无偏就是能够把元素的 hash 值算得比较均匀。</p> <p>向布隆过滤器中添加 key 时，会使用多个 hash 函数对 key 进行 hash 算得一个整数索引值然后对位数组长度 进行取模运算得到一个位置，每个 hash 函数都会算得一个不同的位置。再把位数组的这几个位置都置为 1 就 完成了 add 操作。</p> <p>向布隆过滤器询问 key 是否存在时，跟 add 一样，也会把 hash 的几个位置都算出来，看看位数组中这几个位 置是否都为 1，只要有一个位为 0，那么说明布隆过滤器中这个key 不存在。如果都是 1，这并不能说明这个 key 就一定存在，只是极有可能存在，因为这些位被置为 1 可能是因为其它的 key 存在所致。如果这个位数组 比较稀疏，这个概率就会很大，如果这个位数组比较拥挤，这个概率就会降低。</p> <p>这种方法适用于<strong>数据命中不高、 数据相对固定、 实时性低（通常是数据集较大） 的应用场景</strong>， 代码维护较为 复杂， <strong>但是缓存空间占用很少</strong>。</p> <p>可以用redisson实现布隆过滤器，引入依赖</p> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.redisson<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>redisson<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span> 
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>3.6.5<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><hr> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>redisboot</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>redisson<span class="token punctuation">.</span></span><span class="token class-name">Redisson</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>redisson<span class="token punctuation">.</span>api<span class="token punctuation">.</span></span><span class="token class-name">RBloomFilter</span><span class="token punctuation">;</span>  
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>redisson<span class="token punctuation">.</span>api<span class="token punctuation">.</span></span><span class="token class-name">RedissonClient</span><span class="token punctuation">;</span> 
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>redisson<span class="token punctuation">.</span>config<span class="token punctuation">.</span></span><span class="token class-name">Config</span><span class="token punctuation">;</span> 
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedissonBloomFilter</span> <span class="token punctuation">{</span> 
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+        <span class="token class-name">Config</span> config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        config<span class="token punctuation">.</span><span class="token function">useSingleServer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setAddress</span><span class="token punctuation">(</span><span class="token string">&quot;redis://49.233.34.168:6400&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//构造Redisson </span>
+        <span class="token class-name">RedissonClient</span> redisson <span class="token operator">=</span> <span class="token class-name">Redisson</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token class-name">RBloomFilter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> bloomFilter <span class="token operator">=</span> redisson<span class="token punctuation">.</span><span class="token function">getBloomFilter</span><span class="token punctuation">(</span><span class="token string">&quot;nameList&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment">//初始化布隆过滤器：预计元素为100000000L,误差率为3%,根据这两个参数会计算出底层的bit数组大小 </span>
+        bloomFilter<span class="token punctuation">.</span><span class="token function">tryInit</span><span class="token punctuation">(</span><span class="token number">100000000L</span><span class="token punctuation">,</span><span class="token number">0.03</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment">//将zhuge插入到布隆过滤器中 </span>
+        bloomFilter<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">&quot;zhuge&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        <span class="token comment">//判断下面号码是否在布隆过滤器中 </span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>bloomFilter<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">&quot;guojia&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//false </span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>bloomFilter<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">&quot;baiqi&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//false </span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>bloomFilter<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">&quot;zhuge&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//true </span>
+    <span class="token punctuation">}</span> 
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><hr> <div class="language-log line-numbers-mode"><pre class="language-text"><code>[redisClient=[addr=redis://49.233.34.168:6400], channel=[id: 0x67a84238, L:/192.168.0.105:52349 - R:/49.233.34.168:6400]]
+false
+21:40:29.446 [redisson-netty-1-2] DEBUG org.redisson.command.CommandAsyncService - connection released for command null and params null from slot null using connection RedisConnection@1281079435 [redisClient=[addr=redis://49.233.34.168:6400], channel=[id: 0xef9f38be, L:/192.168.0.105:52336 - R:/49.233.34.168:6400]]
+false
+21:40:29.473 [redisson-netty-1-7] DEBUG org.redisson.command.CommandAsyncService - connection released for command null and params null from slot null using connection RedisConnection@361441739 [redisClient=[addr=redis://49.233.34.168:6400], channel=[id: 0x4e1615ba, L:/192.168.0.105:52317 - R:/49.233.34.168:6400]]
+true
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h4 id="使用布隆过滤器需要把所有数据提前放入布隆过滤器-并且在增加数据时也要往布隆过滤器里放-布隆过滤器-缓存过滤伪代码"><a href="#使用布隆过滤器需要把所有数据提前放入布隆过滤器-并且在增加数据时也要往布隆过滤器里放-布隆过滤器-缓存过滤伪代码" class="header-anchor">#</a> 使用布隆过滤器需要把所有数据提前放入布隆过滤器，并且在增加数据时也要往布隆过滤器里放，布隆过滤器 缓存过滤伪代码：</h4> <div class="language-java line-numbers-mode"><pre class="language-java"><code>  <span class="token comment">//初始化布隆过滤器</span>
+  <span class="token class-name">RBloomFilter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> bloomFilter <span class="token operator">=</span> redisson<span class="token punctuation">.</span><span class="token function">getBloomFilter</span><span class="token punctuation">(</span><span class="token string">&quot;nameList&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//初始化布隆过滤器： 预计元素为100000000L,误差率为3%</span>
+  bloomFilter<span class="token punctuation">.</span><span class="token function">tryInit</span><span class="token punctuation">(</span><span class="token number">100000000L</span><span class="token punctuation">,</span><span class="token number">0.03</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//把所有数据存入布隆过滤器</span>
+  <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+       <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token operator">:</span> keys<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            bloomFilter<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>        
+        <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token class-name">String</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token comment">// 从布隆过滤器这一级缓存判断下key是否存在</span>
+       <span class="token class-name">Boolean</span> exist <span class="token operator">=</span> bloomFilter<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>exist<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>        
+        <span class="token punctuation">}</span>
+       <span class="token comment">// 从缓存中获取数据</span>
+       <span class="token class-name">String</span> cacheValue <span class="token operator">=</span> cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">// 缓存为空</span>
+       <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isBlank</span><span class="token punctuation">(</span>cacheValue<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>             <span class="token comment">// 从存储中获取</span>
+            <span class="token class-name">String</span> storageValue <span class="token operator">=</span> storage<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cache<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> storageValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 如果存储数据为空， 需要设置一个过期时间(300秒)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>storageValue <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                cache<span class="token punctuation">.</span><span class="token function">expire</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> storageValue<span class="token punctuation">;</span>      
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 缓存非空</span>
+            <span class="token keyword">return</span> cacheValue<span class="token punctuation">;</span>       
+        <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><h4 id="注意-布隆过滤器不能删除数据-如果要删除得重新初始化数据。"><a href="#注意-布隆过滤器不能删除数据-如果要删除得重新初始化数据。" class="header-anchor">#</a> 注意：布隆过滤器不能删除数据，如果要删除得重新初始化数据。</h4> <h2 id="_7-3-缓存失效-击穿"><a href="#_7-3-缓存失效-击穿" class="header-anchor">#</a> 7.3 缓存失效(击穿)</h2> <p>由于大批量缓存在同一时间失效可能导致大量请求同时穿透缓存直达数据库， 可能会造成数据库瞬间压力过大甚至挂掉， 对于这种情况我们在批量增加缓存时最好将这一批数据的缓存过期时间设置为一个时间段内的不同时间。</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>  <span class="token class-name">String</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">// 从缓存中获取数据</span>
+    <span class="token class-name">String</span> cacheValue <span class="token operator">=</span> cache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 缓存为空</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">StringUtils</span><span class="token punctuation">.</span><span class="token function">isBlank</span><span class="token punctuation">(</span>cacheValue<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">// 从存储中获取</span>
+            <span class="token class-name">String</span> storageValue <span class="token operator">=</span> storage<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cache<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> storageValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">//设置一个过期时间(300到600之间的一个随机数)</span>
+            <span class="token keyword">int</span> expireTime <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span><span class="token number">300</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">300</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>storageValue <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                cache<span class="token punctuation">.</span><span class="token function">expire</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> expireTime<span class="token punctuation">)</span><span class="token punctuation">;</span>    
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> storageValue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 缓存非空</span>
+            <span class="token keyword">return</span> cacheValue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="_7-4-缓存与数据库双写不一致"><a href="#_7-4-缓存与数据库双写不一致" class="header-anchor">#</a> 7.4 缓存与数据库双写不一致</h2> <p>在大并发下， 同时操作数据库与缓存会存在数据不一致性问题</p> <h3 id="_7-4-1-双写不一致情况"><a href="#_7-4-1-双写不一致情况" class="header-anchor">#</a> 7.4.1 双写不一致情况</h3> <p><strong>先更新数据库，再更新缓存</strong> <a data-fancybox="" title="双写不一致情况" href="./image/redis16.jpg"><img src="/assets/img/redis16.fec6686b.jpg" alt="双写不一致情况"></a></p> <h3 id="_7-4-2-读写并发不一致"><a href="#_7-4-2-读写并发不一致" class="header-anchor">#</a> 7.4.2 读写并发不一致</h3> <p>这种是常说的的<strong>先写数据库删除缓存再更新缓存</strong> <a data-fancybox="" title="读写并发不一致" href="./image/redis17.jpg"><img src="/assets/img/redis17.d6659522.jpg" alt="读写并发不一致"></a></p> <h3 id="_7-4-3-延时双删-不建议用"><a href="#_7-4-3-延时双删-不建议用" class="header-anchor">#</a> 7.4.3 延时双删（不建议用）</h3> <ol><li>删除redis</li> <li>更新数据库</li> <li>延时500毫秒--牺牲性能不一定解决问题</li> <li>删除redis</li> <li>更新数据库</li></ol> <h3 id="_7-4-5-分布式锁处理"><a href="#_7-4-5-分布式锁处理" class="header-anchor">#</a> 7.4.5 分布式锁处理</h3> <p><strong>分布式锁处理相当于串行化处理，肯定不会出问题</strong></p> <h3 id="_7-4-6-canal处理"><a href="#_7-4-6-canal处理" class="header-anchor">#</a> 7.4.6 canal处理</h3> <p><a data-fancybox="" title="读写并发不一致" href="./image/redis18.jpg"><img src="/assets/img/redis18.45da2167.jpg" alt="读写并发不一致"></a></p> <div class="custom-block tip"><p class="custom-block-title">总结解决方案：</p> <ol><li>对于并发几率很小的数据(如个人维度的订单数据、  用户数据等)， 这种几乎不用考虑这个问题， 很少会发生 缓存不一致， 可以给缓存数据加上过期时间， 每隔一段时间触发读的主动更新即可。</li> <li>就算并发很高， 如果业务上能容忍短时间的缓存数据不一致(如商品名称， 商品分类菜单等)， 缓存加上过期 时间依然可以解决大部分业务对于缓存的要求。</li> <li>如果不能容忍缓存数据不一致， 可以通过加读写锁保证并发读写或写写的时候按顺序排好队， 读读的时候相 当于无锁。</li> <li>也可以用阿里开源的canal通过监听数据库的binlog日志及时的去修改缓存， 但是引入了新的中间件， 增加 了系统的复杂度</li></ol></div> <h2 id="_7-5-redis开发规范"><a href="#_7-5-redis开发规范" class="header-anchor">#</a> 7.5 Redis开发规范</h2> <p><a href="https://note.youdao.com/s/ME0ZymwT">https://note.youdao.com/s/ME0ZymwT</a></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/db/redis/Redis高可用集群-5.html" class="prev">
+        6. Redis高可用集群
+      </a></span> <span class="next"><a href="/db/redis/Redis订阅与发布-6.html">
+        7. Redis订阅与发布
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a86c1f59.js" defer></script><script src="/assets/js/2.572fbcb7.js" defer></script><script src="/assets/js/45.4e9cb319.js" defer></script>
+  </body>
+</html>

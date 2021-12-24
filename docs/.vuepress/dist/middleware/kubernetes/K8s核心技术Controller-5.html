@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>6. K8s核心技术Controller | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.a86c1f59.js" as="script"><link rel="preload" href="/assets/js/2.572fbcb7.js" as="script"><link rel="preload" href="/assets/js/18.2f7a7cd1.js" as="script"><link rel="prefetch" href="/assets/js/10.8de04070.js"><link rel="prefetch" href="/assets/js/100.95c60bcc.js"><link rel="prefetch" href="/assets/js/101.66aaacb7.js"><link rel="prefetch" href="/assets/js/102.06cfb9b6.js"><link rel="prefetch" href="/assets/js/103.f2c99fdc.js"><link rel="prefetch" href="/assets/js/104.e6165e64.js"><link rel="prefetch" href="/assets/js/105.757306c7.js"><link rel="prefetch" href="/assets/js/106.c2c7e8d5.js"><link rel="prefetch" href="/assets/js/107.a12c9e45.js"><link rel="prefetch" href="/assets/js/108.af6bf755.js"><link rel="prefetch" href="/assets/js/109.e95af487.js"><link rel="prefetch" href="/assets/js/11.323cce65.js"><link rel="prefetch" href="/assets/js/110.d55414b7.js"><link rel="prefetch" href="/assets/js/111.0e568416.js"><link rel="prefetch" href="/assets/js/112.24068f5c.js"><link rel="prefetch" href="/assets/js/113.11a3ed5d.js"><link rel="prefetch" href="/assets/js/114.b7a21a5c.js"><link rel="prefetch" href="/assets/js/115.8a8b7953.js"><link rel="prefetch" href="/assets/js/116.5847ef55.js"><link rel="prefetch" href="/assets/js/117.0ba1b0af.js"><link rel="prefetch" href="/assets/js/118.64e334e6.js"><link rel="prefetch" href="/assets/js/119.a5859784.js"><link rel="prefetch" href="/assets/js/12.c83e3c87.js"><link rel="prefetch" href="/assets/js/120.857f02ab.js"><link rel="prefetch" href="/assets/js/121.df5a5733.js"><link rel="prefetch" href="/assets/js/122.6f87eff8.js"><link rel="prefetch" href="/assets/js/123.2a9af6f7.js"><link rel="prefetch" href="/assets/js/124.1fcc27ae.js"><link rel="prefetch" href="/assets/js/125.bf8fd16c.js"><link rel="prefetch" href="/assets/js/126.2104d4c1.js"><link rel="prefetch" href="/assets/js/127.4b6c4988.js"><link rel="prefetch" href="/assets/js/128.a802cc4c.js"><link rel="prefetch" href="/assets/js/129.c99f7efa.js"><link rel="prefetch" href="/assets/js/13.9013091b.js"><link rel="prefetch" href="/assets/js/130.0861503e.js"><link rel="prefetch" href="/assets/js/131.b26f57dc.js"><link rel="prefetch" href="/assets/js/132.fe7c29b3.js"><link rel="prefetch" href="/assets/js/133.7461fcc3.js"><link rel="prefetch" href="/assets/js/134.a857d18e.js"><link rel="prefetch" href="/assets/js/135.51d933ef.js"><link rel="prefetch" href="/assets/js/136.bbd6d5c1.js"><link rel="prefetch" href="/assets/js/137.19bd53e8.js"><link rel="prefetch" href="/assets/js/138.701e8f3a.js"><link rel="prefetch" href="/assets/js/139.c5128cb6.js"><link rel="prefetch" href="/assets/js/14.932e0778.js"><link rel="prefetch" href="/assets/js/140.6c972a8d.js"><link rel="prefetch" href="/assets/js/141.1d6633ab.js"><link rel="prefetch" href="/assets/js/142.efed1127.js"><link rel="prefetch" href="/assets/js/143.b27f42b8.js"><link rel="prefetch" href="/assets/js/144.f31ebd51.js"><link rel="prefetch" href="/assets/js/145.f8c2b775.js"><link rel="prefetch" href="/assets/js/146.b219bc33.js"><link rel="prefetch" href="/assets/js/147.d8118e9f.js"><link rel="prefetch" href="/assets/js/148.6b1cba56.js"><link rel="prefetch" href="/assets/js/149.a47f6457.js"><link rel="prefetch" href="/assets/js/15.04b4b708.js"><link rel="prefetch" href="/assets/js/150.6455c79e.js"><link rel="prefetch" href="/assets/js/151.ba4699a4.js"><link rel="prefetch" href="/assets/js/152.76b2df89.js"><link rel="prefetch" href="/assets/js/153.63a35950.js"><link rel="prefetch" href="/assets/js/154.de8cadf7.js"><link rel="prefetch" href="/assets/js/155.728a2868.js"><link rel="prefetch" href="/assets/js/156.e7c79791.js"><link rel="prefetch" href="/assets/js/157.43a31655.js"><link rel="prefetch" href="/assets/js/158.d71759b1.js"><link rel="prefetch" href="/assets/js/159.82fb8b40.js"><link rel="prefetch" href="/assets/js/16.c7e977c7.js"><link rel="prefetch" href="/assets/js/160.2fbfe95f.js"><link rel="prefetch" href="/assets/js/161.0a45983e.js"><link rel="prefetch" href="/assets/js/162.34afe2d7.js"><link rel="prefetch" href="/assets/js/163.80e9e5fd.js"><link rel="prefetch" href="/assets/js/164.64eac1eb.js"><link rel="prefetch" href="/assets/js/165.814458b0.js"><link rel="prefetch" href="/assets/js/166.66ebdce1.js"><link rel="prefetch" href="/assets/js/167.9a721e1f.js"><link rel="prefetch" href="/assets/js/168.cf53b343.js"><link rel="prefetch" href="/assets/js/169.9602ea8d.js"><link rel="prefetch" href="/assets/js/17.bf149089.js"><link rel="prefetch" href="/assets/js/170.2b63d7d3.js"><link rel="prefetch" href="/assets/js/171.9b8de16f.js"><link rel="prefetch" href="/assets/js/172.08c6417f.js"><link rel="prefetch" href="/assets/js/173.f4c6ef29.js"><link rel="prefetch" href="/assets/js/174.20f62f8b.js"><link rel="prefetch" href="/assets/js/175.29849dda.js"><link rel="prefetch" href="/assets/js/176.ac876a4e.js"><link rel="prefetch" href="/assets/js/177.0e998ca1.js"><link rel="prefetch" href="/assets/js/178.3ba3620d.js"><link rel="prefetch" href="/assets/js/179.2fd4422d.js"><link rel="prefetch" href="/assets/js/180.c8b3c0df.js"><link rel="prefetch" href="/assets/js/181.3c84430a.js"><link rel="prefetch" href="/assets/js/182.581e3779.js"><link rel="prefetch" href="/assets/js/183.25c352d0.js"><link rel="prefetch" href="/assets/js/184.7b1393d7.js"><link rel="prefetch" href="/assets/js/185.0667ae17.js"><link rel="prefetch" href="/assets/js/186.f8a31fc5.js"><link rel="prefetch" href="/assets/js/187.7271a1e3.js"><link rel="prefetch" href="/assets/js/188.f6525f8c.js"><link rel="prefetch" href="/assets/js/189.60f4b285.js"><link rel="prefetch" href="/assets/js/19.414b88d3.js"><link rel="prefetch" href="/assets/js/190.196e7072.js"><link rel="prefetch" href="/assets/js/191.fc6622ef.js"><link rel="prefetch" href="/assets/js/192.a4ca4789.js"><link rel="prefetch" href="/assets/js/193.bf683ffc.js"><link rel="prefetch" href="/assets/js/194.0f896182.js"><link rel="prefetch" href="/assets/js/195.291fcd52.js"><link rel="prefetch" href="/assets/js/196.3d54fbfe.js"><link rel="prefetch" href="/assets/js/197.43503dc3.js"><link rel="prefetch" href="/assets/js/198.3c25a6a0.js"><link rel="prefetch" href="/assets/js/199.0186d807.js"><link rel="prefetch" href="/assets/js/20.52a18ee0.js"><link rel="prefetch" href="/assets/js/200.a2d1bd7b.js"><link rel="prefetch" href="/assets/js/201.e66a5e9d.js"><link rel="prefetch" href="/assets/js/202.c18a80fd.js"><link rel="prefetch" href="/assets/js/203.fa7739e9.js"><link rel="prefetch" href="/assets/js/204.19ad0ee8.js"><link rel="prefetch" href="/assets/js/205.29d77299.js"><link rel="prefetch" href="/assets/js/206.8e0e135b.js"><link rel="prefetch" href="/assets/js/207.6aeed711.js"><link rel="prefetch" href="/assets/js/208.55850a7b.js"><link rel="prefetch" href="/assets/js/209.e47aaa64.js"><link rel="prefetch" href="/assets/js/21.22842a0f.js"><link rel="prefetch" href="/assets/js/210.9e12678a.js"><link rel="prefetch" href="/assets/js/211.361efbe3.js"><link rel="prefetch" href="/assets/js/212.cd28b79d.js"><link rel="prefetch" href="/assets/js/213.0385731c.js"><link rel="prefetch" href="/assets/js/214.8422df25.js"><link rel="prefetch" href="/assets/js/215.63219b00.js"><link rel="prefetch" href="/assets/js/216.02d008b5.js"><link rel="prefetch" href="/assets/js/217.40b9c7fb.js"><link rel="prefetch" href="/assets/js/218.3bdde972.js"><link rel="prefetch" href="/assets/js/219.c5433a99.js"><link rel="prefetch" href="/assets/js/22.a21b7c0e.js"><link rel="prefetch" href="/assets/js/220.0c354022.js"><link rel="prefetch" href="/assets/js/221.ddf22c5e.js"><link rel="prefetch" href="/assets/js/222.7678fe1e.js"><link rel="prefetch" href="/assets/js/223.6c5962cc.js"><link rel="prefetch" href="/assets/js/224.f7e36bf3.js"><link rel="prefetch" href="/assets/js/225.725b6fcf.js"><link rel="prefetch" href="/assets/js/226.5e9d7eec.js"><link rel="prefetch" href="/assets/js/227.b060aa31.js"><link rel="prefetch" href="/assets/js/228.a3eba3b6.js"><link rel="prefetch" href="/assets/js/229.486bd794.js"><link rel="prefetch" href="/assets/js/23.5f9d0976.js"><link rel="prefetch" href="/assets/js/230.5a7c0a55.js"><link rel="prefetch" href="/assets/js/231.7c6620a5.js"><link rel="prefetch" href="/assets/js/232.cc58a96c.js"><link rel="prefetch" href="/assets/js/233.daf6c78a.js"><link rel="prefetch" href="/assets/js/234.7193ae71.js"><link rel="prefetch" href="/assets/js/235.cd42c17c.js"><link rel="prefetch" href="/assets/js/236.9c046bb9.js"><link rel="prefetch" href="/assets/js/237.d0a60f1b.js"><link rel="prefetch" href="/assets/js/238.91fc6a5f.js"><link rel="prefetch" href="/assets/js/239.64e7c2b7.js"><link rel="prefetch" href="/assets/js/24.c810eb09.js"><link rel="prefetch" href="/assets/js/240.7570cd7f.js"><link rel="prefetch" href="/assets/js/241.9ccd2364.js"><link rel="prefetch" href="/assets/js/242.3ce7ba91.js"><link rel="prefetch" href="/assets/js/243.101634ca.js"><link rel="prefetch" href="/assets/js/244.bcd75b66.js"><link rel="prefetch" href="/assets/js/245.35236282.js"><link rel="prefetch" href="/assets/js/246.067edc5b.js"><link rel="prefetch" href="/assets/js/247.b4c7f756.js"><link rel="prefetch" href="/assets/js/248.ece4f86b.js"><link rel="prefetch" href="/assets/js/249.988d23f8.js"><link rel="prefetch" href="/assets/js/25.13c59344.js"><link rel="prefetch" href="/assets/js/250.c51d6266.js"><link rel="prefetch" href="/assets/js/251.3bdf26a3.js"><link rel="prefetch" href="/assets/js/252.7db45b10.js"><link rel="prefetch" href="/assets/js/253.49b64f22.js"><link rel="prefetch" href="/assets/js/254.35933a61.js"><link rel="prefetch" href="/assets/js/255.09c9d6b6.js"><link rel="prefetch" href="/assets/js/256.3ec90e6f.js"><link rel="prefetch" href="/assets/js/257.bc178194.js"><link rel="prefetch" href="/assets/js/258.17d8c2de.js"><link rel="prefetch" href="/assets/js/259.03417ccc.js"><link rel="prefetch" href="/assets/js/26.e0294a3b.js"><link rel="prefetch" href="/assets/js/260.216a2f51.js"><link rel="prefetch" href="/assets/js/261.871c216b.js"><link rel="prefetch" href="/assets/js/262.56efbf44.js"><link rel="prefetch" href="/assets/js/263.122c5634.js"><link rel="prefetch" href="/assets/js/264.e9e1d4f6.js"><link rel="prefetch" href="/assets/js/265.56ddac52.js"><link rel="prefetch" href="/assets/js/266.5726ebe6.js"><link rel="prefetch" href="/assets/js/267.5e1c37d4.js"><link rel="prefetch" href="/assets/js/268.82d4a6c1.js"><link rel="prefetch" href="/assets/js/269.ff31fe86.js"><link rel="prefetch" href="/assets/js/27.35fc009c.js"><link rel="prefetch" href="/assets/js/270.6109e3ea.js"><link rel="prefetch" href="/assets/js/271.c6c91d5b.js"><link rel="prefetch" href="/assets/js/272.a8859d64.js"><link rel="prefetch" href="/assets/js/273.f1c310b9.js"><link rel="prefetch" href="/assets/js/274.f47ab8e0.js"><link rel="prefetch" href="/assets/js/275.1deb3270.js"><link rel="prefetch" href="/assets/js/276.8c7ee165.js"><link rel="prefetch" href="/assets/js/277.9954c4e9.js"><link rel="prefetch" href="/assets/js/278.cf66e2ed.js"><link rel="prefetch" href="/assets/js/279.83405e57.js"><link rel="prefetch" href="/assets/js/28.f3c87fa4.js"><link rel="prefetch" href="/assets/js/280.73124214.js"><link rel="prefetch" href="/assets/js/281.1bf94d5a.js"><link rel="prefetch" href="/assets/js/29.87738507.js"><link rel="prefetch" href="/assets/js/3.9ddafd63.js"><link rel="prefetch" href="/assets/js/30.9a33d360.js"><link rel="prefetch" href="/assets/js/31.760d306e.js"><link rel="prefetch" href="/assets/js/32.729df4d8.js"><link rel="prefetch" href="/assets/js/33.870a94f6.js"><link rel="prefetch" href="/assets/js/34.a06cf942.js"><link rel="prefetch" href="/assets/js/35.a7120b36.js"><link rel="prefetch" href="/assets/js/36.9b151665.js"><link rel="prefetch" href="/assets/js/37.7747739c.js"><link rel="prefetch" href="/assets/js/38.c0d80251.js"><link rel="prefetch" href="/assets/js/39.085aa663.js"><link rel="prefetch" href="/assets/js/4.b1166e63.js"><link rel="prefetch" href="/assets/js/40.128118ea.js"><link rel="prefetch" href="/assets/js/41.deda7589.js"><link rel="prefetch" href="/assets/js/42.1f799c3f.js"><link rel="prefetch" href="/assets/js/43.ce0cf301.js"><link rel="prefetch" href="/assets/js/44.c349236e.js"><link rel="prefetch" href="/assets/js/45.4e9cb319.js"><link rel="prefetch" href="/assets/js/46.c7a05043.js"><link rel="prefetch" href="/assets/js/47.f97ee979.js"><link rel="prefetch" href="/assets/js/48.3a5a97e9.js"><link rel="prefetch" href="/assets/js/49.ac08632a.js"><link rel="prefetch" href="/assets/js/5.093e58d7.js"><link rel="prefetch" href="/assets/js/50.27d273f3.js"><link rel="prefetch" href="/assets/js/51.66cc8321.js"><link rel="prefetch" href="/assets/js/52.d161537d.js"><link rel="prefetch" href="/assets/js/53.d140f908.js"><link rel="prefetch" href="/assets/js/54.0235ceff.js"><link rel="prefetch" href="/assets/js/55.a55594c1.js"><link rel="prefetch" href="/assets/js/56.1f22204a.js"><link rel="prefetch" href="/assets/js/57.a0a26849.js"><link rel="prefetch" href="/assets/js/58.d7345235.js"><link rel="prefetch" href="/assets/js/59.81a8a316.js"><link rel="prefetch" href="/assets/js/6.59f3b7b6.js"><link rel="prefetch" href="/assets/js/60.c2b813c0.js"><link rel="prefetch" href="/assets/js/61.9972e78e.js"><link rel="prefetch" href="/assets/js/62.99b67f22.js"><link rel="prefetch" href="/assets/js/63.b469a857.js"><link rel="prefetch" href="/assets/js/64.0ca6f6c1.js"><link rel="prefetch" href="/assets/js/65.b8540b0f.js"><link rel="prefetch" href="/assets/js/66.4980be30.js"><link rel="prefetch" href="/assets/js/67.8278463d.js"><link rel="prefetch" href="/assets/js/68.907a24bc.js"><link rel="prefetch" href="/assets/js/69.fb4558bc.js"><link rel="prefetch" href="/assets/js/7.f7e8ebdc.js"><link rel="prefetch" href="/assets/js/70.622bf466.js"><link rel="prefetch" href="/assets/js/71.5e0ee530.js"><link rel="prefetch" href="/assets/js/72.eb23a35d.js"><link rel="prefetch" href="/assets/js/73.40abfa0b.js"><link rel="prefetch" href="/assets/js/74.4094b61b.js"><link rel="prefetch" href="/assets/js/75.5c3b5a4c.js"><link rel="prefetch" href="/assets/js/76.efbc2228.js"><link rel="prefetch" href="/assets/js/77.e8c7c1df.js"><link rel="prefetch" href="/assets/js/78.1dbc6bec.js"><link rel="prefetch" href="/assets/js/79.cacffcfa.js"><link rel="prefetch" href="/assets/js/8.ba73daac.js"><link rel="prefetch" href="/assets/js/80.4adb6bc0.js"><link rel="prefetch" href="/assets/js/81.ec01b0eb.js"><link rel="prefetch" href="/assets/js/82.fa60abc7.js"><link rel="prefetch" href="/assets/js/83.adc499ef.js"><link rel="prefetch" href="/assets/js/84.6a9a7f25.js"><link rel="prefetch" href="/assets/js/85.dd78c411.js"><link rel="prefetch" href="/assets/js/86.b2755e09.js"><link rel="prefetch" href="/assets/js/87.14216b7f.js"><link rel="prefetch" href="/assets/js/88.25ad2b2e.js"><link rel="prefetch" href="/assets/js/89.4434e71b.js"><link rel="prefetch" href="/assets/js/9.5f162f90.js"><link rel="prefetch" href="/assets/js/90.135b0f44.js"><link rel="prefetch" href="/assets/js/91.9fff7f99.js"><link rel="prefetch" href="/assets/js/92.fd8650e0.js"><link rel="prefetch" href="/assets/js/93.97e850e6.js"><link rel="prefetch" href="/assets/js/94.44278b7b.js"><link rel="prefetch" href="/assets/js/95.f7ef3696.js"><link rel="prefetch" href="/assets/js/96.e3c08b5c.js"><link rel="prefetch" href="/assets/js/97.60754372.js"><link rel="prefetch" href="/assets/js/98.d5cfbfb5.js"><link rel="prefetch" href="/assets/js/99.90f3c1fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link router-link-active">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link router-link-active">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Kubernetes</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/kubernetes/" aria-current="page" class="sidebar-link">kubernetes 容器管理</a></li><li><a href="/middleware/kubernetes/K8s组件介绍-0.html" class="sidebar-link">1. K8s组件介绍</a></li><li><a href="/middleware/kubernetes/kubeadm方式搭建K8S集群-1.html" class="sidebar-link">2. kubeadm方式搭建K8S集群</a></li><li><a href="/middleware/kubernetes/集群管理工具kubectl-2.html" class="sidebar-link">3. K8s集群管理工具kubectl</a></li><li><a href="/middleware/kubernetes/K8s集群YAML文件详解-3.html" class="sidebar-link">4. K8s集群YAML文件详解</a></li><li><a href="/middleware/kubernetes/K8s核心技术Pod-4.html" class="sidebar-link">5. K8s核心技术Pod</a></li><li><a href="/middleware/kubernetes/K8s核心技术Controller-5.html" class="active sidebar-link">6. K8s核心技术Controller</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-1-什么是controller" class="sidebar-link">6.1 什么是Controller</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-2-pod和controller的关系" class="sidebar-link">6.2 Pod和Controller的关系</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-3-deployment控制器应用" class="sidebar-link">6.3 Deployment控制器应用</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-4-deployment部署应用" class="sidebar-link">6.4 Deployment部署应用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-4-1-创建yaml配置文件" class="sidebar-link">6.4.1 创建yaml配置文件</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-4-2-使用yaml创建pod" class="sidebar-link">6.4.2 使用YAML创建Pod</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-4-3-导出对应的配置文件" class="sidebar-link">6.4.3 导出对应的配置文件</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-5-升级回滚和弹性伸缩" class="sidebar-link">6.5 升级回滚和弹性伸缩</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-5-1-应用升级和回滚" class="sidebar-link">6.5.1 应用升级和回滚</a></li><li class="sidebar-sub-header"><a href="/middleware/kubernetes/K8s核心技术Controller-5.html#_6-5-2-弹性伸缩" class="sidebar-link">6.5.2 弹性伸缩</a></li></ul></li></ul></li><li><a href="/middleware/kubernetes/K8s核心技术Service-6.html" class="sidebar-link">7. K8s核心技术Service</a></li><li><a href="/middleware/kubernetes/K8s控制器Statefulset-7.html" class="sidebar-link">8. K8s核心技术--其他控制器</a></li><li><a href="/middleware/kubernetes/K8s配置管理-8.html" class="sidebar-link">9. K8s配置管理</a></li><li><a href="/middleware/kubernetes/K8s集群安全机制-9.html" class="sidebar-link">10. K8s集群安全机制</a></li><li><a href="/middleware/kubernetes/K8s核心技术Ingress-a.html" class="sidebar-link">11. K8s核心技术Ingress</a></li><li><a href="/middleware/kubernetes/K8s核心技术Helm-b.html" class="sidebar-link">12. K8s核心技术Helm</a></li><li><a href="/middleware/kubernetes/K8s持久化存储-c.html" class="sidebar-link">13. K8s持久化存储</a></li><li><a href="/middleware/kubernetes/k8s资源监控-d.html" class="sidebar-link">14. K8s集群资源监控</a></li><li><a href="/middleware/kubernetes/k8s高可用集群-e.html" class="sidebar-link">15. K8s高可用集群搭建</a></li><li><a href="/middleware/kubernetes/k8s配置默认存储类-f.html" class="sidebar-link">Kubernetes配置默认存储类</a></li><li><a href="/middleware/kubernetes/K8s容器交付-f.html" class="sidebar-link">16. K8s容器交付</a></li><li><a href="/middleware/kubernetes/kubesphere可视化-g.html" class="sidebar-link">16. K8s安装--kubesphere</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_6-k8s核心技术controller"><a href="#_6-k8s核心技术controller" class="header-anchor">#</a> 6. K8s核心技术Controller</h1> <ul><li>什么是Controller</li> <li>Pod和Controller的关系</li> <li>Deployment控制器应用场景</li> <li>yaml文件字段说明</li> <li>Deployment控制器部署应用</li> <li>升级回滚</li> <li>弹性伸缩</li></ul> <h2 id="_6-1-什么是controller"><a href="#_6-1-什么是controller" class="header-anchor">#</a> 6.1 什么是Controller</h2> <p>Controller是在集群上管理和运行容器的对象，Controller是实际存在的，Pod是虚拟机的</p> <h2 id="_6-2-pod和controller的关系"><a href="#_6-2-pod和controller的关系" class="header-anchor">#</a> 6.2 Pod和Controller的关系</h2> <p>Pod是通过Controller实现应用的运维，比如弹性伸缩，滚动升级等</p> <p>Pod 和 Controller之间是通过label标签来建立关系，同时Controller又被称为控制器工作负载</p> <p><img src="/assets/img/image-20201116092431237.62b16523.png" alt="image-20201116092431237"></p> <h2 id="_6-3-deployment控制器应用"><a href="#_6-3-deployment控制器应用" class="header-anchor">#</a> 6.3 Deployment控制器应用</h2> <ul><li>Deployment控制器可以部署无状态应用</li> <li>管理Pod和ReplicaSet</li> <li>部署，滚动升级等功能</li> <li>应用场景：web服务，微服务</li></ul> <p>Deployment表示用户对K8S集群的一次更新操作。Deployment是一个比RS( Replica Set, RS) 应用模型更广的 API 对象，可以是创建一个新的服务，更新一个新的服务，也可以是滚动升级一个服务。滚动升级一个服务，实际是创建一个新的RS，然后逐渐将新 RS 中副本数增加到理想状态，将旧RS中的副本数减少到0的复合操作。</p> <p>这样一个复合操作用一个RS是不好描述的，所以用一个更通用的Deployment来描述。以K8S的发展方向，未来对所有长期伺服型的业务的管理，都会通过Deployment来管理。</p> <h2 id="_6-4-deployment部署应用"><a href="#_6-4-deployment部署应用" class="header-anchor">#</a> 6.4 Deployment部署应用</h2> <h3 id="_6-4-1-创建yaml配置文件"><a href="#_6-4-1-创建yaml配置文件" class="header-anchor">#</a> 6.4.1 创建yaml配置文件</h3> <p>之前我们也使用Deployment部署过应用，如下代码所示</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectrl create deployment web --image<span class="token operator">=</span>nginx
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>但是上述代码不是很好的进行复用，因为每次我们都需要重新输入代码，所以我们都是通过YAML进行配置</p> <p>但是我们可以尝试使用上面的代码创建一个镜像【只是尝试，不会创建】</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl create deployment web --image<span class="token operator">=</span>nginx --dry-run -o yaml <span class="token operator">&gt;</span> nginx.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>然后输出一个yaml配置文件 <code>nginx.yml</code> ，配置文件如下所示</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: web
+  name: web
+spec:
+  replicas: <span class="token number">1</span>
+  selector:
+    matchLabels:
+      app: web
+  strategy: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: web
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+status: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><p>我们看到的 selector 和 label 就是我们Pod 和 Controller之间建立关系的桥梁</p> <p><img src="/assets/img/image-20201116093638951.89c51cd1.png" alt="image-20201116093638951"></p> <h3 id="_6-4-2-使用yaml创建pod"><a href="#_6-4-2-使用yaml创建pod" class="header-anchor">#</a> 6.4.2 使用YAML创建Pod</h3> <p>通过刚刚的代码，我们已经生成了YAML文件，下面我们就可以使用该配置文件快速创建Pod镜像了</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl apply -f nginx.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="data:image/png;base64,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" alt="image-20201116094046007"></p> <p>但是因为这个方式创建的，我们只能在集群内部进行访问，所以我们还需要对外暴露端口</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl expose deployment web --port<span class="token operator">=</span><span class="token number">80</span> --type<span class="token operator">=</span>NodePort --target-port<span class="token operator">=</span><span class="token number">80</span> --name<span class="token operator">=</span>web1
+
+<span class="token punctuation">[</span>root@k8smaster ~<span class="token punctuation">]</span><span class="token comment">#  kubectl get pod,svc</span>
+NAME                        READY   STATUS    RESTARTS   AGE
+pod/nginx-f89759699-xffhv   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          10h
+pod/web-5dcb957ccc-pjx48    <span class="token number">1</span>/1     Running   <span class="token number">0</span>          135m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="token punctuation">(</span>S<span class="token punctuation">)</span>        AGE
+service/kubernetes   ClusterIP   <span class="token number">10.96</span>.0.1       <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>        <span class="token number">443</span>/TCP        12h
+service/nginx        NodePort    <span class="token number">10.104</span>.215.38   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>        <span class="token number">80</span>:32307/TCP   10h
+service/web1         NodePort    <span class="token number">10.107</span>.26.157   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>        <span class="token number">80</span>:30257/TCP   4m15s
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>关于上述命令，有几个参数</p> <ul><li>--port：就是我们内部的端口号</li> <li>--target-port：就是暴露外面访问的端口号</li> <li>--name：名称</li> <li>--type：类型</li></ul> <h3 id="_6-4-3-导出对应的配置文件"><a href="#_6-4-3-导出对应的配置文件" class="header-anchor">#</a> 6.4.3 导出对应的配置文件</h3> <ul><li>创建pod并导出yaml文件</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl expose deployment web --port<span class="token operator">=</span><span class="token number">80</span> --type<span class="token operator">=</span>NodePort --target-port<span class="token operator">=</span><span class="token number">80</span> --name<span class="token operator">=</span>web2 -o yaml <span class="token operator">&gt;</span> web1.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>得到的web1.yaml如下所示</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: <span class="token string">&quot;2020-11-16T02:26:53Z&quot;</span>
+  labels:
+    app: web
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+          f:app: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+      f:spec:
+        f:externalTrafficPolicy: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        f:ports:
+          .: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+          k:<span class="token punctuation">{</span><span class="token string">&quot;port&quot;</span>:80,<span class="token string">&quot;protocol&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;TCP&quot;</span><span class="token punctuation">}</span>:
+            .: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+            f:port: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+            f:protocol: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+            f:targetPort: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        f:selector:
+          .: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+          f:app: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        f:sessionAffinity: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        f:type: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    manager: kubectl
+    operation: Update
+    time: <span class="token string">&quot;2020-11-16T02:26:53Z&quot;</span>
+  name: web2
+  namespace: default
+  resourceVersion: <span class="token string">&quot;113693&quot;</span>
+  selfLink: /api/v1/namespaces/default/services/web2
+  uid: d570437d-a6b4-4456-8dfb-950f09534516
+spec:
+  clusterIP: <span class="token number">10.104</span>.174.145
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: <span class="token number">32639</span>
+    port: <span class="token number">80</span>
+    protocol: TCP
+    targetPort: <span class="token number">80</span>
+  selector:
+    app: web
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br></div></div><p>然后我们可以通过下面的命令来查看对外暴露的服务</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl get pods,svc
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="/assets/img/image-20201116104021357.93480c6e.png" alt="image-20201116104021357"></p> <p>然后我们访问对应的url，即可看到 nginx了 <code>http://192.168.177.130:32639/</code></p> <p><img src="/assets/img/image-20201116104131968.145b9b2a.png" alt="image-20201116104131968"></p> <h2 id="_6-5-升级回滚和弹性伸缩"><a href="#_6-5-升级回滚和弹性伸缩" class="header-anchor">#</a> 6.5 升级回滚和弹性伸缩</h2> <ul><li>升级：  假设从版本为1.14 升级到 1.15 ，这就叫应用的升级【升级可以保证服务不中断】</li> <li>回滚：从版本1.15 变成 1.14，这就叫应用的回滚</li> <li>弹性伸缩：我们根据不同的业务场景，来改变Pod的数量对外提供服务，这就是弹性伸缩</li></ul> <h3 id="_6-5-1-应用升级和回滚"><a href="#_6-5-1-应用升级和回滚" class="header-anchor">#</a> 6.5.1 应用升级和回滚</h3> <p>首先我们先创建一个 1.14版本的Pod</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: web
+  name: web
+spec:
+  replicas: <span class="token number">1</span>
+  selector:
+    matchLabels:
+      app: web
+  strategy: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: web
+    spec:
+      containers:
+      - image: nginx:1.14
+        name: nginx
+        resources: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+status: <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><p>我们先指定版本为1.14，然后开始创建我们的Pod</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl apply -f nginx.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>同时，我们使用docker images命令，就能看到我们成功拉取到了一个 1.14版本的镜像</p> <p><img src="/assets/img/image-20201116105710966.4da9b1c0.png" alt="image-20201116105710966"></p> <p>我们使用下面的命令，可以将nginx从 1.14 升级到 1.15</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl <span class="token builtin class-name">set</span> image deployment web <span class="token assign-left variable">nginx</span><span class="token operator">=</span>nginx:1.15
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>在我们执行完命令后，能看到升级的过程</p> <p><img src="/assets/img/image-20201116105847069.4415fec0.png" alt="image-20201116105847069"></p> <ul><li>首先是开始的nginx 1.14版本的Pod在运行，然后 1.15版本的在创建</li> <li>然后在1.15版本创建完成后，就会暂停1.14版本</li> <li>最后把1.14版本的Pod移除，完成我们的升级</li></ul> <p>我们在下载 1.15版本，容器就处于ContainerCreating状态，然后下载完成后，就用 1.15版本去替换1.14版本了，这么做的好处就是：升级可以保证服务不中断</p> <p><img src="/assets/img/image-20201116111614085.9bcdf9af.png" alt="image-20201116111614085"></p> <p>我们到我们的node2节点上，查看我们的 docker images;</p> <p><img src="/assets/img/image-20201116111315000.6053f3a1.png" alt="image-20201116111315000"></p> <p>能够看到，我们已经成功拉取到了 1.15版本的nginx了</p> <h4 id="查看升级状态"><a href="#查看升级状态" class="header-anchor">#</a> 查看升级状态</h4> <p>下面可以，查看升级状态</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl rollout status deployment web
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="data:image/png;base64,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" alt="image-20201116112139645"></p> <h4 id="查看历史版本"><a href="#查看历史版本" class="header-anchor">#</a> 查看历史版本</h4> <p>我们还可以查看历史版本</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl rollout <span class="token function">history</span> deployment web
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="应用回滚"><a href="#应用回滚" class="header-anchor">#</a> 应用回滚</h4> <p>我们可以使用下面命令，完成回滚操作，也就是回滚到上一个版本</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl rollout undo deployment web
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>然后我们就可以查看状态</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl rollout status deployment web
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><img src="/assets/img/image-20201116112524601.9e533bab.png" alt="image-20201116112524601"></p> <p>同时我们还可以回滚到指定版本</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl rollout undo deployment web --to-revision<span class="token operator">=</span><span class="token number">2</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_6-5-2-弹性伸缩"><a href="#_6-5-2-弹性伸缩" class="header-anchor">#</a> 6.5.2 弹性伸缩</h3> <p>弹性伸缩，也就是我们通过命令一下创建多个副本</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl scale deployment web --replicas<span class="token operator">=</span><span class="token number">10</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>能够清晰看到，我们一下创建了10个副本</p> <p><img src="/assets/img/image-20201117092841865.3993150c.png" alt="image-20201117092841865"></p> <ul><li>减少副本</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@k8smaster ~<span class="token punctuation">]</span><span class="token comment"># kubectl scale deployment web1111 --replicas=1</span>
+deployment.apps/web1111 scaled
+<span class="token punctuation">[</span>root@k8smaster ~<span class="token punctuation">]</span><span class="token comment"># kubectl get pods</span>
+NAME                       READY   STATUS        RESTARTS   AGE
+nginx-f89759699-xffhv      <span class="token number">1</span>/1     Running       <span class="token number">0</span>          11h
+web-5dcb957ccc-swrfk       <span class="token number">1</span>/1     Running       <span class="token number">0</span>          106s
+web-tqk-86bf49fd74-kj8rd   <span class="token number">1</span>/1     Running       <span class="token number">0</span>          16m
+web1111-68bd75d8d5-9w864   <span class="token number">0</span>/1     Terminating   <span class="token number">0</span>          53s
+web1111-68bd75d8d5-wwwwd   <span class="token number">1</span>/1     Running       <span class="token number">0</span>          102s
+<span class="token punctuation">[</span>root@k8smaster ~<span class="token punctuation">]</span><span class="token comment"># kubectl get pods</span>
+NAME                       READY   STATUS        RESTARTS   AGE
+nginx-f89759699-xffhv      <span class="token number">1</span>/1     Running       <span class="token number">0</span>          11h
+web-5dcb957ccc-swrfk       <span class="token number">1</span>/1     Running       <span class="token number">0</span>          110s
+web-tqk-86bf49fd74-kj8rd   <span class="token number">1</span>/1     Running       <span class="token number">0</span>          16m
+web1111-68bd75d8d5-9w864   <span class="token number">0</span>/1     Terminating   <span class="token number">0</span>          57s
+web1111-68bd75d8d5-wwwwd   <span class="token number">1</span>/1     Running       <span class="token number">0</span>          106s
+<span class="token punctuation">[</span>root@k8smaster ~<span class="token punctuation">]</span><span class="token comment"># kubectl get pods</span>
+NAME                       READY   STATUS    RESTARTS   AGE
+nginx-f89759699-xffhv      <span class="token number">1</span>/1     Running   <span class="token number">0</span>          11h
+web-5dcb957ccc-swrfk       <span class="token number">1</span>/1     Running   <span class="token number">0</span>          2m1s
+web-tqk-86bf49fd74-kj8rd   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          16m
+web1111-68bd75d8d5-wwwwd   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          117s
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/kubernetes/K8s核心技术Pod-4.html" class="prev">
+        5. K8s核心技术Pod
+      </a></span> <span class="next"><a href="/middleware/kubernetes/K8s核心技术Service-6.html">
+        7. K8s核心技术Service
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a86c1f59.js" defer></script><script src="/assets/js/2.572fbcb7.js" defer></script><script src="/assets/js/18.2f7a7cd1.js" defer></script>
+  </body>
+</html>

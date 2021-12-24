@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>4. Gateway限流 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.a86c1f59.js" as="script"><link rel="preload" href="/assets/js/2.572fbcb7.js" as="script"><link rel="preload" href="/assets/js/36.9b151665.js" as="script"><link rel="prefetch" href="/assets/js/10.8de04070.js"><link rel="prefetch" href="/assets/js/100.95c60bcc.js"><link rel="prefetch" href="/assets/js/101.66aaacb7.js"><link rel="prefetch" href="/assets/js/102.06cfb9b6.js"><link rel="prefetch" href="/assets/js/103.f2c99fdc.js"><link rel="prefetch" href="/assets/js/104.e6165e64.js"><link rel="prefetch" href="/assets/js/105.757306c7.js"><link rel="prefetch" href="/assets/js/106.c2c7e8d5.js"><link rel="prefetch" href="/assets/js/107.a12c9e45.js"><link rel="prefetch" href="/assets/js/108.af6bf755.js"><link rel="prefetch" href="/assets/js/109.e95af487.js"><link rel="prefetch" href="/assets/js/11.323cce65.js"><link rel="prefetch" href="/assets/js/110.d55414b7.js"><link rel="prefetch" href="/assets/js/111.0e568416.js"><link rel="prefetch" href="/assets/js/112.24068f5c.js"><link rel="prefetch" href="/assets/js/113.11a3ed5d.js"><link rel="prefetch" href="/assets/js/114.b7a21a5c.js"><link rel="prefetch" href="/assets/js/115.8a8b7953.js"><link rel="prefetch" href="/assets/js/116.5847ef55.js"><link rel="prefetch" href="/assets/js/117.0ba1b0af.js"><link rel="prefetch" href="/assets/js/118.64e334e6.js"><link rel="prefetch" href="/assets/js/119.a5859784.js"><link rel="prefetch" href="/assets/js/12.c83e3c87.js"><link rel="prefetch" href="/assets/js/120.857f02ab.js"><link rel="prefetch" href="/assets/js/121.df5a5733.js"><link rel="prefetch" href="/assets/js/122.6f87eff8.js"><link rel="prefetch" href="/assets/js/123.2a9af6f7.js"><link rel="prefetch" href="/assets/js/124.1fcc27ae.js"><link rel="prefetch" href="/assets/js/125.bf8fd16c.js"><link rel="prefetch" href="/assets/js/126.2104d4c1.js"><link rel="prefetch" href="/assets/js/127.4b6c4988.js"><link rel="prefetch" href="/assets/js/128.a802cc4c.js"><link rel="prefetch" href="/assets/js/129.c99f7efa.js"><link rel="prefetch" href="/assets/js/13.9013091b.js"><link rel="prefetch" href="/assets/js/130.0861503e.js"><link rel="prefetch" href="/assets/js/131.b26f57dc.js"><link rel="prefetch" href="/assets/js/132.fe7c29b3.js"><link rel="prefetch" href="/assets/js/133.7461fcc3.js"><link rel="prefetch" href="/assets/js/134.a857d18e.js"><link rel="prefetch" href="/assets/js/135.51d933ef.js"><link rel="prefetch" href="/assets/js/136.bbd6d5c1.js"><link rel="prefetch" href="/assets/js/137.19bd53e8.js"><link rel="prefetch" href="/assets/js/138.701e8f3a.js"><link rel="prefetch" href="/assets/js/139.c5128cb6.js"><link rel="prefetch" href="/assets/js/14.932e0778.js"><link rel="prefetch" href="/assets/js/140.6c972a8d.js"><link rel="prefetch" href="/assets/js/141.1d6633ab.js"><link rel="prefetch" href="/assets/js/142.efed1127.js"><link rel="prefetch" href="/assets/js/143.b27f42b8.js"><link rel="prefetch" href="/assets/js/144.f31ebd51.js"><link rel="prefetch" href="/assets/js/145.f8c2b775.js"><link rel="prefetch" href="/assets/js/146.b219bc33.js"><link rel="prefetch" href="/assets/js/147.d8118e9f.js"><link rel="prefetch" href="/assets/js/148.6b1cba56.js"><link rel="prefetch" href="/assets/js/149.a47f6457.js"><link rel="prefetch" href="/assets/js/15.04b4b708.js"><link rel="prefetch" href="/assets/js/150.6455c79e.js"><link rel="prefetch" href="/assets/js/151.ba4699a4.js"><link rel="prefetch" href="/assets/js/152.76b2df89.js"><link rel="prefetch" href="/assets/js/153.63a35950.js"><link rel="prefetch" href="/assets/js/154.de8cadf7.js"><link rel="prefetch" href="/assets/js/155.728a2868.js"><link rel="prefetch" href="/assets/js/156.e7c79791.js"><link rel="prefetch" href="/assets/js/157.43a31655.js"><link rel="prefetch" href="/assets/js/158.d71759b1.js"><link rel="prefetch" href="/assets/js/159.82fb8b40.js"><link rel="prefetch" href="/assets/js/16.c7e977c7.js"><link rel="prefetch" href="/assets/js/160.2fbfe95f.js"><link rel="prefetch" href="/assets/js/161.0a45983e.js"><link rel="prefetch" href="/assets/js/162.34afe2d7.js"><link rel="prefetch" href="/assets/js/163.80e9e5fd.js"><link rel="prefetch" href="/assets/js/164.64eac1eb.js"><link rel="prefetch" href="/assets/js/165.814458b0.js"><link rel="prefetch" href="/assets/js/166.66ebdce1.js"><link rel="prefetch" href="/assets/js/167.9a721e1f.js"><link rel="prefetch" href="/assets/js/168.cf53b343.js"><link rel="prefetch" href="/assets/js/169.9602ea8d.js"><link rel="prefetch" href="/assets/js/17.bf149089.js"><link rel="prefetch" href="/assets/js/170.2b63d7d3.js"><link rel="prefetch" href="/assets/js/171.9b8de16f.js"><link rel="prefetch" href="/assets/js/172.08c6417f.js"><link rel="prefetch" href="/assets/js/173.f4c6ef29.js"><link rel="prefetch" href="/assets/js/174.20f62f8b.js"><link rel="prefetch" href="/assets/js/175.29849dda.js"><link rel="prefetch" href="/assets/js/176.ac876a4e.js"><link rel="prefetch" href="/assets/js/177.0e998ca1.js"><link rel="prefetch" href="/assets/js/178.3ba3620d.js"><link rel="prefetch" href="/assets/js/179.2fd4422d.js"><link rel="prefetch" href="/assets/js/18.2f7a7cd1.js"><link rel="prefetch" href="/assets/js/180.c8b3c0df.js"><link rel="prefetch" href="/assets/js/181.3c84430a.js"><link rel="prefetch" href="/assets/js/182.581e3779.js"><link rel="prefetch" href="/assets/js/183.25c352d0.js"><link rel="prefetch" href="/assets/js/184.7b1393d7.js"><link rel="prefetch" href="/assets/js/185.0667ae17.js"><link rel="prefetch" href="/assets/js/186.f8a31fc5.js"><link rel="prefetch" href="/assets/js/187.7271a1e3.js"><link rel="prefetch" href="/assets/js/188.f6525f8c.js"><link rel="prefetch" href="/assets/js/189.60f4b285.js"><link rel="prefetch" href="/assets/js/19.414b88d3.js"><link rel="prefetch" href="/assets/js/190.196e7072.js"><link rel="prefetch" href="/assets/js/191.fc6622ef.js"><link rel="prefetch" href="/assets/js/192.a4ca4789.js"><link rel="prefetch" href="/assets/js/193.bf683ffc.js"><link rel="prefetch" href="/assets/js/194.0f896182.js"><link rel="prefetch" href="/assets/js/195.291fcd52.js"><link rel="prefetch" href="/assets/js/196.3d54fbfe.js"><link rel="prefetch" href="/assets/js/197.43503dc3.js"><link rel="prefetch" href="/assets/js/198.3c25a6a0.js"><link rel="prefetch" href="/assets/js/199.0186d807.js"><link rel="prefetch" href="/assets/js/20.52a18ee0.js"><link rel="prefetch" href="/assets/js/200.a2d1bd7b.js"><link rel="prefetch" href="/assets/js/201.e66a5e9d.js"><link rel="prefetch" href="/assets/js/202.c18a80fd.js"><link rel="prefetch" href="/assets/js/203.fa7739e9.js"><link rel="prefetch" href="/assets/js/204.19ad0ee8.js"><link rel="prefetch" href="/assets/js/205.29d77299.js"><link rel="prefetch" href="/assets/js/206.8e0e135b.js"><link rel="prefetch" href="/assets/js/207.6aeed711.js"><link rel="prefetch" href="/assets/js/208.55850a7b.js"><link rel="prefetch" href="/assets/js/209.e47aaa64.js"><link rel="prefetch" href="/assets/js/21.22842a0f.js"><link rel="prefetch" href="/assets/js/210.9e12678a.js"><link rel="prefetch" href="/assets/js/211.361efbe3.js"><link rel="prefetch" href="/assets/js/212.cd28b79d.js"><link rel="prefetch" href="/assets/js/213.0385731c.js"><link rel="prefetch" href="/assets/js/214.8422df25.js"><link rel="prefetch" href="/assets/js/215.63219b00.js"><link rel="prefetch" href="/assets/js/216.02d008b5.js"><link rel="prefetch" href="/assets/js/217.40b9c7fb.js"><link rel="prefetch" href="/assets/js/218.3bdde972.js"><link rel="prefetch" href="/assets/js/219.c5433a99.js"><link rel="prefetch" href="/assets/js/22.a21b7c0e.js"><link rel="prefetch" href="/assets/js/220.0c354022.js"><link rel="prefetch" href="/assets/js/221.ddf22c5e.js"><link rel="prefetch" href="/assets/js/222.7678fe1e.js"><link rel="prefetch" href="/assets/js/223.6c5962cc.js"><link rel="prefetch" href="/assets/js/224.f7e36bf3.js"><link rel="prefetch" href="/assets/js/225.725b6fcf.js"><link rel="prefetch" href="/assets/js/226.5e9d7eec.js"><link rel="prefetch" href="/assets/js/227.b060aa31.js"><link rel="prefetch" href="/assets/js/228.a3eba3b6.js"><link rel="prefetch" href="/assets/js/229.486bd794.js"><link rel="prefetch" href="/assets/js/23.5f9d0976.js"><link rel="prefetch" href="/assets/js/230.5a7c0a55.js"><link rel="prefetch" href="/assets/js/231.7c6620a5.js"><link rel="prefetch" href="/assets/js/232.cc58a96c.js"><link rel="prefetch" href="/assets/js/233.daf6c78a.js"><link rel="prefetch" href="/assets/js/234.7193ae71.js"><link rel="prefetch" href="/assets/js/235.cd42c17c.js"><link rel="prefetch" href="/assets/js/236.9c046bb9.js"><link rel="prefetch" href="/assets/js/237.d0a60f1b.js"><link rel="prefetch" href="/assets/js/238.91fc6a5f.js"><link rel="prefetch" href="/assets/js/239.64e7c2b7.js"><link rel="prefetch" href="/assets/js/24.c810eb09.js"><link rel="prefetch" href="/assets/js/240.7570cd7f.js"><link rel="prefetch" href="/assets/js/241.9ccd2364.js"><link rel="prefetch" href="/assets/js/242.3ce7ba91.js"><link rel="prefetch" href="/assets/js/243.101634ca.js"><link rel="prefetch" href="/assets/js/244.bcd75b66.js"><link rel="prefetch" href="/assets/js/245.35236282.js"><link rel="prefetch" href="/assets/js/246.067edc5b.js"><link rel="prefetch" href="/assets/js/247.b4c7f756.js"><link rel="prefetch" href="/assets/js/248.ece4f86b.js"><link rel="prefetch" href="/assets/js/249.988d23f8.js"><link rel="prefetch" href="/assets/js/25.13c59344.js"><link rel="prefetch" href="/assets/js/250.c51d6266.js"><link rel="prefetch" href="/assets/js/251.3bdf26a3.js"><link rel="prefetch" href="/assets/js/252.7db45b10.js"><link rel="prefetch" href="/assets/js/253.49b64f22.js"><link rel="prefetch" href="/assets/js/254.35933a61.js"><link rel="prefetch" href="/assets/js/255.09c9d6b6.js"><link rel="prefetch" href="/assets/js/256.3ec90e6f.js"><link rel="prefetch" href="/assets/js/257.bc178194.js"><link rel="prefetch" href="/assets/js/258.17d8c2de.js"><link rel="prefetch" href="/assets/js/259.03417ccc.js"><link rel="prefetch" href="/assets/js/26.e0294a3b.js"><link rel="prefetch" href="/assets/js/260.216a2f51.js"><link rel="prefetch" href="/assets/js/261.871c216b.js"><link rel="prefetch" href="/assets/js/262.56efbf44.js"><link rel="prefetch" href="/assets/js/263.122c5634.js"><link rel="prefetch" href="/assets/js/264.e9e1d4f6.js"><link rel="prefetch" href="/assets/js/265.56ddac52.js"><link rel="prefetch" href="/assets/js/266.5726ebe6.js"><link rel="prefetch" href="/assets/js/267.5e1c37d4.js"><link rel="prefetch" href="/assets/js/268.82d4a6c1.js"><link rel="prefetch" href="/assets/js/269.ff31fe86.js"><link rel="prefetch" href="/assets/js/27.35fc009c.js"><link rel="prefetch" href="/assets/js/270.6109e3ea.js"><link rel="prefetch" href="/assets/js/271.c6c91d5b.js"><link rel="prefetch" href="/assets/js/272.a8859d64.js"><link rel="prefetch" href="/assets/js/273.f1c310b9.js"><link rel="prefetch" href="/assets/js/274.f47ab8e0.js"><link rel="prefetch" href="/assets/js/275.1deb3270.js"><link rel="prefetch" href="/assets/js/276.8c7ee165.js"><link rel="prefetch" href="/assets/js/277.9954c4e9.js"><link rel="prefetch" href="/assets/js/278.cf66e2ed.js"><link rel="prefetch" href="/assets/js/279.83405e57.js"><link rel="prefetch" href="/assets/js/28.f3c87fa4.js"><link rel="prefetch" href="/assets/js/280.73124214.js"><link rel="prefetch" href="/assets/js/281.1bf94d5a.js"><link rel="prefetch" href="/assets/js/29.87738507.js"><link rel="prefetch" href="/assets/js/3.9ddafd63.js"><link rel="prefetch" href="/assets/js/30.9a33d360.js"><link rel="prefetch" href="/assets/js/31.760d306e.js"><link rel="prefetch" href="/assets/js/32.729df4d8.js"><link rel="prefetch" href="/assets/js/33.870a94f6.js"><link rel="prefetch" href="/assets/js/34.a06cf942.js"><link rel="prefetch" href="/assets/js/35.a7120b36.js"><link rel="prefetch" href="/assets/js/37.7747739c.js"><link rel="prefetch" href="/assets/js/38.c0d80251.js"><link rel="prefetch" href="/assets/js/39.085aa663.js"><link rel="prefetch" href="/assets/js/4.b1166e63.js"><link rel="prefetch" href="/assets/js/40.128118ea.js"><link rel="prefetch" href="/assets/js/41.deda7589.js"><link rel="prefetch" href="/assets/js/42.1f799c3f.js"><link rel="prefetch" href="/assets/js/43.ce0cf301.js"><link rel="prefetch" href="/assets/js/44.c349236e.js"><link rel="prefetch" href="/assets/js/45.4e9cb319.js"><link rel="prefetch" href="/assets/js/46.c7a05043.js"><link rel="prefetch" href="/assets/js/47.f97ee979.js"><link rel="prefetch" href="/assets/js/48.3a5a97e9.js"><link rel="prefetch" href="/assets/js/49.ac08632a.js"><link rel="prefetch" href="/assets/js/5.093e58d7.js"><link rel="prefetch" href="/assets/js/50.27d273f3.js"><link rel="prefetch" href="/assets/js/51.66cc8321.js"><link rel="prefetch" href="/assets/js/52.d161537d.js"><link rel="prefetch" href="/assets/js/53.d140f908.js"><link rel="prefetch" href="/assets/js/54.0235ceff.js"><link rel="prefetch" href="/assets/js/55.a55594c1.js"><link rel="prefetch" href="/assets/js/56.1f22204a.js"><link rel="prefetch" href="/assets/js/57.a0a26849.js"><link rel="prefetch" href="/assets/js/58.d7345235.js"><link rel="prefetch" href="/assets/js/59.81a8a316.js"><link rel="prefetch" href="/assets/js/6.59f3b7b6.js"><link rel="prefetch" href="/assets/js/60.c2b813c0.js"><link rel="prefetch" href="/assets/js/61.9972e78e.js"><link rel="prefetch" href="/assets/js/62.99b67f22.js"><link rel="prefetch" href="/assets/js/63.b469a857.js"><link rel="prefetch" href="/assets/js/64.0ca6f6c1.js"><link rel="prefetch" href="/assets/js/65.b8540b0f.js"><link rel="prefetch" href="/assets/js/66.4980be30.js"><link rel="prefetch" href="/assets/js/67.8278463d.js"><link rel="prefetch" href="/assets/js/68.907a24bc.js"><link rel="prefetch" href="/assets/js/69.fb4558bc.js"><link rel="prefetch" href="/assets/js/7.f7e8ebdc.js"><link rel="prefetch" href="/assets/js/70.622bf466.js"><link rel="prefetch" href="/assets/js/71.5e0ee530.js"><link rel="prefetch" href="/assets/js/72.eb23a35d.js"><link rel="prefetch" href="/assets/js/73.40abfa0b.js"><link rel="prefetch" href="/assets/js/74.4094b61b.js"><link rel="prefetch" href="/assets/js/75.5c3b5a4c.js"><link rel="prefetch" href="/assets/js/76.efbc2228.js"><link rel="prefetch" href="/assets/js/77.e8c7c1df.js"><link rel="prefetch" href="/assets/js/78.1dbc6bec.js"><link rel="prefetch" href="/assets/js/79.cacffcfa.js"><link rel="prefetch" href="/assets/js/8.ba73daac.js"><link rel="prefetch" href="/assets/js/80.4adb6bc0.js"><link rel="prefetch" href="/assets/js/81.ec01b0eb.js"><link rel="prefetch" href="/assets/js/82.fa60abc7.js"><link rel="prefetch" href="/assets/js/83.adc499ef.js"><link rel="prefetch" href="/assets/js/84.6a9a7f25.js"><link rel="prefetch" href="/assets/js/85.dd78c411.js"><link rel="prefetch" href="/assets/js/86.b2755e09.js"><link rel="prefetch" href="/assets/js/87.14216b7f.js"><link rel="prefetch" href="/assets/js/88.25ad2b2e.js"><link rel="prefetch" href="/assets/js/89.4434e71b.js"><link rel="prefetch" href="/assets/js/9.5f162f90.js"><link rel="prefetch" href="/assets/js/90.135b0f44.js"><link rel="prefetch" href="/assets/js/91.9fff7f99.js"><link rel="prefetch" href="/assets/js/92.fd8650e0.js"><link rel="prefetch" href="/assets/js/93.97e850e6.js"><link rel="prefetch" href="/assets/js/94.44278b7b.js"><link rel="prefetch" href="/assets/js/95.f7ef3696.js"><link rel="prefetch" href="/assets/js/96.e3c08b5c.js"><link rel="prefetch" href="/assets/js/97.60754372.js"><link rel="prefetch" href="/assets/js/98.d5cfbfb5.js"><link rel="prefetch" href="/assets/js/99.90f3c1fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link router-link-active">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link router-link-active">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Gateway</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/framework/SpringCloud/gateway/" aria-current="page" class="sidebar-link">Gateway 服务网关</a></li><li><a href="/framework/SpringCloud/gateway/网关简介-0.html" class="sidebar-link">1. 网关简介</a></li><li><a href="/framework/SpringCloud/gateway/Gateway简介-1.html" class="sidebar-link">1 Gateway简介</a></li><li><a href="/framework/SpringCloud/gateway/Gateway路由规则-2.html" class="sidebar-link">2. 路由规则概述</a></li><li><a href="/framework/SpringCloud/gateway/Gateway过滤器-3.html" class="sidebar-link">3. 过滤器概述</a></li><li><a href="/framework/SpringCloud/gateway/Gateway限流-4.html" class="active sidebar-link">4. Gateway限流</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#_4-1-网关限流简介及算法" class="sidebar-link">4.1 网关限流简介及算法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#计数器算法" class="sidebar-link">计数器算法</a></li><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#漏桶算法" class="sidebar-link">漏桶算法</a></li><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#令牌桶算法" class="sidebar-link">令牌桶算法</a></li></ul></li><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#_4-2-gateway-常用限流方式" class="sidebar-link">4.2 Gateway 常用限流方式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#添加依赖" class="sidebar-link">添加依赖</a></li><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#uri-限流" class="sidebar-link">URI 限流</a></li><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#ip-限流" class="sidebar-link">IP 限流</a></li><li class="sidebar-sub-header"><a href="/framework/SpringCloud/gateway/Gateway限流-4.html#参数-限流" class="sidebar-link">参数 限流</a></li></ul></li></ul></li><li><a href="/framework/SpringCloud/gateway/Gateway整合Sentinel-5.html" class="sidebar-link">5. Gateway整合Sentinel</a></li><li><a href="/framework/SpringCloud/gateway/Gateway高可用网关环境-6.html" class="sidebar-link">6. Gateway高可用网关环境</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_4-gateway限流"><a href="#_4-gateway限流" class="header-anchor">#</a> 4. Gateway限流</h1> <h2 id="_4-1-网关限流简介及算法"><a href="#_4-1-网关限流简介及算法" class="header-anchor">#</a> 4.1 网关限流简介及算法</h2> <p>顾名思义，限流就是限制流量，就像你宽带包有 1 个 G 的流量，用完了就没了。通过限流，我们可以很好地控制系统的<font color="red"><strong>QPS</strong></font>，从而达到保护系统的目的</p> <div class="custom-block tip"><p class="custom-block-title">为什么需要限流?</p> <p>比如 Web 服务、对外 API，这种类型的服务有以下几种可能导致机器被拖垮：</p> <ol><li>用户增长过快（好事）</li> <li>因为某个热点事件（微博热搜）</li> <li>竞争对象爬虫</li> <li>恶意的请求<br>
+这些情况都是无法预知的，不知道什么时候会有 10 倍甚至 20 倍的流量打进来，如果真碰上这种情况，扩容是根本来不及的。</li></ol></div> <div class="custom-block tip"><p class="custom-block-title">限流算法</p> <p><font color="red"><strong>计数器算法</strong></font><br> <font color="red"><strong>漏桶（Leaky Bucket）算法</strong></font><br> <font color="red"><strong>令牌桶（Token Bucket）算法</strong></font></p></div> <h3 id="计数器算法"><a href="#计数器算法" class="header-anchor">#</a> 计数器算法</h3> <p>计数器算法是限流算法里最简单也是最容易实现的一种算法。比如我们规定，对于 A 接口来说，我们 1 分钟的
+访问次数不能超过 100 个。那么我们可以这么做：在一开始的时候，我们可以设置一个计数器 counter，每当一个请
+求过来的时候，counter 就加 1，如果 counter 的值大于 100 并且该请求与第一个请求的间隔时间还在 1 分钟之
+内，触发限流；如果该请求与第一个请求的间隔时间大于 1 分钟，重置 counter 重新计数，具体算法的示意图如
+下：
+<a data-fancybox="" title="计数器算法" href="./image/jishuqisuanfa1.jpg"><img src="/assets/img/jishuqisuanfa1.f173e8dd.jpg" alt="计数器算法"></a>
+这个算法虽然简单，但是有一个十分致命的问题，那就是临界问题，我们看下图：</p> <p><a data-fancybox="" title="计数器算法" href="./image/jishuqisuanfa2.jpg"><img src="/assets/img/jishuqisuanfa2.5732142c.jpg" alt="计数器算法"></a>
+从上图中我们可以看到，假设有一个恶意用户，他在 0:59 时，瞬间发送了 100 个请求，并且 1:00 又瞬间发送
+了 100 个请求，那么其实这个用户在 1 秒里面，瞬间发送了 200 个请求。我们刚才规定的是 1 分钟最多 100 个请
+求，也就是每秒钟最多 1.7 个请求，用户通过在时间窗口的重置节点处突发请求， 可以瞬间超过我们的速率限制。
+用户有可能通过算法的这个漏洞，瞬间压垮我们的应用。</p> <p>还有资料浪费的问题存在，我们的预期想法是希望 100 个请求可以均匀分散在这一分钟内，假设 30s 以内我们
+就请求上限了，那么剩余的半分钟服务器就会处于闲置状态，比如下图：
+<a data-fancybox="" title="计数器算法" href="./image/jishuqisuanfa3.jpg"><img src="/assets/img/jishuqisuanfa3.0e3b5f05.jpg" alt="计数器算法"></a></p> <h3 id="漏桶算法"><a href="#漏桶算法" class="header-anchor">#</a> 漏桶算法</h3> <p>漏桶算法其实也很简单，可以粗略的认为就是注水漏水的过程，往桶中以任意速率流入水，以一定速率流出水，当水超过桶流量则丢弃，因为桶容量是不变的，保证了整体的速率。</p> <p><a data-fancybox="" title="漏桶算法" href="./image/loutong.jpg"><img src="/assets/img/loutong.bc2f7f25.jpg" alt="漏桶算法"></a></p> <h4 id="漏桶算法是使用队列机制实现的"><a href="#漏桶算法是使用队列机制实现的" class="header-anchor">#</a> 漏桶算法是使用队列机制实现的</h4> <p><a data-fancybox="" title="漏桶算法" href="./image/loutong2.jpg"><img src="/assets/img/loutong2.5c6f48e7.jpg" alt="漏桶算法"></a></p> <p><strong>漏桶算法主要用途在于保护它人（服务），假设入水量很大，而出水量较慢，则会造成网关的资源堆积可能导致网关瘫痪。而目标服务可能是可以处理大量请求的，但是漏桶算法出水量缓慢反而造成服务那边的资源浪费</strong></p> <h3 id="令牌桶算法"><a href="#令牌桶算法" class="header-anchor">#</a> 令牌桶算法</h3> <p>令牌桶算法是对漏桶算法的一种改进，漏桶算法能够限制请求调用的速率，而令牌桶算法能够在限制调用的平均
+速率的同时还允许一定程度的突发调用。在令牌桶算法中，存在一个桶，用来存放固定数量的令牌。算法中存在一种
+机制，以一定的速率往桶中放令牌。每次请求调用需要先获取令牌，只有拿到令牌，才有机会继续执行，否则选择选
+择等待可用的令牌、或者直接拒绝。放令牌这个动作是持续不断的进行，如果桶中令牌数达到上限，就丢弃令牌。</p> <p>场景大概是这样的：桶中一直有大量的可用令牌，这时进来的请求可以直接拿到令牌执行，比如设置 QPS 为
+100/s，那么限流器初始化完成一秒后，桶中就已经有 100 个令牌了，等服务启动完成对外提供服务时，该限
+流器可以抵挡瞬时的 100 个请求。当桶中没有令牌时，请求会进行等待，最后相当于以一定的速率执行。</p> <div class="custom-block tip"><p class="custom-block-title">Spring Cloud Gateway 内部使用的就是该算法：</p> <ol><li>所有的请求在处理之前都需要拿到一个可用的令牌才会被处理；</li> <li>根据限流大小，设置按照一定的速率往桶里添加令牌；</li> <li>桶设置最大的放置令牌限制，当桶满时、新添加的令牌就被丢弃或者拒绝；</li> <li>请求到达后首先要获取令牌桶中的令牌，拿着令牌才可以进行其他的业务逻辑，处理完业务逻辑之后，将令牌直接删除；</li> <li>令牌桶有最低限额，当桶中的令牌达到最低限额的时候，请求处理完之后将不会删除令牌，以此保证足够的限流。</li></ol></div> <p><a data-fancybox="" title="令牌桶算法" href="./image/lingpaitong.jpg"><img src="/assets/img/lingpaitong.6c301e00.jpg" alt="令牌桶算法"></a> <strong>漏桶算法主要用途在于保护它人，而令牌桶算法主要目的在于保护自己，将请求压力交由目标服务处理。假设突然进来很多请求，只要拿到令牌这些请求会瞬时被处理调用目标服务。</strong></p> <h2 id="_4-2-gateway-常用限流方式"><a href="#_4-2-gateway-常用限流方式" class="header-anchor">#</a> 4.2 Gateway 常用限流方式</h2> <p>Spring Cloud Gateway 官方提供了 RequestRateLimiterGatewayFilterFactory 过滤器工厂，使用 Redis和 Lua 脚本实现了令牌桶的方式。</p> <p>官网文档：https://cloud.spring.io/spring-cloud-static/spring-cloud-gateway/2.2.1.RELEASE/reference/html/#the-redis-ratelimiter 具体实现逻辑在 RequestRateLimiterGatewayFilterFactory 类中， Lua 脚本在如下图所示的源码文件夹中：</p> <h3 id="添加依赖"><a href="#添加依赖" class="header-anchor">#</a> 添加依赖</h3> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code><span class="token comment">&lt;!-- spring data redis reactive 依赖 --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-starter-data-redis-reactive<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+<span class="token comment">&lt;!-- commons-pool2 对象池依赖 --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.apache.commons<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>commons-pool2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h3 id="uri-限流"><a href="#uri-限流" class="header-anchor">#</a> URI 限流</h3> <p><strong>配置限流过滤器和限流过滤器引用的 bean 对象</strong></p> <div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> gateway<span class="token punctuation">-</span>server <span class="token comment"># 应用名称</span>
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">gateway</span><span class="token punctuation">:</span>
+      <span class="token key atrule">discovery</span><span class="token punctuation">:</span>
+        <span class="token key atrule">locator</span><span class="token punctuation">:</span>
+        <span class="token comment"># 是否与服务发现组件进行结合，通过 serviceId 转发到具体服务实例。</span>
+          <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>                           <span class="token comment"># 是否开启基于服务发现的路由规则</span>
+          <span class="token key atrule">lower-case-service-id</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>      <span class="token comment"># 是否将服务名称转小写</span>
+      <span class="token comment"># 路由规则</span>
+      <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">id</span><span class="token punctuation">:</span> order<span class="token punctuation">-</span>service                <span class="token comment"># 路由 ID，唯一</span>
+          <span class="token key atrule">uri</span><span class="token punctuation">:</span> lb<span class="token punctuation">:</span>//order<span class="token punctuation">-</span>service        <span class="token comment"># lb:// 根据服务名称从注册中心获取服务请求地址</span>
+          <span class="token key atrule">predicates</span><span class="token punctuation">:</span>                   <span class="token comment"># 断言（判断条件）</span>
+            <span class="token comment"># 匹配对应 URL 的请求，将匹配到的请求追加在目标 URI 之后</span>
+            <span class="token punctuation">-</span> Path=/order/<span class="token important">**</span>
+          <span class="token key atrule">filters</span><span class="token punctuation">:</span>                       <span class="token comment"># 网关过滤器</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> RequestRateLimiter
+              <span class="token key atrule">args</span><span class="token punctuation">:</span>
+                <span class="token key atrule">redis-rate-limiter.replenishRate</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token comment"># 令牌桶每秒填充速率</span>
+                <span class="token key atrule">redis-rate-limiter.burstCapacity</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># 令牌桶总容量</span>
+                <span class="token key atrule">key-resolver</span><span class="token punctuation">:</span> <span class="token string">&quot;#{@pathKeyResolver}&quot;</span> <span class="token comment"># 使用 SpEL 表达式按名称引用 bean</span>
+  <span class="token comment"># redis 缓存</span>
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">timeout</span><span class="token punctuation">:</span> <span class="token number">10000</span>            <span class="token comment"># 连接超时时间</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 49.232.21.151   <span class="token comment"># Redis服务器地址</span>
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span>                  <span class="token comment"># Redis服务器端口</span>
+<span class="token comment">#    password: root            # Redis服务器密码</span>
+    <span class="token key atrule">database</span><span class="token punctuation">:</span> <span class="token number">0</span>                <span class="token comment"># 选择哪个库，默认0库</span>
+    <span class="token key atrule">lettuce</span><span class="token punctuation">:</span>
+      <span class="token key atrule">pool</span><span class="token punctuation">:</span>
+        <span class="token key atrule">max-active</span><span class="token punctuation">:</span> <span class="token number">1024</span>   <span class="token comment"># 最大连接数，默认 8</span>
+        <span class="token key atrule">max-wait</span><span class="token punctuation">:</span> <span class="token number">10000</span>    <span class="token comment"># 最大连接阻塞等待时间，单位毫秒，默认 -1</span>
+        <span class="token key atrule">max-idle</span><span class="token punctuation">:</span> <span class="token number">200</span>       <span class="token comment"># 最大空闲连接，默认 8</span>
+        <span class="token key atrule">min-idle</span><span class="token punctuation">:</span> <span class="token number">5</span>          <span class="token comment"># 最小空闲连接，默认 0</span>
+<span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">9000</span>
+
+<span class="token comment"># 配置 Eureka Server 注册中心</span>
+<span class="token key atrule">eureka</span><span class="token punctuation">:</span>
+  <span class="token key atrule">instance</span><span class="token punctuation">:</span>
+    <span class="token key atrule">prefer-ip-address</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>       <span class="token comment"># 是否使用 ip 地址注册</span>
+    <span class="token key atrule">instance-id</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>spring.cloud.client.ip<span class="token punctuation">-</span>address<span class="token punctuation">}</span><span class="token punctuation">:</span>$<span class="token punctuation">{</span>server.port<span class="token punctuation">}</span> <span class="token comment"># ip:port</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">service-url</span><span class="token punctuation">:</span>                  <span class="token comment"># 设置服务注册中心地址</span>
+      <span class="token key atrule">defaultZone</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8761/eureka/<span class="token punctuation">,</span>http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8762/eureka/
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br></div></div><p><strong>编写限流规则配置类</strong></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>cloud<span class="token punctuation">.</span>gateway<span class="token punctuation">.</span>filter<span class="token punctuation">.</span>ratelimit<span class="token punctuation">.</span></span><span class="token class-name">KeyResolver</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Bean</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Configuration</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">reactor<span class="token punctuation">.</span>core<span class="token punctuation">.</span>publisher<span class="token punctuation">.</span></span><span class="token class-name">Mono</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * 限流规则配置类
+ * @author Administrator
+ */</span>
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">KeyResolverConfiguration</span> <span class="token punctuation">{</span>
+   <span class="token comment">/**
+    * 限流规则
+    *
+    * @return
+    */</span>
+         <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">KeyResolver</span> <span class="token function">pathKeyResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">/*
+        return new KeyResolver() {
+            @Override
+            public Mono&lt;String&gt; resolve(ServerWebExchange exchange) {
+                return Mono.just(exchange.getRequest().getPath().toString());
+            }
+        };
+         */</span>
+        <span class="token comment">// JDK 1.8</span>
+        <span class="token keyword">return</span> exchange <span class="token operator">-&gt;</span> <span class="token class-name">Mono</span><span class="token punctuation">.</span><span class="token function">just</span><span class="token punctuation">(</span>exchange<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getURI</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><p><a>http://localhost:9000/order/2</a></p> <p><a data-fancybox="" title="url限流" href="./image/urlfilters.jpg"><img src="/assets/img/urlfilters.6ef64ef4.jpg" alt="url限流"></a></p> <h3 id="ip-限流"><a href="#ip-限流" class="header-anchor">#</a> IP 限流</h3> <p><strong>配置限流过滤器和限流过滤器引用的 bean 对象</strong></p> <div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> gateway<span class="token punctuation">-</span>server <span class="token comment"># 应用名称</span>
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">gateway</span><span class="token punctuation">:</span>
+      <span class="token key atrule">discovery</span><span class="token punctuation">:</span>
+        <span class="token key atrule">locator</span><span class="token punctuation">:</span>
+        <span class="token comment"># 是否与服务发现组件进行结合，通过 serviceId 转发到具体服务实例。</span>
+          <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>                           <span class="token comment"># 是否开启基于服务发现的路由规则</span>
+          <span class="token key atrule">lower-case-service-id</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>      <span class="token comment"># 是否将服务名称转小写</span>
+      <span class="token comment"># 路由规则</span>
+      <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">id</span><span class="token punctuation">:</span> product<span class="token punctuation">-</span>service                <span class="token comment"># 路由 ID，唯一</span>
+          <span class="token key atrule">uri</span><span class="token punctuation">:</span> lb<span class="token punctuation">:</span>//product<span class="token punctuation">-</span>service         <span class="token comment"># lb:// 根据服务名称从注册中心获取服务请求地址</span>
+          <span class="token key atrule">predicates</span><span class="token punctuation">:</span>                            <span class="token comment"># 断言（判断条件）</span>
+              <span class="token comment"># 匹配对应 URI 的请求，将匹配到的请求追加在目标 URI 之后</span>
+             <span class="token punctuation">-</span> Path=/product/<span class="token important">**</span><span class="token punctuation">,</span> /api<span class="token punctuation">-</span>gateway/<span class="token important">**</span>
+          <span class="token key atrule">filters</span><span class="token punctuation">:</span>                                 <span class="token comment"># 网关过滤器</span>
+             <span class="token comment"># 将 /api-gateway/product/1 重写为 /product/1</span>
+             <span class="token punctuation">-</span> RewritePath=/api<span class="token punctuation">-</span>gateway(<span class="token punctuation">?</span>&lt;segment<span class="token punctuation">&gt;</span>/<span class="token punctuation">?</span>.<span class="token important">*)</span><span class="token punctuation">,</span> $\<span class="token punctuation">{</span>segment<span class="token punctuation">}</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">id</span><span class="token punctuation">:</span> order<span class="token punctuation">-</span>service                <span class="token comment"># 路由 ID，唯一</span>
+          <span class="token key atrule">uri</span><span class="token punctuation">:</span> lb<span class="token punctuation">:</span>//order<span class="token punctuation">-</span>service        <span class="token comment"># lb:// 根据服务名称从注册中心获取服务请求地址</span>
+          <span class="token key atrule">predicates</span><span class="token punctuation">:</span>                   <span class="token comment"># 断言（判断条件）</span>
+            <span class="token comment"># 匹配对应 URL 的请求，将匹配到的请求追加在目标 URI 之后</span>
+            <span class="token punctuation">-</span> Path=/order/<span class="token important">**</span>
+          <span class="token key atrule">filters</span><span class="token punctuation">:</span>                       <span class="token comment"># 网关过滤器</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> RequestRateLimiter
+              <span class="token key atrule">args</span><span class="token punctuation">:</span>
+                <span class="token key atrule">redis-rate-limiter.replenishRate</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token comment"># 令牌桶每秒填充速率</span>
+                <span class="token key atrule">redis-rate-limiter.burstCapacity</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># 令牌桶总容量</span>
+                <span class="token key atrule">key-resolver</span><span class="token punctuation">:</span> <span class="token string">&quot;#{@ipKeyResolver}&quot;</span> <span class="token comment"># 使用 SpEL 表达式按名称引用 bean</span>
+  <span class="token comment"># redis 缓存</span>
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">timeout</span><span class="token punctuation">:</span> <span class="token number">10000</span>            <span class="token comment"># 连接超时时间</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 49.232.21.151   <span class="token comment"># Redis服务器地址</span>
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span>                  <span class="token comment"># Redis服务器端口</span>
+<span class="token comment">#    password: root            # Redis服务器密码</span>
+    <span class="token key atrule">database</span><span class="token punctuation">:</span> <span class="token number">0</span>                <span class="token comment"># 选择哪个库，默认0库</span>
+    <span class="token key atrule">lettuce</span><span class="token punctuation">:</span>
+      <span class="token key atrule">pool</span><span class="token punctuation">:</span>
+        <span class="token key atrule">max-active</span><span class="token punctuation">:</span> <span class="token number">1024</span>   <span class="token comment"># 最大连接数，默认 8</span>
+        <span class="token key atrule">max-wait</span><span class="token punctuation">:</span> <span class="token number">10000</span>    <span class="token comment"># 最大连接阻塞等待时间，单位毫秒，默认 -1</span>
+        <span class="token key atrule">max-idle</span><span class="token punctuation">:</span> <span class="token number">200</span>       <span class="token comment"># 最大空闲连接，默认 8</span>
+        <span class="token key atrule">min-idle</span><span class="token punctuation">:</span> <span class="token number">5</span>          <span class="token comment"># 最小空闲连接，默认 0</span>
+<span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">9000</span>
+
+<span class="token comment"># 配置 Eureka Server 注册中心</span>
+<span class="token key atrule">eureka</span><span class="token punctuation">:</span>
+  <span class="token key atrule">instance</span><span class="token punctuation">:</span>
+    <span class="token key atrule">prefer-ip-address</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>       <span class="token comment"># 是否使用 ip 地址注册</span>
+    <span class="token key atrule">instance-id</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>spring.cloud.client.ip<span class="token punctuation">-</span>address<span class="token punctuation">}</span><span class="token punctuation">:</span>$<span class="token punctuation">{</span>server.port<span class="token punctuation">}</span> <span class="token comment"># ip:port</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">service-url</span><span class="token punctuation">:</span>                  <span class="token comment"># 设置服务注册中心地址</span>
+      <span class="token key atrule">defaultZone</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8761/eureka/<span class="token punctuation">,</span>http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8762/eureka/
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br></div></div><p><strong>编写限流规则配置类</strong></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>
+    <span class="token comment">/**
+     * 根据 IP 限流
+     *
+     * @return
+     */</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">KeyResolver</span> <span class="token function">ipKeyResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> exchange <span class="token operator">-&gt;</span> <span class="token class-name">Mono</span><span class="token punctuation">.</span><span class="token function">just</span><span class="token punctuation">(</span>exchange<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRemoteAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getHostName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p><a>http://localhost:9000/order/1</a></p> <p><a data-fancybox="" title="IP限流" href="./image/IPfilter.jpg"><img src="/assets/img/IPfilter.9b0c9869.jpg" alt="IP限流"></a></p> <h3 id="参数-限流"><a href="#参数-限流" class="header-anchor">#</a> 参数 限流</h3> <p><strong>配置限流过滤器和限流过滤器引用的 bean 对象</strong></p> <div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> gateway<span class="token punctuation">-</span>server <span class="token comment"># 应用名称</span>
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">gateway</span><span class="token punctuation">:</span>
+      <span class="token key atrule">discovery</span><span class="token punctuation">:</span>
+        <span class="token key atrule">locator</span><span class="token punctuation">:</span>
+        <span class="token comment"># 是否与服务发现组件进行结合，通过 serviceId 转发到具体服务实例。</span>
+          <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>                           <span class="token comment"># 是否开启基于服务发现的路由规则</span>
+          <span class="token key atrule">lower-case-service-id</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>      <span class="token comment"># 是否将服务名称转小写</span>
+      <span class="token comment"># 路由规则</span>
+      <span class="token key atrule">routes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">id</span><span class="token punctuation">:</span> product<span class="token punctuation">-</span>service                <span class="token comment"># 路由 ID，唯一</span>
+          <span class="token key atrule">uri</span><span class="token punctuation">:</span> lb<span class="token punctuation">:</span>//product<span class="token punctuation">-</span>service         <span class="token comment"># lb:// 根据服务名称从注册中心获取服务请求地址</span>
+          <span class="token key atrule">predicates</span><span class="token punctuation">:</span>                            <span class="token comment"># 断言（判断条件）</span>
+              <span class="token comment"># 匹配对应 URI 的请求，将匹配到的请求追加在目标 URI 之后</span>
+             <span class="token punctuation">-</span> Path=/product/<span class="token important">**</span><span class="token punctuation">,</span> /api<span class="token punctuation">-</span>gateway/<span class="token important">**</span>
+          <span class="token key atrule">filters</span><span class="token punctuation">:</span>                                 <span class="token comment"># 网关过滤器</span>
+             <span class="token comment"># 将 /api-gateway/product/1 重写为 /product/1</span>
+             <span class="token punctuation">-</span> RewritePath=/api<span class="token punctuation">-</span>gateway(<span class="token punctuation">?</span>&lt;segment<span class="token punctuation">&gt;</span>/<span class="token punctuation">?</span>.<span class="token important">*)</span><span class="token punctuation">,</span> $\<span class="token punctuation">{</span>segment<span class="token punctuation">}</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">id</span><span class="token punctuation">:</span> order<span class="token punctuation">-</span>service                <span class="token comment"># 路由 ID，唯一</span>
+          <span class="token key atrule">uri</span><span class="token punctuation">:</span> lb<span class="token punctuation">:</span>//order<span class="token punctuation">-</span>service        <span class="token comment"># lb:// 根据服务名称从注册中心获取服务请求地址</span>
+          <span class="token key atrule">predicates</span><span class="token punctuation">:</span>                   <span class="token comment"># 断言（判断条件）</span>
+            <span class="token comment"># 匹配对应 URL 的请求，将匹配到的请求追加在目标 URI 之后</span>
+            <span class="token punctuation">-</span> Path=/order/<span class="token important">**</span>
+          <span class="token key atrule">filters</span><span class="token punctuation">:</span>                       <span class="token comment"># 网关过滤器</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> RequestRateLimiter
+              <span class="token key atrule">args</span><span class="token punctuation">:</span>
+                <span class="token key atrule">redis-rate-limiter.replenishRate</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token comment"># 令牌桶每秒填充速率</span>
+                <span class="token key atrule">redis-rate-limiter.burstCapacity</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># 令牌桶总容量</span>
+                <span class="token key atrule">key-resolver</span><span class="token punctuation">:</span> <span class="token string">&quot;#{@parameterKeyResolver}&quot;</span> <span class="token comment"># 使用 SpEL 表达式按名称引用 bean</span>
+
+  <span class="token comment"># redis 缓存</span>
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">timeout</span><span class="token punctuation">:</span> <span class="token number">10000</span>            <span class="token comment"># 连接超时时间</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 49.232.21.151   <span class="token comment"># Redis服务器地址</span>
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span>                  <span class="token comment"># Redis服务器端口</span>
+<span class="token comment">#    password: root            # Redis服务器密码</span>
+    <span class="token key atrule">database</span><span class="token punctuation">:</span> <span class="token number">0</span>                <span class="token comment"># 选择哪个库，默认0库</span>
+    <span class="token key atrule">lettuce</span><span class="token punctuation">:</span>
+      <span class="token key atrule">pool</span><span class="token punctuation">:</span>
+        <span class="token key atrule">max-active</span><span class="token punctuation">:</span> <span class="token number">1024</span>   <span class="token comment"># 最大连接数，默认 8</span>
+        <span class="token key atrule">max-wait</span><span class="token punctuation">:</span> <span class="token number">10000</span>    <span class="token comment"># 最大连接阻塞等待时间，单位毫秒，默认 -1</span>
+        <span class="token key atrule">max-idle</span><span class="token punctuation">:</span> <span class="token number">200</span>       <span class="token comment"># 最大空闲连接，默认 8</span>
+        <span class="token key atrule">min-idle</span><span class="token punctuation">:</span> <span class="token number">5</span>          <span class="token comment"># 最小空闲连接，默认 0</span>
+<span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">9000</span>
+
+<span class="token comment"># 配置 Eureka Server 注册中心</span>
+<span class="token key atrule">eureka</span><span class="token punctuation">:</span>
+  <span class="token key atrule">instance</span><span class="token punctuation">:</span>
+    <span class="token key atrule">prefer-ip-address</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>       <span class="token comment"># 是否使用 ip 地址注册</span>
+    <span class="token key atrule">instance-id</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>spring.cloud.client.ip<span class="token punctuation">-</span>address<span class="token punctuation">}</span><span class="token punctuation">:</span>$<span class="token punctuation">{</span>server.port<span class="token punctuation">}</span> <span class="token comment"># ip:port</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">service-url</span><span class="token punctuation">:</span>                  <span class="token comment"># 设置服务注册中心地址</span>
+      <span class="token key atrule">defaultZone</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8761/eureka/<span class="token punctuation">,</span>http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>8762/eureka/
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br></div></div><p><strong>编写限流规则配置类</strong></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>    <span class="token comment">/**
+     * 根据参数限流
+     *
+     * @return
+     */</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">KeyResolver</span> <span class="token function">parameterKeyResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> exchange <span class="token operator">-&gt;</span> <span class="token class-name">Mono</span><span class="token punctuation">.</span><span class="token function">just</span><span class="token punctuation">(</span>exchange<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getQueryParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getFirst</span><span class="token punctuation">(</span><span class="token string">&quot;userId&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p><a>http://localhost:9000/order/1?userId=123 </a> <a data-fancybox="" title="IP限流" href="./image/parameter.jpg"><img src="/assets/img/parameter.67ce0430.jpg" alt="IP限流"></a></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/framework/SpringCloud/gateway/Gateway过滤器-3.html" class="prev">
+        3. 过滤器概述
+      </a></span> <span class="next"><a href="/framework/SpringCloud/gateway/Gateway整合Sentinel-5.html">
+        5. Gateway整合Sentinel
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a86c1f59.js" defer></script><script src="/assets/js/2.572fbcb7.js" defer></script><script src="/assets/js/36.9b151665.js" defer></script>
+  </body>
+</html>

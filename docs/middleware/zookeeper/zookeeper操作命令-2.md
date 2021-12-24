@@ -1,6 +1,6 @@
 # 3. ZK客户端操作命令
 
-<a data-fancybox title="客户端命令行操作" href="../image/zookeeper10.jpg">![客户端命令行操作](../image/zookeeper10.jpg)</a>
+<a data-fancybox title="客户端命令行操作" href="./image/zookeeper10.jpg">![客户端命令行操作](./image/zookeeper10.jpg)</a>
 
 ## 3.1 连接客户端
 

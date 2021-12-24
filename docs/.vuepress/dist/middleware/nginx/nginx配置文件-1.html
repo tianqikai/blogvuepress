@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>2. nginx配置文件 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.a86c1f59.js" as="script"><link rel="preload" href="/assets/js/2.572fbcb7.js" as="script"><link rel="preload" href="/assets/js/133.7461fcc3.js" as="script"><link rel="prefetch" href="/assets/js/10.8de04070.js"><link rel="prefetch" href="/assets/js/100.95c60bcc.js"><link rel="prefetch" href="/assets/js/101.66aaacb7.js"><link rel="prefetch" href="/assets/js/102.06cfb9b6.js"><link rel="prefetch" href="/assets/js/103.f2c99fdc.js"><link rel="prefetch" href="/assets/js/104.e6165e64.js"><link rel="prefetch" href="/assets/js/105.757306c7.js"><link rel="prefetch" href="/assets/js/106.c2c7e8d5.js"><link rel="prefetch" href="/assets/js/107.a12c9e45.js"><link rel="prefetch" href="/assets/js/108.af6bf755.js"><link rel="prefetch" href="/assets/js/109.e95af487.js"><link rel="prefetch" href="/assets/js/11.323cce65.js"><link rel="prefetch" href="/assets/js/110.d55414b7.js"><link rel="prefetch" href="/assets/js/111.0e568416.js"><link rel="prefetch" href="/assets/js/112.24068f5c.js"><link rel="prefetch" href="/assets/js/113.11a3ed5d.js"><link rel="prefetch" href="/assets/js/114.b7a21a5c.js"><link rel="prefetch" href="/assets/js/115.8a8b7953.js"><link rel="prefetch" href="/assets/js/116.5847ef55.js"><link rel="prefetch" href="/assets/js/117.0ba1b0af.js"><link rel="prefetch" href="/assets/js/118.64e334e6.js"><link rel="prefetch" href="/assets/js/119.a5859784.js"><link rel="prefetch" href="/assets/js/12.c83e3c87.js"><link rel="prefetch" href="/assets/js/120.857f02ab.js"><link rel="prefetch" href="/assets/js/121.df5a5733.js"><link rel="prefetch" href="/assets/js/122.6f87eff8.js"><link rel="prefetch" href="/assets/js/123.2a9af6f7.js"><link rel="prefetch" href="/assets/js/124.1fcc27ae.js"><link rel="prefetch" href="/assets/js/125.bf8fd16c.js"><link rel="prefetch" href="/assets/js/126.2104d4c1.js"><link rel="prefetch" href="/assets/js/127.4b6c4988.js"><link rel="prefetch" href="/assets/js/128.a802cc4c.js"><link rel="prefetch" href="/assets/js/129.c99f7efa.js"><link rel="prefetch" href="/assets/js/13.9013091b.js"><link rel="prefetch" href="/assets/js/130.0861503e.js"><link rel="prefetch" href="/assets/js/131.b26f57dc.js"><link rel="prefetch" href="/assets/js/132.fe7c29b3.js"><link rel="prefetch" href="/assets/js/134.a857d18e.js"><link rel="prefetch" href="/assets/js/135.51d933ef.js"><link rel="prefetch" href="/assets/js/136.bbd6d5c1.js"><link rel="prefetch" href="/assets/js/137.19bd53e8.js"><link rel="prefetch" href="/assets/js/138.701e8f3a.js"><link rel="prefetch" href="/assets/js/139.c5128cb6.js"><link rel="prefetch" href="/assets/js/14.932e0778.js"><link rel="prefetch" href="/assets/js/140.6c972a8d.js"><link rel="prefetch" href="/assets/js/141.1d6633ab.js"><link rel="prefetch" href="/assets/js/142.efed1127.js"><link rel="prefetch" href="/assets/js/143.b27f42b8.js"><link rel="prefetch" href="/assets/js/144.f31ebd51.js"><link rel="prefetch" href="/assets/js/145.f8c2b775.js"><link rel="prefetch" href="/assets/js/146.b219bc33.js"><link rel="prefetch" href="/assets/js/147.d8118e9f.js"><link rel="prefetch" href="/assets/js/148.6b1cba56.js"><link rel="prefetch" href="/assets/js/149.a47f6457.js"><link rel="prefetch" href="/assets/js/15.04b4b708.js"><link rel="prefetch" href="/assets/js/150.6455c79e.js"><link rel="prefetch" href="/assets/js/151.ba4699a4.js"><link rel="prefetch" href="/assets/js/152.76b2df89.js"><link rel="prefetch" href="/assets/js/153.63a35950.js"><link rel="prefetch" href="/assets/js/154.de8cadf7.js"><link rel="prefetch" href="/assets/js/155.728a2868.js"><link rel="prefetch" href="/assets/js/156.e7c79791.js"><link rel="prefetch" href="/assets/js/157.43a31655.js"><link rel="prefetch" href="/assets/js/158.d71759b1.js"><link rel="prefetch" href="/assets/js/159.82fb8b40.js"><link rel="prefetch" href="/assets/js/16.c7e977c7.js"><link rel="prefetch" href="/assets/js/160.2fbfe95f.js"><link rel="prefetch" href="/assets/js/161.0a45983e.js"><link rel="prefetch" href="/assets/js/162.34afe2d7.js"><link rel="prefetch" href="/assets/js/163.80e9e5fd.js"><link rel="prefetch" href="/assets/js/164.64eac1eb.js"><link rel="prefetch" href="/assets/js/165.814458b0.js"><link rel="prefetch" href="/assets/js/166.66ebdce1.js"><link rel="prefetch" href="/assets/js/167.9a721e1f.js"><link rel="prefetch" href="/assets/js/168.cf53b343.js"><link rel="prefetch" href="/assets/js/169.9602ea8d.js"><link rel="prefetch" href="/assets/js/17.bf149089.js"><link rel="prefetch" href="/assets/js/170.2b63d7d3.js"><link rel="prefetch" href="/assets/js/171.9b8de16f.js"><link rel="prefetch" href="/assets/js/172.08c6417f.js"><link rel="prefetch" href="/assets/js/173.f4c6ef29.js"><link rel="prefetch" href="/assets/js/174.20f62f8b.js"><link rel="prefetch" href="/assets/js/175.29849dda.js"><link rel="prefetch" href="/assets/js/176.ac876a4e.js"><link rel="prefetch" href="/assets/js/177.0e998ca1.js"><link rel="prefetch" href="/assets/js/178.3ba3620d.js"><link rel="prefetch" href="/assets/js/179.2fd4422d.js"><link rel="prefetch" href="/assets/js/18.2f7a7cd1.js"><link rel="prefetch" href="/assets/js/180.c8b3c0df.js"><link rel="prefetch" href="/assets/js/181.3c84430a.js"><link rel="prefetch" href="/assets/js/182.581e3779.js"><link rel="prefetch" href="/assets/js/183.25c352d0.js"><link rel="prefetch" href="/assets/js/184.7b1393d7.js"><link rel="prefetch" href="/assets/js/185.0667ae17.js"><link rel="prefetch" href="/assets/js/186.f8a31fc5.js"><link rel="prefetch" href="/assets/js/187.7271a1e3.js"><link rel="prefetch" href="/assets/js/188.f6525f8c.js"><link rel="prefetch" href="/assets/js/189.60f4b285.js"><link rel="prefetch" href="/assets/js/19.414b88d3.js"><link rel="prefetch" href="/assets/js/190.196e7072.js"><link rel="prefetch" href="/assets/js/191.fc6622ef.js"><link rel="prefetch" href="/assets/js/192.a4ca4789.js"><link rel="prefetch" href="/assets/js/193.bf683ffc.js"><link rel="prefetch" href="/assets/js/194.0f896182.js"><link rel="prefetch" href="/assets/js/195.291fcd52.js"><link rel="prefetch" href="/assets/js/196.3d54fbfe.js"><link rel="prefetch" href="/assets/js/197.43503dc3.js"><link rel="prefetch" href="/assets/js/198.3c25a6a0.js"><link rel="prefetch" href="/assets/js/199.0186d807.js"><link rel="prefetch" href="/assets/js/20.52a18ee0.js"><link rel="prefetch" href="/assets/js/200.a2d1bd7b.js"><link rel="prefetch" href="/assets/js/201.e66a5e9d.js"><link rel="prefetch" href="/assets/js/202.c18a80fd.js"><link rel="prefetch" href="/assets/js/203.fa7739e9.js"><link rel="prefetch" href="/assets/js/204.19ad0ee8.js"><link rel="prefetch" href="/assets/js/205.29d77299.js"><link rel="prefetch" href="/assets/js/206.8e0e135b.js"><link rel="prefetch" href="/assets/js/207.6aeed711.js"><link rel="prefetch" href="/assets/js/208.55850a7b.js"><link rel="prefetch" href="/assets/js/209.e47aaa64.js"><link rel="prefetch" href="/assets/js/21.22842a0f.js"><link rel="prefetch" href="/assets/js/210.9e12678a.js"><link rel="prefetch" href="/assets/js/211.361efbe3.js"><link rel="prefetch" href="/assets/js/212.cd28b79d.js"><link rel="prefetch" href="/assets/js/213.0385731c.js"><link rel="prefetch" href="/assets/js/214.8422df25.js"><link rel="prefetch" href="/assets/js/215.63219b00.js"><link rel="prefetch" href="/assets/js/216.02d008b5.js"><link rel="prefetch" href="/assets/js/217.40b9c7fb.js"><link rel="prefetch" href="/assets/js/218.3bdde972.js"><link rel="prefetch" href="/assets/js/219.c5433a99.js"><link rel="prefetch" href="/assets/js/22.a21b7c0e.js"><link rel="prefetch" href="/assets/js/220.0c354022.js"><link rel="prefetch" href="/assets/js/221.ddf22c5e.js"><link rel="prefetch" href="/assets/js/222.7678fe1e.js"><link rel="prefetch" href="/assets/js/223.6c5962cc.js"><link rel="prefetch" href="/assets/js/224.f7e36bf3.js"><link rel="prefetch" href="/assets/js/225.725b6fcf.js"><link rel="prefetch" href="/assets/js/226.5e9d7eec.js"><link rel="prefetch" href="/assets/js/227.b060aa31.js"><link rel="prefetch" href="/assets/js/228.a3eba3b6.js"><link rel="prefetch" href="/assets/js/229.486bd794.js"><link rel="prefetch" href="/assets/js/23.5f9d0976.js"><link rel="prefetch" href="/assets/js/230.5a7c0a55.js"><link rel="prefetch" href="/assets/js/231.7c6620a5.js"><link rel="prefetch" href="/assets/js/232.cc58a96c.js"><link rel="prefetch" href="/assets/js/233.daf6c78a.js"><link rel="prefetch" href="/assets/js/234.7193ae71.js"><link rel="prefetch" href="/assets/js/235.cd42c17c.js"><link rel="prefetch" href="/assets/js/236.9c046bb9.js"><link rel="prefetch" href="/assets/js/237.d0a60f1b.js"><link rel="prefetch" href="/assets/js/238.91fc6a5f.js"><link rel="prefetch" href="/assets/js/239.64e7c2b7.js"><link rel="prefetch" href="/assets/js/24.c810eb09.js"><link rel="prefetch" href="/assets/js/240.7570cd7f.js"><link rel="prefetch" href="/assets/js/241.9ccd2364.js"><link rel="prefetch" href="/assets/js/242.3ce7ba91.js"><link rel="prefetch" href="/assets/js/243.101634ca.js"><link rel="prefetch" href="/assets/js/244.bcd75b66.js"><link rel="prefetch" href="/assets/js/245.35236282.js"><link rel="prefetch" href="/assets/js/246.067edc5b.js"><link rel="prefetch" href="/assets/js/247.b4c7f756.js"><link rel="prefetch" href="/assets/js/248.ece4f86b.js"><link rel="prefetch" href="/assets/js/249.988d23f8.js"><link rel="prefetch" href="/assets/js/25.13c59344.js"><link rel="prefetch" href="/assets/js/250.c51d6266.js"><link rel="prefetch" href="/assets/js/251.3bdf26a3.js"><link rel="prefetch" href="/assets/js/252.7db45b10.js"><link rel="prefetch" href="/assets/js/253.49b64f22.js"><link rel="prefetch" href="/assets/js/254.35933a61.js"><link rel="prefetch" href="/assets/js/255.09c9d6b6.js"><link rel="prefetch" href="/assets/js/256.3ec90e6f.js"><link rel="prefetch" href="/assets/js/257.bc178194.js"><link rel="prefetch" href="/assets/js/258.17d8c2de.js"><link rel="prefetch" href="/assets/js/259.03417ccc.js"><link rel="prefetch" href="/assets/js/26.e0294a3b.js"><link rel="prefetch" href="/assets/js/260.216a2f51.js"><link rel="prefetch" href="/assets/js/261.871c216b.js"><link rel="prefetch" href="/assets/js/262.56efbf44.js"><link rel="prefetch" href="/assets/js/263.122c5634.js"><link rel="prefetch" href="/assets/js/264.e9e1d4f6.js"><link rel="prefetch" href="/assets/js/265.56ddac52.js"><link rel="prefetch" href="/assets/js/266.5726ebe6.js"><link rel="prefetch" href="/assets/js/267.5e1c37d4.js"><link rel="prefetch" href="/assets/js/268.82d4a6c1.js"><link rel="prefetch" href="/assets/js/269.ff31fe86.js"><link rel="prefetch" href="/assets/js/27.35fc009c.js"><link rel="prefetch" href="/assets/js/270.6109e3ea.js"><link rel="prefetch" href="/assets/js/271.c6c91d5b.js"><link rel="prefetch" href="/assets/js/272.a8859d64.js"><link rel="prefetch" href="/assets/js/273.f1c310b9.js"><link rel="prefetch" href="/assets/js/274.f47ab8e0.js"><link rel="prefetch" href="/assets/js/275.1deb3270.js"><link rel="prefetch" href="/assets/js/276.8c7ee165.js"><link rel="prefetch" href="/assets/js/277.9954c4e9.js"><link rel="prefetch" href="/assets/js/278.cf66e2ed.js"><link rel="prefetch" href="/assets/js/279.83405e57.js"><link rel="prefetch" href="/assets/js/28.f3c87fa4.js"><link rel="prefetch" href="/assets/js/280.73124214.js"><link rel="prefetch" href="/assets/js/281.1bf94d5a.js"><link rel="prefetch" href="/assets/js/29.87738507.js"><link rel="prefetch" href="/assets/js/3.9ddafd63.js"><link rel="prefetch" href="/assets/js/30.9a33d360.js"><link rel="prefetch" href="/assets/js/31.760d306e.js"><link rel="prefetch" href="/assets/js/32.729df4d8.js"><link rel="prefetch" href="/assets/js/33.870a94f6.js"><link rel="prefetch" href="/assets/js/34.a06cf942.js"><link rel="prefetch" href="/assets/js/35.a7120b36.js"><link rel="prefetch" href="/assets/js/36.9b151665.js"><link rel="prefetch" href="/assets/js/37.7747739c.js"><link rel="prefetch" href="/assets/js/38.c0d80251.js"><link rel="prefetch" href="/assets/js/39.085aa663.js"><link rel="prefetch" href="/assets/js/4.b1166e63.js"><link rel="prefetch" href="/assets/js/40.128118ea.js"><link rel="prefetch" href="/assets/js/41.deda7589.js"><link rel="prefetch" href="/assets/js/42.1f799c3f.js"><link rel="prefetch" href="/assets/js/43.ce0cf301.js"><link rel="prefetch" href="/assets/js/44.c349236e.js"><link rel="prefetch" href="/assets/js/45.4e9cb319.js"><link rel="prefetch" href="/assets/js/46.c7a05043.js"><link rel="prefetch" href="/assets/js/47.f97ee979.js"><link rel="prefetch" href="/assets/js/48.3a5a97e9.js"><link rel="prefetch" href="/assets/js/49.ac08632a.js"><link rel="prefetch" href="/assets/js/5.093e58d7.js"><link rel="prefetch" href="/assets/js/50.27d273f3.js"><link rel="prefetch" href="/assets/js/51.66cc8321.js"><link rel="prefetch" href="/assets/js/52.d161537d.js"><link rel="prefetch" href="/assets/js/53.d140f908.js"><link rel="prefetch" href="/assets/js/54.0235ceff.js"><link rel="prefetch" href="/assets/js/55.a55594c1.js"><link rel="prefetch" href="/assets/js/56.1f22204a.js"><link rel="prefetch" href="/assets/js/57.a0a26849.js"><link rel="prefetch" href="/assets/js/58.d7345235.js"><link rel="prefetch" href="/assets/js/59.81a8a316.js"><link rel="prefetch" href="/assets/js/6.59f3b7b6.js"><link rel="prefetch" href="/assets/js/60.c2b813c0.js"><link rel="prefetch" href="/assets/js/61.9972e78e.js"><link rel="prefetch" href="/assets/js/62.99b67f22.js"><link rel="prefetch" href="/assets/js/63.b469a857.js"><link rel="prefetch" href="/assets/js/64.0ca6f6c1.js"><link rel="prefetch" href="/assets/js/65.b8540b0f.js"><link rel="prefetch" href="/assets/js/66.4980be30.js"><link rel="prefetch" href="/assets/js/67.8278463d.js"><link rel="prefetch" href="/assets/js/68.907a24bc.js"><link rel="prefetch" href="/assets/js/69.fb4558bc.js"><link rel="prefetch" href="/assets/js/7.f7e8ebdc.js"><link rel="prefetch" href="/assets/js/70.622bf466.js"><link rel="prefetch" href="/assets/js/71.5e0ee530.js"><link rel="prefetch" href="/assets/js/72.eb23a35d.js"><link rel="prefetch" href="/assets/js/73.40abfa0b.js"><link rel="prefetch" href="/assets/js/74.4094b61b.js"><link rel="prefetch" href="/assets/js/75.5c3b5a4c.js"><link rel="prefetch" href="/assets/js/76.efbc2228.js"><link rel="prefetch" href="/assets/js/77.e8c7c1df.js"><link rel="prefetch" href="/assets/js/78.1dbc6bec.js"><link rel="prefetch" href="/assets/js/79.cacffcfa.js"><link rel="prefetch" href="/assets/js/8.ba73daac.js"><link rel="prefetch" href="/assets/js/80.4adb6bc0.js"><link rel="prefetch" href="/assets/js/81.ec01b0eb.js"><link rel="prefetch" href="/assets/js/82.fa60abc7.js"><link rel="prefetch" href="/assets/js/83.adc499ef.js"><link rel="prefetch" href="/assets/js/84.6a9a7f25.js"><link rel="prefetch" href="/assets/js/85.dd78c411.js"><link rel="prefetch" href="/assets/js/86.b2755e09.js"><link rel="prefetch" href="/assets/js/87.14216b7f.js"><link rel="prefetch" href="/assets/js/88.25ad2b2e.js"><link rel="prefetch" href="/assets/js/89.4434e71b.js"><link rel="prefetch" href="/assets/js/9.5f162f90.js"><link rel="prefetch" href="/assets/js/90.135b0f44.js"><link rel="prefetch" href="/assets/js/91.9fff7f99.js"><link rel="prefetch" href="/assets/js/92.fd8650e0.js"><link rel="prefetch" href="/assets/js/93.97e850e6.js"><link rel="prefetch" href="/assets/js/94.44278b7b.js"><link rel="prefetch" href="/assets/js/95.f7ef3696.js"><link rel="prefetch" href="/assets/js/96.e3c08b5c.js"><link rel="prefetch" href="/assets/js/97.60754372.js"><link rel="prefetch" href="/assets/js/98.d5cfbfb5.js"><link rel="prefetch" href="/assets/js/99.90f3c1fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link router-link-active">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link router-link-active">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Nginx</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/nginx/" aria-current="page" class="sidebar-link">Nginx简介</a></li><li><a href="/middleware/nginx/Nginx简介-0.html" class="sidebar-link">1. Nginx简介</a></li><li><a href="/middleware/nginx/nginx配置文件-1.html" class="active sidebar-link">2. nginx配置文件</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/nginx/nginx配置文件-1.html#_2-1-nginx配置文件解读" class="sidebar-link">2.1 Nginx配置文件解读</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/nginx/nginx配置文件-1.html#_2-1-1-全局块" class="sidebar-link">2.1.1 全局块</a></li><li class="sidebar-sub-header"><a href="/middleware/nginx/nginx配置文件-1.html#_2-1-2-events-块" class="sidebar-link">2.1.2 events 块</a></li><li class="sidebar-sub-header"><a href="/middleware/nginx/nginx配置文件-1.html#_2-1-3-http块" class="sidebar-link">2.1.3 http块</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/nginx/nginx配置文件-1.html#nginx-配置文件解读" class="sidebar-link">Nginx 配置文件解读</a></li><li class="sidebar-sub-header"><a href="/middleware/nginx/nginx配置文件-1.html#_2-2-配置文件" class="sidebar-link">2.2 配置文件</a></li><li class="sidebar-sub-header"><a href="/middleware/nginx/nginx配置文件-1.html#_2-3-文字版描述" class="sidebar-link">2.3 文字版描述</a></li></ul></li><li><a href="/middleware/nginx/nginx反向代理-2.html" class="sidebar-link">3. Nginx 反向代理</a></li><li><a href="/middleware/nginx/nginx负载均衡-3.html" class="sidebar-link">3. nginx负载均衡</a></li><li><a href="/middleware/nginx/nginx限流熔断-4.html" class="sidebar-link">5. Nginx限流熔断</a></li><li><a href="/middleware/nginx/nginx搭建高可用集群-5.html" class="sidebar-link">6. Nginx搭建高可用集群</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_2-nginx配置文件"><a href="#_2-nginx配置文件" class="header-anchor">#</a> 2. nginx配置文件</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_2-1-nginx配置文件解读">2.1 Nginx配置文件解读</a><ul><li><a href="#_2-1-1-全局块">2.1.1 全局块</a></li><li><a href="#_2-1-2-events-块">2.1.2 events 块</a></li><li><a href="#_2-1-3-http块">2.1.3 http块</a></li></ul></li><li><a href="#nginx-配置文件解读">Nginx 配置文件解读</a></li><li><a href="#_2-2-配置文件">2.2 配置文件</a></li><li><a href="#_2-3-文字版描述">2.3 文字版描述</a></li></ul></div><p></p> <h2 id="_2-1-nginx配置文件解读"><a href="#_2-1-nginx配置文件解读" class="header-anchor">#</a> 2.1 Nginx配置文件解读</h2> <p>配置文件的大体分为三大块全局块，events块，http模块</p> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code>#   nginx配置文件主要分为六个区域： 核心区域 
+#    main(全局设置)  作用域是全局 （从配置文件开始到events 块之间的内容）
+#    events(nginx工作模式)
+#   upstream(负载均衡服务器设置）
+#    http(http设置) 
+#   	 sever(主机设置) 
+#   		 location(URL匹配)
+#   
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="_2-1-1-全局块"><a href="#_2-1-1-全局块" class="header-anchor">#</a> 2.1.1 全局块</h3> <p>从配置文件开始到events 块之间的内容，主要会设置一些影响nginx 服务器整体运行的配置指令，主要包括配置运行Nginx 服务器的用户（组）、允许生成的worker process 数，进程PID 存放路径、日志存放路径和类型以及配置文件的引入等。比如上面第一行配置的</p> <p><a data-fancybox="" title="全局块" href="./image/image-20201012105805808.png"><img src="data:image/png;base64,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" alt="全局块"></a></p> <p>这是nginx 服务器并发处理服务的关键配置，worker_processes 值越大，可以支持的并发处理量就越多，但是会受到硬件、软件等设备的制约</p> <h3 id="_2-1-2-events-块"><a href="#_2-1-2-events-块" class="header-anchor">#</a> 2.1.2 events 块</h3> <p><a data-fancybox="" title="events 块" href="./image/image-20201012105928481.png"><img src="data:image/png;base64,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" alt="events 块"></a></p> <p>events 块涉及的指令主要影响Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多work process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个word process 可以同时支持的最大连接数等。</p> <p>上述例子就表示每个work process 支持的最大连接数为1024</p> <p>这部分的配置对Nginx 的性能影响较大，在实际中应该灵活配置</p> <h3 id="_2-1-3-http块"><a href="#_2-1-3-http块" class="header-anchor">#</a> 2.1.3 http块</h3> <p><a data-fancybox="" title="http块" href="./image/image-20201012110023268.png"><img src="/assets/img/image-20201012110023268.60f18ec3.png" alt="http块"></a></p> <p>这是 Nginx 服务器中最频繁的部分，代理，缓存，日志，定义的功能绝大多数功能和第三方模块都在这里</p> <p>需要注意的是：http 块 可以包含 <strong>http全局块，server块</strong></p> <hr> <h2 id="nginx-配置文件解读"><a href="#nginx-配置文件解读" class="header-anchor">#</a> Nginx 配置文件解读</h2> <p>配置文件的几大块</p> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code>#   nginx配置文件主要分为六个区域： 核心区域 
+#    main(全局设置)  作用域是全局 
+#    events(nginx工作模式)
+#   upstream(负载均衡服务器设置）
+#    http(http设置) 
+#   	 sever(主机设置) 
+#   		 location(URL匹配)
+#   
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h2 id="_2-2-配置文件"><a href="#_2-2-配置文件" class="header-anchor">#</a> 2.2 配置文件</h2> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code>#设置用户的权限  root nobody 指定 用户名虚拟机内用户   或者 Ip访问 
+#user  nobody;
+#设置工作进程数 一般为 Cpu 核心*2  4*2 
+worker_processes  8;  
+# 日志输出参数 
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+# 进程ID 
+#pid        logs/nginx.pid;
+
+events {
+#指定运行模型 
+    use epoll;
+# 工作连接数  默认512 根据自己的情况调整 
+    worker_connections  1024;
+}
+
+#http模块 
+http {
+#  能够支持的类型 在 这个文件下写着  mime.types
+    include       mime.types;
+# 默认的类型  在 application/octet-stream;
+    default_type  application/octet-stream;
+# 日志的格式 
+    #log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '
+    #                  '$status $body_bytes_sent &quot;$http_referer&quot; '
+    #                  '&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;';
+#访问日志记录 
+    #access_log  logs/access.log  main;
+#启动 发送文件 
+    sendfile        on;
+# 开启TCP 推送 
+    #tcp_nopush     on;
+# 连接超时时间 
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+# 开启压缩文件 
+    #gzip  on;
+# 服务 
+# 服务分组  反向代理的核心关键 
+ upstream tuling {
+# ip 方式 最大失败3个连接  间隔 30S  权重为 5
+        server 127.0.0.1:8080       max_fails=3 fail_timeout=30s weight=5;
+#根据ip 利用Hash算法决定访问哪台机器 
+   ip_hash;
+    }
+    server {
+        listen       80;
+        server_name  localhost;
+        #charset koi8-r;
+#访问日志记录 以及位置  
+        #access_log  logs/host.access.log  main;
+# 匹配位置 支持正则表达式 
+        location / {
+# 寻找位置 默认在Nginx 目录下的  类型 
+            root   html;
+            index  index.html index.htm;
+			 proxy_pass   http://127.0.0.1;
+        }
+#错误信息 页面 
+        #error_page  404              /404.html;
+#将服务器错误页重定向到静态页/50x.html
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+#实例 入 将访问尾缀为 \.php 跳转到 127.0.0.1
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+#将PHP脚本传递给正在侦听127.0.0.1:9000的FastCGI服务器
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+#拒绝访问.htaccess文件，如果Apache的文档根
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br></div></div><h2 id="_2-3-文字版描述"><a href="#_2-3-文字版描述" class="header-anchor">#</a> 2.3 文字版描述</h2> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code>################### main区域 #################################
+#user :来指定Nginx Worker进程运行用户以及用户组，默认由nobody账号运行。也可以创建nginx用户指定用户。
+#    创建www用户，在nginx配置文件中把user noboby noboby;--&gt;user www www;即可
+#    /usr/sbin/groupadd www 
+#    /usr/sbin/useradd -g www www
+#worker_processes:来指定了Nginx要开启的子进程数。每个Nginx进程平均耗费10M~12M内存。根据经验，一般指定1个进程就足够了，如果是多核CPU，
+#    建议指定和CPU的数量一样的进程数即可。我这里写2，那么就会开启2个子进程，总共3个进程。
+#error_log:用来定义全局错误日志文件。日志输出级别有debug、info、notice、warn、error、crit可供选择，其中，debug输出日志最为最详细，而crit输出日志最少。
+#pid:用来指定进程id的存储文件位置。
+#worker_rlimit_nofile:用于指定一个nginx进程可以打开的最多文件描述符数目，这里是65535，需要使用命令“ulimit -n 65535”来设置。
+
+user  nobody;
+worker_processes  1;
+error_log  logs/error.log;
+error_log  logs/error.log  notice;
+error_log  logs/error.log  info;
+pid        logs/nginx.pid;
+
+
+#####################event 区域###############################
+#use：用来指定Nginx的工作模式。Nginx支持的工作模式有select、poll、kqueue、epoll、rtsig和/dev/poll。
+#    其中select和poll都是标准的工作模式，kqueue和epoll是高效的工作模式，不同的是epoll用在Linux平台上，
+#    而kqueue用在BSD系统中,对于Linux系统，epoll工作模式是首选。
+#worker_connections：用于定义Nginx每个进程的最大连接数，即接收前端的最大请求数，默认是1024。
+#    最大客户端连接数由worker_processes和worker_connections决定，即Max_clients=worker_processes*worker_connections，
+#   在作为反向代理时，Max_clients变为：Max_clients = worker_processes * worker_connections/4。 
+#    进程的最大连接数受Linux系统进程的最大打开文件数限制，在执行操作系统命令“ulimit -n 65536”后worker_connections的设置才能生效。
+
+events {
+    use epoll;
+    worker_connections  1024;
+}
+######################### http设置#####################################
+#    http模块负责HTTP服务器相关属性的配置，有server和upstream两个子模块
+http {
+#include ：来用设定文件的mime类型,类型在配置文件目录下的mime.type文件定义，来告诉nginx来识别文件类型。
+#default_type：设定了默认的类型为二进制流，也就是当文件类型未定义时使用这种方式，例如在没有配置asp的locate环境时，Nginx是不予解析的，此时，用浏览器访问asp文件就会出现下载了。
+#log_format：用于设置日志的格式，和记录哪些参数，这里设置为main，刚好用于access_log来纪录这种类型。
+    include       mime.types;
+    default_type  application/octet-stream;
+    log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '
+                      '$status $body_bytes_sent &quot;$http_referer&quot; '
+                      '&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;';
+    access_log  logs/access.log  main;
+    sendfile        on;
+    tcp_nopush     on;
+    keepalive_timeout  0;
+    keepalive_timeout  65;
+    gzip  on;
+
+######################### server设置#####################################
+#server用来定一个虚拟主机，标志定义虚拟主机开始。
+#listen：用于指定虚拟主机的服务端口。
+#server_name：用来指定IP地址或者域名，多个域名之间用空格分开。
+#root ：表示在这整个server虚拟主机内，全部的root web根目录。注意要和locate {}下面定义的区分开来。
+#index ：全局定义访问的默认首页地址。注意要和locate {}下面定义的区分开来。
+#charset：用于设置网页的默认编码格式。
+#access_log：用来指定此虚拟主机的访问日志存放路径，最后的main用于指定访问日志的输出格式。
+    server {
+        listen       80;
+        server_name  localhost;
+        root   /Users/hk/www;
+        index  index.php index.html index.htm; 
+        charset utf-8;
+        access_log  logs/host.access.log  main;
+        aerror_log  logs/host.error.log   main;
+
+######################### location设置#####################################
+# location模块 负载均衡,反向代理,虚拟域名等配置。是来定位的，定位URL，解析URL，它也提供了强大的正则匹配功能，也支持条件判断匹配，
+#    可以通过location指令实现Nginx对动,静态网页进行过滤处理。
+#/表示匹配访问根目录。
+#root指令用于指定访问根目录时，虚拟主机的web目录，这个目录可以是相对路径（相对路径是相对于nginx的安装目录）。也可以是绝对路径。
+#proxy_pass：代理转发，如果在proxy_pass后面的url加/，表示绝对根路径；如果没有/，表示相对路径，把匹配的路径部分也给代理走。
+#proxy_set_header：允许重新定义或者添加发往后端服务器的请求头。
+#include：加载配置文件，后面介绍nginx多个配置文件时候会提到。
+#root：定位localtion匹配的url资源路径。
+#index：定义页面显示html，一般和alias配合使用。
+        location / {       
+            root   html;    
+            index  index.html index.htm;
+        }
+
+        error_page  404              /404.html;       
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+        
+        
+        #反向代理配置
+        location /jyb {
+            proxy_pass http://qurt/;
+            proxy_read_timeout 1800s;
+            proxy_set_header   Host $host:$server_port;
+            proxy_set_header   X-real-ip  $remote_addr;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;  
+            proxy_set_header   X-Forwarded-Proto  $scheme; 
+         }
+     
+        
+         #采用uwsgi方式
+         location /python/ {
+             include uwsgi_params;
+             uwsgi_pass 127.0.0.1:33333;
+         }
+        
+        # FastCGI方式
+        location ~ \.php$ {
+            root           html;
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+        
+        #访问nginx本机目录的文件
+        location / {
+            root   /home/hk/;
+            index  index.html index.htm;
+        }
+        
+        location  /static/ {
+             alias /var/static/;
+        }
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+            deny  all;
+        }
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    server {
+        listen       8000;
+        listen       somename:8080;
+        server_name  somename  alias  another.alias;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+    }
+
+
+    # HTTPS server    
+    server {
+        listen       443 ssl;
+        server_name  localhost;
+
+        ssl_certificate      cert.pem;
+        ssl_certificate_key  cert.key;
+
+        ssl_session_cache    shared:SSL:1m;
+        ssl_session_timeout  5m;
+
+        ssl_ciphers  HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers  on;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+    }
+    
+##############upstram 模块################
+# upstream 模块  负载均衡模块，通过一个简单的调度算法来实现客户端IP到后端服务器的负载均衡。
+#Nginx的负载均衡模块目前支持4种调度算法:
+#    weight 轮询（默认）。每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某台服务器宕机，故障系统被自动剔除，使用户访问不受影响。
+#        weight指定轮询权值，weight值越大，分配到的访问机率越高，主要用于后端每个服务器性能不均的情况下。
+#    ip_hash。每个请求按访问IP的hash结果分配，这样来自同一个IP的访客固定访问一个后端服务器，有效解决了动态网页存在的session共享问题。
+#    fair。比上面两个更加智能的负载均衡算法。此种算法可以依据页面大小和加载时间长短智能地进行负载均衡，
+#        也就是根据后端服务器的响应时间来分配请求，响应时间短的优先分配。Nginx本身是不支持fair的，如果需要使用这种调度算法，必须下载Nginx的upstream_fair模块。
+#    url_hash。按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，可以进一步提高后端缓存服务器的效率。Nginx本身是不支持url_hash的，
+#        如果需要使用这种调度算法，必须安装Nginx 的hash软件包。
+
+#在HTTP Upstream模块中，可以通过server指令指定后端服务器的IP地址和端口，同时还可以设定每个后端服务器在负载均衡调度中的状态。常用的状态有：
+#    down，表示当前的server暂时不参与负载均衡。
+#    backup，预留的备份机器。当其他所有的非backup机器出现故障或者忙的时候，才会请求backup机器，因此这台机器的压力最轻。
+#    max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误。
+#    fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用。
+
+#注意 当负载调度算法为ip_hash时，后端服务器在负载均衡调度中的状态不能是weight和backup。
+#备注： nginx的worker_rlimit_nofile达到上限时，再有客户端链接报502错误. 用了log_format指令设置了日志格式之后，需要用access_log指令指定日志文件的存放路径。
+    
+    upstream server_group {
+        ip_hash;
+        server 192.168.123.1:80;
+        server 192.168.123.2:80 down;
+        server 192.168.123.3:8080  max_fails=3  fail_timeout=20s;
+        server 192.168.123.4:8080;
+    }
+    
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            proxy_pass http://server_group/;
+        }
+    }
+
+}
+
+
+######################nginx 中location中root和alias的区别 ####################
+    nginx指定文件路径有两种方式root和alias，这两者的用法区别，使用方法总结了。
+    root与alias主要区别在于nginx如何解释location后面的uri，这会使两者分别以不同的方式将请求映射到服务器文件上。
+    [root]
+        语法：root path
+        默认值：root html
+        配置段：http、server、location、if
+
+    [alias]
+        语法：alias path
+        配置段：location
+
+    root实例：
+
+        location ^~ /t/ {
+            root /www/root/html/;
+        }
+        如果一个请求的URI是/t/a.html时，web服务器将会返回服务器上的/www/root/html/t/a.html的文件。
+
+    alias实例：
+        location ^~ /t/ {
+            alias /www/root/html/new_t/;
+        }
+        如果一个请求的URI是/t/a.html时，web服务器将会返回服务器上的/www/root/html/new_t/a.html的文件。注意这里是new_t，
+        因为alias会把location后面配置的路径丢弃掉，把当前匹配到的目录指向到指定的目录。
+    注意：
+        1. 使用alias时，目录名后面一定要加&quot;/&quot;。
+        2. alias在使用正则匹配时，必须捕捉要匹配的内容并在指定的内容处使用。
+        3. alias只能位于location块中。（root可以不放在location中）
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br><span class="line-number">211</span><br><span class="line-number">212</span><br><span class="line-number">213</span><br><span class="line-number">214</span><br><span class="line-number">215</span><br><span class="line-number">216</span><br><span class="line-number">217</span><br><span class="line-number">218</span><br><span class="line-number">219</span><br><span class="line-number">220</span><br><span class="line-number">221</span><br><span class="line-number">222</span><br><span class="line-number">223</span><br><span class="line-number">224</span><br><span class="line-number">225</span><br><span class="line-number">226</span><br><span class="line-number">227</span><br><span class="line-number">228</span><br><span class="line-number">229</span><br><span class="line-number">230</span><br><span class="line-number">231</span><br><span class="line-number">232</span><br><span class="line-number">233</span><br><span class="line-number">234</span><br><span class="line-number">235</span><br><span class="line-number">236</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/nginx/Nginx简介-0.html" class="prev">
+        1. Nginx简介
+      </a></span> <span class="next"><a href="/middleware/nginx/nginx反向代理-2.html">
+        3. Nginx 反向代理
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a86c1f59.js" defer></script><script src="/assets/js/2.572fbcb7.js" defer></script><script src="/assets/js/133.7461fcc3.js" defer></script>
+  </body>
+</html>

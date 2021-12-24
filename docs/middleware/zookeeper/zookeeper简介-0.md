@@ -37,11 +37,11 @@ Zookeeper从设计模式的角度上来理解：属于观察者模型的一种�
 **zookeeper数据结构**  
 ZooKeeper数据模型的结构与Unix文件系统很类似，整体上可以看作是一棵树，每个节点称做一个ZNode。每一个ZNode默认能够存储1MB的数据，每个ZNode都可以通过其路径唯一标识。
 
-<a data-fancybox title="Zookeeper数据结构" href="./image/zookeeper3.jpg"></a>
+<a data-fancybox title="Zookeeper数据结构" href="./image/zookeeper3.jpg">![Zookeeper数据结构](./image/zookeeper3.jpg)</a>
 
 每个子目录项都被称作为 znode(目录节点)，和文件系统类似，我们能够自由的增加、删除 znode，在一个znode下增加、删除子znode。 
 
-<a data-fancybox title="Zookeeper数据结构" href="./image/zookeeper22.jpg">![Zookeeper数据结构](./image/zookeeper22.jpg)</a>
+<!-- <a data-fancybox title="Zookeeper数据结构" href="./image/zookeeper22.jpg">![Zookeeper数据结构](./image/zookeeper22.jpg)</a> -->
 
 :::tip 有四种类型的znode： 
 1. **PERSISTENT­持久化目录节点** 客户端与zookeeper断开连接后，该节点依旧存在，只要不手动删除该节点，他将永远存在 

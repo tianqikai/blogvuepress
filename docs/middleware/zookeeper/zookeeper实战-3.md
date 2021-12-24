@@ -105,7 +105,7 @@ public class ConfigCenter {
 
 ### 4.3.1 ZK非公平锁
 
-<a data-fancybox title="ZK非公平锁" href="../image/zklock01.jpg">![ZK非公平锁](./image/zklock01.jpg)</a> 
+<a data-fancybox title="ZK非公平锁" href="./image/zklock01.jpg">![ZK非公平锁](./image/zklock01.jpg)</a> 
 
 
 如上实现方式在并发问题比较严重的情况下，性能会下降的比较厉害，
@@ -115,7 +115,7 @@ public class ConfigCenter {
 
 ### 4.3.2 ZK公平锁
 
-<a data-fancybox title="ZK公平锁" href="../image/zklock02.jpg">![ZK公平锁](./image/zklock02.jpg)</a> 
+<a data-fancybox title="ZK公平锁" href="./image/zklock02.jpg">![ZK公平锁](./image/zklock02.jpg)</a> 
 
 ```java
 @PostMapping("/stock/deduct")
@@ -157,7 +157,7 @@ public class ConfigCenter {
 
 
 
-<a data-fancybox title="ZK共享锁（读写锁）" href="../image/zklock03.jpg">![ZK共享锁（读写锁）](./image/zklock03.jpg)</a> 
+<a data-fancybox title="ZK共享锁（读写锁）" href="./image/zklock03.jpg">![ZK共享锁（读写锁）](./image/zklock03.jpg)</a> 
 
 ```java
 @RestController

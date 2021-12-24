@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>5. Redis慢查询和事务 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.a86c1f59.js" as="script"><link rel="preload" href="/assets/js/2.572fbcb7.js" as="script"><link rel="preload" href="/assets/js/78.1dbc6bec.js" as="script"><link rel="prefetch" href="/assets/js/10.8de04070.js"><link rel="prefetch" href="/assets/js/100.95c60bcc.js"><link rel="prefetch" href="/assets/js/101.66aaacb7.js"><link rel="prefetch" href="/assets/js/102.06cfb9b6.js"><link rel="prefetch" href="/assets/js/103.f2c99fdc.js"><link rel="prefetch" href="/assets/js/104.e6165e64.js"><link rel="prefetch" href="/assets/js/105.757306c7.js"><link rel="prefetch" href="/assets/js/106.c2c7e8d5.js"><link rel="prefetch" href="/assets/js/107.a12c9e45.js"><link rel="prefetch" href="/assets/js/108.af6bf755.js"><link rel="prefetch" href="/assets/js/109.e95af487.js"><link rel="prefetch" href="/assets/js/11.323cce65.js"><link rel="prefetch" href="/assets/js/110.d55414b7.js"><link rel="prefetch" href="/assets/js/111.0e568416.js"><link rel="prefetch" href="/assets/js/112.24068f5c.js"><link rel="prefetch" href="/assets/js/113.11a3ed5d.js"><link rel="prefetch" href="/assets/js/114.b7a21a5c.js"><link rel="prefetch" href="/assets/js/115.8a8b7953.js"><link rel="prefetch" href="/assets/js/116.5847ef55.js"><link rel="prefetch" href="/assets/js/117.0ba1b0af.js"><link rel="prefetch" href="/assets/js/118.64e334e6.js"><link rel="prefetch" href="/assets/js/119.a5859784.js"><link rel="prefetch" href="/assets/js/12.c83e3c87.js"><link rel="prefetch" href="/assets/js/120.857f02ab.js"><link rel="prefetch" href="/assets/js/121.df5a5733.js"><link rel="prefetch" href="/assets/js/122.6f87eff8.js"><link rel="prefetch" href="/assets/js/123.2a9af6f7.js"><link rel="prefetch" href="/assets/js/124.1fcc27ae.js"><link rel="prefetch" href="/assets/js/125.bf8fd16c.js"><link rel="prefetch" href="/assets/js/126.2104d4c1.js"><link rel="prefetch" href="/assets/js/127.4b6c4988.js"><link rel="prefetch" href="/assets/js/128.a802cc4c.js"><link rel="prefetch" href="/assets/js/129.c99f7efa.js"><link rel="prefetch" href="/assets/js/13.9013091b.js"><link rel="prefetch" href="/assets/js/130.0861503e.js"><link rel="prefetch" href="/assets/js/131.b26f57dc.js"><link rel="prefetch" href="/assets/js/132.fe7c29b3.js"><link rel="prefetch" href="/assets/js/133.7461fcc3.js"><link rel="prefetch" href="/assets/js/134.a857d18e.js"><link rel="prefetch" href="/assets/js/135.51d933ef.js"><link rel="prefetch" href="/assets/js/136.bbd6d5c1.js"><link rel="prefetch" href="/assets/js/137.19bd53e8.js"><link rel="prefetch" href="/assets/js/138.701e8f3a.js"><link rel="prefetch" href="/assets/js/139.c5128cb6.js"><link rel="prefetch" href="/assets/js/14.932e0778.js"><link rel="prefetch" href="/assets/js/140.6c972a8d.js"><link rel="prefetch" href="/assets/js/141.1d6633ab.js"><link rel="prefetch" href="/assets/js/142.efed1127.js"><link rel="prefetch" href="/assets/js/143.b27f42b8.js"><link rel="prefetch" href="/assets/js/144.f31ebd51.js"><link rel="prefetch" href="/assets/js/145.f8c2b775.js"><link rel="prefetch" href="/assets/js/146.b219bc33.js"><link rel="prefetch" href="/assets/js/147.d8118e9f.js"><link rel="prefetch" href="/assets/js/148.6b1cba56.js"><link rel="prefetch" href="/assets/js/149.a47f6457.js"><link rel="prefetch" href="/assets/js/15.04b4b708.js"><link rel="prefetch" href="/assets/js/150.6455c79e.js"><link rel="prefetch" href="/assets/js/151.ba4699a4.js"><link rel="prefetch" href="/assets/js/152.76b2df89.js"><link rel="prefetch" href="/assets/js/153.63a35950.js"><link rel="prefetch" href="/assets/js/154.de8cadf7.js"><link rel="prefetch" href="/assets/js/155.728a2868.js"><link rel="prefetch" href="/assets/js/156.e7c79791.js"><link rel="prefetch" href="/assets/js/157.43a31655.js"><link rel="prefetch" href="/assets/js/158.d71759b1.js"><link rel="prefetch" href="/assets/js/159.82fb8b40.js"><link rel="prefetch" href="/assets/js/16.c7e977c7.js"><link rel="prefetch" href="/assets/js/160.2fbfe95f.js"><link rel="prefetch" href="/assets/js/161.0a45983e.js"><link rel="prefetch" href="/assets/js/162.34afe2d7.js"><link rel="prefetch" href="/assets/js/163.80e9e5fd.js"><link rel="prefetch" href="/assets/js/164.64eac1eb.js"><link rel="prefetch" href="/assets/js/165.814458b0.js"><link rel="prefetch" href="/assets/js/166.66ebdce1.js"><link rel="prefetch" href="/assets/js/167.9a721e1f.js"><link rel="prefetch" href="/assets/js/168.cf53b343.js"><link rel="prefetch" href="/assets/js/169.9602ea8d.js"><link rel="prefetch" href="/assets/js/17.bf149089.js"><link rel="prefetch" href="/assets/js/170.2b63d7d3.js"><link rel="prefetch" href="/assets/js/171.9b8de16f.js"><link rel="prefetch" href="/assets/js/172.08c6417f.js"><link rel="prefetch" href="/assets/js/173.f4c6ef29.js"><link rel="prefetch" href="/assets/js/174.20f62f8b.js"><link rel="prefetch" href="/assets/js/175.29849dda.js"><link rel="prefetch" href="/assets/js/176.ac876a4e.js"><link rel="prefetch" href="/assets/js/177.0e998ca1.js"><link rel="prefetch" href="/assets/js/178.3ba3620d.js"><link rel="prefetch" href="/assets/js/179.2fd4422d.js"><link rel="prefetch" href="/assets/js/18.2f7a7cd1.js"><link rel="prefetch" href="/assets/js/180.c8b3c0df.js"><link rel="prefetch" href="/assets/js/181.3c84430a.js"><link rel="prefetch" href="/assets/js/182.581e3779.js"><link rel="prefetch" href="/assets/js/183.25c352d0.js"><link rel="prefetch" href="/assets/js/184.7b1393d7.js"><link rel="prefetch" href="/assets/js/185.0667ae17.js"><link rel="prefetch" href="/assets/js/186.f8a31fc5.js"><link rel="prefetch" href="/assets/js/187.7271a1e3.js"><link rel="prefetch" href="/assets/js/188.f6525f8c.js"><link rel="prefetch" href="/assets/js/189.60f4b285.js"><link rel="prefetch" href="/assets/js/19.414b88d3.js"><link rel="prefetch" href="/assets/js/190.196e7072.js"><link rel="prefetch" href="/assets/js/191.fc6622ef.js"><link rel="prefetch" href="/assets/js/192.a4ca4789.js"><link rel="prefetch" href="/assets/js/193.bf683ffc.js"><link rel="prefetch" href="/assets/js/194.0f896182.js"><link rel="prefetch" href="/assets/js/195.291fcd52.js"><link rel="prefetch" href="/assets/js/196.3d54fbfe.js"><link rel="prefetch" href="/assets/js/197.43503dc3.js"><link rel="prefetch" href="/assets/js/198.3c25a6a0.js"><link rel="prefetch" href="/assets/js/199.0186d807.js"><link rel="prefetch" href="/assets/js/20.52a18ee0.js"><link rel="prefetch" href="/assets/js/200.a2d1bd7b.js"><link rel="prefetch" href="/assets/js/201.e66a5e9d.js"><link rel="prefetch" href="/assets/js/202.c18a80fd.js"><link rel="prefetch" href="/assets/js/203.fa7739e9.js"><link rel="prefetch" href="/assets/js/204.19ad0ee8.js"><link rel="prefetch" href="/assets/js/205.29d77299.js"><link rel="prefetch" href="/assets/js/206.8e0e135b.js"><link rel="prefetch" href="/assets/js/207.6aeed711.js"><link rel="prefetch" href="/assets/js/208.55850a7b.js"><link rel="prefetch" href="/assets/js/209.e47aaa64.js"><link rel="prefetch" href="/assets/js/21.22842a0f.js"><link rel="prefetch" href="/assets/js/210.9e12678a.js"><link rel="prefetch" href="/assets/js/211.361efbe3.js"><link rel="prefetch" href="/assets/js/212.cd28b79d.js"><link rel="prefetch" href="/assets/js/213.0385731c.js"><link rel="prefetch" href="/assets/js/214.8422df25.js"><link rel="prefetch" href="/assets/js/215.63219b00.js"><link rel="prefetch" href="/assets/js/216.02d008b5.js"><link rel="prefetch" href="/assets/js/217.40b9c7fb.js"><link rel="prefetch" href="/assets/js/218.3bdde972.js"><link rel="prefetch" href="/assets/js/219.c5433a99.js"><link rel="prefetch" href="/assets/js/22.a21b7c0e.js"><link rel="prefetch" href="/assets/js/220.0c354022.js"><link rel="prefetch" href="/assets/js/221.ddf22c5e.js"><link rel="prefetch" href="/assets/js/222.7678fe1e.js"><link rel="prefetch" href="/assets/js/223.6c5962cc.js"><link rel="prefetch" href="/assets/js/224.f7e36bf3.js"><link rel="prefetch" href="/assets/js/225.725b6fcf.js"><link rel="prefetch" href="/assets/js/226.5e9d7eec.js"><link rel="prefetch" href="/assets/js/227.b060aa31.js"><link rel="prefetch" href="/assets/js/228.a3eba3b6.js"><link rel="prefetch" href="/assets/js/229.486bd794.js"><link rel="prefetch" href="/assets/js/23.5f9d0976.js"><link rel="prefetch" href="/assets/js/230.5a7c0a55.js"><link rel="prefetch" href="/assets/js/231.7c6620a5.js"><link rel="prefetch" href="/assets/js/232.cc58a96c.js"><link rel="prefetch" href="/assets/js/233.daf6c78a.js"><link rel="prefetch" href="/assets/js/234.7193ae71.js"><link rel="prefetch" href="/assets/js/235.cd42c17c.js"><link rel="prefetch" href="/assets/js/236.9c046bb9.js"><link rel="prefetch" href="/assets/js/237.d0a60f1b.js"><link rel="prefetch" href="/assets/js/238.91fc6a5f.js"><link rel="prefetch" href="/assets/js/239.64e7c2b7.js"><link rel="prefetch" href="/assets/js/24.c810eb09.js"><link rel="prefetch" href="/assets/js/240.7570cd7f.js"><link rel="prefetch" href="/assets/js/241.9ccd2364.js"><link rel="prefetch" href="/assets/js/242.3ce7ba91.js"><link rel="prefetch" href="/assets/js/243.101634ca.js"><link rel="prefetch" href="/assets/js/244.bcd75b66.js"><link rel="prefetch" href="/assets/js/245.35236282.js"><link rel="prefetch" href="/assets/js/246.067edc5b.js"><link rel="prefetch" href="/assets/js/247.b4c7f756.js"><link rel="prefetch" href="/assets/js/248.ece4f86b.js"><link rel="prefetch" href="/assets/js/249.988d23f8.js"><link rel="prefetch" href="/assets/js/25.13c59344.js"><link rel="prefetch" href="/assets/js/250.c51d6266.js"><link rel="prefetch" href="/assets/js/251.3bdf26a3.js"><link rel="prefetch" href="/assets/js/252.7db45b10.js"><link rel="prefetch" href="/assets/js/253.49b64f22.js"><link rel="prefetch" href="/assets/js/254.35933a61.js"><link rel="prefetch" href="/assets/js/255.09c9d6b6.js"><link rel="prefetch" href="/assets/js/256.3ec90e6f.js"><link rel="prefetch" href="/assets/js/257.bc178194.js"><link rel="prefetch" href="/assets/js/258.17d8c2de.js"><link rel="prefetch" href="/assets/js/259.03417ccc.js"><link rel="prefetch" href="/assets/js/26.e0294a3b.js"><link rel="prefetch" href="/assets/js/260.216a2f51.js"><link rel="prefetch" href="/assets/js/261.871c216b.js"><link rel="prefetch" href="/assets/js/262.56efbf44.js"><link rel="prefetch" href="/assets/js/263.122c5634.js"><link rel="prefetch" href="/assets/js/264.e9e1d4f6.js"><link rel="prefetch" href="/assets/js/265.56ddac52.js"><link rel="prefetch" href="/assets/js/266.5726ebe6.js"><link rel="prefetch" href="/assets/js/267.5e1c37d4.js"><link rel="prefetch" href="/assets/js/268.82d4a6c1.js"><link rel="prefetch" href="/assets/js/269.ff31fe86.js"><link rel="prefetch" href="/assets/js/27.35fc009c.js"><link rel="prefetch" href="/assets/js/270.6109e3ea.js"><link rel="prefetch" href="/assets/js/271.c6c91d5b.js"><link rel="prefetch" href="/assets/js/272.a8859d64.js"><link rel="prefetch" href="/assets/js/273.f1c310b9.js"><link rel="prefetch" href="/assets/js/274.f47ab8e0.js"><link rel="prefetch" href="/assets/js/275.1deb3270.js"><link rel="prefetch" href="/assets/js/276.8c7ee165.js"><link rel="prefetch" href="/assets/js/277.9954c4e9.js"><link rel="prefetch" href="/assets/js/278.cf66e2ed.js"><link rel="prefetch" href="/assets/js/279.83405e57.js"><link rel="prefetch" href="/assets/js/28.f3c87fa4.js"><link rel="prefetch" href="/assets/js/280.73124214.js"><link rel="prefetch" href="/assets/js/281.1bf94d5a.js"><link rel="prefetch" href="/assets/js/29.87738507.js"><link rel="prefetch" href="/assets/js/3.9ddafd63.js"><link rel="prefetch" href="/assets/js/30.9a33d360.js"><link rel="prefetch" href="/assets/js/31.760d306e.js"><link rel="prefetch" href="/assets/js/32.729df4d8.js"><link rel="prefetch" href="/assets/js/33.870a94f6.js"><link rel="prefetch" href="/assets/js/34.a06cf942.js"><link rel="prefetch" href="/assets/js/35.a7120b36.js"><link rel="prefetch" href="/assets/js/36.9b151665.js"><link rel="prefetch" href="/assets/js/37.7747739c.js"><link rel="prefetch" href="/assets/js/38.c0d80251.js"><link rel="prefetch" href="/assets/js/39.085aa663.js"><link rel="prefetch" href="/assets/js/4.b1166e63.js"><link rel="prefetch" href="/assets/js/40.128118ea.js"><link rel="prefetch" href="/assets/js/41.deda7589.js"><link rel="prefetch" href="/assets/js/42.1f799c3f.js"><link rel="prefetch" href="/assets/js/43.ce0cf301.js"><link rel="prefetch" href="/assets/js/44.c349236e.js"><link rel="prefetch" href="/assets/js/45.4e9cb319.js"><link rel="prefetch" href="/assets/js/46.c7a05043.js"><link rel="prefetch" href="/assets/js/47.f97ee979.js"><link rel="prefetch" href="/assets/js/48.3a5a97e9.js"><link rel="prefetch" href="/assets/js/49.ac08632a.js"><link rel="prefetch" href="/assets/js/5.093e58d7.js"><link rel="prefetch" href="/assets/js/50.27d273f3.js"><link rel="prefetch" href="/assets/js/51.66cc8321.js"><link rel="prefetch" href="/assets/js/52.d161537d.js"><link rel="prefetch" href="/assets/js/53.d140f908.js"><link rel="prefetch" href="/assets/js/54.0235ceff.js"><link rel="prefetch" href="/assets/js/55.a55594c1.js"><link rel="prefetch" href="/assets/js/56.1f22204a.js"><link rel="prefetch" href="/assets/js/57.a0a26849.js"><link rel="prefetch" href="/assets/js/58.d7345235.js"><link rel="prefetch" href="/assets/js/59.81a8a316.js"><link rel="prefetch" href="/assets/js/6.59f3b7b6.js"><link rel="prefetch" href="/assets/js/60.c2b813c0.js"><link rel="prefetch" href="/assets/js/61.9972e78e.js"><link rel="prefetch" href="/assets/js/62.99b67f22.js"><link rel="prefetch" href="/assets/js/63.b469a857.js"><link rel="prefetch" href="/assets/js/64.0ca6f6c1.js"><link rel="prefetch" href="/assets/js/65.b8540b0f.js"><link rel="prefetch" href="/assets/js/66.4980be30.js"><link rel="prefetch" href="/assets/js/67.8278463d.js"><link rel="prefetch" href="/assets/js/68.907a24bc.js"><link rel="prefetch" href="/assets/js/69.fb4558bc.js"><link rel="prefetch" href="/assets/js/7.f7e8ebdc.js"><link rel="prefetch" href="/assets/js/70.622bf466.js"><link rel="prefetch" href="/assets/js/71.5e0ee530.js"><link rel="prefetch" href="/assets/js/72.eb23a35d.js"><link rel="prefetch" href="/assets/js/73.40abfa0b.js"><link rel="prefetch" href="/assets/js/74.4094b61b.js"><link rel="prefetch" href="/assets/js/75.5c3b5a4c.js"><link rel="prefetch" href="/assets/js/76.efbc2228.js"><link rel="prefetch" href="/assets/js/77.e8c7c1df.js"><link rel="prefetch" href="/assets/js/79.cacffcfa.js"><link rel="prefetch" href="/assets/js/8.ba73daac.js"><link rel="prefetch" href="/assets/js/80.4adb6bc0.js"><link rel="prefetch" href="/assets/js/81.ec01b0eb.js"><link rel="prefetch" href="/assets/js/82.fa60abc7.js"><link rel="prefetch" href="/assets/js/83.adc499ef.js"><link rel="prefetch" href="/assets/js/84.6a9a7f25.js"><link rel="prefetch" href="/assets/js/85.dd78c411.js"><link rel="prefetch" href="/assets/js/86.b2755e09.js"><link rel="prefetch" href="/assets/js/87.14216b7f.js"><link rel="prefetch" href="/assets/js/88.25ad2b2e.js"><link rel="prefetch" href="/assets/js/89.4434e71b.js"><link rel="prefetch" href="/assets/js/9.5f162f90.js"><link rel="prefetch" href="/assets/js/90.135b0f44.js"><link rel="prefetch" href="/assets/js/91.9fff7f99.js"><link rel="prefetch" href="/assets/js/92.fd8650e0.js"><link rel="prefetch" href="/assets/js/93.97e850e6.js"><link rel="prefetch" href="/assets/js/94.44278b7b.js"><link rel="prefetch" href="/assets/js/95.f7ef3696.js"><link rel="prefetch" href="/assets/js/96.e3c08b5c.js"><link rel="prefetch" href="/assets/js/97.60754372.js"><link rel="prefetch" href="/assets/js/98.d5cfbfb5.js"><link rel="prefetch" href="/assets/js/99.90f3c1fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link router-link-active">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link router-link-active">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/SpringMVC/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Redis</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/db/redis/Redis基础知识-0.html" class="sidebar-link">1. Redis基础知识</a></li><li><a href="/db/redis/SringBoot整合Redis-1.html" class="sidebar-link">2. SringBoot整合Redis</a></li><li><a href="/db/redis/Redis分布式锁-2.html" class="sidebar-link">3. Redis分布式锁</a></li><li><a href="/db/redis/Redis实战案例-3.html" class="sidebar-link">4. Redis实战案例</a></li><li><a href="/db/redis/Redis慢查询和事务-4.html" class="active sidebar-link">5. Redis慢查询和事务</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-1-redis-慢查询阈值" class="sidebar-link">5.1 Redis 慢查询阈值</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-1-1-redis-慢查询阈值设置" class="sidebar-link">5.1.1 Redis 慢查询阈值设置</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-1-2-redis-慢查询原理" class="sidebar-link">5.1.2 Redis 慢查询原理</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-1-3-redis-慢查询的命令" class="sidebar-link">5.1.3 Redis 慢查询的命令</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-1-4-redis-性能测试工具" class="sidebar-link">5.1.4 Redis 性能测试工具</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-2-resp-协议" class="sidebar-link">5.2 Resp 协议</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-2-1-服务端程序如下" class="sidebar-link">5.2.1 服务端程序如下</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-2-2-客户端程序如下" class="sidebar-link">5.2.2 客户端程序如下</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-2-3-测试打印结果" class="sidebar-link">5.2.3 测试打印结果</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-3-pipeline-操作流程" class="sidebar-link">5.3 PIPELINE 操作流程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#每一次请求都会建立网络连接非常耗时-特别是跨机房的场景下" class="sidebar-link">每一次请求都会建立网络连接非常耗时, 特别是跨机房的场景下</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#使用-pipeline-可以解决网络开销的问题" class="sidebar-link">使用 PIPELINE 可以解决网络开销的问题</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-4-基于pipeline将数据库表数据快速同步到redis" class="sidebar-link">5.4 基于PipeLine将数据库表数据快速同步到Redis</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#操作指令如下" class="sidebar-link">操作指令如下</a></li></ul></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-5-redis弱事务" class="sidebar-link">5.5 Redis弱事务</a></li><li class="sidebar-sub-header"><a href="/db/redis/Redis慢查询和事务-4.html#_5-6-redis消息发布与订阅机制" class="sidebar-link">5.6 Redis消息发布与订阅机制</a></li></ul></li><li><a href="/db/redis/Redis高可用集群-5.html" class="sidebar-link">6. Redis高可用集群</a></li><li><a href="/db/redis/Redis性能优化-6.html" class="sidebar-link">7. Redis缓存设计与调优</a></li><li><a href="/db/redis/Redis订阅与发布-6.html" class="sidebar-link">7. Redis订阅与发布</a></li><li><a href="/db/redis/缓存使用案例1-f.html" class="sidebar-link">1. 使用缓存的经典场景</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_5-redis慢查询和事务"><a href="#_5-redis慢查询和事务" class="header-anchor">#</a> 5. Redis慢查询和事务</h1> <p>redis命令生命周期：<strong>发送 排队 执行 返回</strong>
+慢查询只统计第3个执行步骤的时间</p> <p><a data-fancybox="" title="Redis慢查询" href="./image/redisslow.jpg"><img src="/assets/img/redisslow.047e6229.jpg" alt="Redis慢查询"></a>
+Redis 的所有指令全部会存放到队列, 由单线程按顺序获取并执行指令, 如果某个指令执 行很慢, 会出现阻塞, 以上图可以得出: Redis 的慢查询指的是在执行第 3 个操作的时候发生的</p> <h2 id="_5-1-redis-慢查询阈值"><a href="#_5-1-redis-慢查询阈值" class="header-anchor">#</a> 5.1 Redis 慢查询阈值</h2> <h3 id="_5-1-1-redis-慢查询阈值设置"><a href="#_5-1-1-redis-慢查询阈值设置" class="header-anchor">#</a> 5.1.1 Redis 慢查询阈值设置</h3> <ol><li>动态设置 6379:&gt; <strong>config set slowlog-log-slower-than 10000</strong> //10 毫秒 使用 config set 完后,若想将配置<strong>持久化保存到redis.conf</strong>，要执行 <strong>config rewrite</strong></li></ol> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># docker容器安装的</span>
+
+root@c2411dac6aa2:/<span class="token comment"># redis-cli</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> config get slowlog-log-slower-than
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;slowlog-log-slower-than&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;10000&quot;</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> config <span class="token builtin class-name">set</span> slowlog-log-slower-than <span class="token number">1000</span>
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> config get slowlog-log-slower-than
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;slowlog-log-slower-than&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;1000&quot;</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> config rewrite
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR Rewriting config file: Permission denied <span class="token comment">##docker安装的 没有权限写</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><ol start="2"><li>redis.conf 修改：找到 <strong>slowlog-log-slower-than 10000</strong> ，修改保存即可 注意：slowlog-log-slower-than =0 记录所有命令都不记录</li></ol> <h3 id="_5-1-2-redis-慢查询原理"><a href="#_5-1-2-redis-慢查询原理" class="header-anchor">#</a> 5.1.2 Redis 慢查询原理</h3> <p>慢查询记录也是存在队列里的，slow-max-len 存放的记录最大条数， 比如设置的 slow-max-len＝10，当有第 11 条慢查询命令插入时，队列的第一条命令就会出列，第 11 条入列到慢查询队列中，可以 config set 动态设置， 也可以修改 redis.conf 完成配置</p> <h3 id="_5-1-3-redis-慢查询的命令"><a href="#_5-1-3-redis-慢查询的命令" class="header-anchor">#</a> 5.1.3 Redis 慢查询的命令</h3> <ol><li>获取队列里慢查询的命令：slowlog get</li></ol> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> config <span class="token builtin class-name">set</span> slowlog-log-slower-than <span class="token number">0</span>
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> tqk aaaa
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> slowlog get
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1637482726</span>
+   <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">18</span>
+   <span class="token number">4</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;set&quot;</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;tqk&quot;</span>
+      <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;aaaa&quot;</span>
+   <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;127.0.0.1:42108&quot;</span>
+   <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">0</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1637482721</span>
+   <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">8</span>
+   <span class="token number">4</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;config&quot;</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;set&quot;</span>
+      <span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;slowlog-log-slower-than&quot;</span>
+      <span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;0&quot;</span>
+   <span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;127.0.0.1:42108&quot;</span>
+   <span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;&quot;</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> slowlog len
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><ol start="2"><li>获取慢查询列表当前的长度：slowlog len //以上只有 1 条慢查询，返回 1；</li> <li>对慢查询列表清理（重置）：slowlog reset //再查 slowlog len 此时返回 0 清空；</li> <li>对于线上 slow-max-len 配置的建议：线上可加大 slow-max-len 的值，记录慢查询存 长命令时 redis 会做截断，不会占用大量内存，线上可设置 1000 以上</li> <li>对于线上 slowlog-log-slower-than 配置的建议：默认为 10 毫秒，根据 redis 并发量 来调整，对于高并发比建议为 1 毫秒 4)，慢查询是先进先出的队列，访问日志记录出列丢失，需定期执行 slowlog get,将结果 存储到其它设备中（如 mysql）</li></ol> <h3 id="_5-1-4-redis-性能测试工具"><a href="#_5-1-4-redis-性能测试工具" class="header-anchor">#</a> 5.1.4 Redis 性能测试工具</h3> <ol><li><strong>redis-benchmark -h 49.233.34.168 -p 6400 -c 100 -n 100000</strong>                                          //100 个并发连接，100000 个请求，检测服务器性能</li></ol> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span> PING_INLINE <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>                                                   
+  <span class="token number">100000</span> requests completed <span class="token keyword">in</span> <span class="token number">10.38</span> seconds
+  <span class="token number">100</span> parallel clients
+  <span class="token number">3</span> bytes payload
+  keep alive: <span class="token number">1</span>
+  <span class="token function">host</span> configuration <span class="token string">&quot;save&quot;</span><span class="token builtin class-name">:</span> <span class="token number">3600</span> <span class="token number">1</span> <span class="token number">300</span> <span class="token number">100</span> <span class="token number">60</span> <span class="token number">10000</span>
+  <span class="token function">host</span> configuration <span class="token string">&quot;appendonly&quot;</span><span class="token builtin class-name">:</span> <span class="token function">yes</span>
+  multi-thread: no
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span> LPUSH <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>                                                   
+  <span class="token number">100000</span> requests completed <span class="token keyword">in</span> <span class="token number">14.79</span> seconds
+  <span class="token number">100</span> parallel clients
+  <span class="token number">3</span> bytes payload
+  keep alive: <span class="token number">1</span>
+  <span class="token function">host</span> configuration <span class="token string">&quot;save&quot;</span><span class="token builtin class-name">:</span> <span class="token number">3600</span> <span class="token number">1</span> <span class="token number">300</span> <span class="token number">100</span> <span class="token number">60</span> <span class="token number">10000</span>
+  <span class="token function">host</span> configuration <span class="token string">&quot;appendonly&quot;</span><span class="token builtin class-name">:</span> <span class="token function">yes</span>
+  multi-thread: no
+
+
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span> SET <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+  <span class="token number">100000</span> requests completed <span class="token keyword">in</span> <span class="token number">1.64</span> seconds 指令1.64秒准备完成
+  <span class="token number">100</span> parallel clients <span class="token comment">#100个并行客户端</span>
+  <span class="token number">3</span> bytes payload <span class="token comment"># 每次输入3个byte的数据</span>
+  keep alive: <span class="token number">1</span> <span class="token comment"># 或者</span>
+
+<span class="token number">33.33</span>% <span class="token operator">&lt;</span><span class="token operator">=</span> <span class="token number">1</span> milliseconds <span class="token comment">#一秒输入33.33%</span>
+<span class="token number">99.80</span>% <span class="token operator">&lt;</span><span class="token operator">=</span> <span class="token number">2</span> milliseconds <span class="token comment">#第二秒秒输入99.80%</span>
+<span class="token number">99.88</span>% <span class="token operator">&lt;</span><span class="token operator">=</span> <span class="token number">3</span> milliseconds <span class="token comment">#由于笔者的阿里云是1核1G此时写入的数据（下面为宝塔监视面板测试时候的cpu状态）</span>
+<span class="token number">99.90</span>% <span class="token operator">&lt;</span><span class="token operator">=</span> <span class="token number">10</span> milliseconds
+<span class="token number">99.95</span>% <span class="token operator">&lt;</span><span class="token operator">=</span> <span class="token number">11</span> milliseconds
+<span class="token number">100.00</span>% <span class="token operator">&lt;</span><span class="token operator">=</span> <span class="token number">11</span> milliseconds
+<span class="token number">61087.36</span> requests per second <span class="token comment">#一秒61087.36次</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><ol start="2"><li><p><strong>redis-benchmark -h 49.233.34.168 -p 6400 -q -d 100</strong>                                                //测试存取大小为 100 字节的数据包的性能</p></li> <li><p><strong>redis-benchmark -h 49.233.34.168 -p 6400 -t set,get -n 100000 -q</strong>                                  //只测试 set,lpush 操作的性能</p></li> <li><p><strong>redis-benchmark -h 49.233.34.168 -p 6400 -n 100000 -q script load &quot;redis.call('set','foo','bar')&quot;</strong> //只测试某些数值存取的性能</p></li></ol> <p><strong>Redis慢查询一般从计算机硬件进行优化，以及持久化策略方面进行考虑</strong></p> <h2 id="_5-2-resp-协议"><a href="#_5-2-resp-协议" class="header-anchor">#</a> 5.2 Resp 协议</h2> <p>Redis 服务器与客户端通过 RESP（REdis Serialization Protocol）协议通信。 主要以下特点：<strong>容易实现,解析快,人类可读</strong>. RESP 底层采用的是 <strong>TCP 的连接方式</strong>，通过 tcp 进行数据传输，然后根据解析规则解析相 应信息，完成交互。 我们可以测试下，首先运行一个 serverSocket 监听 6379，来接收 redis 客户端的请求信息，实现如下</p> <h3 id="_5-2-1-服务端程序如下"><a href="#_5-2-1-服务端程序如下" class="header-anchor">#</a> 5.2.1 服务端程序如下</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>james<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>redis</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span><span class="token class-name">IOException</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span><span class="token class-name">ServerSocket</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span><span class="token class-name">Socket</span><span class="token punctuation">;</span>
+
+<span class="token comment">//写一个伪的redis</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ServerRedis</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name">ServerSocket</span> serverSocket <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ServerSocket</span><span class="token punctuation">(</span><span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Socket</span> rec <span class="token operator">=</span> serverSocket<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token number">2048</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            rec<span class="token punctuation">.</span><span class="token function">getInputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h3 id="_5-2-2-客户端程序如下"><a href="#_5-2-2-客户端程序如下" class="header-anchor">#</a> 5.2.2 客户端程序如下</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>james<span class="token punctuation">.</span>cache<span class="token punctuation">.</span>redis</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">redis<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>jedis<span class="token punctuation">.</span></span><span class="token class-name">Jedis</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ClientTest</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">&quot;127.0.0.1&quot;</span><span class="token punctuation">,</span><span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;name&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;rehash&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h3 id="_5-2-3-测试打印结果"><a href="#_5-2-3-测试打印结果" class="header-anchor">#</a> 5.2.3 测试打印结果</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>*3
+$3
+SET
+$4
+name
+$6
+rehash
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><a data-fancybox="" title="Resp 协议" href="./image/redisresp.jpg"><img src="/assets/img/redisresp.1497f6b4.jpg" alt="Resp 协议"></a></p> <h2 id="_5-3-pipeline-操作流程"><a href="#_5-3-pipeline-操作流程" class="header-anchor">#</a> 5.3 PIPELINE 操作流程</h2> <p>大多数情况下，我们都会通过请求-相应机制去操作 redis。只用这种模式的一般的步骤 是，先获得 jedis 实例，然后通过 jedis 的 get/put 方法与 redis 交互。由于 redis 是单线程的， 下一次请求必须等待上一次请求执行完成后才能继续执行。然而使用 Pipeline 模式，客户端 可以一次性的发送多个命令，无需等待服务端返回。这样就大大的减少了网络往返时间，提高了系统性能。</p> <h3 id="每一次请求都会建立网络连接非常耗时-特别是跨机房的场景下"><a href="#每一次请求都会建立网络连接非常耗时-特别是跨机房的场景下" class="header-anchor">#</a> 每一次请求都会建立网络连接非常耗时, 特别是跨机房的场景下</h3> <p><a data-fancybox="" title="PIPELINE " href="./image/redis11.jpg"><img src="/assets/img/redis11.2f06396f.jpg" alt="PIPELINE"></a></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>    <span class="token keyword">public</span> <span class="token keyword">static</span>  <span class="token keyword">void</span> <span class="token function">delByStu</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> keys<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">&quot;49.233.34.168&quot;</span><span class="token punctuation">,</span> <span class="token number">6400</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建 jedis实例，没有进行连接</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token operator">:</span>keys<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            jedis<span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建连接并执行命令</span>
+        <span class="token punctuation">}</span>
+        jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="使用-pipeline-可以解决网络开销的问题"><a href="#使用-pipeline-可以解决网络开销的问题" class="header-anchor">#</a> 使用 PIPELINE 可以解决网络开销的问题</h3> <p>原理也非常简单,流程如下, 将多个指令打包后,一次性提交到 Redis, 网络通信只有一次
+<a data-fancybox="" title="PIPELINE " href="./image/redis12.jpg"><img src="/assets/img/redis12.35a7b05b.jpg" alt="PIPELINE"></a></p> <div class="language-java line-numbers-mode"><pre class="language-java"><code>    <span class="token keyword">public</span> <span class="token keyword">static</span>  <span class="token keyword">void</span> <span class="token function">delByPipe</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> keys<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">&quot;49.233.34.168&quot;</span><span class="token punctuation">,</span> <span class="token number">6400</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建 jedis实例，没有进行连接</span>
+        <span class="token class-name">Pipeline</span> pipelined <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">pipelined</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">String</span> key<span class="token operator">:</span>keys<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            pipelined<span class="token punctuation">.</span><span class="token function">del</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//封装命令 没有提交</span>
+        <span class="token punctuation">}</span>
+        pipelined<span class="token punctuation">.</span><span class="token function">sync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//提交</span>
+        jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h2 id="_5-4-基于pipeline将数据库表数据快速同步到redis"><a href="#_5-4-基于pipeline将数据库表数据快速同步到redis" class="header-anchor">#</a> 5.4 基于PipeLine将数据库表数据快速同步到Redis</h2> <h3 id="操作指令如下"><a href="#操作指令如下" class="header-anchor">#</a> 操作指令如下</h3> <div class="language-sql line-numbers-mode"><pre class="language-sql"><code><span class="token keyword">SELECT</span> CONCAT<span class="token punctuation">(</span>
+ <span class="token string">'*10\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>redis_cmd<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'\r\n'</span><span class="token punctuation">,</span> redis_cmd<span class="token punctuation">,</span> <span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>redis_key<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'\r\n'</span><span class="token punctuation">,</span> redis_key<span class="token punctuation">,</span> <span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hkey1<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hkey1<span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hval1<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hval1<span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hkey2<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hkey2<span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hval2<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hval2<span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hkey3<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hkey3<span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hval3<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hval3<span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hkey4<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hkey4<span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>
+   <span class="token string">'$'</span><span class="token punctuation">,</span> LENGTH<span class="token punctuation">(</span>hval4<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'\r\n'</span><span class="token punctuation">,</span>hval4<span class="token punctuation">,</span><span class="token string">'\r'</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+ <span class="token keyword">SELECT</span>
+ <span class="token string">'HSET'</span> <span class="token keyword">AS</span> redis_cmd<span class="token punctuation">,</span>
+ CONCAT<span class="token punctuation">(</span><span class="token string">'order:info:'</span><span class="token punctuation">,</span>orderid<span class="token punctuation">)</span> <span class="token keyword">AS</span> redis_key<span class="token punctuation">,</span>
+ <span class="token string">'ordertime'</span> <span class="token keyword">AS</span> hkey1<span class="token punctuation">,</span> ordertime <span class="token keyword">AS</span> hval1<span class="token punctuation">,</span>
+ <span class="token string">'ordermoney'</span> <span class="token keyword">AS</span> hkey2<span class="token punctuation">,</span> ordermoney <span class="token keyword">AS</span> hval2<span class="token punctuation">,</span>
+ <span class="token string">'orderstatus'</span> <span class="token keyword">AS</span> hkey3<span class="token punctuation">,</span> orderstatus <span class="token keyword">AS</span> hval3<span class="token punctuation">,</span>
+ <span class="token string">'version'</span> <span class="token keyword">AS</span> hkey4<span class="token punctuation">,</span> <span class="token punctuation">`</span>version<span class="token punctuation">`</span> <span class="token keyword">AS</span> hval4
+ <span class="token keyword">FROM</span> redis<span class="token punctuation">.</span><span class="token punctuation">`</span><span class="token keyword">order</span><span class="token punctuation">`</span>
+<span class="token punctuation">)</span> <span class="token keyword">AS</span> t
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><p><a data-fancybox="" title="ordersql " href="./image/ordersql.jpg"><img src="/assets/img/ordersql.add586d2.jpg" alt="ordersql"></a></p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment">## stress 可能不需要  --skip-column-names --raw 不要列名称</span>
+mysql -utest -ptest stress --default-character-set<span class="token operator">=</span>utf8 --skip-column-names --raw <span class="token operator">&lt;</span> order.sql <span class="token operator">|</span> redis-cli -h <span class="token number">192.168</span>.42.111 -p <span class="token number">6379</span> -a <span class="token number">12345678</span> --pipe
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_5-5-redis弱事务"><a href="#_5-5-redis弱事务" class="header-anchor">#</a> 5.5 Redis弱事务</h2> <p><strong>pipeline是多条命令的组合，为了保证它的原子性，redis提供了简单的事务。</strong></p> <p>redis的简单事务，将一组需要一起执行的命令放到<strong>multi和exec</strong>两个</p> <p>命令之间，其中multi代表事务开始，exec代表事务结束</p> <p>watch命令：使用watch后， multi失效，事务失效</p> <p><strong>总结：redis提供了简单的事务，不支持事务回滚</strong></p> <h2 id="_5-6-redis消息发布与订阅机制"><a href="#_5-6-redis消息发布与订阅机制" class="header-anchor">#</a> 5.6 Redis消息发布与订阅机制</h2> <p>redis提供了“发布、订阅”模式的消息机制，其中消息订阅者与发布者不直接通信，发布者向指定的频道（channel）发布消息，订阅该频道的每个客户端都可以接收到消息</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/db/redis/Redis实战案例-3.html" class="prev">
+        4. Redis实战案例
+      </a></span> <span class="next"><a href="/db/redis/Redis高可用集群-5.html">
+        6. Redis高可用集群
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a86c1f59.js" defer></script><script src="/assets/js/2.572fbcb7.js" defer></script><script src="/assets/js/78.1dbc6bec.js" defer></script>
+  </body>
+</html>
