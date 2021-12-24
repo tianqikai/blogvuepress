@@ -1,7 +1,7 @@
 # 4. Spring之Bean生命周期
 [[toc]]
 
-<a data-fancybox title="Bean的生成过程" href="./image/beancreate.jpg.jpg">![Bean的生成过程](./image/beancreate.jpg.jpg)</a>
+<a data-fancybox title="Bean的生成过程" href="./image/beancreate.jpg">![Bean的生成过程](./image/beancreate.jpg)</a>
 
 ## 4.1  生成BeanDefinition
 

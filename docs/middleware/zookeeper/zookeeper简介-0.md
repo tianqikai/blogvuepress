@@ -10,7 +10,7 @@ Zookeeper从设计模式的角度上来理解：属于观察者模型的一种�
 
 --------------
 
-<a data-fancybox title="zookeeperg工作机制" href="../image/zookeeper1.jpg">![zookeeperg工作机制](../image/zookeeper1.jpg)</a>
+<a data-fancybox title="zookeeperg工作机制" href="./image/zookeeper1.jpg">![zookeeperg工作机制](./image/zookeeper1.jpg)</a>
 
 ### 1.2.1 监听通知机制 
 
@@ -23,7 +23,7 @@ Zookeeper从设计模式的角度上来理解：属于观察者模型的一种�
 
 ## 1.3 Zookeeper特点
 
-<a data-fancybox title="Zookeeper特点" href="../image/zookeeper2.jpg">![Zookeeper特点](../image/zookeeper2.jpg)</a>
+<a data-fancybox title="Zookeeper特点" href="./image/zookeeper2.jpg">![Zookeeper特点](./image/zookeeper2.jpg)</a>
 
 1. Zookeeper：一个领导者（Leader），多个跟随者（Follower）组成的集群。 
 2. 集群中只要有半数以上节点存活，Zookeeper集群就能正常服务。 
@@ -37,11 +37,11 @@ Zookeeper从设计模式的角度上来理解：属于观察者模型的一种�
 **zookeeper数据结构**  
 ZooKeeper数据模型的结构与Unix文件系统很类似，整体上可以看作是一棵树，每个节点称做一个ZNode。每一个ZNode默认能够存储1MB的数据，每个ZNode都可以通过其路径唯一标识。
 
-<a data-fancybox title="Zookeeper数据结构" href="../image/zookeeper3.jpg"></a>
+<a data-fancybox title="Zookeeper数据结构" href="./image/zookeeper3.jpg"></a>
 
 每个子目录项都被称作为 znode(目录节点)，和文件系统类似，我们能够自由的增加、删除 znode，在一个znode下增加、删除子znode。 
 
-<a data-fancybox title="Zookeeper数据结构" href="../image/zookeeper22.jpg">![Zookeeper数据结构](../image/zookeeper22.jpg)</a>
+<a data-fancybox title="Zookeeper数据结构" href="./image/zookeeper22.jpg">![Zookeeper数据结构](./image/zookeeper22.jpg)</a>
 
 :::tip 有四种类型的znode： 
 1. **PERSISTENT­持久化目录节点** 客户端与zookeeper断开连接后，该节点依旧存在，只要不手动删除该节点，他将永远存在 
@@ -76,7 +76,7 @@ ZooKeeper数据模型的结构与Unix文件系统很类似，整体上可以看�
 
 在分布式环境下，经常需要对应用/服务进行统一命名，便于识别。例如：IP不容易记住，而域名容易记住。  
 
-<a data-fancybox title="Zookeeper统一命名服务" href="../image/zookeeper4.jpg">![Zookeeper统一命名服务](../image/zookeeper4.jpg)</a>
+<a data-fancybox title="Zookeeper统一命名服务" href="./image/zookeeper4.jpg">![Zookeeper统一命名服务](./image/zookeeper4.jpg)</a>
 
 2. <font color='red' size=4><strong>统一配置管理</strong></font>
 
@@ -90,7 +90,7 @@ ZooKeeper数据模型的结构与Unix文件系统很类似，整体上可以看�
 （3）一旦Znode中的数据被修改，ZooKeeper将通知各个客户端服务器。  
 :::
 
-<a data-fancybox title="Zookeeper统一配置管理" href="../image/zookeeper5.jpg">![Zookeeper统一配置管理](../image/zookeeper5.jpg)</a>
+<a data-fancybox title="Zookeeper统一配置管理" href="./image/zookeeper5.jpg">![Zookeeper统一配置管理](./image/zookeeper5.jpg)</a>
 
 3. <font color='red' size=4><strong>统一集群管理</strong></font>
 
@@ -99,17 +99,17 @@ ZooKeeper数据模型的结构与Unix文件系统很类似，整体上可以看�
  2. ZooKeeper可以实现实时监控节点状态变化; 可将节点信息写入ZooKeeper上的一个ZNode。监听这个ZNode可获取它的实时状态变化。
 :::
 
-<a data-fancybox title="Zookeeper统一集群管理" href="../image/zookeeper6.jpg">![Zookeeper统一集群管理](../image/zookeeper6.jpg)</a>
+<a data-fancybox title="Zookeeper统一集群管理" href="./image/zookeeper6.jpg">![Zookeeper统一集群管理](./image/zookeeper6.jpg)</a>
 
 4. <font color='red' size=4><strong>服务器节点动态上下线</strong></font>
 
-<a data-fancybox title="Zookeeper服务器节点动态上下线" href="../image/zookeeper7.jpg">![Zookeeper服务器节点动态上下线](../image/zookeeper7.jpg)</a>
+<a data-fancybox title="Zookeeper服务器节点动态上下线" href="./image/zookeeper7.jpg">![Zookeeper服务器节点动态上下线](./image/zookeeper7.jpg)</a>
 
 5. <font color='red' size=4><strong>软负载均衡</strong></font>
 
 <font color='red' ><strong>在Zookeeper中记录每台服务器的访问数，让访问数最少的服务器去处理最新的客户端请求</strong></font>
 
-<a data-fancybox title="Zookeeper软负载均衡" href="../image/zookeeper8.jpg">![Zookeeper软负载均衡](../image/zookeeper8.jpg)</a>
+<a data-fancybox title="Zookeeper软负载均衡" href="./image/zookeeper8.jpg">![Zookeeper软负载均衡](./image/zookeeper8.jpg)</a>
 
 ## 1.5 Zookeeper下载地址
 
