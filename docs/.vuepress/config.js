@@ -95,6 +95,39 @@ module.exports = {
                     { text: 'Springboot', link: '/framework/springboot/' },
                     { text: 'Dubbo', link: '/framework/dubbo/' },
                     { text: 'Vue', link: '/framework/vue/' },
+                    // { text: 'SpringCloud', 
+                    //     ariLabel:"SpringCloud",
+                    //     link: '/framework/SpringCloud/',
+                    //     items:[
+                    //         { text: 'Eureka', link: '/framework/SpringCloud/Eureka/' },
+                    //         { text: 'Consul', link: '/framework/SpringCloud/Consul/' },
+                    //         { text: 'Feign', link: '/framework/SpringCloud/Feign/' },
+                    //         { text: 'Hystrix', link: '/framework/SpringCloud/Hystrix/' },
+                    //         { text: 'Zuul', link: '/framework/SpringCloud/zuul/' },
+                    //         { text: 'Gateway', link: '/framework/SpringCloud/gateway/' },
+                    //         { text: 'Sleuth链路追踪', link: '/framework/SpringCloud/sleuth/' },
+                    //         // { text: 'Stream消息驱动', link: '/framework/SpringCloud/Stream/' },
+                    //         // { text: 'Config配置中心', link: '/framework/SpringCloud/Config/' },
+                    //         // { text: 'Bus消息总线', link: '/framework/SpringCloud/Bus/' },
+                    //         // { text: 'Consul配置中心', link: '/framework/SpringCloud/Consul/' },
+                    //         { text: 'Apollo配置中心', link: '/framework/SpringCloud/Apollo/' },  
+                    //     ]
+                    // },
+                    // {   text: 'SpringCloudAlibaba',
+                    //     ariLabel:"SpringCloudAlibaba",
+                    //     link:'/framework/SpringCloudAlibaba/',
+                    //     items:[
+                    //         { text: 'Nacos', link: '/framework/SpringCloudAlibaba/nacos/' },
+                    //         { text: 'Sentinel', link: '/framework/SpringCloudAlibaba/Sentinel/' },
+                    //         { text: 'seata', link: '/framework/SpringCloudAlibaba/seata/' },
+                    //     ]
+                    // },
+                ]
+            },
+            {
+                text: '微服务',
+                ariLabel: '微服务',
+                items: [  //多级导航栏
                     { text: 'SpringCloud', 
                         ariLabel:"SpringCloud",
                         link: '/framework/SpringCloud/',
@@ -131,8 +164,8 @@ module.exports = {
                     { text: 'netty', link: '/middleware/netty/' },
                     { text: 'nginx', link: '/middleware/nginx/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
-                    { text: 'docker', link: '/middleware/docker/' },
-                    { text: 'kubernetes', link: '/middleware/kubernetes/' },
+                    // { text: 'docker', link: '/middleware/docker/' },
+                    // { text: 'kubernetes', link: '/middleware/kubernetes/' },
                     { text: 'Elasticsearch', link: '/middleware/Elasticsearch/' },
                     {   text: 'MQ',
                         ariLabel:"MQ",
@@ -144,6 +177,16 @@ module.exports = {
                             { text: 'RocketMQ', link: '/middleware/RocketMQ/' },
                         ]
                     },
+                ]
+            },
+            {
+                text: '云原生',
+                ariLabel: '云原生',
+                items: [  //多级导航栏
+                    { text: '云原生网络', link: '/middleware/network/' },
+                    { text: 'docker', link: '/middleware/docker/' },
+                    { text: 'kubernetes', link: '/middleware/kubernetes/' },
+                    { text: 'Jenkins', link: '/tool/Jenkins/' },
                 ]
             },
             {
@@ -168,7 +211,6 @@ module.exports = {
                     { text: 'jemeter', link: '/tool/jemeter/' },
                     { text: 'postman', link: '/tool/postman/' },
                     { text: 'PowerDesigner', link: '/tool/PowerDesigner/' },
-                    { text: 'Jenkins', link: '/tool/Jenkins/' },
                     { text: 'Nodejs', link: '/tool/Nodejs/' },
                 ]
             },
