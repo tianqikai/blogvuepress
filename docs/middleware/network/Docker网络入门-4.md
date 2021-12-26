@@ -115,7 +115,7 @@ root@91ca2b95e724:/# ip addr
 ```
 可以看到这宿主机和容器其实是在同一个网段的～，所以肯定能通！
 
-### 4.1.2 docker容器与docker容器进行访问
+### 4.1.2 docker容器间进行访问
 
 这两个容器之间能通过彼此的ip的相互ping通吗？
 
@@ -314,7 +314,7 @@ f572f2267be8   host      host      local
     }
 ]
 ```
-### 4.1.3 Docker网络 --link
+### 4.1.3 Docker网络--link
 
 **--link 可以让我们让两个容器通过服务名直接ping通**
 ```bash

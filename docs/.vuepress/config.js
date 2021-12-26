@@ -164,7 +164,7 @@ module.exports = {
                     { text: 'netty', link: '/middleware/netty/' },
                     { text: 'nginx', link: '/middleware/nginx/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
-                    // { text: 'docker', link: '/middleware/docker/' },
+                    { text: '单点登陆', link: '/middleware/sso/' },
                     // { text: 'kubernetes', link: '/middleware/kubernetes/' },
                     { text: 'Elasticsearch', link: '/middleware/Elasticsearch/' },
                     {   text: 'MQ',
@@ -199,6 +199,7 @@ module.exports = {
                     { text: 'IDEA快捷键', link: '/other/idea/' },
                     { text: '常用网站', link: '/other/url/' },
                     { text: 'Liunx安装jdk', link: '/other/jdk/' },
+                    { text: 'VMware', link: '/other/VMware/' },
                     { text: 'Liunx集群', link: '/other/jiqun/' }
                 ]
             },
