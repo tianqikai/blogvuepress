@@ -2,6 +2,23 @@
 
 ## 5.1 环境配置
 
+### 建表语句
+
+```sql
+CREATE TABLE `t_user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_german2_ci DEFAULT NULL,
+  `user_pwd` varchar(255) CHARACTER SET utf8 COLLATE utf8_german2_ci DEFAULT NULL,
+  `true_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_german2_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_german2_ci DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_german2_ci DEFAULT NULL,
+  `is_valid` int(10) unsigned zerofill DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+```
+
 ### 5.1.1  pom.xml 添加
 
 ```xml

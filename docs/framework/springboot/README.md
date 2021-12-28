@@ -1,3 +1,6 @@
+---
+autoNext: Springboot应用-0
+---
 
 # Springboot
 
@@ -15,7 +18,7 @@
 3. 使用@Import导入自动配置类
 
 
-![./springboot01.png](./springboot01.png)
+![./springboot01.png](./images/springboot01.png)
 
 首先对于一个SpringBoot工程来说，最明显的标志的就是 `@SpringBootApplication`它标记了这是一个SpringBoot工程，所以今天的 SpringBoot自动装配原理也就是从它开始说起。
 
