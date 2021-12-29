@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. kafka概述以及安装 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/131.c102eff9.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.45304a1e.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/19.2f8716ce.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/195.fc8e0760.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/24.f478b0fc.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/75.c4e6ea57.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/88.60082ea3.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link router-link-active">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link router-link-active">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Kafka</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/kafka/" aria-current="page" class="sidebar-link">kafka</a></li><li><a href="/middleware/kafka/kafka概述以及安装-0.html" class="active sidebar-link">1. kafka概述以及安装</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-2-kafka搭建与使用" class="sidebar-link">1.2 kafka搭建与使用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-2-1-安装前的环境准备" class="sidebar-link">1.2.1 安装前的环境准备</a></li><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-2-2-下载安装包并启动" class="sidebar-link">1.2.2 下载安装包并启动</a></li><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-2-3-server-properties核心配置详解" class="sidebar-link">1.2.3 server.properties核心配置详解</a></li><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-2-4-创建删除主题" class="sidebar-link">1.2.4 创建删除主题</a></li><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-2-5-发送消费消息" class="sidebar-link">1.2.5 发送消费消息</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-3-kafka集群搭建与使用" class="sidebar-link">1.3 kafka集群搭建与使用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/kafka/kafka概述以及安装-0.html#_1-3-1-kafka集群配置" class="sidebar-link">1.3.1 kafka集群配置</a></li></ul></li></ul></li><li><a href="/middleware/kafka/kafka配置再说明-1.html" class="sidebar-link">2. kafka配置再说明</a></li><li><a href="/middleware/kafka/Java整合Kafka-2.html" class="sidebar-link">3. Java原生整合Kafka</a></li><li><a href="/middleware/kafka/Kafka设计原理-3.html" class="sidebar-link">4. Kafka设计原理详解</a></li><li><a href="/middleware/kafka/kafka性能优化-4.html" class="sidebar-link">5. kafka性能优化</a></li><li><a href="/middleware/kafka/SpringBoot整合kafka-4.html" class="sidebar-link">5 Spring-Boot整合Kafka</a></li><li><a href="/middleware/kafka/kafka削峰填谷方案-5.html" class="sidebar-link">6. kafka削峰填谷实战方案</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_1-kafka概述以及安装"><a href="#_1-kafka概述以及安装" class="header-anchor">#</a> 1. kafka概述以及安装</h1> <h1 id="_1-1-kafka基本概念"><a href="#_1-1-kafka基本概念" class="header-anchor">#</a> 1.1 Kafka基本概念</h1> <p>kafka是一个分布式的，分区的消息(官方称之为commit log)服务。它提供一个消息系统应该具备的功能，但是确有着独特的设计。可以这样来说，Kafka借鉴了JMS规范的思想，但是确并没有完全遵循JMS规范。首先，让我们来看一下基础的消息(Message)相关术语：</p> <div class="custom-block tip"><p class="custom-block-title">Kafka中的基本概念</p> <ol><li><font color="#aa2116"><strong>Broker 消息中间件处理节点</strong></font>，一个Kafka节点就是 一个broker，一个或者多个Broker可以组成一个Kafka集群</li> <li><font color="#aa2116"><strong>Topic 主题</strong></font> Kafka根据topic对消息进行归类，发布到 Kafka集群的每条消息都需要指定一个topic</li> <li><font color="#aa2116"><strong>Partition 分区</strong></font> 物理上的概念，一个topic可以分为多个 partition，每个partition内部消息是有序的</li> <li><font color="#aa2116"><strong>Producer 消息生产者</strong></font> 向Broker发送消息的客户端 Consumer 消息消费者，从Broker读取消息的客户端</li> <li><font color="#aa2116"><strong>ConsumerGroup 消费者群组</strong></font> 每个Consumer属于一个特定的Consumer Group，一条消息可以被多个不同的 Consumer Group消费，但是一个 Consumer Group中只能有一个Consumer 能够消费该消息</li> <li>批次</li> <li>偏移量</li></ol></div> <p>因此，从一个较高的层面上来看，producer通过网络发送消息到Kafka集群，然后consumer来进行消费，如下图：</p> <p><a data-fancybox="" title="kafka" href="./image/kafka01.jpg"><img src="/assets/img/kafka01.c780dd5c.jpg" alt="kafka"></a></p> <p>服务端(brokers)和客户端(producer、consumer)之间通信通过<font color="#d93a49"><strong>TCP协议</strong></font>来完成</p> <h3 id="_1-1-1-主题topic和消息日志log"><a href="#_1-1-1-主题topic和消息日志log" class="header-anchor">#</a> 1.1.1 主题Topic和消息日志Log</h3> <p>让我们首先深入理解Kafka提出一个高层次的抽象概念-Topic。 可以理解Topic是一个类别的名称，<strong>同类消息发送到同一个Topic</strong>下面。对于每一个Topic，下面可以有<strong>多个分区 (Partition)日志文件</strong>:</p> <p><a data-fancybox="" title="kafka" href="./image/kafka02.jpg"><img src="/assets/img/kafka02.d6679187.jpg" alt="kafka"></a></p> <p><strong>Partition是一个有序的message序列</strong>，这些message按顺序添加到一个叫做commit log的文件中。每个partition中的消息都有一个唯一的编号，<strong>称之为offset，用来唯一标示某个分区中的message</strong>。</p> <p><strong>提示</strong>：每个partition，都对应一个commit log文件。一个partition中的message的offset都是唯一的，但是不同的 partition中的message的offset可能是相同的（<strong>分区+offset唯一</strong>）。</p> <h4 id="可以这么来理解topic-partition和broker"><a href="#可以这么来理解topic-partition和broker" class="header-anchor">#</a> 可以这么来理解Topic，Partition和Broker</h4> <p>一个topic，代表逻辑上的一个业务数据集，比如按数据库里不同表的数据操作消息区分放入不同topic，订单相关操作消 息放入订单topic，用户相关操作消息放入用户topic，对于大型网站来说，后端数据都是海量的，订单消息很可能是非常 巨量的，比如有几百个G甚至达到TB级别，如果把这么多数据都放在一台机器上可定会有容量限制问题，那么就可以在 <strong>topic内部划分多个partition来分片存储数据，不同的partition可以位于不同的机器上，每台机器上都运行一个Kafka的进程Broker</strong></p> <h3 id="为什么要对topic下数据进行分区存储"><a href="#为什么要对topic下数据进行分区存储" class="header-anchor">#</a> 为什么要对Topic下数据进行分区存储？</h3> <ol><li>commit log文件会受到所在机器的文件系统大小的限制，分区之后，理论上一个topic可以处理任意数量的数据。</li> <li>为了提高并行度</li></ol> <p>kafka集群，在配置的时间范围内，维护所有的由producer生成的消息，而不管这些消息有没有被消费。例如日志保留( log retention )时间被设置为2天。kafka会维护最近2天生产的所有消息，而2天前的消息会被丢弃。kafka的性能与保留 的数据量的大小没有关系，因此保存大量的数据(日志信息)不会有什么影响。</p> <p>每个consumer是基于自己在commit log中的消费进度(offset)来进行工作的。在kafka中，消费offset由consumer自 己来维护；一般情况下我们按照顺序逐条消费commit log中的消息，当然我可以通过指定offset来重复消费某些消息， 或者跳过某些消息。</p> <p>这意味kafka中的consumer对集群的影响是非常小的，添加一个或者减少一个consumer，对于集群或者其他consumer 来说，都是没有影响的，因为每个consumer维护各自的offset。所以说kafka集群是无状态的，性能不会因为 consumer数量受太多影响。kafka还将很多关键信息记录在zookeeper里，保证自己的无状态，从而在水平扩容时非常方便。</p> <h3 id="_1-1-2-分布式distribution"><a href="#_1-1-2-分布式distribution" class="header-anchor">#</a> 1.1.2 分布式Distribution</h3> <p>log的partitions分布在kafka集群中不同的broker上，每个broker可以请求备份其他broker上partition上的数据。kafka 集群支持配置一个partition备份的数量。</p> <p>针对每个partition，都有一个broker起到“leader”的作用，0个或多个其他的broker作为“follwers”的作用。</p> <p>leader处理所有的针对这个partition的读写请求，而followers被动复制leader的结果。如果这个leader失效了，其中 的一个follower将会自动的变成新的leader。</p> <h3 id="_1-1-3-producers"><a href="#_1-1-3-producers" class="header-anchor">#</a> 1.1.3 Producers</h3> <p>生产者将消息发送到topic中去，同时负责选择将message发送到topic的哪一个partition中。通过round­robin做简单的 负载均衡。也可以根据消息中的某一个关键字来进行区分。通常第二种方式使用的更多。</p> <h3 id="_1-1-4-consumers"><a href="#_1-1-4-consumers" class="header-anchor">#</a> 1.1.4 Consumers</h3> <p>传统的消息传递模式有2种：<strong>队列( queue) 和（publish-subscribe）</strong></p> <p>queue模式：多个consumer从服务器中读取数据，消息只会到达一个consumer。</p> <p>publish-subscribe模式：消息会被广播给所有的consumer。</p> <p>Kafka基于这2种模式提供了一种consumer的抽象概念：<strong>consumer group</strong>。</p> <p>queue模式：所有的consumer都位于同一个consumer group 下。
+publish-subscribe模式：所有的consumer都有着自己唯一的consumer group。</p> <p><a data-fancybox="" title="kafka" href="./image/kafka03.jpg"><img src="/assets/img/kafka03.8e70c50b.jpg" alt="kafka"></a></p> <p>上图说明：由2个broker组成的kafka集群，总共有4个partition(P0-P3)。这个集群由2个Consumer Group， A有2个consumer instances ，B有四个。</p> <p>通常一个topic会有几个consumer group，每个consumer group都是一个逻辑上的订阅者（ logical subscriber ）。每个consumer group由多个consumer instance组成，从而达到可扩展和容灾的功能。</p> <h3 id="_1-1-5-消费顺序"><a href="#_1-1-5-消费顺序" class="header-anchor">#</a> 1.1.5 消费顺序</h3> <p>Kafka比传统的消息系统有着更强的顺序保证。 一个partition同一个时刻在一个consumer group中只有一个consumer instance在消费，从而保证顺序。<strong>consumer group中的consumer instance的数量不能比一个Topic中的partition的数量多</strong>，<strong>否则，多出来的 consumer消费不到消息</strong></p> <h2 id="_1-2-kafka搭建与使用"><a href="#_1-2-kafka搭建与使用" class="header-anchor">#</a> 1.2 kafka搭建与使用</h2> <h3 id="_1-2-1-安装前的环境准备"><a href="#_1-2-1-安装前的环境准备" class="header-anchor">#</a> 1.2.1 安装前的环境准备</h3> <ol><li>由于Kafka是用Scala语言开发的，运行在JVM上，因此在安装Kafka之前需要先安装JDK。</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#下载安装包然后执行该命令</span>
+<span class="token function">rpm</span> -ivh jdk-8u211-linux-x64.rpm
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ol start="2"><li>kafka依赖zookeeper，所以需要先安装zookeeper</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">## 获取不到，手工下载 </span>
+<span class="token function">wget</span> http://mirror.bit.edu.cn/apache/zookeeper/stable/zookeeper‐3.4.12.tar.gz 
+
+<span class="token function">tar</span> ‐zxvf apache-zookeeper-3.6.3-bin.tar.gz
+
+<span class="token builtin class-name">cd</span> zookeeper‐3.6.3 
+
+<span class="token function">cp</span> conf/zoo_sample.cfg conf/zoo.cfg 
+
+<span class="token comment"># 启动zookeeper </span>
+bin/zkServer.sh start 
+
+bin/zkCli.sh 
+<span class="token comment">#查看zk的根目录相关节点</span>
+<span class="token function">ls</span> / 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h3 id="_1-2-2-下载安装包并启动"><a href="#_1-2-2-下载安装包并启动" class="header-anchor">#</a> 1.2.2 下载安装包并启动</h3> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">## 下不了可以换一个比较新的版本，资源会好一点</span>
+<span class="token function">wget</span> https://archive.apache.org/dist/kafka/2.0.0/kafka_2.11-2.0.0.tgz
+<span class="token function">tar</span> ‐xzf kafka_2.11-2.0.0.tgz 
+<span class="token builtin class-name">cd</span> kafka_2.11‐1.1.0
+<span class="token comment"># 现在来启动kafka服务</span>
+<span class="token builtin class-name">cd</span> bin
+./kafka-server-start.sh  -daemon /root/kafka_2.11-2.0.0/config/server.properties
+
+<span class="token comment"># 我们进入zookeeper目录通过zookeeper客户端查看下zookeeper的目录树 </span>
+/root/apache-zookeeper-3.6.3-bin/bin/zkCli.sh
+<span class="token comment">#查看zk的根目录kafka相关节点  </span>
+<span class="token function">ls</span> / 
+<span class="token comment">#查看kafka节点</span>
+<span class="token function">ls</span> /brokers/ids 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="_1-2-3-server-properties核心配置详解"><a href="#_1-2-3-server-properties核心配置详解" class="header-anchor">#</a> 1.2.3 server.properties核心配置详解</h3> <div class="custom-block tip"><p class="custom-block-title">server.properties核心配置详解</p> <ol><li>每个broker都可以用一个唯一的非负整数id进行标识；这个id可以作为broker的“名字”，你可以选择任意你喜欢的数字作为id，只要id是 唯一的即可。</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>broker.id=0
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="2"><li>kafka存放数据的路径。这个路径并不是唯一的，可以是多个，路径之间只需要使用逗号分隔即可；每当创建新partition时，都会选择在包含最少partitions的路径下进行</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>log.dirs=/tmp/kafka-logs
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="3"><li>server接受客户端连接的端口</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>listeners=PLAINTEXT://:9092
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="4"><li>zooKeeper连接字符串的格式为：hostname:port，此处hostname和port分别是ZooKeeper集群中某个节点的host和port；zookeeper 如果是集群，连接方式为 hostname1:port1, hostname2:port2,hostname3:port3</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>zookeeper.connect=localhost:2181
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="5"><li>每个日志文件删除之前保存的时间。默认数据保存时间对所有topic都一样。单位小时</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>log.retention.hours=168
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="6"><li>当producer设置acks为-1时，min.insync.replicas指定replicas的最小数目（必须确认每一个repica的写数据都是成功的），如果这个数 没有达到，producer发送消息会产生异常</li></ol> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code>min.insync.replicas<span class="token operator">=</span><span class="token number">1</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="7"><li>是否允许删除主题</li></ol> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code>delete.topic.enable<span class="token operator">=</span>false
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div></div> <h3 id="_1-2-4-创建删除主题"><a href="#_1-2-4-创建删除主题" class="header-anchor">#</a> 1.2.4 创建删除主题</h3> <h4 id="创建主题"><a href="#创建主题" class="header-anchor">#</a> 创建主题</h4> <p>现在我们来创建一个名字为“tqk001”的Topic，这个topic只有一个partition，并且备份因子也设置为1：</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> /root/kafka_2.11-2.0.0/bin
+<span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-topics.sh --create --zookeeper 101.43.21.33:2181 --replication-factor 1 --partitions 1 --topic tqk001</span>
+Created topic <span class="token string">&quot;tqk001&quot;</span><span class="token builtin class-name">.</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>现在我们可以通过以下命令来查看kafka中目前存在的topic</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-topics.sh --list --zookeeper 101.43.21.33:2181</span>
+tqk001
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>除了我们通过手工的方式创建Topic，当producer发布一个消息到某个指定的Topic，<strong>这个Topic如果不存在，就自动创建</strong>。</p> <h4 id="删除主题"><a href="#删除主题" class="header-anchor">#</a> 删除主题</h4> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-topics.sh --delete --topic tqk001 --zookeeper 101.43.21.33:2181</span>
+Topic tqk001 is marked <span class="token keyword">for</span> deletion.
+Note: This will have no impact <span class="token keyword">if</span> delete.topic.enable is not <span class="token builtin class-name">set</span> to true.
+<span class="token comment"># 再次查看已不存在</span>
+<span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-topics.sh --list --zookeeper 101.43.21.33:2181</span>
+<span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># </span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h3 id="_1-2-5-发送消费消息"><a href="#_1-2-5-发送消费消息" class="header-anchor">#</a> 1.2.5 发送消费消息</h3> <h4 id="发送消息"><a href="#发送消息" class="header-anchor">#</a> 发送消息</h4> <p>kafka自带了一个producer命令客户端，可以从本地文件中读取内容，或者我们也可以以命令行中直接输入内容，并将这 些内容以消息的形式发送到kafka集群中。在默认情况下，每一个行会被当做成一个独立的消息。 首先我们要运行发布消息的脚本，然后在命令中输入要发送的消息的内容：</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-console-producer.sh  --broker-list 101.43.21.33:9092 --topic tqk001</span>
+<span class="token operator">&gt;</span>this is a msg
+<span class="token operator">&gt;</span>this is a other msg
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h4 id="消费消息"><a href="#消费消息" class="header-anchor">#</a> 消费消息</h4> <p>对于consumer，kafka同样也携带了一个命令行客户端，会将获取到内容在命令中进行输出，<em><strong>默认是消费最新的消息</strong></em></p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-console-consumer.sh --bootstrap-server 101.43.21.33:9092 --consumer-property  group.id=testGroup --topic tqk001</span>
+thi
+my name is tqk
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p><strong>如果想要消费之前的消息可以通过--from-beginning参数指定</strong>，如下命令：</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-console-consumer.sh --bootstrap-server 101.43.21.33:9092  --from-beginning --topic tqk001</span>
+this i
+this is a other msg
+thi
+my name is tqk
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h4 id="查看组名"><a href="#查看组名" class="header-anchor">#</a> 查看组名</h4> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-consumer-groups.sh --bootstrap-server 101.43.21.33:9092  --list</span>
+console-consumer-73860
+testGroup
+console-consumer-46311
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h4 id="查看消费者的消费偏移量"><a href="#查看消费者的消费偏移量" class="header-anchor">#</a> 查看消费者的消费偏移量</h4> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-consumer-groups.sh --bootstrap-server 101.43.21.33:9092 --describe --group testGroup</span>
+
+TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                     HOST            CLIENT-ID
+tqk001          <span class="token number">0</span>          <span class="token number">6</span>               <span class="token number">6</span>               <span class="token number">0</span>               consumer-1-2c58d09e-dcbb-407b-a29f-92e1b8fd86df /10.0.16.5      consumer-1
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h4 id="消费多主题"><a href="#消费多主题" class="header-anchor">#</a> 消费多主题</h4> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-console-consumer.sh --bootstrap-server 101.43.21.33:9092  --whitelist &quot;tqk001|test&quot;</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h4 id="单播消费"><a href="#单播消费" class="header-anchor">#</a> 单播消费</h4> <p>一条消息只能被某一个消费者消费的模式，类似queue模式，只需让所有消费者在同一个消费组里即可 分别在两个客户端执行如下消费命令，然后往主题里发送消息，结果只有一个客户端能收到消息</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-console-consumer.sh --bootstrap-server 101.43.21.33:9092 --consumer-property  group.id=testGroup --topic tqk001</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h4 id="多播消费"><a href="#多播消费" class="header-anchor">#</a> 多播消费</h4> <p>一条消息能被多个消费者消费的模式，类似publish-subscribe模式费，针对Kafka同一条消息只能被同一个消费组下的某一个消费者消费的特性，要实现多播只要保证这些消费者属于不同的消费组即可。我们再增加一个消费者，该消费者属于testGroup-2消费 组，结果两个客户端都能收到消息</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-console-consumer.sh --bootstrap-server 101.43.21.33:9092 --consumer-property  group.id=testGroup2 --topic tqk001</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="_1-3-kafka集群搭建与使用"><a href="#_1-3-kafka集群搭建与使用" class="header-anchor">#</a> 1.3 kafka集群搭建与使用</h2> <p>到目前为止，我们都是在一个单节点上运行broker，这并没有什么意思。对于kafka来说，一个单独的broker意味着 kafka集群中只有一个节点。要想增加kafka集群中的节点数量，只需要多启动几个broker实例即可。为了有更好的理解，现在我们在一台机器上同时启动三个broker实例。</p> <p><strong>Broker 如何加入 Kafka 集群非常简单，只需要两个参数。</strong><br>
+第一、配置 zookeeper.connect<br>
+第二、为新增的 broker 设置一个集群内的唯一性id(<strong>broker.id</strong>)。 Kafka 中的集群是可以动态扩容的。</p> <h3 id="_1-3-1-kafka集群配置"><a href="#_1-3-1-kafka集群配置" class="header-anchor">#</a> 1.3.1 kafka集群配置</h3> <p><strong>模拟单个服务器搭建多个borker</strong>
+首先，我们需要建立好其他2个broker的配置文件：</p> <div class="language-cpp line-numbers-mode"><pre class="language-cpp"><code>cp config<span class="token operator">/</span>server<span class="token punctuation">.</span>properties config<span class="token operator">/</span>server‐<span class="token number">1.</span>properties 
+cp config<span class="token operator">/</span>server<span class="token punctuation">.</span>properties config<span class="token operator">/</span>server‐<span class="token number">2.</span>properties
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p><strong>配置文件的内容分别如下：</strong></p> <hr> <p><strong>config/server-1.properties:</strong></p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># borker的编号,如果集群中有多个,则每个borker需设置不同的编号</span>
+broker.id<span class="token operator">=</span><span class="token number">2</span>
+
+<span class="token comment">#broker对外提供服务入口的端口(默认9092)</span>
+<span class="token assign-left variable">listeners</span><span class="token operator">=</span>PLAINTEXT://:29092
+
+<span class="token comment">#存放消息日志文件地址</span>
+log.dirs<span class="token operator">=</span>/tmp/kafka/kafkaData-2/kafka-logs
+
+<span class="token comment"># kafka所需zookeeper集群地址</span>
+zookeeper.connect<span class="token operator">=</span>localhost:2181
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><hr> <p><strong>config/server-2.properties:</strong></p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment"># borker的编号,如果集群中有多个,则每个borker需设置不同的编号</span>
+broker.id<span class="token operator">=</span><span class="token number">3</span>
+
+<span class="token comment">#broker对外提供服务入口的端口(默认9092)</span>
+<span class="token assign-left variable">listeners</span><span class="token operator">=</span>PLAINTEXT://:39092
+
+<span class="token comment">#存放消息日志文件地址</span>
+log.dirs<span class="token operator">=</span>/tmp/kafkaData-3/kafka-logs
+
+<span class="token comment"># kafka所需zookeeper集群地址</span>
+zookeeper.connect<span class="token operator">=</span>localhost:2181
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><hr> <h4 id="目前我们已经有一个zookeeper实例和一个broker实例在运行了-现在我们只需要在启动2个broker实例即可"><a href="#目前我们已经有一个zookeeper实例和一个broker实例在运行了-现在我们只需要在启动2个broker实例即可" class="header-anchor">#</a> 目前我们已经有一个zookeeper实例和一个broker实例在运行了，现在我们只需要在启动2个broker实例即可：</h4> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> bin
+./kafka-server-start.sh  -daemon /root/kafka_2.11-2.0.0/config/server-1.properties <span class="token operator">&amp;</span>
+./kafka-server-start.sh  -daemon /root/kafka_2.11-2.0.0/config/server-2.properties <span class="token operator">&amp;</span>
+<span class="token comment"># 查看是否启动成功</span>
+<span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># jps -m</span>
+<span class="token number">25202</span> Kafka /root/kafka_2.11-2.0.0/config/server-2.properties
+<span class="token number">22723</span> Kafka /root/kafka_2.11-2.0.0/config/server-1.properties
+<span class="token number">3060</span> Kafka /root/kafka_2.11-2.0.0/config/server.properties
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h4 id="现在我们创建一个新的topic-副本数设置为3-分区数设置为2"><a href="#现在我们创建一个新的topic-副本数设置为3-分区数设置为2" class="header-anchor">#</a> 现在我们创建一个新的topic，副本数设置为3，分区数设置为2:**</h4> <div class="language-cpp line-numbers-mode"><pre class="language-cpp"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span># <span class="token punctuation">.</span><span class="token operator">/</span>kafka<span class="token operator">-</span>topics<span class="token punctuation">.</span>sh <span class="token operator">--</span>create <span class="token operator">--</span>zookeeper <span class="token number">101.43</span><span class="token punctuation">.</span><span class="token number">21.33</span><span class="token operator">:</span><span class="token number">2181</span> <span class="token operator">--</span>replication<span class="token operator">-</span>factor <span class="token number">3</span> <span class="token operator">--</span>partitions <span class="token number">2</span> <span class="token operator">--</span>topic tqkjiqun
+Created topic <span class="token string">&quot;tqkjiqun&quot;</span><span class="token punctuation">.</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h4 id="查看下topic的情况"><a href="#查看下topic的情况" class="header-anchor">#</a> 查看下topic的情况</h4> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment">#  ./kafka-topics.sh  --zookeeper 101.43.21.33:2181 --topic tqkjiqun --describe</span>
+Topic:tqkjiqun	PartitionCount:2	ReplicationFactor:3	Configs:
+	Topic: tqkjiqun	Partition: <span class="token number">0</span>	Leader: <span class="token number">3</span>	Replicas: <span class="token number">3,0</span>,2	Isr: <span class="token number">3,0</span>,2
+	Topic: tqkjiqun	Partition: <span class="token number">1</span>	Leader: <span class="token number">0</span>	Replicas: <span class="token number">0,2</span>,3	Isr: <span class="token number">0,2</span>,3
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>以下是输出内容的解释，第一行是所有分区的概要信息，之后的每一行表示每一个partition的信息。</p> <ol><li>leader节点负责给定partition的所有读写请求。</li> <li>replicas 表示某个partition在哪几个broker上存在备份。不管这个几点是不是”leader“，甚至这个节点挂了，也会列出。</li> <li>isr 是replicas的一个子集，它只列出当前还存活着的，并且已同步备份了该partition的节点。</li></ol> <p>我们可以运行相同的命令查看之前创建的名称为”tqk001“的topic</p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment">#  ./kafka-topics.sh  --zookeeper 101.43.21.33:2181 --topic tqk001 --describe</span>
+Topic:tqk001	PartitionCount:1	ReplicationFactor:1	Configs:
+	Topic: tqk001	Partition: <span class="token number">0</span>	Leader: <span class="token number">0</span>	Replicas: <span class="token number">0</span>	Isr: <span class="token number">0</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>之前设置了topic的partition数量为1，备份因子为1，因此显示就如上所示了。当然我们也可以通过如下<strong>命令增加topic 的分区数量(目前kafka不支持减少分区)：</strong></p> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment"># ./kafka-topics.sh  --alter --partitions 3 --zookeeper 101.43.21.33:2181 --topic tqk001</span>
+WARNING: If partitions are increased <span class="token keyword">for</span> a topic that has a key, the partition logic or ordering of the messages will be affected
+Adding partitions succeeded<span class="token operator">!</span>
+<span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment">#  ./kafka-topics.sh  --zookeeper 101.43.21.33:2181 --topic tqk001 --describe</span>
+Topic:tqk001	PartitionCount:3	ReplicationFactor:1	Configs:
+	Topic: tqk001	Partition: <span class="token number">0</span>	Leader: <span class="token number">0</span>	Replicas: <span class="token number">0</span>	Isr: <span class="token number">0</span>
+	Topic: tqk001	Partition: <span class="token number">1</span>	Leader: <span class="token number">2</span>	Replicas: <span class="token number">2</span>	Isr: <span class="token number">2</span>
+	Topic: tqk001	Partition: <span class="token number">2</span>	Leader: <span class="token number">3</span>	Replicas: <span class="token number">3</span>	Isr: <span class="token number">3</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h4 id="现在我们向新建的-my-replicated-topic-中发送一些message-kafka集群可以加上所有kafka节点"><a href="#现在我们向新建的-my-replicated-topic-中发送一些message-kafka集群可以加上所有kafka节点" class="header-anchor">#</a> 现在我们向新建的 my-replicated-topic 中发送一些message，kafka集群可以加上所有kafka节点：</h4> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment">#  ./kafka-console-producer.sh --broker-list  101.43.21.33:9092,101.43.21.33:29092,101.43.21.33:39092 --topic tqkjiqun</span>
+<span class="token operator">&gt;</span>this is jiqun
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h4 id="现在开始消费"><a href="#现在开始消费" class="header-anchor">#</a> 现在开始消费：</h4> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token punctuation">[</span>root@YUN01 bin<span class="token punctuation">]</span><span class="token comment">#  ./kafka-console-consumer.sh --bootstrap-server 101.43.21.33:9092 --consumer-property  group.id=testGroup --topic tqkjiqun</span>
+this is jiqun
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/kafka/" class="prev router-link-active">
+        kafka
+      </a></span> <span class="next"><a href="/middleware/kafka/kafka配置再说明-1.html">
+        2. kafka配置再说明
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/131.c102eff9.js" defer></script>
+  </body>
+</html>

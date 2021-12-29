@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>3. Iptables与防火墙 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/75.c4e6ea57.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/131.c102eff9.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.45304a1e.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/19.2f8716ce.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/195.fc8e0760.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/24.f478b0fc.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/88.60082ea3.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link router-link-active">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link router-link-active">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Network</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/network/" aria-current="page" class="sidebar-link">云原生网络知识</a></li><li><a href="/middleware/network/网络基础知识-0.html" class="sidebar-link">0. 网络基础知识</a></li><li><a href="/middleware/network/一次网络请求都发生了什么-1.html" class="sidebar-link">1. 一次网络请求都发生了什么</a></li><li><a href="/middleware/network/DNS域名解析器-2.html" class="sidebar-link">2. DNS（domain name system）域名管理</a></li><li><a href="/middleware/network/Iptables与防火墙-3.html" class="active sidebar-link">3. Iptables与防火墙</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-1-iptables、防火墙之间有啥关系" class="sidebar-link">3.1 iptables、防火墙之间有啥关系？</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-2-iptables安装" class="sidebar-link">3.2 iptables安装</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-3-iptables的五表五链及流量走向" class="sidebar-link">3.3 iptables的五表五链及流量走向</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-4-iptables-commands" class="sidebar-link">3.4 iptables commands</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-5-filter表" class="sidebar-link">3.5 filter表</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-5-1-usage尝鲜-filter表及规则" class="sidebar-link">3.5.1 usage尝鲜 filter表及规则</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-5-2-案例-filter的流量过滤" class="sidebar-link">3.5.2 案例：filter的流量过滤</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-6-iptables的匹配规则" class="sidebar-link">3.6 iptables的匹配规则</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-7-补充两个小实验-加深对流量走向的理解" class="sidebar-link">3.7 补充两个小实验，加深对流量走向的理解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-7-1-实验一-加深对匹配规则的了解" class="sidebar-link">3.7.1 实验一：加深对匹配规则的了解</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-7-2-实验二-特殊的-j-log" class="sidebar-link">3.7.2 实验二：特殊的-j LOG</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-7-3-实验总结" class="sidebar-link">3.7.3 实验总结</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-8-iptables中的模块" class="sidebar-link">3.8 iptables中的模块</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-9-nat表" class="sidebar-link">3.9 nat表</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-9-1-案例-使用nat表完成snat" class="sidebar-link">3.9.1 案例：使用nat表完成SNAT</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-9-2-案例-通过nat表完成dnat" class="sidebar-link">3.9.2 案例：通过nat表完成DNAT</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#_3-10-相关配置文件" class="sidebar-link">3.10 相关配置文件</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Iptables与防火墙-3.html#最后总结-iptables" class="sidebar-link">最后总结 Iptables</a></li></ul></li><li><a href="/middleware/network/Docker网络入门-4.html" class="sidebar-link">4. Docker网络入门</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_3-iptables与防火墙"><a href="#_3-iptables与防火墙" class="header-anchor">#</a> 3. Iptables与防火墙</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_3-1-iptables、防火墙之间有啥关系">3.1 iptables、防火墙之间有啥关系？</a></li><li><a href="#_3-2-iptables安装">3.2 iptables安装</a></li><li><a href="#_3-3-iptables的五表五链及流量走向">3.3 iptables的五表五链及流量走向</a></li><li><a href="#_3-4-iptables-commands">3.4 iptables commands</a></li><li><a href="#_3-5-filter表">3.5 filter表</a><ul><li><a href="#_3-5-1-usage尝鲜-filter表及规则">3.5.1 usage尝鲜 filter表及规则</a></li><li><a href="#_3-5-2-案例-filter的流量过滤">3.5.2 案例：filter的流量过滤</a></li></ul></li><li><a href="#_3-6-iptables的匹配规则">3.6 iptables的匹配规则</a></li><li><a href="#_3-7-补充两个小实验-加深对流量走向的理解">3.7 补充两个小实验，加深对流量走向的理解</a><ul><li><a href="#_3-7-1-实验一-加深对匹配规则的了解">3.7.1 实验一：加深对匹配规则的了解</a></li><li><a href="#_3-7-2-实验二-特殊的-j-log">3.7.2 实验二：特殊的-j LOG</a></li><li><a href="#_3-7-3-实验总结">3.7.3 实验总结</a></li></ul></li><li><a href="#_3-8-iptables中的模块">3.8 iptables中的模块</a></li><li><a href="#_3-9-nat表">3.9 nat表</a><ul><li><a href="#_3-9-1-案例-使用nat表完成snat">3.9.1 案例：使用nat表完成SNAT</a></li><li><a href="#_3-9-2-案例-通过nat表完成dnat">3.9.2 案例：通过nat表完成DNAT</a></li></ul></li><li><a href="#_3-10-相关配置文件">3.10 相关配置文件</a></li><li><a href="#最后总结-iptables">最后总结 Iptables</a></li></ul></div><p></p> <p>Linux的网络控制模块在内核中，叫做<code>netfilter</code>。而<code>iptables</code>是位于用户空间的一个<strong>命令行工具</strong>;</p> <p><code>iptables</code>它作用在OIS7层网络模型中的第四层，<strong>用来和内核的netfilter交互，配置netfilter进而实现对网络的控制、流量的转发</strong>。</p> <p><code>Natfilter</code> 是集成到linux内核协议栈中的一套防火墙系统，用户可通过运行在用户空间的工具来把相关配置下发给Netfilter 。</p> <p><code>Netfilter</code> 提供了整个防火墙的框架，各个协议基于Netfilter 框架来自己实现自己的防火墙功能。每个协议都有自己独立的表来存储自己的配置信息，他们之间完全独立的进行配置和运行。
+<strong>毫不夸张的说，整个linux系统的网络安全就是基于netfilter构建起来的</strong>。</p> <p>如果你想搞懂docker或者是k8s的网络调度模型，或者是去你自己的机器上查看一下他们自动生成的转发规则，那么肯定要需要对iptables有一定的认知，不然学了半天docker或者是k8s真的是只会停留在使用的这个层面上。</p> <h2 id="_3-1-iptables、防火墙之间有啥关系"><a href="#_3-1-iptables、防火墙之间有啥关系" class="header-anchor">#</a> 3.1 iptables、防火墙之间有啥关系？</h2> <p>Iptables is an extremely flexible firewall utility built for Linux operating systems.</p> <p>Whether you’re a novice Linux geek or a system administrator, there’s probably some way that iptables can be a great use to you. Read on as we show you how to configure the most versatile Linux firewall.</p> <p>简单的说就是：<strong><code>iptables</code> 是一个简单、灵活、实用的命令行工具，可以用来配置、控制 linux 防火墙</strong>。</p> <h2 id="_3-2-iptables安装"><a href="#_3-2-iptables安装" class="header-anchor">#</a> 3.2 iptables安装</h2> <ul><li>安装、启动、查看、开启启动</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code> ~<span class="token punctuation">]</span><span class="token comment"># yum install -y iptables-services</span>
+ ~<span class="token punctuation">]</span><span class="token comment"># yum start|restart|reload|stop|status iptables</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_3-3-iptables的五表五链及流量走向"><a href="#_3-3-iptables的五表五链及流量走向" class="header-anchor">#</a> 3.3 iptables的五表五链及流量走向</h2> <p>iptables中总共有4张表还有5条链，我们可以在链上加不同的规则。</p> <p>五张表：filter表、nat表、mangle表、raw表、security表</p> <p>五条链：prerouting、input、output、forward、postrouting</p> <p>你可以通过<code>iptables -t ${表名} -nL</code>查看表上的链</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost named<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -nL</span>
+Chain INPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination         
+
+Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination         
+
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination 
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">规则表：</p> <ol><li>filter表——三个链：INPUT、FORWARD、OUTPUT
+<ul><li>作用：过滤数据包 内核模块：iptables_filter.</li></ul></li> <li>Nat表——三个链：PREROUTING、POSTROUTING、OUTPUT
+<ul><li>作用：用于网络地址转换（IP、端口） 内核模块：iptable_nat</li></ul></li> <li>Mangle表——五个链：PREROUTING、POSTROUTING、INPUT、OUTPUT、FORWARD
+<ul><li>作用：修改数据包的服务类型、TTL、并且可以配置路由实现QOS内核模块：iptable_mangle(别看这个表这么麻烦，咱们设置策略时几乎都不会用到它)</li></ul></li> <li>Raw表——两个链：OUTPUT、PREROUTING
+<ul><li>作用：决定数据包是否被状态跟踪机制处理 内核模块：iptable_raw</li></ul></li></ol></div> <blockquote><p>规则表之间的优先顺序： <strong><code>Raw——mangle——nat——filter</code></strong></p></blockquote> <div class="custom-block tip"><p class="custom-block-title">规则链：</p> <ol><li>INPUT——<code>进来的数据包</code>应用此规则链中的策略</li> <li>OUTPUT——<code>外出的数据包</code>应用此规则链中的策略</li> <li>FORWARD——<code>转发数据包</code>时应用此规则链中的策略</li> <li>PREROUTING——对数据包作路由选择前应用此链中的规则
+<ul><li>记住！所有的数据包进来的时侯都先由这个链处理</li></ul></li> <li>POSTROUTING——对数据包作路由选择后应用此链中的规则
+<ul><li>所有的数据包出来的时侯都先由这个链处理</li></ul></li></ol></div> <div class="custom-block tip"><p class="custom-block-title">规则链之间的优先顺序（分三种情况）：</p> <p>第一种情况：入站数据流向</p> <ul><li>从外界到达防火墙的数据包，先被PREROUTING规则链处理（是否修改数据包地址等），之后会进行路由选择（判断该数据包应该发往何处），如果数据包 的目标主机是防火墙本机（比如说Internet用户访问防火墙主机中的web服务器的数据包），那么内核将其传给INPUT链进行处理（决定是否允许通 过等），通过以后再交给系统上层的应用程序（比如Apache服务器）进行响应。
+第二冲情况：转发数据流向</li> <li>来自外界的数据包到达防火墙后，首先被PREROUTING规则链处理，之后会进行路由选择，如果数据包的目标地址是其它外部地址（比如局域网用户通过网 关访问QQ站点的数据包），则内核将其传递给FORWARD链进行处理（是否转发或拦截），然后再交给POSTROUTING规则链（是否修改数据包的地 址等）进行处理。
+第三种情况：出站数据流向</li> <li>防火墙本机向外部地址发送的数据包（比如在防火墙主机中测试公网DNS服务器时），首先被OUTPUT规则链处理，之后进行路由选择，然后传递给POSTROUTING规则链（是否修改数据包的地址等）进行处理。</li></ul></div> <p><strong>整理一下就得到了如下脑图：</strong></p> <p><a data-fancybox="" title="iptables的五表五链及流量走向" href="./images/iptables01.png"><img src="/assets/img/iptables01.391c8744.png" alt="iptables的五表五链及流量走向"></a></p> <h2 id="_3-4-iptables-commands"><a href="#_3-4-iptables-commands" class="header-anchor">#</a> 3.4 iptables commands</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>iptables -t <span class="token variable">${表名}</span>  <span class="token variable">${Commands}</span> <span class="token variable">${链名}</span>  <span class="token variable">${链中的规则号}</span> <span class="token variable">${匹配条件}</span> <span class="token variable">${目标动作}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p><code>表名：4张表，filter、nat、mangle、raw</code></p> <p><strong>Commands</strong>：尾部追加-A、检查-C、删除-D、头部插入-I、替换-R、查看全部-L、清空-F、新建chain-N、默认规则-P(默认为ACCEPT)</p> <p><strong>链名</strong>：5条链，<code>PREROUTING、INPUT、FORWOARD、OUTPUT、POSTROUTING</code></p> <p><strong>匹配条件</strong>：<code>-p</code>协议、<code>-4 、-6、-s 源地址、-d 目标地址、-i 网络接口名</code></p> <p><strong>目标动作</strong>：拒绝访问<code>-j REJECT</code>、允许通过<code>-j ACCEPT</code>、丢弃<code>-j DROP</code>、记录日志 <code>-j LOG</code>、源地址转换<code>-j snat</code>、目标地址转换<code>-j dnat</code>、还有<code>RETURN、QUEUE</code></p> <p>可以通过像如下查看使用帮助文档。主要可以分如下三个部分</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code> ~<span class="token punctuation">]</span><span class="token comment"># iptables --help</span>
+ Usage:    <span class="token comment"># 使用案例</span>
+ Commands: <span class="token comment"># 命令选项</span>
+ Options:  <span class="token comment"># 其他可选项</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>参考：https://wiki.centos.org/HowTos/Network/IPTables</p> <p>这里面有一些针对linux操作系统iptables简单的教学</p> <h2 id="_3-5-filter表"><a href="#_3-5-filter表" class="header-anchor">#</a> 3.5 filter表</h2> <h3 id="_3-5-1-usage尝鲜-filter表及规则"><a href="#_3-5-1-usage尝鲜-filter表及规则" class="header-anchor">#</a> 3.5.1 usage尝鲜 filter表及规则</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 清空防火墙</span>
+ ~<span class="token punctuation">]</span><span class="token comment"># iptables -F</span>
+ 
+<span class="token comment"># 查看 (policy ACCEPT) 表示默认规则是接收</span>
+ ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -L</span>
+Chain INPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+
+Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+
+<span class="token comment"># 添加规则，丢弃|接受｜拒绝｜所有进来的数据包</span>
+~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -A INPUT -j DROP|ACCEPT|REJECT|LOG</span>
+
+
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment">#  iptables -t filter -A INPUT -j ACCEPT</span>
+<span class="token comment"># 再查看（如果还想操作某个Chain中的具体某条规则，可以加--line-numbers参数）</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -L --line-numbers</span>
+Chain INPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination         
+<span class="token number">1</span>    ACCEPT     all  --  anywhere             anywhere            
+
+Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination         
+
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination  
+
+<span class="token comment"># 修改默认规则</span>
+<span class="token punctuation">[</span>root@ecs-kc1-large-2-linux-20201228182212 ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -P INPUT DROP</span>
+<span class="token punctuation">[</span>root@ecs-kc1-large-2-linux-20201228182212 ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -L</span>
+Chain INPUT <span class="token punctuation">(</span>policy DROP<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+ACCEPT     all  --  anywhere             anywhere
+REJECT     all  --  anywhere             anywhere             reject-with icmp-port-unreachable
+
+Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+<span class="token comment"># 删除策略 DROP类型策略</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -D INPUT  -j DROP</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br></div></div><h3 id="_3-5-2-案例-filter的流量过滤"><a href="#_3-5-2-案例-filter的流量过滤" class="header-anchor">#</a> 3.5.2 案例：filter的流量过滤</h3> <p>比如我想将发送百度的数据包丢弃，就可以在OUTPUT Chain上添加如下的规则</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># telnet 49.232.21.151 8899</span>
+Trying <span class="token number">49.232</span>.21.151<span class="token punctuation">..</span>.
+Connected to <span class="token number">49.232</span>.21.151.
+Escape character is <span class="token string">'^]'</span><span class="token builtin class-name">.</span>
+
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -A OUTPUT -p tcp -d 49.232.21.151 -j DROP</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -L</span>
+Chain INPUT <span class="token punctuation">(</span>policy DROP<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination         
+ACCEPT     all  --  anywhere             anywhere            
+
+Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination  
+
+<span class="token comment"># 任何发送目的地是49.232.21.151，都会被drop掉</span>
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination         
+DROP       tcp  --  anywhere             <span class="token number">49.232</span>.21.151 
+
+
+<span class="token comment"># 测试一下，结果夯住</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># telnet 49.232.21.151 8899</span>
+Trying <span class="token number">49.232</span>.21.151<span class="token punctuation">..</span>.
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><ul><li>删除过滤规则，语法:<code>iptables -t 表名 -D 链名 规则序号</code></li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -D OUTPUT 1</span>
+<span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># iptables -L --line-number</span>
+Chain INPUT <span class="token punctuation">(</span>policy DROP<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination         
+<span class="token number">1</span>    ACCEPT     all  --  anywhere             anywhere            
+
+Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination         
+
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><ul><li>在指定表的指定链中的指定的位置插入规则</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># -I 默认是在头部插入，也可以指定插入的位置</span>
+<span class="token punctuation">[</span>root@ecs-kc1-large-2-linux-20201228182212 ~<span class="token punctuation">]</span><span class="token comment"># iptables -t filter -I INPUT 2 -j REJECT</span>
+<span class="token punctuation">[</span>root@ecs-kc1-large-2-linux-20201228182212 ~<span class="token punctuation">]</span><span class="token comment"># iptables -L --line-numbers</span>
+Chain INPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination
+<span class="token number">1</span>    ACCEPT     all  --  anywhere             anywhere
+<span class="token number">2</span>    REJECT     all  --  anywhere             anywhere             reject-with icmp-port-unreachable
+
+Chain FORWARD <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination
+
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+num  target     prot opt <span class="token builtin class-name">source</span>               destination
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="_3-6-iptables的匹配规则"><a href="#_3-6-iptables的匹配规则" class="header-anchor">#</a> 3.6 iptables的匹配规则</h2> <p>什么是匹配规则？</p> <p>这个东西并不难理解，他其实就是一种描述。比如说：我想丢弃来自A的流量，
+体现在iptables语法上就是：<code>iptables -t filter -A INPUT -s ${A的地址} -j DROP</code> ，这段话中的来自A其实就是匹配规则。</p> <div class="custom-block tip"><p class="custom-block-title">常见的规则如下：</p> <p><strong>源地址</strong>：<code>-s 192.168.1.0/24</code></p> <p><strong>目标地址</strong>：<code>-d 192.168.1.11</code></p> <p><strong>协议</strong>：<code>-p tcp|udp|icmp</code></p> <p><strong>从哪个网卡进来</strong>：<code>-i eth0|lo</code></p> <p><strong>从哪个网卡出去</strong>：<code>-o eth0|lo</code></p> <p><strong>目标端口（必须制定协议）</strong>：<code>-p tcp|udp --dport 8080</code></p> <p><strong>源端口（必须制定协议）</strong>：<code>-p tcp|udp --sport 8080</code></p></div> <h2 id="_3-7-补充两个小实验-加深对流量走向的理解"><a href="#_3-7-补充两个小实验-加深对流量走向的理解" class="header-anchor">#</a> 3.7 补充两个小实验，加深对流量走向的理解</h2> <h3 id="_3-7-1-实验一-加深对匹配规则的了解"><a href="#_3-7-1-实验一-加深对匹配规则的了解" class="header-anchor">#</a> 3.7.1 实验一：加深对匹配规则的了解</h3> <p>通过这个实验搞清楚：当数据包命中了该链上的某一个规则后，还会继续往下匹配该链上的其他规则吗？</p> <p><a data-fancybox="" title="iptables的五表五链及流量走向" href="./images/iptables02.png"><img src="/assets/img/iptables02.f73e5744.png" alt="iptables的五表五链及流量走向"></a></p> <p>我们在<code>10.4.4.8</code>的fitler表、INPUT链上添加如下规则</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>iptables -t filter -A INPUT -s <span class="token number">10.4</span>.4.11 -j DROP
+iptables -t filter -A INPUT -s <span class="token number">10.4</span>.4.12 -j ACCEPT
+iptables -t filter -A INPUT -s <span class="token number">10.4</span>.4.11 -j ACCEPT
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>问：ip为10.4.4.12的机器能ping通10.4.4.8吗？</p> <p>答：肯定能</p> <p>问：ip为10.4.4.11的机器能ping通10.4.4.8吗？</p> <p>答：不能</p> <hr> <p>流量的走向如下图，它会挨个经过各表的input链，其中当然也包含我们加了DROP规则的filter表的INPUT链。
+<a data-fancybox="" title="iptables的五表五链及流量走向" href="./images/iptables03.png"><img src="/assets/img/iptables03.efbe369e.png" alt="iptables的五表五链及流量走向"></a></p> <p>而你仔细看上面的规则，第一条是DROP、第三条是ACCEPT。再结合最终实验的结果是ping不通，<strong>所以不难猜出流量确实会依次经过链上的规则，但是当有命中的规则后，会去执行该规则-j参数指定的动作。不再往下匹配本链上的其他规则</strong>。</p> <h3 id="_3-7-2-实验二-特殊的-j-log"><a href="#_3-7-2-实验二-特殊的-j-log" class="header-anchor">#</a> 3.7.2 实验二：特殊的-j LOG</h3> <p>实验二思路如下图：</p> <p><a data-fancybox="" title="iptables的五表五链及流量走向" href="./images/iptables04.png"><img src="/assets/img/iptables04.538da29b.png" alt="iptables的五表五链及流量走向"></a></p> <ul><li>我们在10.4.4.8上添加如下规则</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 清空现有的规则</span>
+iptables -t filter -F
+<span class="token comment"># 修改默认规则，默认DROP所有流量</span>
+iptables -t filter -P INPUT DROP
+<span class="token comment"># 再添加如下两条规则</span>
+iptables -t filter -A INPUT -s <span class="token number">10.4</span>.4.11 -j LOG
+iptables -t filter -A INPUT -s <span class="token number">10.4</span>.4.11  -j ACCEPT
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>问：从10.4.4.12ping10.4.4.8能通吗？</p> <p>答：不能，因为10.4.4.8的filter表的INPUT链的默认规则是DROP，意思是如果没有命令filter表INPUT链中的其他规则，那么就会DROP这个数据包。所以很显然，10.4.4.12的数据包会被drop</p> <p>问：从10.4.4.11ping10.4.4.8能通吗？</p> <p>答：可以。</p> <p>大概的逻辑我用下面的伪代码通俗表达出来</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code><span class="token comment">// 遍历filter.input链上的所有规则</span>
+<span class="token keyword">for</span> _<span class="token punctuation">,</span>pattern <span class="token operator">:</span><span class="token operator">=</span> range filter<span class="token punctuation">.</span>INPUT<span class="token punctuation">.</span>patterns<span class="token punctuation">{</span>
+  
+  <span class="token keyword">if</span> pattern<span class="token punctuation">.</span>动作 <span class="token operator">==</span> `<span class="token operator">-</span>j LOG`  <span class="token punctuation">{</span>
+    <span class="token comment">// 将日志记录进 /var/log/message</span>
+    <span class="token keyword">continue</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token keyword">if</span> pattern <span class="token punctuation">{</span>
+    <span class="token comment">// 执行该规则定义的动作</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h3 id="_3-7-3-实验总结"><a href="#_3-7-3-实验总结" class="header-anchor">#</a> 3.7.3 实验总结</h3> <p>iptables中每条链下面的规则处理顺序是从上到下逐条遍历的，除非碰到了<code>DROP、REJECT、RETURN</code>。</p> <p>还有就是如果定义的行为是JUMP，那就会相应的jump到指定链上的指定规则上，如下：
+<a data-fancybox="" title="iptables的五表五链及流量走向" href="./images/iptables05.png"><img src="/assets/img/iptables05.e5e92d6a.png" alt="iptables的五表五链及流量走向"></a></p> <h2 id="_3-8-iptables中的模块"><a href="#_3-8-iptables中的模块" class="header-anchor">#</a> 3.8 iptables中的模块</h2> <ul><li>多端口
+Case: 可以在命令中像下面这样指定多个连续的端口</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>iptables -t <span class="token variable">${表名}</span> <span class="token variable">${commands}</span> <span class="token variable">${chain}</span> <span class="token variable">${规则号}</span> --dport <span class="token number">20</span>:30 -j <span class="token variable">${动作}</span>
+<span class="token comment"># 其中的20:30表示20和30之间的所有端口</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ul><li>想指定多个不连续的端口可以使用iptables的multiport</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看帮助文档</span>
+~<span class="token punctuation">]</span><span class="token comment"># iptables -m multiport --help</span>
+<span class="token punctuation">..</span>.
+multiport match options:
+<span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> --source-ports port<span class="token punctuation">[</span>,port:port,port<span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+ --sports <span class="token punctuation">..</span>.
+    match <span class="token builtin class-name">source</span> port<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> --destination-ports port<span class="token punctuation">[</span>,port:port,port<span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+ --dports <span class="token punctuation">..</span>.
+    match destination port<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> --ports port<span class="token punctuation">[</span>,port:port,port<span class="token punctuation">]</span>
+    match both <span class="token builtin class-name">source</span> and destination port<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+
+<span class="token comment">#命令例子</span>
+iptables -t <span class="token variable">${表名}</span> <span class="token variable">${commands}</span> <span class="token variable">${chain}</span> <span class="token variable">${规则号}</span>  
+     <span class="token variable">${-p 协议}</span> -m multiport --dports <span class="token number">20,30</span> -j <span class="token variable">${动作}</span>
+
+
+<span class="token comment">#相当于如下两行命令</span>
+iptables -t <span class="token variable">${表名}</span> <span class="token variable">${commands}</span> <span class="token variable">${chain}</span>  <span class="token variable">${规则号}</span> -p <span class="token variable">${协议}</span> --dprot <span class="token number">20</span> -j <span class="token variable">${动作}</span>
+iptables -t <span class="token variable">${表名}</span> <span class="token variable">${commands}</span> <span class="token variable">${chain}</span>  <span class="token variable">${规则号}</span> -p <span class="token variable">${协议}</span> --dprot <span class="token number">30</span> -j <span class="token variable">${动作}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><ul><li>ip范围</li></ul> <p>查看帮助文档</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>~<span class="token punctuation">]</span><span class="token comment"># iptables -m iprange --help</span>
+iprange match options:
+<span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> --src-range ip<span class="token punctuation">[</span>-ip<span class="token punctuation">]</span>    Match <span class="token builtin class-name">source</span> IP <span class="token keyword">in</span> the specified range
+<span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> --dst-range ip<span class="token punctuation">[</span>-ip<span class="token punctuation">]</span>    Match destination IP <span class="token keyword">in</span> the specified range
+
+<span class="token comment"># 案例：</span>
+<span class="token comment"># 拒绝指定范围内的ip访问自己80端口</span>
+iptables -t filter -A INPUT 
+     -m -iprange --src-range <span class="token number">10.10</span>.10.2-10.10.10.5
+     -p tcp --dport <span class="token number">80</span>
+         -j DROP
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><ul><li>连接状态</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>查看帮助文档：
+
+~<span class="token punctuation">]</span><span class="token comment"># iptables -m state --help</span>
+state match options:
+ <span class="token punctuation">[</span><span class="token operator">!</span><span class="token punctuation">]</span> --state <span class="token punctuation">[</span>INVALID<span class="token operator">|</span>ESTABLISHED<span class="token operator">|</span>NEW<span class="token operator">|</span>RELATED<span class="token operator">|</span>UNTRACKED<span class="token punctuation">]</span><span class="token punctuation">[</span>,<span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><ol><li><p>INVALID：无效连接</p></li> <li><p>NEW：首次访问和服务端建立的连接，之后和服务端的交互时连接的state不再是NEW</p></li> <li><p>ESTABLISHED：连接完成，和服务端建立连接之后的所有交互，包括访问服务端、服务器的响应。</p></li> <li><p>RELATED：相关联的连接，如ftp使用20、21建立连接，再使用其他端口交互数据时的这个连接就是和第一次建立连接时的相关的连接。state也就是RELATED。</p></li></ol> <blockquote><p>想让防火墙识别出连接的状态为RELATED，需要让iptable加载插件vi /etc/sysconfig/iptables-config，然后修改：IPTABLES_MODULES=&quot;nf_conntrack_ftp&quot;，再重启防火墙即可。</p></blockquote> <p>案例：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 放行所有状态为ESTABLISHD的数据包</span>
+iptables -f filter -A OUTPT
+     -m state --state ESTABLISHED
+     -j ACCEPT
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h2 id="_3-9-nat表"><a href="#_3-9-nat表" class="header-anchor">#</a> 3.9 nat表</h2> <p>作用：用于网络地址转换（IP、端口） 内核模块：iptable_nat</p> <p>查看NAT表，可以找到它有4条链，如下</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code> ~<span class="token punctuation">]</span><span class="token comment"># iptables -t nat -L</span>
+Chain PREROUTING <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+
+Chain INPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+
+Chain OUTPUT <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+
+Chain POSTROUTING <span class="token punctuation">(</span>policy ACCEPT<span class="token punctuation">)</span>
+target     prot opt <span class="token builtin class-name">source</span>               destination
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>通常我们会通过给nat表中的PREROUTING、POSTROUTING这两条链添加规则来实现SNAT、DNAT如下:</p> <p><code>-j SNAT</code> ，源地址转换说的时在数据包发送出去前，我们将数据包的src ip修改成期望的值。所以这个规则需要添加在POSTROUTING中。</p> <p><code>-j DNAT</code>，目标地址转换？比如发送者发过来的数据包的dst ip = A，那目标地址转换就是允许我们修改dst ip=B，也就是将数据包发送给B处理，这个过程对发送者来说是感知不到的，他会坚定的认为自己的数据包会发往A，而且B也感知不到这个过程，它甚至会认为这个数据包从一开始就是发给他的。</p> <p><code>-j MASQUERADE</code>，地址伪装</p> <h3 id="_3-9-1-案例-使用nat表完成snat"><a href="#_3-9-1-案例-使用nat表完成snat" class="header-anchor">#</a> 3.9.1 案例：使用nat表完成SNAT</h3> <ul><li>案例：将src ip = 10.10.10.10转换成src ip = 22.22.22.22然后将数据包发给期望的目的ip所在的机器</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>iptables -t nat -A POSTROUTING -s <span class="token number">10.10</span>.10.10 -j SNAT --to <span class="token number">22.22</span>.22.1
+
+<span class="token comment"># 如果公网地址不停的变化，可以像下面这样设置：</span>
+<span class="token comment"># step1:使用MASQUERADE做地址伪装，意思是我们不用手动指定将src ip转成哪个ip</span>
+<span class="token comment"># step2:让本机自己去查有没有去往dst ip的通路，如果有的话，就用这个通路的ip作为src ip</span>
+<span class="token comment"># step3:另一边数据包的接收者来说，src ip就是step2中自动找到的通路网口的ip地址</span>
+iptables -t nat -A POSTROUTING -s <span class="token number">10.10</span>.10.10 -j MASQUERADE
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><strong>总结</strong>：源地址转换一般是数据包从私网流向公网时做的转换，将私网地址转换成公网地址，会将这个转换记录记录到地址转换表中，目的是为了数据包从公网回来时，能正确的回到私网中发送请求的机器中。</p> <p><strong>LAN接口 WAN接口 使用的技术</strong></p> <h3 id="_3-9-2-案例-通过nat表完成dnat"><a href="#_3-9-2-案例-通过nat表完成dnat" class="header-anchor">#</a> 3.9.2 案例：通过nat表完成DNAT</h3> <p>DNAT全称：<code>Destnation Network Address Tranlater目标地址改写</code>。</p> <p>当我 telnet 192.168.0.2 55时，我期望tables规则将我的目标地址改写成20.181.38.148:80</p> <p>先尝试telnet 192.168.0.2 55，发现没有任何route去该host</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>~<span class="token punctuation">]</span><span class="token comment"># telnet 192.168.0.2 55</span>
+Trying <span class="token number">192.168</span>.0.2<span class="token punctuation">..</span>.
+telnet: connect to address <span class="token number">192.168</span>.0.2: No route to <span class="token function">host</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>好，再使用iptable添加DNAT规则，命令如下：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>~<span class="token punctuation">]</span> iptables -t nat -A OUTPUT -p tcp -d <span class="token number">192.168</span>.0.2 --dport <span class="token number">55</span> -j DNAT --to-destination <span class="token number">220.181</span>.38.148:80
+ 
+ <span class="token comment"># 参数解析</span>
+ <span class="token comment"># -A 表示append，追加iptable规则</span>
+ <span class="token comment"># OUTPUT 是内核的回调钩子，流量被转发出去前会经过这个阶段，DNAT的规则就加在这个阶段。</span>
+ <span class="token comment"># -p protocol 协议</span>
+ <span class="token comment"># -d destnation 目标地址</span>
+ <span class="token comment"># --dport 目标口</span>
+ <span class="token comment"># -j jump 跳转（跳转到目标规则）</span>
+ <span class="token comment"># --to-destination 目标地址</span>
+ 
+ <span class="token comment"># 命令含义：</span>
+ 当OUTPUT Chain上的数据包使用的协议是tcp、目标地址是192.168.0.2、目标端口是55时，
+ 我跳转到DNAT模式，将目标地址改成：220.181.38.148:80
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><ul><li>再尝试telnet 192.168.0.2 55，会发现链路通了！</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>~<span class="token punctuation">]</span><span class="token comment"># telnet 192.168.0.2 55</span>
+Trying <span class="token number">192.168</span>.0.2<span class="token punctuation">..</span>.
+Connected to <span class="token number">192.168</span>.0.2.
+Escape character is <span class="token string">'^]'</span><span class="token builtin class-name">.</span>
+Connection closed by foreign host.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>再查看iptable规则，如下：</p> <blockquote><p>可以看到有很多的Chain比如上面的OUTPUT就是一条链，它是操作系统的一个hook，当请求被发送出去时会经过这个hook。</p></blockquote> <blockquote><p>还有就是通过iptable的DNAT能力可以做tizi！你仔细琢磨一下，原理就在上面的图中哦～</p></blockquote> <p>补充典型应用场景：公司有自己建设的机房，机房中机器的ip都在：10.10.10.0/24网段，机房对外提供服务就需要通过网络设备暴露公网一个ip，比如是：22.22.22.1:80</p> <p>当网络设备收到dst ip = 22.22.22.1:80的数据包时，就会做DNAT转换，将dst ip转换成内网中的某台服务器的ip，比如就是:dtp ip = 10.10.10.10，然后将数据包转发给这台机器让它处理数据包。</p> <h2 id="_3-10-相关配置文件"><a href="#_3-10-相关配置文件" class="header-anchor">#</a> 3.10 相关配置文件</h2> <p>iptables的配置文件在/etc/sysconfig目录如下：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>-rw-------  <span class="token number">1</span> root root  <span class="token number">635</span> <span class="token number">10</span>月  <span class="token number">2</span> <span class="token number">2020</span> ip6tables
+-rw-------  <span class="token number">1</span> root root <span class="token number">2134</span> <span class="token number">10</span>月  <span class="token number">2</span> <span class="token number">2020</span> ip6tables-config
+-rw-------  <span class="token number">1</span> root root  <span class="token number">550</span> <span class="token number">10</span>月  <span class="token number">2</span> <span class="token number">2020</span> iptables
+-rw-------  <span class="token number">1</span> root root <span class="token number">2116</span> <span class="token number">10</span>月  <span class="token number">2</span> <span class="token number">2020</span> iptables-config
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>iptables启动时会加载这个配置文件中定义好的各表、链中的规则</p> <p><a data-fancybox="" title="iptables的五表五链及流量走向" href="./images/iptables06.png"><img src="/assets/img/iptables06.5f04ff47.png" alt="iptables的五表五链及流量走向"></a></p> <p>一般我们会先使用iptables修改各种规则，如果想让iptables启动、重启时，继续使用你刚才修改的配置，我们就会考虑使用iptables-save命令将规则导出为配置文件。</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 导出某张表的iptables规则</span>
+<span class="token punctuation">[</span>root@bairimeng ~<span class="token punctuation">]</span><span class="token comment"># iptables-save -t filter &gt; 1.bak</span>
+<span class="token comment"># 导出全力量iptables规则</span>
+<span class="token punctuation">[</span>root@bairimeng ~<span class="token punctuation">]</span><span class="token comment"># iptables-save &gt; 2.bak</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>再将文件中的内容拷贝进/etc/sysconfig/iptables中即可</p> <h2 id="最后总结-iptables"><a href="#最后总结-iptables" class="header-anchor">#</a> 最后总结 Iptables</h2> <p><code>iptables</code>它作用在OIS7层网络模型中的第四层，<strong>用来和内核的netfilter交互，配置netfilter进而实现对网络的控制、流量的转发</strong>。</p> <p><code>Natfilter</code> 是集成到linux内核协议栈中的一套防火墙系统，用户可通过运行在用户空间的工具来把相关配置下发给Netfilter</p> <p>十三、参考资料
+1、https://zjj2wry.github.io/network/iptables/</p> <p>2、维基百科：https://en.wikipedia.org/wiki/Iptables</p> <p>3、man page https://linux.die.net/man/8/iptables</p> <p>4、centos iptables wiki：https://wiki.centos.org/HowTos/Network/IPTables</p> <p>5、ibm：https://www.ibm.com/docs/en/linux-on-systems?topic=tests-firewall-iptables-rules</p> <p>6、参考：《Kubernetes网络权威指南》</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/network/DNS域名解析器-2.html" class="prev">
+        2. DNS（domain name system）域名管理
+      </a></span> <span class="next"><a href="/middleware/network/Docker网络入门-4.html">
+        4. Docker网络入门
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/75.c4e6ea57.js" defer></script>
+  </body>
+</html>

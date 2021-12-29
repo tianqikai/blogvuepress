@@ -90,7 +90,7 @@ module.exports = {
                 ariLabel: '常用框架',
                 items: [  //多级导航栏
                     { text: 'Spring', link: '/framework/Spring/' },
-                    { text: 'SpringMVC', link: '/framework/SpringMVC/' },
+                    { text: 'SpringMVC', link: '/framework/springmvc/' },
                     { text: 'Mybatis', link: '/framework/mybatis/' },
                     { text: 'Springboot', link: '/framework/springboot/' },
                     { text: 'Dubbo', link: '/framework/dubbo/' },

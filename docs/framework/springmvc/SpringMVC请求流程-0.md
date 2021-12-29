@@ -53,7 +53,7 @@ Model2 模型是在 Model1 的基础上进行改良，它是 MVC 模型的一个
     - 作用：将数据展现给用户
 :::
 
-![./images/SpringMVC整体请求流程.png](./images/SpringMVC整体请求流程.png)
+![./images/SpringMVC04.png](./images/SpringMVC04.png)
 
 
 1. 首先用户发送请求,请求被SpringMvc前端控制器（DispatherServlet）捕获；

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>3. ZK客户端操作命令 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/195.fc8e0760.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/131.c102eff9.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.45304a1e.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/19.2f8716ce.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/24.f478b0fc.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/75.c4e6ea57.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/88.60082ea3.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link router-link-active">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link router-link-active">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Zookeeper</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/zookeeper/zookeeper简介-0.html" class="sidebar-link">1. Zookeeper简介</a></li><li><a href="/middleware/zookeeper/zookeeper安装-1.html" class="sidebar-link">2. Zookeeper安装</a></li><li><a href="/middleware/zookeeper/zookeeper操作命令-2.html" class="active sidebar-link">3. ZK客户端操作命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-1-连接客户端" class="sidebar-link">3.1 连接客户端</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-2-显示所有操作命令-help" class="sidebar-link">3.2 显示所有操作命令--help</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-3-创建zookeeper-节点命令" class="sidebar-link">3.3 创建zookeeper 节点命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-3-1-创建节点-create-节点名" class="sidebar-link">3.3.1 创建节点  --create /节点名</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-3-2-创建短暂节点" class="sidebar-link">3.3.2 创建短暂节点</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-3-3-创建带序号的节点" class="sidebar-link">3.3.3 创建带序号的节点</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-3-4-创建容器节点-移除了" class="sidebar-link">3.3.4 创建容器节点(移除了)</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-4-查看子节点" class="sidebar-link">3.4 查看子节点</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-5-获得节点的值" class="sidebar-link">3.5 获得节点的值</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-6-修改节点数据值" class="sidebar-link">3.6 修改节点数据值</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-7-事件监听机制" class="sidebar-link">3.7 事件监听机制</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-7-1-节点的监听" class="sidebar-link">3.7.1 节点的监听</a></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-7-2-路径监听" class="sidebar-link">3.7.2 路径监听</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-8-删除节点" class="sidebar-link">3.8 删除节点</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#递归删除节点" class="sidebar-link">递归删除节点</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/zookeeper/zookeeper操作命令-2.html#_3-9-查看节点状态" class="sidebar-link">3.9 查看节点状态</a></li></ul></li><li><a href="/middleware/zookeeper/zookeeper实战-3.html" class="sidebar-link">4. zookeeper实战</a></li><li><a href="/middleware/zookeeper/zookeeper内部原理-4.html" class="sidebar-link">5. zookeeper内部原理</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_3-zk客户端操作命令"><a href="#_3-zk客户端操作命令" class="header-anchor">#</a> 3. ZK客户端操作命令</h1> <p><a data-fancybox="" title="客户端命令行操作" href="./image/zookeeper10.jpg"><img src="/assets/img/zookeeper10.a59eede2.jpg" alt="客户端命令行操作"></a></p> <h2 id="_3-1-连接客户端"><a href="#_3-1-连接客户端" class="header-anchor">#</a> 3.1 连接客户端</h2> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>sh <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>zk<span class="token operator">-</span>cluster<span class="token operator">/</span>zk<span class="token operator">-</span><span class="token number">1</span><span class="token operator">/</span>bin<span class="token operator">/</span>zkCli<span class="token punctuation">.</span>sh <span class="token operator">-</span>server <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="_3-2-显示所有操作命令-help"><a href="#_3-2-显示所有操作命令-help" class="header-anchor">#</a> 3.2 显示所有操作命令--help</h2> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">0</span>] help
+ZooKeeper <span class="token operator">-</span>server host<span class="token punctuation">:</span>port cmd args
+	stat path [watch]
+	<span class="token keyword">set</span> path data [version]
+	ls path [watch]
+	delquota [<span class="token operator">-</span>n|<span class="token operator">-</span>b] path
+	ls2 path [watch]
+	setAcl path acl
+	setquota <span class="token operator">-</span>n|<span class="token operator">-</span>b val path
+	history 
+	redo cmdno
+	printwatches <span class="token keyword">on</span>|off
+	delete path [version]
+	sync path
+	listquota path
+	rmr path
+	<span class="token keyword">get</span> path [watch]
+	create [<span class="token operator">-</span>s] [<span class="token operator">-</span>e] path data acl
+	addauth scheme auth
+	quit 
+	getAcl path
+	close 
+	connect host<span class="token punctuation">:</span>port
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><h2 id="_3-3-创建zookeeper-节点命令"><a href="#_3-3-创建zookeeper-节点命令" class="header-anchor">#</a> 3.3 创建zookeeper 节点命令</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code> create <span class="token punctuation">[</span> ‐s<span class="token punctuation">]</span> <span class="token punctuation">[</span> ‐e<span class="token punctuation">]</span> <span class="token punctuation">[</span> ‐c<span class="token punctuation">]</span> <span class="token punctuation">[</span> ‐t ttl<span class="token punctuation">]</span> path <span class="token punctuation">[</span>data<span class="token punctuation">]</span> <span class="token punctuation">[</span>acl<span class="token punctuation">]</span>
+ <span class="token comment">#中括号为可选项， 没有则默认创建持久化节点</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><hr> <div class="custom-block tip"><p class="custom-block-title">参数说明</p> <ol><li>-s: 顺序节点</li> <li>-e: 临时节点</li> <li>-c: 容器节点</li> <li>-t:  可以给节点添加过期时间， 默认禁用， 需要通过系统参数启用</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>（-Dzookeeper.extendedTypesEnabled =true,  znode.container.checkIntervalMs : (Java system
+property only) New in 3.5.1: The time interval in milliseconds for each check of candidate
+container and ttl nodes. Default is &quot;60000&quot;.)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div></div> <h3 id="_3-3-1-创建节点-create-节点名"><a href="#_3-3-1-创建节点-create-节点名" class="header-anchor">#</a> 3.3.1 创建节点  --create /节点名</h3> <p><strong>没有加任何可选参数， 创建的就是持久化节点</strong></p> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">3</span>] create <span class="token operator">/</span>sanguo  <span class="token string">&quot;wuguo&quot;</span>
+Created <span class="token operator">/</span>sanguo
+[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">4</span>] create <span class="token operator">/</span>sanguo<span class="token operator">/</span>shuguo  <span class="token string">&quot;诸葛亮&quot;</span>
+Created <span class="token operator">/</span>sanguo<span class="token operator">/</span>shuguo
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_3-3-2-创建短暂节点"><a href="#_3-3-2-创建短暂节点" class="header-anchor">#</a> 3.3.2 创建短暂节点</h3> <p><font color="red"><strong>create 后跟一个 -e 创建临时节点 ， 临时节点不能创建子节点</strong></font></p> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">12</span>] create <span class="token operator">-</span>e <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo <span class="token string">&quot;周瑜&quot;</span>
+Created <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ol><li>在当前客户端是能查看到的</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">13</span>] <span class="token keyword">get</span> <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo
+周瑜
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ol start="2"><li>退出当前客户端然后再重启客户端</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>quit
+sh <span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>zk<span class="token operator">-</span>cluster<span class="token operator">/</span>zk<span class="token operator">-</span><span class="token number">1</span><span class="token operator">/</span>bin<span class="token operator">/</span>zkCli<span class="token punctuation">.</span>sh <span class="token operator">-</span>server <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ol start="3"><li>再次查看根目录下短暂节点已经删除</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">0</span>] <span class="token keyword">get</span> <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo 
+Node does <span class="token keyword">not</span> exist<span class="token punctuation">:</span> <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="_3-3-3-创建带序号的节点"><a href="#_3-3-3-创建带序号的节点" class="header-anchor">#</a> 3.3.3 创建带序号的节点</h3> <h4 id="先创建一个普通的根节点-sanguo-weiguo"><a href="#先创建一个普通的根节点-sanguo-weiguo" class="header-anchor">#</a> 先创建一个普通的根节点/sanguo/weiguo</h4> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>create <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo <span class="token string">&quot;曹操&quot;</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h4 id="创建带序号的节点-create-s-xxx-xxx"><a href="#创建带序号的节点-create-s-xxx-xxx" class="header-anchor">#</a> 创建带序号的节点 -- create -s XXX &quot;XXX&quot;</h4> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">2</span>] create <span class="token operator">-</span>s <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo <span class="token string">&quot;许诸&quot;</span>
+Created <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo0000000004
+[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">3</span>] create <span class="token operator">-</span>s <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo <span class="token string">&quot;许诸&quot;</span>
+Created <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo0000000005
+[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">4</span>] create <span class="token operator">-</span>s <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo <span class="token string">&quot;许诸&quot;</span>
+Created <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo0000000006
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>如果原来没有序号节点，序号从0开始依次递增。如果原节点下已有2个节点，则再排序时从2开始，以此类推。</p> <h2 id="_3-3-4-创建容器节点-移除了"><a href="#_3-3-4-创建容器节点-移除了" class="header-anchor">#</a> 3.3.4 创建容器节点(移除了)</h2> <p>容器节点主要用来容纳字节点， 如果没有给其创建子节点， 容器节点表现和持久化节点一样， 如果给容器节点创建了子节点，后续又把子节点清空， 容器节点也会被zookeeper删除。</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>create ‐c /container
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="_3-4-查看子节点"><a href="#_3-4-查看子节点" class="header-anchor">#</a> 3.4 查看子节点</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>zk: <span class="token number">127.0</span>.0.1:2181<span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token function">ls</span> /
+<span class="token punctuation">[</span>zookeeper, tqk<span class="token punctuation">]</span>
+<span class="token comment">#查看当前节点详细数据</span>
+<span class="token punctuation">[</span>zk: <span class="token number">127.0</span>.0.1:2181<span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">2</span><span class="token punctuation">]</span> ls2 /
+<span class="token punctuation">[</span>zookeeper, tqk<span class="token punctuation">]</span>
+cZxid <span class="token operator">=</span> 0x0
+ctime <span class="token operator">=</span> Thu Jan 01 08:00:00 CST <span class="token number">1970</span>
+mZxid <span class="token operator">=</span> 0x0
+mtime <span class="token operator">=</span> Thu Jan 01 08:00:00 CST <span class="token number">1970</span>
+pZxid <span class="token operator">=</span> 0x100000002
+cversion <span class="token operator">=</span> <span class="token number">0</span>
+dataVersion <span class="token operator">=</span> <span class="token number">0</span>
+aclVersion <span class="token operator">=</span> <span class="token number">0</span>
+ephemeralOwner <span class="token operator">=</span> 0x0
+dataLength <span class="token operator">=</span> <span class="token number">0</span>
+numChildren <span class="token operator">=</span> <span class="token number">2</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="_3-5-获得节点的值"><a href="#_3-5-获得节点的值" class="header-anchor">#</a> 3.5 获得节点的值</h2> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">10</span>] <span class="token keyword">get</span> <span class="token operator">/</span>sanguo<span class="token operator">/</span>shuguo
+诸葛亮
+cZxid <span class="token operator">=</span> <span class="token number">0</span>x100000006
+ctime <span class="token operator">=</span> Sun May <span class="token number">16</span> <span class="token number">19</span><span class="token punctuation">:</span><span class="token number">43</span><span class="token punctuation">:</span><span class="token number">01</span> CST <span class="token number">2021</span>
+mZxid <span class="token operator">=</span> <span class="token number">0</span>x100000006
+mtime <span class="token operator">=</span> Sun May <span class="token number">16</span> <span class="token number">19</span><span class="token punctuation">:</span><span class="token number">43</span><span class="token punctuation">:</span><span class="token number">01</span> CST <span class="token number">2021</span>
+pZxid <span class="token operator">=</span> <span class="token number">0</span>x100000006
+cversion <span class="token operator">=</span> <span class="token number">0</span>
+dataVersion <span class="token operator">=</span> <span class="token number">0</span>
+aclVersion <span class="token operator">=</span> <span class="token number">0</span>
+ephemeralOwner <span class="token operator">=</span> <span class="token number">0</span>x0
+dataLength <span class="token operator">=</span> <span class="token number">9</span>
+numChildren <span class="token operator">=</span> <span class="token number">0</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="_3-6-修改节点数据值"><a href="#_3-6-修改节点数据值" class="header-anchor">#</a> 3.6 修改节点数据值</h2> <p><strong>set -s XXX &quot;XXX&quot;</strong></p> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code><span class="token keyword">set</span> <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo0000000005  <span class="token string">&quot;司马懿&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="_3-7-事件监听机制"><a href="#_3-7-事件监听机制" class="header-anchor">#</a> 3.7 事件监听机制</h2> <h3 id="_3-7-1-节点的监听"><a href="#_3-7-1-节点的监听" class="header-anchor">#</a> 3.7.1 节点的监听</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 3.5.x版本</span>
+get ‐w /path <span class="token comment">#注册监听的同时获取数据 </span>
+<span class="token function">stat</span> ‐w /path <span class="token comment">#对节点进行监听，且获取元数据信息</span>
+
+<span class="token comment"># 3.6.x版本 </span>
+get /path <span class="token function">watch</span>  <span class="token comment">#注册监听的同时获取数据 </span>
+<span class="token function">stat</span> /path <span class="token function">watch</span>  <span class="token comment"># 对节点进行监听，且获取元数据信息</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><font color="red"><strong> 针对节点的监听：  一定事件触发， 对应的注册立刻被移除， 所以事件监听是一次性的</strong></font></p> <ol><li>在[127.0.0.1:2182]主机上注册监听/tqk/tqk节点数据变化</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2182</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">10</span>] <span class="token keyword">get</span> <span class="token operator">/</span>tqk<span class="token operator">/</span>tqk watch
+tianqikai
+cZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+ctime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">02</span> CST <span class="token number">2021</span>
+mZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+mtime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">02</span> CST <span class="token number">2021</span>
+pZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+cversion <span class="token operator">=</span> <span class="token number">0</span>
+dataVersion <span class="token operator">=</span> <span class="token number">0</span>
+aclVersion <span class="token operator">=</span> <span class="token number">0</span>
+ephemeralOwner <span class="token operator">=</span> <span class="token number">0</span>x0
+dataLength <span class="token operator">=</span> <span class="token number">9</span>
+numChildren <span class="token operator">=</span> <span class="token number">0</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><ol start="2"><li>在[127.0.0.1:2183]主机上修改/tqk/tqk节点的数据</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2183</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">9</span>] <span class="token keyword">get</span> <span class="token operator">/</span>tqk<span class="token operator">/</span>tqk watch 
+tianqikai
+cZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+ctime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">02</span> CST <span class="token number">2021</span>
+mZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+mtime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">02</span> CST <span class="token number">2021</span>
+pZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+cversion <span class="token operator">=</span> <span class="token number">0</span>
+dataVersion <span class="token operator">=</span> <span class="token number">0</span>
+aclVersion <span class="token operator">=</span> <span class="token number">0</span>
+ephemeralOwner <span class="token operator">=</span> <span class="token number">0</span>x0
+dataLength <span class="token operator">=</span> <span class="token number">9</span>
+numChildren <span class="token operator">=</span> <span class="token number">0</span>
+[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2183</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">10</span>] <span class="token keyword">set</span> <span class="token operator">/</span>tqk<span class="token operator">/</span>tqk tqk
+
+WATCHER<span class="token punctuation">:</span><span class="token punctuation">:</span>
+
+WatchedEvent state<span class="token punctuation">:</span>SyncConnected <span class="token keyword">type</span><span class="token punctuation">:</span>NodeDataChanged path<span class="token punctuation">:</span><span class="token operator">/</span>tqk<span class="token operator">/</span>tqk
+cZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+ctime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">02</span> CST <span class="token number">2021</span>
+mZxid <span class="token operator">=</span> <span class="token number">0</span>x100000046
+mtime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">58</span> CST <span class="token number">2021</span>
+pZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+cversion <span class="token operator">=</span> <span class="token number">0</span>
+dataVersion <span class="token operator">=</span> <span class="token number">1</span>
+aclVersion <span class="token operator">=</span> <span class="token number">0</span>
+ephemeralOwner <span class="token operator">=</span> <span class="token number">0</span>x0
+dataLength <span class="token operator">=</span> <span class="token number">3</span>
+numChildren <span class="token operator">=</span> <span class="token number">0</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><ol start="3"><li>观察[127.0.0.1:2182]主机收到数据变化的监听</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2182</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">10</span>] <span class="token keyword">get</span> <span class="token operator">/</span>tqk<span class="token operator">/</span>tqk watch
+tianqikai
+cZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+ctime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">02</span> CST <span class="token number">2021</span>
+mZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+mtime <span class="token operator">=</span> Wed Dec <span class="token number">15</span> <span class="token number">16</span><span class="token punctuation">:</span><span class="token number">53</span><span class="token punctuation">:</span><span class="token number">02</span> CST <span class="token number">2021</span>
+pZxid <span class="token operator">=</span> <span class="token number">0</span>x100000045
+cversion <span class="token operator">=</span> <span class="token number">0</span>
+dataVersion <span class="token operator">=</span> <span class="token number">0</span>
+aclVersion <span class="token operator">=</span> <span class="token number">0</span>
+ephemeralOwner <span class="token operator">=</span> <span class="token number">0</span>x0
+dataLength <span class="token operator">=</span> <span class="token number">9</span>
+numChildren <span class="token operator">=</span> <span class="token number">0</span>
+[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2182</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">11</span>] 
+WATCHER<span class="token punctuation">:</span><span class="token punctuation">:</span>
+
+WatchedEvent state<span class="token punctuation">:</span>SyncConnected <span class="token keyword">type</span><span class="token punctuation">:</span>NodeDataChanged path<span class="token punctuation">:</span><span class="token operator">/</span>tqk<span class="token operator">/</span>tqk
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h3 id="_3-7-2-路径监听"><a href="#_3-7-2-路径监听" class="header-anchor">#</a> 3.7.2 路径监听</h3> <p><strong>针对递归子目录的监听</strong></p> <ol><li>在hadoop104主机上注册监听/sanguo节点的子节点变化</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>    ls <span class="token operator">/</span>sanguo watch
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="2"><li>在hadoop103主机/sanguo节点上创建子节点</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2182</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">1</span>] create <span class="token operator">-</span>s <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo <span class="token string">&quot;孙权&quot;</span>
+Created <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo0000000007
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ol start="3"><li>观察hadoop104主机收到子节点变化的监听</li></ol> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>WATCHER<span class="token punctuation">:</span><span class="token punctuation">:</span>
+
+WatchedEvent state<span class="token punctuation">:</span>SyncConnected <span class="token keyword">type</span><span class="token punctuation">:</span>NodeChildrenChanged path<span class="token punctuation">:</span><span class="token operator">/</span>sanguo
+[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">17</span>] <span class="token keyword">get</span> <span class="token operator">/</span>sanguo<span class="token operator">/</span>wuguo0000000007
+孙权
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h2 id="_3-8-删除节点"><a href="#_3-8-删除节点" class="header-anchor">#</a> 3.8 删除节点</h2> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>delete <span class="token operator">/</span>sanguo<span class="token operator">/</span>weiguo
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="递归删除节点"><a href="#递归删除节点" class="header-anchor">#</a> 递归删除节点</h3> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code> rmr <span class="token operator">/</span>sanguo<span class="token operator">/</span>shuguo
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="_3-9-查看节点状态"><a href="#_3-9-查看节点状态" class="header-anchor">#</a> 3.9 查看节点状态</h2> <div class="language-vb line-numbers-mode"><pre class="language-vb"><code>[zk<span class="token punctuation">:</span> <span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">:</span><span class="token number">2181</span><span class="token punctuation">(</span>CONNECTED<span class="token punctuation">)</span> <span class="token number">22</span>] stat <span class="token operator">/</span>sanguo       
+cZxid <span class="token operator">=</span> <span class="token number">0</span>x100000005
+ctime <span class="token operator">=</span> Sun May <span class="token number">16</span> <span class="token number">19</span><span class="token punctuation">:</span><span class="token number">42</span><span class="token punctuation">:</span><span class="token number">35</span> CST <span class="token number">2021</span>
+mZxid <span class="token operator">=</span> <span class="token number">0</span>x100000005
+mtime <span class="token operator">=</span> Sun May <span class="token number">16</span> <span class="token number">19</span><span class="token punctuation">:</span><span class="token number">42</span><span class="token punctuation">:</span><span class="token number">35</span> CST <span class="token number">2021</span>
+pZxid <span class="token operator">=</span> <span class="token number">0</span>x100000017
+cversion <span class="token operator">=</span> <span class="token number">12</span>
+dataVersion <span class="token operator">=</span> <span class="token number">0</span>
+aclVersion <span class="token operator">=</span> <span class="token number">0</span>
+ephemeralOwner <span class="token operator">=</span> <span class="token number">0</span>x0
+dataLength <span class="token operator">=</span> <span class="token number">5</span>
+numChildren <span class="token operator">=</span> <span class="token number">4</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">Stat参数</p> <ol><li>cZxid：  创建znode的事务ID（Zxid的值）</li> <li>mZxid：  最后修改znode的事务ID。</li> <li>pZxid：  最后添加或删除子节点的事务ID（子节点列表发生变化才会发生改变</li> <li>ctime：  znode创建时间。</li> <li>mtime：  znode最近修改时间。</li> <li>dataVersion：  znode的当前数据版本。</li> <li>cversion：  znode的子节点结果集版本（一个节点的子节点增加、  删除都会影响这个版本</li> <li>aclVersion：  表示对此znode的acl版本。</li> <li>ephemeralOwner：  znode是临时znode时， 表示znode所有者的 session ID。   如果znode不是临时znode， 则该字段设置为零。</li> <li>dataLength：  znode数据字段的长度</li></ol></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/zookeeper/zookeeper安装-1.html" class="prev">
+        2. Zookeeper安装
+      </a></span> <span class="next"><a href="/middleware/zookeeper/zookeeper实战-3.html">
+        4. zookeeper实战
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/195.fc8e0760.js" defer></script>
+  </body>
+</html>

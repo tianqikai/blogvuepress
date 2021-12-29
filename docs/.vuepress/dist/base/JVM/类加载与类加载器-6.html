@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>7. 类加载与类加载器 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/19.2f8716ce.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/131.c102eff9.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.45304a1e.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/195.fc8e0760.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/24.f478b0fc.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/75.c4e6ea57.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/88.60082ea3.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link router-link-active">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link router-link-active">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JVM</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/base/JVM/" aria-current="page" class="sidebar-link">JVM调优</a></li><li><a href="/base/JVM/JVM基础知识-0.html" class="sidebar-link">1. JVM基础知识</a></li><li><a href="/base/JVM/深入理解JVM的内存区域-1.html" class="sidebar-link">2. 深入理解JVM的内存区域</a></li><li><a href="/base/JVM/JVM中的对象及引用-2.html" class="sidebar-link">3. JVM中的对象及引用</a></li><li><a href="/base/JVM/垃圾回收机制及算法-3.html" class="sidebar-link">4. 垃圾回收机制及算法</a></li><li><a href="/base/JVM/垃圾回收器串讲及 HostSpot 的细节实现-4.html" class="sidebar-link">5. 垃圾回收器及HostSpot的细节</a></li><li><a href="/base/JVM/Class文件结构及深入字节码指令-5.html" class="sidebar-link">6. Class文件结构及字节码指令</a></li><li><a href="/base/JVM/类加载与类加载器-6.html" class="active sidebar-link">7. 类加载与类加载器</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-一个类的生命周期-重点" class="sidebar-link">7.1 一个类的生命周期（重点）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-1-类生命周期7个阶段" class="sidebar-link">7.1.1 类生命周期7个阶段</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-2-阶段顺序" class="sidebar-link">7.1.2 阶段顺序</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-3-加载的时机" class="sidebar-link">7.1.3 加载的时机</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-4-验证" class="sidebar-link">7.1.4 验证</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-5-准备" class="sidebar-link">7.1.5 准备</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-6-解析" class="sidebar-link">7.1.6 解析</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-1-7-初始化-重点" class="sidebar-link">7.1.7 初始化（重点）</a></li></ul></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-2-类加载" class="sidebar-link">7.2 类加载</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-2-1-jdk提供的三层类加载器-重点" class="sidebar-link">7.2.1 JDK提供的三层类加载器（重点）</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-2-2-类加载器的问题" class="sidebar-link">7.2.2 类加载器的问题</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-2-3-双亲委派机制-重点" class="sidebar-link">7.2.3 双亲委派机制（重点）</a></li><li class="sidebar-sub-header"><a href="/base/JVM/类加载与类加载器-6.html#_7-2-4-自定义类加载器" class="sidebar-link">7.2.4 自定义类加载器</a></li></ul></li></ul></li><li><a href="/base/JVM/方法调用的底层实现-8.html" class="sidebar-link">8.方法调用的底层实现</a></li><li><a href="/base/JVM/Java语法糖及实现-9.html" class="sidebar-link">9.Java语法糖及实现</a></li><li><a href="/base/JVM/GC 调优工具-a.html" class="sidebar-link">10. GC调优工具</a></li><li><a href="/base/JVM/JVM 性能调优-b.html" class="sidebar-link">11.JVM性能调优（一）</a></li><li><a href="/base/JVM/JVM 性能调优二-c.html" class="sidebar-link">12.JVM性能调优（二）</a></li><li><a href="/base/JVM/JVM 调优实战-d.html" class="sidebar-link">13.JVM调优实战</a></li><li><a href="/base/JVM/MAT分析内存泄漏-e.html" class="sidebar-link">14.MAT分析内存泄漏</a></li><li><a href="/base/JVM/直接内存与JVM源码分析-f.html" class="sidebar-link">14. 直接内存与JVM源码分析</a></li><li><a href="/base/JVM/JVM编译技术原理-g.html" class="sidebar-link">15 JVM编译技术原理</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_7-类加载与类加载器"><a href="#_7-类加载与类加载器" class="header-anchor">#</a> 7. 类加载与类加载器</h1> <h2 id="_7-1-一个类的生命周期-重点"><a href="#_7-1-一个类的生命周期-重点" class="header-anchor">#</a> 7.1 一个类的生命周期（重点）</h2> <h3 id="_7-1-1-类生命周期7个阶段"><a href="#_7-1-1-类生命周期7个阶段" class="header-anchor">#</a> 7.1.1 类生命周期7个阶段</h3> <p>类从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期包括：
+加载（Loading）、<br>
+验证（Verification）、<br>
+准备（Preparation）、<br>
+解析（Resolution）、<br>
+初始化（Initialization）、<br>
+使用（Using）和<br>
+卸载（Unloading）7 个阶段。<br> <font color="red"><strong>其中验证、准备、解析 3 个部分统称为连接（Linking）</strong></font> <a data-fancybox="" title="类生命周期7个阶段 " href="./image/leishengmingzhouqi.jpg"><img src="/assets/img/leishengmingzhouqi.be9e52d1.jpg" alt="类生命周期7个阶段 "></a></p> <h3 id="_7-1-2-阶段顺序"><a href="#_7-1-2-阶段顺序" class="header-anchor">#</a> 7.1.2 阶段顺序</h3> <p>加载、校验、准备、初始化和卸载这五个阶段的顺序是确定的，但是对于“解析”阶段则不一定，它在某些情况下可以在初始化之后再开始，这样做是 为了支持 java 的运行时绑定特征（也称为动态绑定或晚期绑定）</p> <h3 id="_7-1-3-加载的时机"><a href="#_7-1-3-加载的时机" class="header-anchor">#</a> 7.1.3 加载的时机</h3> <p>什么是需要开始类第一个阶段“加载”，虚拟机规范没有强制约束，这点交给虚拟机的具体实现来自由把控。</p> <p><font color="red">JVM 虚拟机的实现都是使用的<strong>懒加载</strong>，就是什么时候需要这个类了我才去加载，并不是说一个jar文件里面有200多个类，但实际我只用到了其中的一个类，我不需要把200多个类全部加载进来。（如果你自己写一个JVM倒是可以这么干！） “加载 loading”阶段是整个类加载（class loading）过程的一个阶段。</font></p> <div class="custom-block tip"><p class="custom-block-title">加载阶段虚拟机需要完成以下3件事情：</p> <ol><li>通过一个类的全限定名来获取定义此类的二进制字节流。</li> <li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。</li> <li>在内存中生成一个代表这个类的 java.lang.Class 对象，作为方法区这个类的各种数据的访问入口</li></ol></div> <p>注意：比如“通过一个类的全限定名来获取定义此类的二进制字节流”没有指定一定得从某个class文件中获取，所以我们可以从zip压缩包、从网络中 获取、运行时计算生成、数据库中读取、或者从加密文件中获取等等。</p> <p>我们也可以通过前面的工具 JHSDB 可以看到，JVM 启动后，相关的类已经加载进入了方法区，成为了方法区的运行时结构。</p> <p>JHSDB 怎么用？</p> <div class="custom-block tip"><p class="custom-block-title">具体见JHSDB工具</p> <ol><li><p>Attarch 上 JVM 启动的进程</p></li> <li><p>打开 Class Browser
+<a data-fancybox="" title="classloader" href="./image/jvmloader.jpg"><img src="/assets/img/jvmloader.61205347.jpg" alt="classloader"></a></p></li> <li><p>可以看到很多class已经被加载进来了</p></li> <li><p>找到 JVMObject，注意！这里已经是内存了，所以说相关的类已经加载进入了方法区，成为了方法区的运行时结构</p></li></ol></div> <h3 id="_7-1-4-验证"><a href="#_7-1-4-验证" class="header-anchor">#</a> 7.1.4 验证</h3> <p>验证是连接阶段的第一步，这一阶段的目的是为了确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。
+但从整体上看，验证阶段大致上会完成下面4个阶段的检验动作：<strong>文件格式验证、元数据验证、字节码验证、符号引用验证</strong>。</p> <h4 id="_7-1-4-1-文件格式验证-非重点"><a href="#_7-1-4-1-文件格式验证-非重点" class="header-anchor">#</a> 7.1.4.1 文件格式验证（非重点）</h4> <p><strong>第一阶段要验证字节流是否符合Class文件格式的规范，并且能被当前版本的虚拟机处理</strong></p> <div class="custom-block tip"><p class="custom-block-title">这一阶段可能包括下面这些验证点:</p> <p>▶ 是否以魔数 OxCAFEBABE 开头<br>
+▶ 主、次版本号是否在当前 Java 虚拟机接受范围之内<br>
+▶ 常量池的常量中是否有不被支持的常量类型(检查常量tag标志)<br>
+▶ 指向常量的各种索引值中是否有指向不存在的常量或不符合类型的常量<br>
+▶ CONSTANT Utf8 info 型的常量中是否有不符合 UTF-8 编码的数据<br>
+▶ Class 文件中各个部分及文件本身是否有被删除的或附加的其他信息<br>
+▶ ...... 以上的部分还只是一小部分，没必要进行深入的研究</p></div> <p>总结一下： 这阶段的验证是基于二进制字节流进行的，只有通过了这个阶段的验证之后，这段字节流才被允许进人 Java 虚拟机内存的方法区中进行存储，所以后面 的三个验证阶段全部是基于方法区的存储结构（内存）上进行的，不会再直接读取、操作字节流了。</p> <h4 id="_7-1-4-2-元数据验证-非重点"><a href="#_7-1-4-2-元数据验证-非重点" class="header-anchor">#</a> 7.1.4.2 元数据验证（非重点）</h4> <p><strong>第二阶段是对字节码描述的信息进行语义分析，以保证其描述的信息符合《Java 语言规范》的要求</strong></p> <div class="custom-block tip"><p class="custom-block-title">这个阶段可能包括的验证点如下:</p> <p>▶ 这个类是否有父类(除了java.lang.Object之外，所有的类都应当有父类)<br>
+▶ 这个类的父类是否继承了不允许被继承的类(被final修饰的类)<br>
+▶ 如果这个类不是抽象类，是否实现了其父类或接口之中要求实现的所有方法<br>
+▶ 类中的字段、方法是否与父类产生矛盾(例如覆盖了父类的 final 字段，或者出现不符合规则的方法重载，例如方法参数都-致，但返回值类型却不同等)<br>
+▶ ...... 以上的部分还只是一小部分，没必要进行深入的研究</p></div> <p>元数据验证是验证的第二阶段，主要目的是对类的元数据信息进行语义校验，保证不存在与《Java 语言规范》定义相悖的元数据信息。</p> <h4 id="_7-1-4-3-字节码验证-非重点"><a href="#_7-1-4-3-字节码验证-非重点" class="header-anchor">#</a> 7.1.4.3 字节码验证（非重点）</h4> <p><strong>字节码验证第三阶段是整个验证过程中最复杂的一个阶段，主要目的是通过数据流分析和控制流分析，确定程序语义是合法的、符合逻辑的。在第二阶段对元数据信息中的数据类型校验完毕以后</strong></p> <div class="custom-block tip"><p class="custom-block-title">这阶段就要对类的方法体(Class文件中的Code属性)进行校验分析，保证被校验类的方法在运行时不会做出危害虚拟机安全的行为:</p> <p>▶ 保证任意时刻操作数栈的数据类型与指令代码序列都能配合工作，例如不会出现类似于“在操作栈放置了一个 int 类型的数据，使用时却按 long 类型 来加载入本地变量表中”这样的情况<br>
+▶ 保证任何跳转指令都不会跳转到方法体以外的字节码指令上<br>
+▶ 保证方法体中的类型转换总是有效的，例如可以把-个子类对象赋值给父类数据类型，这是安全的，但是把父类对象赋值给子类数据类型，甚至把对 象赋值给与它毫无继承关系、完全不相干的一个数据类型，则是危险和不合法的<br>
+▶ ...... 以上的部分还只是一小部分，没必要进行深入的研究。 如果一个类型中有方法体的字节码没有通过字节码验证，那它肯定是有问题的</p></div> <h4 id="_7-1-4-4-符号引用验证-非重点"><a href="#_7-1-4-4-符号引用验证-非重点" class="header-anchor">#</a> 7.1.4.4 符号引用验证（非重点）</h4> <p>最后一个阶段的校验行为发生在虚拟机将符号引用转化为直接引用的时候，这个转化动作将在连接的第三阶段一解析阶段中发生。符号引用验证可以看作是对类自身以外(常量池中的各种符号引用)的各类信息进行匹配性校验，通俗来说就是，该类是否缺少或者被禁止访问它依赖的某些外部类、方法、字段等资源。</p> <div class="custom-block tip"><p class="custom-block-title">本阶段通常需要校验下列内容:</p> <div class="language- extra-class"><pre><code>▶ 符号引用中通过字符串描述的全限定名是否能找到对应的类   
+▶ 在指定类中是否存在符合方法的字段描述符及简单名称所描述的方法和字段   
+▶ 符号引用中的类、字段、方法的可访问性( private、 protected. public、 package )   
+▶ 是否可被当前类访问  
+▶ ...... 符号引用验证的主要目的是确保解析行为能正常执行，如果无法通过符号引用验证，将会抛出异常  
+</code></pre></div></div> <p><strong>验证（总结）</strong></p> <p>验证阶段对于虚拟机的类加载机制来说，是一个非常重要的、 但却不是必须要执行的阶段，因为验证阶段只有通过或者不通过的差别，只要通过了验证， 其后就对程序运行期没有任何影响了。如果程序运行的全部代码(包括自己编写的、第三方包中的、从外部加载的、动态生成的等所有代码)都已经被反复 使用和验证过，<font color="red">在生产环境的实施阶段就可以考虑使用**-Xverify:none**参数来关闭大部分的类验证措施，以缩短虚拟机类加载的时间</font></p> <h3 id="_7-1-5-准备"><a href="#_7-1-5-准备" class="header-anchor">#</a> 7.1.5 准备</h3> <p><strong>准备阶段是正式为类中定义的变量（被static修饰的变量）分配内存并设置类变量初始值的阶段，这些变量所使用的内存都将在方法区中进行分配</strong></p> <p>这个阶段中有两个容易产生混淆的概念需要强调一下：
+首先，这时候进行内存分配的仅包括类变量（被static修饰的变量），而不包括实例变量，实例变量将会在对象实例化时随着对象一起分配在 Java 堆中。
+其次，这里所说的初始值“通常情况”下是数据类型的零值，假设一个类变量的定义为： public static int value=123；
+那变量 value 在准备阶段过后的初始值为0而不是123，因为这时候尚未开始执行任何Java方法，而把value赋值为123是后续的初始化环节。</p> <p><strong>基本数据类型的零值表</strong></p> <p><a data-fancybox="" title="基本数据类型的零值表" href="./image/lingzhibiao.jpg"><img src="/assets/img/lingzhibiao.947b20a2.jpg" alt="基本数据类型的零值表"></a></p> <h3 id="_7-1-6-解析"><a href="#_7-1-6-解析" class="header-anchor">#</a> 7.1.6 解析</h3> <p>解析阶段是JVM将常量池内的符号引用替换为直接引用的过程</p> <p>符号引用是一种定义，可以是任何字面上的含义，而直接引用就是直接指向目标的指针、相对偏移量</p> <p>直接引用的对象都存在于内存中，你可以把通讯录里的女友手机号码，类比为符号引用，把面对面和你吃饭的女朋友，类比为直接引用</p> <div class="custom-block tip"><p class="custom-block-title">解析大体可以分为：（不重要）</p> <div class="language- extra-class"><pre><code>▶ 类或接口的解析 
+▶ 字段解析 
+▶ 类方法解析 
+▶ 接口方法解析 
+</code></pre></div></div> <p>我们了解几个经常发生的异常，就与这个阶段有关。<br>
+java.lang.NoSuchFieldError 根据继承关系从下往上，找不到相关字段时的报错。（字段解析异常）<br>
+java.lang.IllegalAccessError 字段或者方法，访问权限不具备时的错误。（类或接口的解析异常）<br>
+java.lang.NoSuchMethodError 找不到相关方法时的错误。（类方法解析、接口方法解析时发生的异常）</p> <h3 id="_7-1-7-初始化-重点"><a href="#_7-1-7-初始化-重点" class="header-anchor">#</a> 7.1.7 初始化（重点）</h3> <h4 id="_7-1-7-1-初始化主要是对一个class中的static-语句进行操作-对应字节码就是clinit方法"><a href="#_7-1-7-1-初始化主要是对一个class中的static-语句进行操作-对应字节码就是clinit方法" class="header-anchor">#</a> 7.1.7.1 初始化主要是对一个class中的static{}语句进行操作(对应字节码就是clinit方法)</h4> <p>＜clinit＞()方法对于类或接口来说并不是必需的，如果一个类中没有静态语句块，也没有对变量的赋值操作，那么编译器可以不为这个类生成＜clinit＞()方法。</p> <p><strong>初始化阶段，虚拟机规范则是严格规定了有且只有6种情况必须立即对类进行&quot;初始化&quot;(而加载、验证、准备自然需要在此之前开始)：</strong></p> <ol><li>遇到 new、getstatic、putstatic 或 invokestatic 这4条字节码指令时，如果类没有进行过初始化，则需要先触发其初始化</li></ol> <div class="custom-block tip"><p class="custom-block-title">生成这4条指令的最常见的Java代码场景是：</p> <div class="language- extra-class"><pre><code>▶ 使用 new 关键字实例化对象的时候。 
+▶ 读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候 
+▶ 调用一个类的静态方法的时候。
+</code></pre></div></div> <ol start="2"><li>使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行过初始化，则需要先触发其初始化。</li> <li>当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。</li> <li>当虚拟机启动时，用户需要指定一个要执行的主类（包含 main()方法的那个类），虚拟机会先初始化这个主类。</li> <li>当使用JDK1.7的动态语言支持时，如果一个 java.lang.invoke.MethodHandle实例最后的解析结果 REF_getStatic、REF_putStatic、REF_invokeStatic的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化。</li> <li>当一个接口中定义了JDK1.8新加入的默认方法（被default关键字修饰的接口方法）时，如果这个接口的实现类发生了初始化，那该接口要在其之前 被初始化。</li></ol> <h4 id="_7-1-7-2-案例分析"><a href="#_7-1-7-2-案例分析" class="header-anchor">#</a> 7.1.7.2 案例分析</h4> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token comment">/**
+ * 父类
+ * @author Administrator
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SuperClazz</span> <span class="token punctuation">{</span>
+	<span class="token keyword">static</span> 	<span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;SuperClass init！&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> value<span class="token operator">=</span><span class="token number">123</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name">String</span> HELLOWORLD<span class="token operator">=</span><span class="token string">&quot;hello world&quot;</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> WHAT <span class="token operator">=</span> value<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">/**
+ * 子类
+ * @author Administrator
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SubClaszz</span> <span class="token keyword">extends</span> <span class="token class-name">SuperClazz</span> <span class="token punctuation">{</span>
+	<span class="token keyword">static</span><span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;SubClass init！&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><div class="custom-block warning"><p class="custom-block-title">案例分析</p> <ol><li>如果通过子类引用父类中的静态字段，只会触发父类的初始化，而不会触发子类的初始化(但是子类会被加载)</li></ol> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token comment">/**
+*初始化的各种场景
+* 通过VM参数可以观察操作是否会导致子类的加载 -XX:+TraceClassLoading
+*
+* @author Administrator*/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Initialization</span> <span class="token punctuation">{</span>
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span>args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token class-name">Initialization</span> initialization <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Initialization</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   	initialization<span class="token punctuation">.</span><span class="token function">M1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//打印子类的静态字段</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">M1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token comment">//如果通过子类引用父类中的静态字段，只会触发父类的初始化，而不会触发子类的初始化(但是子类会被加载)</span>
+   	<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">SubClaszz</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">[</span><span class="token class-name">Loaded</span> <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>ex7<span class="token punctuation">.</span></span>SuperClazz</span> from file<span class="token operator">:</span><span class="token operator">/</span><span class="token class-name">D</span><span class="token operator">:</span><span class="token operator">/</span>javaweb<span class="token operator">/</span>JVM<span class="token operator">/</span>out<span class="token operator">/</span>production<span class="token operator">/</span>JVM<span class="token operator">/</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token class-name">Loaded</span> <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>ex7<span class="token punctuation">.</span></span>SubClaszz</span> from file<span class="token operator">:</span><span class="token operator">/</span><span class="token class-name">D</span><span class="token operator">:</span><span class="token operator">/</span>javaweb<span class="token operator">/</span>JVM<span class="token operator">/</span>out<span class="token operator">/</span>production<span class="token operator">/</span>JVM<span class="token operator">/</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token class-name">Loaded</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>net<span class="token punctuation">.</span></span>Socket</span>$<span class="token number">2</span> from <span class="token class-name">C</span><span class="token operator">:</span>\<span class="token class-name">Program</span> <span class="token class-name">Files</span>\<span class="token class-name">Java</span>\jdk1<span class="token punctuation">.</span><span class="token number">8.0_144</span>\jre\lib\rt<span class="token punctuation">.</span>jar<span class="token punctuation">]</span>
+<span class="token class-name">SuperClass</span> init！
+<span class="token number">123</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><ol start="2"><li>使用数组的方式，不会触发初始化(触发父类加载，不会触发子类加载)</li></ol> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token comment">/**
+*初始化的各种场景
+* 通过VM参数可以观察操作是否会导致子类的加载 -XX:+TraceClassLoading
+*
+* @author Administrator*/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Initialization</span> <span class="token punctuation">{</span>
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span>args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token class-name">Initialization</span> initialization <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Initialization</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   	initialization<span class="token punctuation">.</span><span class="token function">M2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//使用数组的方式创建</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">M2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token comment">//使用数组的方式， 不会触发初始化(触发父类加载，不会触发子类加载)</span>
+   	<span class="token class-name">SuperClazz</span><span class="token punctuation">[</span><span class="token punctuation">]</span>sca <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SuperClazz</span><span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><ol start="3"><li>打印一个常量,不会触发初始化(同样不会触类加载、编译的时候这个常量已经进入了自己class的常量池)</li></ol> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token comment">/**
+*初始化的各种场景
+* 通过VM参数可以观察操作是否会导致子类的加载 -XX:+TraceClassLoading
+*
+* @author Administrator*/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Initialization</span> <span class="token punctuation">{</span>
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span>args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token class-name">Initialization</span> initialization <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Initialization</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   	initialization<span class="token punctuation">.</span><span class="token function">M3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//打印一个常量</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">M3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token comment">//打印一个常量,不会触发初始化(同样不会触类加载、编译的时候这个常量已经进入了自己class的常量池)</span>
+   	<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">SuperClazz</span><span class="token punctuation">.</span>HELLOWORLD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><ol start="4"><li>如果使用常量去引用另外一个常量(这个值编译时无法确定，所以必须要触发初始化)</li></ol> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token comment">/**
+*初始化的各种场景
+* 通过VM参数可以观察操作是否会导致子类的加载 -XX:+TraceClassLoading
+*
+* @author Administrator*/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Initialization</span> <span class="token punctuation">{</span>
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span>args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token class-name">Initialization</span> initialization <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Initialization</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   	initialization<span class="token punctuation">.</span><span class="token function">M4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//如果使用常量去引用另外一个常量</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">M4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   	<span class="token comment">//如果使用常量去引用另外一个常量(会不会初始化SuperClazz  1  不会走2)</span>
+   	<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">SuperClazz</span><span class="token punctuation">.</span>WHAT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div></div> <h4 id="_7-1-7-3-线程安全"><a href="#_7-1-7-3-线程安全" class="header-anchor">#</a> 7.1.7.3 线程安全</h4> <p>虚拟机会保证一个类的＜clinit＞()方法在多线程环境中被正确地加锁、同步，如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类 的＜clinit＞()方法，其他线程都需要阻塞等待，直到活动线程执行＜clinit＞()方法完毕。如果在一个类的＜clinit＞()方法中有耗时很长的操作，就 可能造成多个进程阻塞。所以类的初始化是线程安全的，项目中可以利用这点。</p> <h2 id="_7-2-类加载"><a href="#_7-2-类加载" class="header-anchor">#</a> 7.2 类加载</h2> <p><strong>整个类加载过程任务非常繁重，虽然这活儿很累，但总得有人干。<font color="red">类加载器</font>做的就是上面5个步骤的事（加载、验证、准备、解析、初始化</strong></p> <p><a data-fancybox="" title="双亲委派" href="./image/shuangqinweipai.jpg"><img src="/assets/img/shuangqinweipai.2bc27ab8.jpg" alt="双亲委派"></a></p> <h3 id="_7-2-1-jdk提供的三层类加载器-重点"><a href="#_7-2-1-jdk提供的三层类加载器-重点" class="header-anchor">#</a> 7.2.1 JDK提供的三层类加载器（重点）</h3> <h4 id="_7-2-1-1-bootstrap-classloader"><a href="#_7-2-1-1-bootstrap-classloader" class="header-anchor">#</a> 7.2.1.1 Bootstrap ClassLoader</h4> <p>这是加载器中的扛把子，任何类的加载行为，都要经它过问。它的作用是加载核心类库，也就是 rt.jar、resources.jar、charsets.jar 等。当然这些jar包的路径是可以指定的，-Xbootclasspath 参数可以完成指定操作。这个加载器是 C++ 编写的，随着JVM启动</p> <h4 id="_7-2-1-2-extention-classloader"><a href="#_7-2-1-2-extention-classloader" class="header-anchor">#</a> 7.2.1.2 Extention ClassLoader</h4> <p>扩展类加载器，主要用于加载 lib/ext 目录下的 jar 包和 .class 文件。同样的通过系统变量 java.ext.dirs可以指定这个目录。 这个加载器是个Java类，继承自 URLClassLoader</p> <h4 id="_7-2-1-3-application-classloader"><a href="#_7-2-1-3-application-classloader" class="header-anchor">#</a> 7.2.1.3 Application ClassLoader</h4> <p>这是我们写的Java类的默认加载器，有时候也叫作 System ClassLoader。一般用来加载classpath下的其他所有jar包和.class 文件，我们写的代码，会首先尝试使用这个类加载器进行加载</p> <h4 id="_7-2-1-4-custom-classloader"><a href="#_7-2-1-4-custom-classloader" class="header-anchor">#</a> 7.2.1.4 Custom ClassLoader</h4> <p>自定义加载器，支持一些个性化的扩展功能</p> <h3 id="_7-2-2-类加载器的问题"><a href="#_7-2-2-类加载器的问题" class="header-anchor">#</a> 7.2.2 类加载器的问题</h3> <p>如果你在项目代码里，写一个 java.lang 的包，然后改写String类的一些行为，编译后，发现并不能生效。JRE的类当然不能轻易被覆盖，否则会被别有用心的人利用，这就太危险了。 对于任意一个类，都需要由加载它的类加载器和这个类本身一同确立其在 Java 虚拟机中的唯一性，每一个类加载器，都拥有一个独立的类名称空间。</p> <p>这句话可以表达得更通俗一些：比较两个类是否“相等”，只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一 个Class文件，被同一个虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相等。 这里所指的“相等”，包括代表类的Class对象的equals()方法、isAssignableFrom()方法、isInstance()方法的返回结果，也包括使用 instanceof 关 键字做对象所属关系判定等情况。</p> <h3 id="_7-2-3-双亲委派机制-重点"><a href="#_7-2-3-双亲委派机制-重点" class="header-anchor">#</a> 7.2.3 双亲委派机制（重点）</h3> <p>双亲委派模型要求除了顶层的启动类加载器外，其余的类加载器都应当有自己的父类加载器。这里类加载器之间的父子关系一般不会以继承（Inheritance）的关系来实现，而是都使用<strong>组合（Composition）关系</strong>来复用父加载器的代码。</p> <p>使用双亲委派模型来组织类加载器之间的关系，有一个显而易见的好处就是 Java 类随着它的类加载器一起具备了一种带有优先级的层次关系。例如类 java.lang.Object，它存放在rt.jar之中，无论哪一个类加载器要加载这个类，最终都是委派给处于模型最顶端的启动类加载器进行加载，因此Object类在程序的各种类加载器环境中都是同一个类。相反，如果没有使用双亲委派模型，由各个类加载器自行去加载的话，如果用户自己编写了一个称为 java.lang.Object 的类，并放在程序的ClassPath中，那系统中将会出现多个不同的Object类，Java类型体系中最基础的行为也就无法保证，应用程序也将 会变得一片混乱。
+<a data-fancybox="" title="双亲委派" href="./image/shuangqinweipai2.jpg"><img src="/assets/img/shuangqinweipai2.754a6cbb.jpg" alt="双亲委派"></a></p> <h3 id="_7-2-4-自定义类加载器"><a href="#_7-2-4-自定义类加载器" class="header-anchor">#</a> 7.2.4 自定义类加载器</h3> <h4 id="_7-2-4-1-tomcat类加载机制"><a href="#_7-2-4-1-tomcat类加载机制" class="header-anchor">#</a> 7.2.4.1 Tomcat类加载机制</h4> <p><a data-fancybox="" title="Tomcat类加载机制" href="./image/tomcat.jpg"><img src="/assets/img/tomcat.353d5182.jpg" alt="Tomcat类加载机制"></a>
+对于一些需要加载的非基础类，会由一个叫作 WebAppClassLoader 的类加载器优先加载。等它加载不到的时候，再交给上层的 ClassLoader 进行加载。 这个加载器用来隔绝不同应用的 .class 文件，比如你的两个应用，可能会依赖同一个第三方的不同版本，它们是相互没有影响的。</p> <p>如何在同一个JVM里，运行着不兼容的两个版本，当然是需要自定义加载器才能完成的事。 那么 tomcat 是怎么打破双亲委派机制的呢？可以看图中的 WebAppClassLoader，它加载自己目录下的 .class 文件，并不会传递给父类的加载器。</p> <p><a data-fancybox="" title="Tomcat类加载机制" href="./image/tomcatclassloader.jpg"><img src="/assets/img/tomcatclassloader.bfe58dbf.jpg" alt="Tomcat类加载机制"></a></p> <p>但是，它却可以使用 SharedClassLoader 所加载的类，实现了共享和分离的功能。但是你自己写一个 ArrayList，放在应用目录里，tomcat 依然不会加载。它只是自定义的加载器顺序不同，但对于顶层来说，还是一样的。</p> <h4 id="_7-2-4-2-spi"><a href="#_7-2-4-2-spi" class="header-anchor">#</a> 7.2.4.2 SPI</h4> <p>Java 中有一个 SPI 机制，全称是 Service Provider Interface，是 Java 提供的一套用来被第三方实现或者扩展的 API，它可以用来启用框架扩展和替换组件。</p> <p>这个说法可能比较晦涩，但是拿我们常用的数据库驱动加载来说，就比较好理解了。在使用 JDBC 写程序之前，通常会调用下面这行代码，用于加载所需要的驱动类。</p> <p>Class.forName(&quot;com.mysql.jdbc.Driver&quot;) 这只是一种初始化模式，通过 static 代码块显式地声明了驱动对象，然后把这些信息，保存到底层的一个List中。这种方式我们不做过多的介绍，因为这明显就是一个接口编程的思路（这里不进行细讲）。</p> <p>但是你会发现，即使删除了 Class.forName 这一行代码，也能加载到正确的驱动类，什么都不需要做，非常的神奇，它是怎么做到的呢？</p> <p>MySQL 的驱动代码，就是在这里实现的。 路径：mysql-connector-java-8.0.11.jar!/META-INF/services/java.sql.Driver 里面的内容是：com.mysql.cj.jdbc.Driver</p> <p><a data-fancybox="" title="SPI" href="./image/jdbcDriver.jpg"><img src="/assets/img/jdbcDriver.55123813.jpg" alt="SPI"></a></p> <p>通过在 META-INF/services 目录下，创建一个以接口全限定名为命名的文件（内容为实现类的全限定名），即可自动加载这一种实现，这就是 SPI。 SPI 实际上是“基于接口的编程＋策略模式＋配置文件”组合实现的动态加载机制，主要使用 java.util.ServiceLoader 类进行动态装载。</p> <p><a data-fancybox="" title="SPI" href="./image/SPI1.jpg"><img src="/assets/img/SPI1.8376baff.jpg" alt="SPI"></a></p> <p>这种方式，同样打破了双亲委派的机制。 DriverManager 类和 ServiceLoader 类都是属于 rt.jar 的。它们的类加载器是 BootstrapClassLoader，也就是最上层的那个。 而具体的数据库驱动，却属于业务代码，这个启动类加载器是无法加载的。这就比较尴尬了，虽然凡事都要祖先过问，但祖先没有能力去做这件事情， 怎么办？ 跟踪代码，来看一下。</p> <p><a data-fancybox="" title="SPI" href="./image/DriverManager.jpg"><img src="/assets/img/DriverManager.e7c5fe8d.jpg" alt="SPI"></a></p> <p>通过代码你可以发现它把当前的类加载器，设置成了线程的上下文类加载器。那么，对于一个刚刚启动的应用程序来说，它当前的加载器是谁呢？也就 是说，启动 main 方法的那个加载器，到底是哪一个？ 所以我们继续跟踪代码。找到 Launcher 类，就是 jre 中用于启动入口函数 main 的类。我们在 Launcher 中找到以下代码。</p> <p><a data-fancybox="" title="SPI" href="./image/Launcher.jpg"><img src="/assets/img/Launcher.b7f8bf61.jpg" alt="SPI"></a></p> <p>到此为止，事情就比较明朗了，当前线程上下文的类加载器，是应用程序类加载器。使用它来加载第三方驱动。 总结一下</p> <p>第一， 可以让你更好的看到一个打破规则的案例(虽然应该是属于 BootStrap 类加载器加载的，但是还是在app类加载器去加载的它)。</p> <p>第二，这个问题面试时出现的几率也是比较高的，你需要好好理解。</p> <h4 id="_7-2-4-3-osgi-了解"><a href="#_7-2-4-3-osgi-了解" class="header-anchor">#</a> 7.2.4.3 OSGi（了解）</h4> <p>OSGi 曾经非常流行，Eclipse 就使用 OSGi 作为插件系统的基础。OSGi 是服务平台的规范，旨在用于需要长运行时间、动态更新和对运行环境破坏 最小的系统。</p> <p>OSGi 规范定义了很多关于包生命周期，以及基础架构和绑定包的交互方式。这些规则，通过使用特殊 Java 类加载器来强制执行，比较霸道。 比如，在一般 Java 应用程序中，classpath 中的所有类都对所有其他类可见，这是毋庸置疑的。</p> <p>但是，OSGi 类加载器基于 OSGi 规范和每个绑定包的 manifest.mf 文件中指定的选项，来限制这些类的交互，这就让编程风格变得非常的怪异。但我们不难想象，这种与直觉相违背的加载方式，这些都是由 专用的类加载器来实现的。 随着 JPMS 的发展（JDK9 引入的，旨在为 Java SE 平台设计、实现一个标准的模块系统），</p> <p>现在的 OSGi，深入研究意义已经不是很 大了。OSGi 是一个庞大的话题（技术上），你只需要了解到，有这么一个复杂的东西，实现了模块化，每个模块可以独立安装、启动、停止、卸载，就可以了。</p> <p>OSGI 一般的公司玩不转，都是阿里这些大公司在用。从大家研究技术的角度上来，就算你去这些公司，再去学习也没问题（阿里不可能要求一个小 厂出来的程序员对 OSGI 精通）。主要精力还是把放在类加载、双亲委派，以及如何打破这些问题解决即可。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/base/JVM/Class文件结构及深入字节码指令-5.html" class="prev">
+        6. Class文件结构及字节码指令
+      </a></span> <span class="next"><a href="/base/JVM/方法调用的底层实现-8.html">
+        8.方法调用的底层实现
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/19.2f8716ce.js" defer></script>
+  </body>
+</html>

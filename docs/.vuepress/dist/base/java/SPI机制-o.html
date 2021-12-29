@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>19. SPI机制 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/146.3772d154.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/131.c102eff9.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.45304a1e.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/19.2f8716ce.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/195.fc8e0760.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/24.f478b0fc.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/75.c4e6ea57.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/88.60082ea3.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link router-link-active">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link router-link-active">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Java</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/base/java/" aria-current="page" class="sidebar-link">JAVA基础学习</a></li><li><a href="/base/java/java概述-1.html" class="sidebar-link">1.java概述</a></li><li><a href="/base/java/java数据类型-2.html" class="sidebar-link">2.java数据类型</a></li><li><a href="/base/java/java基础语法-3.html" class="sidebar-link">3.java基础语法</a></li><li><a href="/base/java/数组-4.html" class="sidebar-link">4.数组</a></li><li><a href="/base/java/面向对象-5.html" class="sidebar-link">5.面向对象</a></li><li><a href="/base/java/异常处理-6.html" class="sidebar-link">6.异常处理</a></li><li><a href="/base/java/枚举值和注解-7.html" class="sidebar-link">7.枚举值和注解</a></li><li><a href="/base/java/常用类-8.html" class="sidebar-link">8.常用类</a></li><li><a href="/base/java/集合-9.html" class="sidebar-link">9.集合</a></li><li><a href="/base/java/多线程-a.html" class="sidebar-link">10.多线程</a></li><li><a href="/base/java/泛型-b.html" class="sidebar-link">11.泛型</a></li><li><a href="/base/java/IO流-c.html" class="sidebar-link">12. IO流</a></li><li><a href="/base/java/网络编程-d.html" class="sidebar-link">13.Java网络编程基础</a></li><li><a href="/base/java/反射-e.html" class="sidebar-link">14.反射</a></li><li><a href="/base/java/动态代理-f.html" class="sidebar-link">15.动态代理</a></li><li><a href="/base/java/JDK8特性-g.html" class="sidebar-link">16.JDK8特性</a></li><li><a href="/base/java/JDK9特性-h.html" class="sidebar-link">17.JDK9特性</a></li><li><a href="/base/java/JDK11特性-i.html" class="sidebar-link">18.JDK11特性</a></li><li><a href="/base/java/SPI机制-o.html" class="active sidebar-link">19. SPI机制</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-1-spi是什么" class="sidebar-link">19.1 SPI是什么</a></li><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-2-实例代码" class="sidebar-link">19.2 实例代码</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-2-1-spi-interface" class="sidebar-link">19.2.1  spi-interface</a></li><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-2-2-spi-boy" class="sidebar-link">19.2.2  spi-boy</a></li><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-2-3-spi-gril" class="sidebar-link">19.2.3  spi-gril</a></li><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-2-4-spi-core" class="sidebar-link">19.2.4  spi-core</a></li><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-2-5-spi-test" class="sidebar-link">19.2.5  spi-test</a></li></ul></li><li class="sidebar-sub-header"><a href="/base/java/SPI机制-o.html#_19-3-使用场景" class="sidebar-link">19.3 使用场景</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_19-spi机制"><a href="#_19-spi机制" class="header-anchor">#</a> 19. SPI机制</h1> <h2 id="_19-1-spi是什么"><a href="#_19-1-spi是什么" class="header-anchor">#</a> 19.1 SPI是什么</h2> <p>SPI全称Service Provider Interface，是Java提供的一套用来<code>被第三方实现或者扩展的API</code>，它可以用来启用框架扩展和替换组件。</p> <p><img src="/assets/img/SPI.4dc06733.png" alt="../image/SPI.png"></p> <p>Java SPI 实际上是<code>基于接口的编程＋策略模式＋配置文件</code>组合实现的动态加载机制。</p> <p>SPI的全名为Service Provider Interface.java spi机制的思想: 系统里抽象的各个模块，往往有很多不同的实现方案，在面向的对象的设计里，一般推荐模块之间基于接口编程，模块之间不对实现类进行硬编码。一旦代码里涉及具体的实现类，就违反了可拔插的原则，如果需要替换一种实现，就需要修改代码。为了实现在模块装配的时候能不在程序里动态指明，这就需要一种服务发现机制</p> <h2 id="_19-2-实例代码"><a href="#_19-2-实例代码" class="header-anchor">#</a> 19.2 实例代码</h2> <p>java spi的具体约定为:当服务的提供者，提供了服务接口的一种实现之后，在jar包的META-INF/services/目录里同时创建一个以服务接口命名的文件。</p> <p>该文件里就是实现该服务接口的具体实现类。而当外部程序装配这个模块的时候，就能通过该jar包META-INF/services/里的配置文件找到具体的实现类名，并装载实例化，完成模块的注入。</p> <p>基于这样一个约定就能很好的找到服务接口的实现类，而不需要再代码里制定。jdk提供服务实现查找的一个工具类：java.util.ServiceLoader</p> <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAb0AAAFFCAIAAAD3jaRnAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAB4+SURBVHhe7d19cxzVlcdxv6b8qbVGMmAebB6MZWHA5jHgRJHBYSGYkELygnlwCMSORMCwZkmCFUjAGMiSrPh3a2ur9g1s7V+8lD3d5/aZ26d7evqOWpoZzffWp6ju2/febqnKP+7t0XQfuL5+8uDCobne2Y1tKZsrvcVie2tteVEOiZXN7e+//95qtIHUSAndly9cz3pcWFrdtJZz+ba1cR31XFrvLN56+KHHfzy/eKurf3Pjw5ZcR7sSKRuri3a1K+tbWln9JcTdhf4GtGxvnpWa6i8hqyyfqNoLwD5wIGRcFBnFdj8353on17ayCMhCJ8oLLVESbcl/tbK0HZ1Ca7Q0ROe9Syfvvv+Eq3Th2CDupdcWThldbdjPS/WXEI8gXAI2/BLCPrkJ7F8H5J+0TJfiyCi2+7kpNAKyljqj1DlXnhRZpeamdi/iIw/ZKHC1o8xJ81SyAe0UsUO33fHQ40+5SheODeJeet74RPHVym7/Rxucm0Ka2e+k/pdQOZGIewHYH1rlZhx/S8Xa1ko2/9IkyjPRpY+mknW0WHG7TtJ80zVz9HqyCy1SO75aaWBXUv0lZF2K30OcgPW/hMqJXC8A+0OWm/nE0EeG/Wu30NSjtXnXJjfjOVpcr7ux1Pubcmjxux+cuKPQs+sFxPPN6i0Iu3Knmpu1oR+fSHbJTWD/OVDOyv62/uOPi2acOxq6tMnNyrCDEurYAw8dufd+VylcXBo55EJTWC8LMi2Wm2E/L9VfgnU3+oNkjSv3N0P3yolcr3g0ANPrQDGp7EdGTcAVq04V507o0iI37SxxRxvT3HLbHQ8+JpNNXy9cXBo55EJTWK84zsIVFle7ll+bzQfdlTv2U2sC1vwSKieq9gKwDxxw+2O39NDpO47e6yqHcqEpXINYnPLuEAAMNVm5eesddz3wyBOusg0XmsI1iJGbAHZisnJz+dRjh48cdZVtuNAUrkGM3ASwExO3TgeACUduAkAachMA0pCbAJCG3ASANOQmAKQhNwEgzYEfUSgUCiWlHPinO04AANojNwEgDbkJAGnITQAz4f7773c1IyM3AcwEchMA0pCbAHbLbfedevGVi1ev/eEvX3wlZEN2pdI1G+qrr78dynXZVUm5efcDT5x7cU3IhjskanLzzc2PW3IdAUy7J372/Gd/vfHlV19fee9DjTbZkF2plEOucTMLxwauy1BHTjz2yaefxSPIrlS6ZrWScvPZF9d0fNlwh8Sk5ObcqUvXtz9fO7Xk6gHsGUnGGze/2fzg2tGTT8quBodsyK5UyqHU6NwNcXS2D00xNDcP3rl838NPy8adS49e3gz/25AN2ZVKOSQNtGWXuTl3+Cdrfw6vKpOycS4hBMlNYLxuO3ZaJpWSj70jJ7VGg0O3pVIOSQNppjVJJHFeee3XwqJnJzQ6k0JTDM1NnWO+98G1z7+4oT+7kl2plA2be9bnpqupNSA3Q/btdg5qRidFM4AGL75yUdbjOtNUmhq2K4ekgTSzmpYW737wnSvv62iyIbuuwQgkMZNCUzTn5uLRB7c+/0IvUn1w7Q8irpEG0kwaD8zN3qXPGlizWJybYuX329df+4kd7Ra5CXTr6rU/XH7vqqt0pIE0c5XN7jz+qHSJ00d2pdI12wPNuSkT4Rd+9Zr8j0Ev8serv9B62dAaOSQNdL6867lZBNz57NXkf760dHhp7nC2rWv57e2rK4ez9vn8tNiOGljyxpWfvvpaf4R8TG3jHF1+4tM//1V/5phUyiHXGJhxbnEaH4rrpVl8aM/E1zCI6+K0+Vzod+9/JONc/ddP4krZlUo5ZDW7lZu2Ttfc7OdjHn/9NDx3VQ9ZbuYNikGKSaXrFR+ymlrHT/+keqtCKl0zAOSmGFdu2kTSZ19oI0EZzRD7yWi5ee6qjmAlm7SWe8UdrWaQh5965oti7i0bsusaABCs0ydinR5VNudmPi2NcrO69N5Jboqnzv7ixtffCtlwhwAoPheaiM+FosooN6vr9DwQy+v0fvuV3/tK2V7r3zZtlZtC//TfVQIw/B1SB3+H5ILSsWaxNrmZ12QhqGvw+s+Fsu3QoB+4RaV1WXrt82y3MjkFMBr+7n1Hf/fuamq1bNZSnJsAxkWSUSaVsh7ne5Y6vs0xY/W52ZLruBMyeWTmCEwCnushkp/rscfm8g/QbfUNALshKTebjT83AWAPkJsAkIbcBICxITcBIA25CQBpDvyIQqFQKCnlwMGFQwCA9shNAEhDbgJAGnITANJ0kJtvbnxo1i/99uHHn3INdm6ud3ZjW8rmSm/RHUKtuTtPP3v+3MN38usCutdxbqrHf3rWtak1t3zBnhe3vb21tjzwH3mcm7qtvbQ09+3cXO/Iw+fOv1SU8+fPHCvSfK639HRHaVU7VF4ZTv308aazWG42XC2A0ZRy88g9991+15G4RkiN1LvKmAvNBnGvODSltM++am5q2d5sFdY7p0k0KLYOnzr37Cn/OxyNG0pDU8+bX0OrBHRXO3f8jKRnc+YCaFbKzXcu/+6jjz+Jo1O2pUbqrabKhWODuNfc6mYcdkvrm5KbGqbbWxdW1rc0Da+vn8waV+abcc6ubOrzjENNHKyhezHskp40b6kXYG1cx4Z7As25mU30zp0+3MWczg012sjVq82nosw6gdGVclNT0qLT7Q7iwrFB3CvkZnma6SahUkLGNebmXO/k2lbWa2O1ZhWfVYbc3LLBS9vRKbRGy6DorM1Nty7Wo7ptc0aZP54/d/q2O/qxFUdYvAbXLu5E8XzTFG38+t1Grl5t+QqrJ5Wacw8fl+5ZvTTTKao1cL1Y+GMG+fublpXHlpbbhKZw4dgg7mVhp0XSLavUgCsCSyeSMh9szs1Sy2gaq6NlldGwFs15yEaBqx1lTlo+tZ3CaO5oakg5f2YpqyxyM9s+fkYrw3Y+SbS0KmVlP93ytNLuca5FQ+ludsYoqrSx1WTtdcAWuVl7Us3EcM16uv4PaJfa/5+BnVF3gVlQ87mQRueNm9+0CU3hwrGB6yg0nrREE8MQXkv5an1obsbxp13iIhkaDxsPZRdgHS0o3W6smkROnixFkBXZ1M+d2tws5nRWotmfTyWZt0qDEGfli+nH35DczC+p7qR2wXnLmu0sKOO7B8N+G8D+U5ObQuLy0tvvtAlN4cLRuGaOzO8krWxbQ6o0Maysvmtz05rp0dq8a5Ob8UQ1rtfdWJukOHamPyPTbfuQZ1BuxmEUi4cyeYrl+Vi+GNttys3iXLUnHSk3QxtgRtTnZhIXl0YOLX73g2O9NKfikoVXsYi2Us7K/nY4HBXNOHc0dGmTm5VhrY1Tm5t5TvXjI9stwiXfPvN0ES5xy+yOZ0i3kIPa/diZEKyhvcacbNjy31Isvxhby/cHzM5Sk5tZ6pWi0J+0Nivjbe1lUd6Q+MB+Nb7cLEdkSL0i4NbyOIsmlU25aev66sjtc9POEne0MWOaRGFlm91tzNMkSsOijSVOKdqELrSlPHvmTHnuGYYtTQ+joayjFG0TYvFMWHHbrUaXm3pUisu46kmH5maxHXrZGYHZMbbcrBUHnDs0dbKpX5SVO9EwVMjNKGcB7LYOcrOBC03hGjj7KTfzSVk3c7GGochNYO+Rm9ON3AT23mTlJgBMvt3NTQDYf8hNAEhDbgJAGnITANKQmwCQhtwEgDRjy834m0UjvJUo/0vP0qPkQv3qJn/+CWBXdZObR+65793LV1o+P0nFualavpVIkZsAxqWb3NRHdrZ8XqdyodnAdWxGbgLYbZ2t01Oj04VjA9exGbkJYLd1eX8zKTpdODZwHVW+Tg+PenNPlrPcjOvtScb6FXit1MfHAUCSjj8XOra0fOPmN5fefsfVV7lwbOA6KstNDUdLwJXN+DmbpWfC5w8nPrm2WaSqzEwHP2QTAAaZ+vmmW5jbrmzopNKKe3eQFHITwAim9f5mm9yM68PRfJGuAWojxA0AYKhucjM1NIULxwZxrzzsstV3Pzejdbqux0Nu+vW7D1mZdTLfBDCCbnKzk7/fHCTuVc3NrLJYkktkrq33kzFvU/oIyF5+KeX65ibzTQAj6PhzofZcODZwHQFgvMaWmwAwpchNAEhDbgJAGnITANKQmwCQhtwEgDTkJgCkITcBIA25CQBpxpab8TeCRni/0FD6/fTab6Dr9y+rT/0AgDa6yc29f7/QUOQmgF3STW7u2fOQOkFuAtiJztbpqdHpwrGB62hPP5KSPcK9CMGV4mnE4fGabeabxVD9t2jkvbRS+4Zn05UfHW+7AGZQl/c3k6LThWODuJdGnuaaFMvNsJ8XDbWhuRla5yXuEqryot31+fDR046lustbCgCmS8efC+32+4V0smnTw6xGg6zIx5XNLPikwfD5ZrVLPrit3/v12j6v1wy1xyEDmEHTNt+M19F5kMWhJg1sbhjnpvUK88oBXeJ5ZVwv29nr3rKhdJFek8UAZsfE3d90zWr1H/C+eTaePNrj3LP1e7v5ZqmLzjeLNbjON3VqqYc21vOOLNKB2dZNbqaGpnBxaeTQ4nc/ONbLElOL5WbYz0sRiENyM7TOS9wlVOXFuuuh61vZ24v4RAiYcd3kZofvF5JDLjSF9Ypz063T1/LpoeXa8PlmpUt2KIpO11enn7a6BzCzOv5cqD0Xl0YOudAUcUfHQnC348zd/QQws8aWmw1caArXILY3ucmfbQIw5OZwukLPFul8IgRgH+TmHuDOJoDYJOYmAEwychMA0pCbAJCG3ASANOQmAKQhNwEgzdhyM/6O0B6/XwgAdqKb3Jyu9wsBwE50k5sdPg+pynUEgPHqbJ2eGp0uHBu4jvEjkew9Gdsp7xcSpece5d+erH0SUhh882zx3OLSs+Z4xgcwm7q8v5kUnS4cG8S9NMg0tqRYbob9vOjTNxpyM84+KdlDPMs1UkJKhlDeyv67vfnT+VXXTJ9qDGCmdPy50HS8XygfJH5IR6gpvoHeHyQMXjzTM+qoh5hyAjNo2uab0cRQY66YEobIa/N+IW0TTxUHvVkoDF4krNbHJQ5fADNi4u5vuma17BZntsSO5pst3y+k8Vcz3yxqdL7Zv3lazk3mmMCM6yY3U0NTuLg0csg9RE5YL0tMLZabYT8v8RyzNjfjSauUbJByjZQwSDk3fce6wQHse93k5nS9X0jEaauxGGei9XK56TuSm8BM6vhzofZcXBo55EJTxB0dy00eKgxgb4wtNxu40BSuQYzcBLDHyE0ASDP1uQkAe2wScxMAJhm5CQBpyE0ASENuAkAachMA0pCbAJBmbLkZf0doMt8vFI8Q/kqUL1YC6Co39+X7hchNALW6yc0On4dU5TqOBbkJwHS2Tk+NTheODVzH+JFI/Udkpr5fKO8ljbfDu4PyV2voUMXbhPStGDoCuQnAdHl/Myk6XTg2iHtZ3mmx3Az7eQkhODg39VBonZdSbpbfJkRuAnA6/lxomt4vpI/vDM2i3Kx7gie5CcBM23wzmiqG4AuTxPA8pP6rgeLUK3ppJrrXXVTX6fG5yE0AzsTd33TNatktTsm4ONFGeL9Q0YzcBNBWN7mZGprCxaWRQ+4hcsJ6xR8KSbHcDPt5KTJ0YG7GXSQxr29JM3ITQFvd5Ob0vV+oGOf6+lmZopKbANrr+HOh9lxcGjnkQlPEHR3LzdGe9x4+IyIQAbQ2ttxs4EJTuAaxEXJTJ5I639QSf0APAM3IzexDJNcAABpMfW4CwB6bxNwEgElGbgJAGnITANKQmwCQhtwEgDTkJgCkGVtuxt8R2uP3CzV/BXOH9EF2fAEJ2Me6yc3per9Qy9xcWt+yb7u3pE9aIjeB/a2b3OzweUhVruOesedyuvoGOtnkC0jA/tbZOj01Ol04NnAd40cijfZ+ofhQ2N66sNR/QlLWXRNQS/ykTq0Jp9BTF+8jurgRddm6cHz+AX0YaLYb5W88zqCRAUyyLu9vJkWnC8cGcS+NKo0YKTt5v1A5N7N3ChXds3qXm3G0aYkiO7yPqJKb2euJwn4xrBtn0MjuggFMlI4/F5qO9wtFh4ptjdrscfE2N8xnkWE7PG5Op4f5GbNThFP355J69mrw2VDxOKp2ZDsKYAJN23wzmp3pM5CKSV94HlKb9wvV5GbRPc7KeNs+8LGSTRX11FEIxrlpL+3QokPpOHGw1o5sRwFMoIm7v+ma1bJbnP3wCiHY6v1CI+emmwk256Z0qQ6l48RdakcGMMm6yc3U0BQuLo0ccg+RE9bLElOL5WbYz0spEHeWm2HAyl3I0HdYbmpjLTqsH2fAyDYggAnUTW5O1/uF4kNhuy43LZE1GeOAbpObFoh6bdVhs0MDRtbRAEymjj8Xas/FpZFDLjRF3NEJ4VUEHwDstrHlZgMXmsI1iJGbAPYYuQkAaaY+NwFgj01ibgLAJCM3ASDNgaPPfgUAaI/cBIA05CYApCE3ASDN2HLz/S/+y7x7/T9X3viHa7BDR5759v1tKd8998wNdwgAdqKb3Hzwxa9+d+3rEy/4+gZxbqqf/+Z712YnmnPzsff+vr3999dfTovU0XoB2Ge6yU1JzI+3vhXto9OFZgPXsRPP/VEiNTkBR+sFYJ/pbJ2eGp0uHBu4jkfe+k4fHSTl/bduHHn5b59Jmn35t+fe+7tWfvbe11mzwfNNiT9tKWX7j99KjTbWGu2eVZZPVO0FYDZ1eX8zKTpdODaIe2lKhvSKcjPs50WnhO1zMw5NLdVhyU0ApuPPhU6/fPPGzW/f/ShM2Rq4cGwQ99I5oE0Jsxqdbxb5qOkmDZrvb0ozW3HrmGHimY+Wda+cSMS9AMysaZtvRnNDWZs/9kx/nS7b0uCxfLXuctN6WerFCahd4uImoTY4uQlATNz9Tdeslt15zAIumm8eeebr17/Mwi5baLeeb1rUxg1UfCLZJTcBiG5yMzU0hYtLI4fcQ+SE9bIg02K5GfbzEs8xG3IzNK7c3wzdKydyveLRAMyUbnKzk7/fVHLIhaawXnGcuXX663mo2XywOTctbTUB4/Ct5qat010vALOp48+F2nNxaeSQC00Rd3QsNzXaAGC3jS03G7jQFK5BjNwEsMfITQBIM/W5CQB7bBJzEwAmGbkJAGl4LxsApCE3ASANuQkAachNAEhDbo5urnd2Y3tzpbfo6gHsb+PMzd4vf7uwcbN35av5E4/0XtlYuPLlwlt/ml86LYfmH/1Z78IHC+983nv1o4N33B33mhzkJjCbxpqbv74uuZnF5eUb2Uau9+Yfe8+/YbtZzcovXccJQW4Cs2l8uXnn0RCLV77q/eJS77mLFpQLl/40v/qr3sVrocEza77vZCA3gdk0ttycf/BJjcX5J57Vmt5vPstqLn958PCdWYMf/zw0eHRVG4i53sm1re2NVQms8Ni3jdUQW3mK2bPgQpzllVtrqxeu54ek8dzqpra5vn5SO6ql9S3rtbIpm2eH9iU3gdk0vtxceUlj8eA9J7Kaw3fpbu9frmqD3nOvac38sQe0Rmhu9mNxNUs42dbQtCh09dtbF5ZkO089CcSswbKkoY88iUsZIeur7Yf1JTeB2TS23NQPhRYufzF/6BbZnT/xSMjN514LDS58kNVcuXHwltu0RhTzzRBVtmth5+uzaNtaW85DdsC2CUE5rL1t5xvkJjBzxpeb+YdCNrucfzKsynuPP5PtHrpFIjXbvXhNG6iU3LRoG5KDJq8kNwEMMabctA+F/vmi1siG1szfl6215+9dCg1eeCt0yWlQ6npZ2E1JjbzSOr2/1m7MvmzRHSp1nZ6N2bJvtkFuAjNnPLk5/1D4UKj35DmtWbjwflZz+cbBQ9mqfP6RFW0w//Tz2kCFCeZm+HzGbnTmhyTFBnwu1CI3s8+CQlyGaB7eN9sgN4GZM57c7K38UmPx4NKprGbxloV3/5LVvPphaPDsesjN5Ue1RtnCPK4EgL00tvuboyE3AYwduQkAaaYsNwFg7MhNAEhDbgJAGnITANKQmwCQhtwEgDS7kptvbnwoXCUA7A+zm5stvyVpX8Ts8E9H4y/FA5g6PjeP3HPfu5ev3H7XEVffwFLyyX+/VcQ1i9/9ILSZozGkXyeXEn/TfG/U5mY1HMlNAI7PTUnMjz7+RLSPzp3k5tAY6jCtnJa5aXbvSgBMl5p1emp0tslNqzHkJoApVX9/Myk6LRN3npvuJT//sfFG/9Fw/WdihpriJT86TlYvbY7Pr2YPeVv3LxHKl8aho540ZZ2eNYtPVB6ndAHZRdacq3yRJ8KY+aH+gHa18nvQmr2/fQFgqIGfCx1bWr5x85tLb7/j6qssE0fITU0HKfYo4spLfvpBlkdMuC1o9bpRfuBm9vTMbDu+NbmZjZZVysghB6WlT6X4dKGmnJv9E/XHcRdQe65ym/6YdT9RcVQqAUygyZpv5vV58FXSJNsuXidpJUvY8jiVJArbwk3iRsvN6ERht9pFVM5V7mtj1v9Epd8AgEkzcfc3m3NTJ6HW2DXId2tyM8+p8BaN8lyv+9wccK5qm5Cb1Z9IaRfSE5hAPjdTQ1NYJnaSm5WX/PSbaaRal5XN2jiry80onuwW6mi5Wfdqo/IF1J+r3KY/Zt1PtHxhLa+pXgyASeBzc5f+ftNqjIZCWJ1m69ks4Kov+ZGWuuYN9flsTrtooPhIqs3N6FzXNzejzMo2tGPRvXxV0Wc44USVVxtVLqD2XOU2RW4W26WfSMjvQWsspgFMjoGfC7VnmZiUmwAwpTrITQCYKeQmAKQhNwEgDbkJAGnITQBIQ24CQBpyEwDSkJsAkKaD3NS/aR/ENQaAaddNbi6feuyFVy7GcWlc470Xf/NyLBoe3rFnar9UCmA0PjdH+366hOYtt99VG52ucUyfaqFfxLavZnduknMz/g3s6lfRyU2gQz43R34ekoTm4q23n7/whiXm+q+vSKVrbDQyNC7zx16M/q/aPTXDmdjclPr4fxiyq0+f2w3kJtChmnV6anRqSj769MrRY0uvvvOebEt63nviAdfMyZ4D1NHqdRpzM/7fxh4gN4EO1d/fTIpOF5o/e/6l+UO3zD/53MIH/1i8+b9CNmTX9RoUHFqvS9f84eeaiVmlpo978FrcPjTwI8hu/41Dthx2zbRSn1knxR4TF6t7il1pcBsnHlxKTW62XLwXlzHoRNULHty9pkHLHxxAbODnQknvF1p94WWbaUpo9l7Z1CfIxaTSddSFavwPVf9J2z/mvCbLzejf/8C390RB5kbIajQu8+DTJ3JKZZiEWvf86MDUGHDqQYP3/5dgDxXVXTUoN931DzlR5YIbu9tG2g8OwOlmvmnuWTopU0vLyoUrN4TtVmedIjyWWBOhkiZxJho3OSrlZs0ILinyxBn1xT6VU9cPHl9D9ZIGVVbr+9FWe6LKBTd2zy+YNxoBO9bZ/U1x4e0rspstz4ug7P3qirBdORR3NPrvNvvnXUkT+5cfdrOZUZhP2SwpblM3Ql3iDIgtoaNVQ2TAqYcPXnuuuGOp3vW1MetOFLUJF9zYPeRm6g8OwPG5mRqaVdk9zQG5KYesWRY9pVuN9s+7SMDe2bX+/c0iCKJ/9jL1q5lv1oxQkzhxM9HmxT4DTj1kcB2qNqryQUJfIePb1E/TWSu1b/2JKhfc2N0uOO0HB+D43Bzh7zedODcXfvvXg/cuL279TzU3ha15pdi/1Xwql31qUc3E7Gi+q13s7T02VMgIP0JN4sQnkhLlSKixj49M7akHDl4sh7NkXB88xYtWzXZGjbZQWfyAg05UveDB3YvtxB8cgDPwc6GRxet0sfD6v83f98DC1/+XbQ9YpwPAFOk+N+PPhdTCp/+tG7WfCwHAdOk+N0XLv0MCgGm0K7kpZGqZLdgH/907AEyp3cpNANivyE0ASENuAkAachMA0pCbAJCG3ASANOQmAKQhNwEgDbkJAGnITQBIQ24CQBpyEwDSkJsAkIbcBIA05CYApCE3ASANuQkAachNAEhDbgJAGnITANKQmwCQhtwEgDTkJgCkITcBIA25CQBpyE0ASENuAkAachMA0pCbAJCG3ASANOQmAKQhNwEgDbkJAGnITQBIQ24CQBpyEwDSkJsAkIbcBIA05CYApCE3ASANuQkAachNAEhDbgJAGnITANKQmwCQhtwEgDTkJgCkITcBIA25CQBpyE0ASENuAkAachMA0pCbAJCG3ASANOQmAKQhNwEgDbkJAGnITQBIQ24CQBpyEwDSkJsAkIbcBIA05CYApCE3ASANuQkAachNAEhDbgJAGnITANKQmwCQhtwEgDTkJgCkITcBIA25CQBpyE0ASENuAkAachMA0pCbAJCG3ASANOQmAKQhNwEgDbkJAGnITQBIsXDo/wHjDxwXDjO6bAAAAABJRU5ErkJggg==" alt="../image/spi01.png"></p> <hr> <ul><li>spi-interface: 是针对厂商定义的接口项目，只提供接口，不提供实现</li> <li>spi-boy/spi-gril: 分别是两个厂商对interface的不同实现，所以他们会依赖于interface项目</li> <li>spi-core: 是提供给用户使用的核心jar文件, 同样依赖于interface项目, 用户使用时需要引入spi-core.jar和厂商具体实现的jar</li> <li>spi-test:用来模拟用户测试, 依赖spi-core和spi-boy/spi-gril(至少一个实现,否则会报错)</li></ul> <h3 id="_19-2-1-spi-interface"><a href="#_19-2-1-spi-interface" class="header-anchor">#</a> 19.2.1  spi-interface</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">People</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token function">people</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h3 id="_19-2-2-spi-boy"><a href="#_19-2-2-spi-boy" class="header-anchor">#</a> 19.2.2  spi-boy</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * @author tianqikai
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Boy</span> <span class="token keyword">implements</span> <span class="token class-name">People</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">people</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;我是一个男孩！&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><hr> <div class="language-java line-numbers-mode"><pre class="language-java"><code>META<span class="token operator">-</span>INF<span class="token operator">/</span>services<span class="token operator">/</span>
+<span class="token comment">//文件名</span>
+<span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi<span class="token punctuation">.</span></span>People</span>
+<span class="token comment">//文件内容</span>
+<span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi<span class="token punctuation">.</span></span>Boy</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_19-2-3-spi-gril"><a href="#_19-2-3-spi-gril" class="header-anchor">#</a> 19.2.3  spi-gril</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * @author tianqikai
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Girl</span> <span class="token keyword">implements</span> <span class="token class-name">People</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">people</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;我是一个女孩！&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><div class="language-java line-numbers-mode"><pre class="language-java"><code>META<span class="token operator">-</span>INF<span class="token operator">/</span>services<span class="token operator">/</span>
+<span class="token comment">//文件名</span>
+<span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi<span class="token punctuation">.</span></span>People</span>
+<span class="token comment">//文件内容</span>
+<span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi<span class="token punctuation">.</span></span>Girl</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_19-2-4-spi-core"><a href="#_19-2-4-spi-core" class="header-anchor">#</a> 19.2.4  spi-core</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Iterator</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ServiceLoader</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * @author tianqikai
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PeopleFactory</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invoker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token class-name">ServiceLoader</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">People</span><span class="token punctuation">&gt;</span></span> load <span class="token operator">=</span> <span class="token class-name">ServiceLoader</span><span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token class-name">People</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Iterator</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">People</span><span class="token punctuation">&gt;</span></span> peopleIterator <span class="token operator">=</span> load<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">boolean</span> notFound<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>peopleIterator<span class="token punctuation">.</span><span class="token function">hasNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            notFound<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token class-name">People</span> people <span class="token operator">=</span> peopleIterator<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            people<span class="token punctuation">.</span><span class="token function">people</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>notFound<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">&quot;未发现实现类&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="_19-2-5-spi-test"><a href="#_19-2-5-spi-test" class="header-anchor">#</a> 19.2.5  spi-test</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>tqk<span class="token punctuation">.</span>spi<span class="token punctuation">.</span></span><span class="token class-name">PeopleFactory</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * @author tianqikai
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">PeopleFactory</span> peopleFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PeopleFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        peopleFactory<span class="token punctuation">.</span><span class="token function">invoker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h2 id="_19-3-使用场景"><a href="#_19-3-使用场景" class="header-anchor">#</a> 19.3 使用场景</h2> <blockquote><p>适用于：<strong>调用者根据实际使用需要，启用、扩展、或者替换框架的实现策略</strong></p></blockquote> <div class="custom-block tip"><p class="custom-block-title">应用场景</p> <ol><li><strong>JDBC加载不同类型的驱动</strong></li> <li>SLF4J对log4j/logback的支持</li> <li>Spring中大量使用了SPI,比如：对servlet3.0规范对ServletContainerInitializer的实现、自动类型转换Type Conversion SPI(Converter SPI、Formatter SPI)等</li> <li>Dubbo中也大量使用SPI的方式实现框架的扩展, 不过它对java提供的原生SPI做了封装</li> <li>更多应用场景需要大家一起去发现，或者自己使用SPI机制实现代码的<strong>解耦</strong></li></ol></div> <hr> <blockquote><p>实际开发中应用场景：</p> <p>对接商品房缴纳保证金：无锡，西安，济南，青岛，杭州</p> <p>对接接口基本都是一样的，但是实现可能有差异。可以实现SPI方式</p></blockquote></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/base/java/JDK11特性-i.html" class="prev">
+        18.JDK11特性
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/146.3772d154.js" defer></script>
+  </body>
+</html>

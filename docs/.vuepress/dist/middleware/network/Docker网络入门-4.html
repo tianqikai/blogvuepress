@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>4. Docker网络入门 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/88.60082ea3.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/131.c102eff9.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.45304a1e.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/19.2f8716ce.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/195.fc8e0760.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/24.f478b0fc.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/75.c4e6ea57.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link router-link-active">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link router-link-active">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Network</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/network/" aria-current="page" class="sidebar-link">云原生网络知识</a></li><li><a href="/middleware/network/网络基础知识-0.html" class="sidebar-link">0. 网络基础知识</a></li><li><a href="/middleware/network/一次网络请求都发生了什么-1.html" class="sidebar-link">1. 一次网络请求都发生了什么</a></li><li><a href="/middleware/network/DNS域名解析器-2.html" class="sidebar-link">2. DNS（domain name system）域名管理</a></li><li><a href="/middleware/network/Iptables与防火墙-3.html" class="sidebar-link">3. Iptables与防火墙</a></li><li><a href="/middleware/network/Docker网络入门-4.html" class="active sidebar-link">4. Docker网络入门</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-1-docker0" class="sidebar-link">4.1 Docker0</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-1-1-宿主机与docker容器进行访问" class="sidebar-link">4.1.1 宿主机与docker容器进行访问</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-1-2-docker容器间进行访问" class="sidebar-link">4.1.2 docker容器间进行访问</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-1-3-docker网络-link" class="sidebar-link">4.1.3 Docker网络--link</a></li></ul></li><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-2-自定义docker网络" class="sidebar-link">4.2 自定义Docker网络</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-2-1-docker中的网络" class="sidebar-link">4.2.1 docker中的网络</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-2-2-自定义网络" class="sidebar-link">4.2.2 自定义网络</a></li><li class="sidebar-sub-header"><a href="/middleware/network/Docker网络入门-4.html#_4-2-3-不同网络中的容器联通" class="sidebar-link">4.2.3 不同网络中的容器联通</a></li></ul></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_4-docker网络入门"><a href="#_4-docker网络入门" class="header-anchor">#</a> 4. Docker网络入门</h1> <h2 id="_4-1-docker0"><a href="#_4-1-docker0" class="header-anchor">#</a> 4.1 Docker0</h2> <p>Docker网络的核心是Docker0
+通过<code>ip addr</code>可以看到服务器中如下几块网卡</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># ip addr</span>
+<span class="token number">1</span>: lo: <span class="token operator">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="token number">1000</span>
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet <span class="token number">127.0</span>.0.1/8 scope <span class="token function">host</span> lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope <span class="token function">host</span> 
+       valid_lft forever preferred_lft forever
+<span class="token number">2</span>: eth0: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc mq state UP group default qlen <span class="token number">1000</span>
+    link/ether <span class="token number">52</span>:54:00:cc:ae:71 brd ff:ff:ff:ff:ff:ff
+    inet <span class="token number">10.0</span>.16.5/22 brd <span class="token number">10.0</span>.19.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet <span class="token number">192.168</span>.200.16/32 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet <span class="token number">192.168</span>.200.17/32 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet <span class="token number">192.168</span>.200.18/32 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fecc:ae71/64 scope <span class="token function">link</span> 
+       valid_lft forever preferred_lft forever
+<span class="token number">3</span>: docker0: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state UP group default 
+    link/ether 02:42:99:9c:79:67 brd ff:ff:ff:ff:ff:ff
+    inet <span class="token number">172.17</span>.0.1/16 brd <span class="token number">172.17</span>.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:99ff:fe9c:7967/64 scope <span class="token function">link</span> 
+       valid_lft forever preferred_lft forever
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><p><a data-fancybox="" title="Docker0" href="./images/network17.png"><img src="/assets/img/network17.981e8b5e.png" alt="Docker0"></a></p> <blockquote><p>查看公网ip可以在控制台获取或者执行：curl cip.cc</p></blockquote> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># curl cip.cc</span>
+IP	<span class="token builtin class-name">:</span> <span class="token number">49.233</span>.34.168
+地址	<span class="token builtin class-name">:</span> 中国  中国
+
+数据二	<span class="token builtin class-name">:</span> 北京市 <span class="token operator">|</span> 腾讯云
+
+数据三	<span class="token builtin class-name">:</span> 中国北京北京 <span class="token operator">|</span> 电信
+
+URL	<span class="token builtin class-name">:</span> http://www.cip.cc/49.233.34.168
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><blockquote><p>容器中安装ip addr命令工具</p></blockquote> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">apt</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">apt</span> <span class="token function">install</span> -y iproute2 <span class="token operator">&amp;&amp;</span> <span class="token function">apt</span> <span class="token function">install</span> -y net-tools <span class="token operator">&amp;&amp;</span> <span class="token function">apt</span> <span class="token function">install</span> -y iputils-ping
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_4-1-1-宿主机与docker容器进行访问"><a href="#_4-1-1-宿主机与docker容器进行访问" class="header-anchor">#</a> 4.1.1 宿主机与docker容器进行访问</h3> <p>Docker中启动Nginx容器，问宿主机能通过容器的ip地址ping通它吗？</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 查看docker容器</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker ps</span>
+CONTAINER ID   IMAGE                 COMMAND                  CREATED        STATUS        PORTS                                            NAMES
+91ca2b95e724   nginx                 <span class="token string">&quot;/docker-entrypoint.…&quot;</span>   <span class="token number">4</span> hours ago    Up <span class="token number">4</span> hours    <span class="token number">0.0</span>.0.0:88-<span class="token operator">&gt;</span><span class="token number">80</span>/tcp                               mynginx
+c2411dac6aa2   redis                 <span class="token string">&quot;docker-entrypoint.s…&quot;</span>   <span class="token number">5</span> weeks ago    Up <span class="token number">5</span> weeks    <span class="token number">0.0</span>.0.0:6400-<span class="token operator">&gt;</span><span class="token number">6379</span>/tcp                           redis
+8559b90888a5   mysql:5.7             <span class="token string">&quot;docker-entrypoint.s…&quot;</span>   <span class="token number">5</span> weeks ago    Up <span class="token number">5</span> weeks    <span class="token number">33060</span>/tcp, <span class="token number">0.0</span>.0.0:6699-<span class="token operator">&gt;</span><span class="token number">3306</span>/tcp                mysqlstudy5.7
+a2d82a7d3653   mysql:5.7             <span class="token string">&quot;docker-entrypoint.s…&quot;</span>   <span class="token number">3</span> months ago   Up <span class="token number">3</span> months   <span class="token number">33060</span>/tcp, <span class="token number">0.0</span>.0.0:3366-<span class="token operator">&gt;</span><span class="token number">3306</span>/tcp                mysqlserver5.7
+3408cea4fa40   kibana:7.4.2          <span class="token string">&quot;/usr/local/bin/dumb…&quot;</span>   <span class="token number">3</span> months ago   Up <span class="token number">3</span> months   <span class="token number">0.0</span>.0.0:5601-<span class="token operator">&gt;</span><span class="token number">5601</span>/tcp                           kibana
+375dd5df9373   elasticsearch:7.4.2   <span class="token string">&quot;/usr/local/bin/dock…&quot;</span>   <span class="token number">3</span> months ago   Up <span class="token number">3</span> months   <span class="token number">0.0</span>.0.0:9200-<span class="token operator">&gt;</span><span class="token number">9200</span>/tcp, <span class="token number">0.0</span>.0.0:9300-<span class="token operator">&gt;</span><span class="token number">9300</span>/tcp   elasticsearch
+<span class="token comment"># 进入docker容器查看ip</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker inspect --format='{{.NetworkSettings.IPAddress}}' mynginx</span>
+<span class="token number">172.17</span>.0.7
+<span class="token comment"># ping 172.17.0.7</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># ping 172.17.0.7</span>
+PING <span class="token number">172.17</span>.0.7 <span class="token punctuation">(</span><span class="token number">172.17</span>.0.7<span class="token punctuation">)</span> <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
+<span class="token number">64</span> bytes from <span class="token number">172.17</span>.0.7: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.038</span> ms
+<span class="token number">64</span> bytes from <span class="token number">172.17</span>.0.7: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.040</span> ms
+<span class="token number">64</span> bytes from <span class="token number">172.17</span>.0.7: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">3</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.041</span> ms
+^C
+--- <span class="token number">172.17</span>.0.7 <span class="token function">ping</span> statistics ---
+<span class="token number">3</span> packets transmitted, <span class="token number">3</span> received, <span class="token number">0</span>% packet loss, <span class="token function">time</span> 1999ms
+rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token number">0.038</span>/0.039/0.041/0.007 ms
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><hr> <p><strong>实验结果很明显：可以ping通！</strong></p> <p>为什么能ping通呢？？？</p> <p>查看容器和宿主机网卡的信息就知道了</p> <p>宿主机中有一块叫Docker0的网卡如下，它的网络段172.17.0.1/16</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token number">3</span>: docker0: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state UP group default 
+    link/ether 02:42:99:9c:79:67 brd ff:ff:ff:ff:ff:ff
+    inet <span class="token number">172.17</span>.0.1/16 brd <span class="token number">172.17</span>.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:99ff:fe9c:7967/64 scope <span class="token function">link</span> 
+       valid_lft forever preferred_lft forever
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>容器的网卡信息如下：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it 91ca2b95e724 /bin/bash</span>
+root@91ca2b95e724:/<span class="token comment"># ip addr</span>
+<span class="token number">1</span>: lo: <span class="token operator">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="token number">1000</span>
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet <span class="token number">127.0</span>.0.1/8 scope <span class="token function">host</span> lo
+       valid_lft forever preferred_lft forever
+<span class="token number">48</span>: eth0@if49: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state UP group default 
+    link/ether 02:42:ac:11:00:07 brd ff:ff:ff:ff:ff:ff link-netnsid <span class="token number">0</span>
+    inet <span class="token number">172.17</span>.0.7/16 brd <span class="token number">172.17</span>.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>可以看到这宿主机和容器其实是在同一个网段的～，所以肯定能通！</p> <h3 id="_4-1-2-docker容器间进行访问"><a href="#_4-1-2-docker容器间进行访问" class="header-anchor">#</a> 4.1.2 docker容器间进行访问</h3> <p>这两个容器之间能通过彼此的ip的相互ping通吗？</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker ps</span>
+CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                                            NAMES
+3d39e0bef1a4   nginx                 <span class="token string">&quot;/docker-entrypoint.…&quot;</span>   <span class="token number">8</span> seconds ago   Up <span class="token number">6</span> seconds   <span class="token number">0.0</span>.0.0:89-<span class="token operator">&gt;</span><span class="token number">80</span>/tcp                               mynginx01
+91ca2b95e724   nginx                 <span class="token string">&quot;/docker-entrypoint.…&quot;</span>   <span class="token number">4</span> hours ago     Up <span class="token number">4</span> hours     <span class="token number">0.0</span>.0.0:88-<span class="token operator">&gt;</span><span class="token number">80</span>/tcp                               mynginx
+
+<span class="token comment"># 进入docker容器查看ip</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker inspect --format='{{.NetworkSettings.IPAddress}}' mynginx</span>
+<span class="token number">172.17</span>.0.7
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker inspect --format='{{.NetworkSettings.IPAddress}}' mynginx01</span>
+<span class="token number">172.17</span>.0.8
+<span class="token comment">#进入容器，ping对方地址</span>
+root@91ca2b95e724:/<span class="token comment"># ping 172.17.0.8</span>
+PING <span class="token number">172.17</span>.0.8 <span class="token punctuation">(</span><span class="token number">172.17</span>.0.8<span class="token punctuation">)</span> <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
+<span class="token number">64</span> bytes from <span class="token number">172.17</span>.0.8: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.079</span> ms
+<span class="token number">64</span> bytes from <span class="token number">172.17</span>.0.8: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.049</span> ms
+<span class="token number">64</span> bytes from <span class="token number">172.17</span>.0.8: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">3</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.040</span> ms
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p><strong>结论很明显：彼此之间能ping通！</strong></p> <p>那Docker是怎么做的呢？</p> <p><font color="red">我们安装Docker后会带有一个默认的网卡叫做Docker0，它实际上是一个网桥，其中有一端连接在真实的互联网上，使用的的技术是veth-pair桥接技术</font></p> <p>此时我的Docker中已经运行了两个容器了，现在去看下宿主机和两个容器的网卡信息。</p> <h4 id="宿主机"><a href="#宿主机" class="header-anchor">#</a> 宿主机</h4> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># ip addr</span>
+
+<span class="token number">49</span>: vethec073d8@if48: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue master docker0 state UP group default 
+    link/ether 9a:3d:26:9a:9d:5b brd ff:ff:ff:ff:ff:ff link-netnsid <span class="token number">5</span>
+    inet6 fe80::983d:26ff:fe9a:9d5b/64 scope <span class="token function">link</span> 
+       valid_lft forever preferred_lft forever
+<span class="token number">51</span>: vethcc6fbae@if50: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue master docker0 state UP group default 
+    link/ether <span class="token number">46</span>:c5:3e:e5:2c:cd brd ff:ff:ff:ff:ff:ff link-netnsid <span class="token number">6</span>
+    inet6 fe80::44c5:3eff:fee5:2ccd/64 scope <span class="token function">link</span> 
+       valid_lft forever preferred_lft forever
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h4 id="mynginx"><a href="#mynginx" class="header-anchor">#</a> mynginx</h4> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it mynginx ip addr</span>
+<span class="token number">1</span>: lo: <span class="token operator">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="token number">1000</span>
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet <span class="token number">127.0</span>.0.1/8 scope <span class="token function">host</span> lo
+       valid_lft forever preferred_lft forever
+<span class="token number">48</span>: eth0@if49: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state UP group default 
+    link/ether 02:42:ac:11:00:07 brd ff:ff:ff:ff:ff:ff link-netnsid <span class="token number">0</span>
+    inet <span class="token number">172.17</span>.0.7/16 brd <span class="token number">172.17</span>.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h4 id="mynginx01"><a href="#mynginx01" class="header-anchor">#</a> mynginx01</h4> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it mynginx01 ip addr</span>
+<span class="token number">1</span>: lo: <span class="token operator">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="token number">1000</span>
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet <span class="token number">127.0</span>.0.1/8 scope <span class="token function">host</span> lo
+       valid_lft forever preferred_lft forever
+<span class="token number">50</span>: eth0@if51: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state UP group default 
+    link/ether 02:42:ac:11:00:08 brd ff:ff:ff:ff:ff:ff link-netnsid <span class="token number">0</span>
+    inet <span class="token number">172.17</span>.0.8/16 brd <span class="token number">172.17</span>.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>仔细看如上两图中多出来的网卡命名对应关系</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 宿主机多出来的：     49: vethec073d8@if48:</span>
+<span class="token comment"># 对应容器mynginx：    48: eth0@if49:</span>
+
+<span class="token comment"># 宿主机多出来的：     51: vethcc6fbae@if50:</span>
+<span class="token comment"># 对应容器mynginx01：   50: eth0@if51:</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>这种网卡成对对应的关系，就是借助<strong>veth-pair技术</strong>实现的</p> <p><font color="red">veth-pair就是一对虚拟的网络接口，成对出现，一端连着协议，一端彼此相连。由它充当一个桥梁的作用，连接各个Docker 容器，实现网络数据交互</font></p> <p><a data-fancybox="" title="Docker0" href="./images/docker01.png"><img src="/assets/img/docker01.acb8b5d9.png" alt="Docker0"></a></p> <p><a data-fancybox="" title="Docker0" href="./images/docker02.png"><img src="/assets/img/docker02.60294131.png" alt="Docker0"></a></p> <hr> <p>在不指定容器网络的情况下，默认容器使用的Docker0做网桥</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network ls</span>
+NETWORK ID     NAME      DRIVER    SCOPE
+a00188b894f8   bridge    bridge    <span class="token builtin class-name">local</span>
+f572f2267be8   <span class="token function">host</span>      <span class="token function">host</span>      <span class="token builtin class-name">local</span>
+60f9f999d553   none      null      <span class="token builtin class-name">local</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>通过下面的命令查看使用Docker0的所有Container</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network inspect a00188b894f8</span>
+<span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;bridge&quot;</span>,
+        <span class="token string">&quot;Id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;a00188b894f8de9cdc8edb9fa927d290f48e9884512b1e1be89ab04703efb831&quot;</span>,
+        <span class="token string">&quot;Created&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;2021-09-05T10:45:01.453772212+08:00&quot;</span>,
+        <span class="token string">&quot;Scope&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;local&quot;</span>,
+        <span class="token comment">#使用桥接方式</span>
+        <span class="token string">&quot;Driver&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;bridge&quot;</span>,
+        <span class="token string">&quot;EnableIPv6&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;IPAM&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;Driver&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;default&quot;</span>,
+            <span class="token string">&quot;Options&quot;</span><span class="token builtin class-name">:</span> null,
+            <span class="token string">&quot;Config&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">{</span>
+                    <span class="token comment">#子网网络网段</span>
+                    <span class="token string">&quot;Subnet&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.0/16&quot;</span>,
+                    <span class="token string">&quot;Gateway&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.1&quot;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;Internal&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Attachable&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Ingress&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;ConfigFrom&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;Network&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;ConfigOnly&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Containers&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token comment"># 各个容器的分配ip信息</span>
+            <span class="token string">&quot;3408cea4fa4056aeebe373db3265f03bb5b500f7da3e826b50b69b5f548a4b0c&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;kibana&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;ec11fef4594d557f1ea85dd69a39303f090be01544eaa1dedf1f12b293f64413&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:ac:11:00:05&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.5/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;375dd5df93738e01acfa73a0ba931f26afda477c11d5518e14c0f4c5e0ac016c&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;elasticsearch&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;3e4b4eafeb05285851c7d4b6657d71225a41ac1398d27521b2e2df2cee84eaec&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:ac:11:00:04&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.4/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;3d39e0bef1a4fb7b215c75622eafb79d723632627c9fb55da7eeb2cf5118410c&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mynginx01&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;5fb86c18bd8becd02731fc00eaba0dd6b98b17593a5733263cfebe8d7fe31b43&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:ac:11:00:08&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.8/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;8559b90888a57eb5a6ec8ed2255f15533d7f6fe7f7b0dbe98ef90e3b58b9ff5f&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mysqlstudy5.7&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;9365bd5f4012f277774f7e5fb319fc5f8089d72894959d582eb42b30e46c9373&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:ac:11:00:06&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.6/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;91ca2b95e7241ef083cd257d0afdafcae9d127bae79229e1b06b2beb8f0df0e0&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mynginx&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;049d8beefd0bd14a243ea5af4e68787eabfef35436f09827f9eb22a3968a4f53&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:ac:11:00:07&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.7/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;a2d82a7d3653c992cd41846b47b786d23d669f186548ba625524f0c9672548d6&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mysqlserver5.7&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;9cfa0caa32ecbac9ba9da5caa795de1c11d47ef2dcdef3d3ef319976cc052bfb&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:ac:11:00:03&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.3/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;c2411dac6aa232978b3eb7332a766b98dfddf84b1ca89393082d9007e0db8934&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;redis&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;026a88d361bff0c1e5b39464d6da200ce81cbd427a7dab85f3dcaf39d70a8fcc&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:ac:11:00:02&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;172.17.0.2/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;Options&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;com.docker.network.bridge.default_bridge&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;true&quot;</span>,
+            <span class="token string">&quot;com.docker.network.bridge.enable_icc&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;true&quot;</span>,
+            <span class="token string">&quot;com.docker.network.bridge.enable_ip_masquerade&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;true&quot;</span>,
+            <span class="token string">&quot;com.docker.network.bridge.host_binding_ipv4&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;0.0.0.0&quot;</span>,
+            <span class="token string">&quot;com.docker.network.bridge.name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;docker0&quot;</span>,
+            <span class="token string">&quot;com.docker.network.driver.mtu&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;1500&quot;</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;Labels&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br></div></div><h3 id="_4-1-3-docker网络-link"><a href="#_4-1-3-docker网络-link" class="header-anchor">#</a> 4.1.3 Docker网络--link</h3> <p><strong>--link 可以让我们让两个容器通过服务名直接ping通</strong></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 使用--link这个启动参数，连通不同的容器，实现通过服务名就ping通容器</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker run -d -P --name mynginx3 --link mynginx nginx</span>
+ca80e7527f99a1e36690a524ec8eb1ada51ed4067290031a75ed37f4d51462bd
+
+<span class="token comment"># 检查容器是否正常启动了</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker ps</span>
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                                            NAMES
+ca80e7527f99   nginx                 <span class="token string">&quot;/docker-entrypoint.…&quot;</span>   <span class="token number">4</span> minutes ago    Up <span class="token number">4</span> minutes    <span class="token number">0.0</span>.0.0:49153-<span class="token operator">&gt;</span><span class="token number">80</span>/tcp                            mynginx3
+3d39e0bef1a4   nginx                 <span class="token string">&quot;/docker-entrypoint.…&quot;</span>   <span class="token number">47</span> minutes ago   Up <span class="token number">47</span> minutes   <span class="token number">0.0</span>.0.0:89-<span class="token operator">&gt;</span><span class="token number">80</span>/tcp                               mynginx01
+91ca2b95e724   nginx                 <span class="token string">&quot;/docker-entrypoint.…&quot;</span>   <span class="token number">5</span> hours ago      Up <span class="token number">5</span> hours      <span class="token number">0.0</span>.0.0:88-<span class="token operator">&gt;</span><span class="token number">80</span>/tcp                               mynginx
+
+
+<span class="token comment"># 使用mynginx3 ping通mynginx</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it mynginx3 ping mynginx</span>
+PING mynginx <span class="token punctuation">(</span><span class="token number">172.17</span>.0.7<span class="token punctuation">)</span> <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
+<span class="token number">64</span> bytes from mynginx <span class="token punctuation">(</span><span class="token number">172.17</span>.0.7<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.112</span> ms
+<span class="token number">64</span> bytes from mynginx <span class="token punctuation">(</span><span class="token number">172.17</span>.0.7<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.038</span> ms
+^C
+--- mynginx <span class="token function">ping</span> statistics ---
+<span class="token number">2</span> packets transmitted, <span class="token number">2</span> received, <span class="token number">0</span>% packet loss, <span class="token function">time</span> 1002ms
+rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token number">0.038</span>/0.075/0.112/0.037 ms
+
+
+<span class="token comment"># 反向使用mynginx2 ping mynginx3</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it mynginx ping mynginx3</span>
+ping: mynginx3: Name or <span class="token function">service</span> not known
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><p>原理：--link实际上是修改了mynginx3的host文件，如下</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>root@ca80e7527f99:/<span class="token comment"># cat /etc/hosts</span>
+<span class="token number">127.0</span>.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+fe00::0	ip6-localnet
+ff00::0	ip6-mcastprefix
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+<span class="token comment">## mynginx</span>
+<span class="token number">172.17</span>.0.7	mynginx 91ca2b95e724
+<span class="token number">172.17</span>.0.9	ca80e7527f99
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>而mynginx01的host文件中没有这种别名，所以反向通过服务名不能ping通</p> <h2 id="_4-2-自定义docker网络"><a href="#_4-2-自定义docker网络" class="header-anchor">#</a> 4.2 自定义Docker网络</h2> <h3 id="_4-2-1-docker中的网络"><a href="#_4-2-1-docker中的网络" class="header-anchor">#</a> 4.2.1 docker中的网络</h3> <ul><li>查看docker所有的网络：</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network ls</span>
+NETWORK ID     NAME      DRIVER    SCOPE
+a00188b894f8   bridge    bridge    <span class="token builtin class-name">local</span>
+f572f2267be8   <span class="token function">host</span>      <span class="token function">host</span>      <span class="token builtin class-name">local</span>
+60f9f999d553   none      null      <span class="token builtin class-name">local</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><hr> <div class="custom-block tip"><p class="custom-block-title">docker中的网络参数</p> <p><code>briage</code>：桥接网络（也是默认的网络）。通过Docker0作为网桥，实现容器联网互通
+<code>host</code>：和宿主机共享网络（使用同一块网卡）
+<code>none</code>：不配置网络，形成一个全封闭的容器，无法和外网连接
+<code>container</code>：让一个容器共享另一个容器网络相关的namespace，实现让几个容器内网络互通</p></div> <h3 id="_4-2-2-自定义网络"><a href="#_4-2-2-自定义网络" class="header-anchor">#</a> 4.2.2 自定义网络</h3> <ul><li>默认网络参数</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 启动容器时我们不添加网络相关启动参数，Docker会为我们补全成下面这样</span>
+<span class="token comment"># 而这里指定的 bridge 就是就是docker0</span>
+docker run -d -P --name xxx --net bridge imageId
+
+<span class="token comment"># --net 指定当前容器启动后加入到哪个网络中</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><ul><li>自定义</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 创建自定义网络</span>
+<span class="token comment"># --subnet 192.168.0.0/16 指定了子网网络，可以分配2的16次方-2个ip</span>
+<span class="token comment"># --gateway 192.168.0.1 网关路由器的ip地址</span>
+<span class="token punctuation">[</span>root@VM-0-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network create --driver bridge --subnet 192.168.0.0/16 --gateway 192.168.0.1 mynet</span>
+a8a84221d4a73a2e2eda9f692c74af75cdbdac440e8c7587b56847c61e1dde4c
+
+<span class="token comment"># 查看是否创建成功了</span>
+<span class="token punctuation">[</span>root@VM-0-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network ls</span>
+NETWORK ID          NAME                DRIVER              SCOPE
+a9ff308438a8        bridge              bridge              <span class="token builtin class-name">local</span>
+0d98ae518a10        <span class="token function">host</span>                <span class="token function">host</span>                <span class="token builtin class-name">local</span>
+a8a84221d4a7        mynet               bridge              <span class="token builtin class-name">local</span>
+cb71d8cdbbca        none                null                <span class="token builtin class-name">local</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><ul><li>查看我们自定义的网络详情</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network inspect mynet</span>
+<span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mynet&quot;</span>,
+        <span class="token string">&quot;Id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;b69cb98e4731728f09ed9b6d9a052c2fe543aafd19fa8453ab3293f1d5fcc408&quot;</span>,
+        <span class="token string">&quot;Created&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;2021-12-24T17:24:43.472154302+08:00&quot;</span>,
+        <span class="token string">&quot;Scope&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;local&quot;</span>,
+        <span class="token string">&quot;Driver&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;bridge&quot;</span>,
+        <span class="token string">&quot;EnableIPv6&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;IPAM&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;Driver&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;default&quot;</span>,
+            <span class="token string">&quot;Options&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+            <span class="token string">&quot;Config&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">{</span>
+                    <span class="token string">&quot;Subnet&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;192.168.0.0/16&quot;</span>,
+                    <span class="token string">&quot;Gateway&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;192.168.0.1&quot;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;Internal&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Attachable&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Ingress&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;ConfigFrom&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;Network&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;ConfigOnly&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Containers&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+        <span class="token string">&quot;Options&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+        <span class="token string">&quot;Labels&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><ul><li>查看宿主机网卡信息：可以看到宿主机上多出来了一张虚拟网卡</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token number">54</span>: br-b69cb98e4731: <span class="token operator">&lt;</span>NO-CARRIER,BROADCAST,MULTICAST,UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state DOWN group default 
+    link/ether 02:42:dc:ed:d4:e8 brd ff:ff:ff:ff:ff:ff
+    inet <span class="token number">192.168</span>.0.1/16 brd <span class="token number">192.168</span>.255.255 scope global br-b69cb98e4731
+       valid_lft forever preferred_lft forever
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>在自定义的网络中的容器是可以直接通过对方的 容器名 ping通的</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># --net mynet --ip 192.168.0.2</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker run --name=mynginx11   -d  --restart=always -p  91:80  --net mynet --ip 192.168.0.2  nginx</span>
+c0b07d1080d3a9041a5f13a28c1666cb0644801ce5238261490fbce5fb98c1a5
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker run --name=mynginx12   -d  --restart=always -p  92:80  --net mynet --ip 192.168.0.3  nginx</span>
+25555ad617472acfa49130ef799edbddb0fe3f4cba94dd14d70a240d0d9bd0b6
+
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it mynginx11 /bin/bash</span>
+root@c0b07d1080d3:/<span class="token comment"># ping mynginx12</span>
+PING mynginx12 <span class="token punctuation">(</span><span class="token number">192.168</span>.0.3<span class="token punctuation">)</span> <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
+<span class="token number">64</span> bytes from mynginx12.mynet <span class="token punctuation">(</span><span class="token number">192.168</span>.0.3<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.055</span> ms
+<span class="token number">64</span> bytes from mynginx12.mynet <span class="token punctuation">(</span><span class="token number">192.168</span>.0.3<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.051</span> ms
+<span class="token number">64</span> bytes from mynginx12.mynet <span class="token punctuation">(</span><span class="token number">192.168</span>.0.3<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">3</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">64</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">0.038</span> ms
+^C
+--- mynginx12 <span class="token function">ping</span> statistics ---
+<span class="token number">3</span> packets transmitted, <span class="token number">3</span> received, <span class="token number">0</span>% packet loss, <span class="token function">time</span> 2001ms
+rtt min/avg/max/mdev <span class="token operator">=</span> <span class="token number">0.038</span>/0.048/0.055/0.007 ms
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h3 id="_4-2-3-不同网络中的容器联通"><a href="#_4-2-3-不同网络中的容器联通" class="header-anchor">#</a> 4.2.3 不同网络中的容器联通</h3> <p><strong>理论上容器1和容器2彼此互通，容器3容器4彼此互通，但是容器12和容器34之间时不互通的，因为他们都不在一个网段中</strong> <a data-fancybox="" title="Docker0" href="./images/docker-net60.png"><img src="/assets/img/docker-net60.f6224951.png" alt="Docker0"></a></p> <p><strong>容器2想ping通容器3或者容器4，本质上是需要将容器2加入到mynet 的网络中</strong></p> <p><a data-fancybox="" title="Docker0" href="./images/docker61.png"><img src="/assets/img/docker61.e36b5f4e.png" alt="Docker0"></a></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 使用connect命令，把一个容器连接到一个网络上</span>
+
+<span class="token comment"># 查看帮助文档</span>
+<span class="token punctuation">[</span>root@VM-0-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network --help</span>
+
+Usage: docker network COMMAND
+
+Manage networks
+
+Commands:
+  connect     Connect a container to a network
+  create      Create a network
+  disconnect  Disconnect a container from a network
+  inspect     Display detailed information on one or <span class="token function">more</span> networks
+  <span class="token function">ls</span>          List networks
+  prune       Remove all unused networks
+  <span class="token function">rm</span>          Remove one or <span class="token function">more</span> networks
+
+Run <span class="token string">'docker network COMMAND --help'</span> <span class="token keyword">for</span> <span class="token function">more</span> information on a command.
+
+<span class="token comment"># 查看connect帮助文档的使用</span>
+<span class="token punctuation">[</span>root@VM-0-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network connect --help</span>
+
+Usage: docker network connect <span class="token punctuation">[</span>OPTIONS<span class="token punctuation">]</span> NETWORK CONTAINER
+
+Connect a container to a network
+
+Options:
+      --alias strings           Add network-scoped <span class="token builtin class-name">alias</span> <span class="token keyword">for</span> the container
+      --driver-opt strings      driver options <span class="token keyword">for</span> the network
+      --ip string               IPv4 address <span class="token punctuation">(</span>e.g., <span class="token number">172.30</span>.100.104<span class="token punctuation">)</span>
+      --ip6 string              IPv6 address <span class="token punctuation">(</span>e.g., <span class="token number">2001</span>:db8::33<span class="token punctuation">)</span>
+      --link list               Add <span class="token function">link</span> to another container
+      --link-local-ip strings   Add a link-local address <span class="token keyword">for</span> the container
+
+<span class="token comment"># 将指定容器添加到指定网络</span>
+<span class="token punctuation">[</span>root@VM-0-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker network connect mynet mynginx</span>
+
+<span class="token comment"># 检查是否添加成功</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker inspect mynet</span>
+<span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mynet&quot;</span>,
+        <span class="token string">&quot;Id&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;b69cb98e4731728f09ed9b6d9a052c2fe543aafd19fa8453ab3293f1d5fcc408&quot;</span>,
+        <span class="token string">&quot;Created&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;2021-12-24T17:24:43.472154302+08:00&quot;</span>,
+        <span class="token string">&quot;Scope&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;local&quot;</span>,
+        <span class="token string">&quot;Driver&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;bridge&quot;</span>,
+        <span class="token string">&quot;EnableIPv6&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;IPAM&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;Driver&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;default&quot;</span>,
+            <span class="token string">&quot;Options&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+            <span class="token string">&quot;Config&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">{</span>
+                    <span class="token string">&quot;Subnet&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;192.168.0.0/16&quot;</span>,
+                    <span class="token string">&quot;Gateway&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;192.168.0.1&quot;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;Internal&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Attachable&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Ingress&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;ConfigFrom&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;Network&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;ConfigOnly&quot;</span><span class="token builtin class-name">:</span> false,
+        <span class="token string">&quot;Containers&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">&quot;25555ad617472acfa49130ef799edbddb0fe3f4cba94dd14d70a240d0d9bd0b6&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mynginx12&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;ac08ffb8f26635e0544fe4f64d9d1b6977a796440304026f933dc3c65b1c430c&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:c0:a8:00:03&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;192.168.0.3/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;91ca2b95e7241ef083cd257d0afdafcae9d127bae79229e1b06b2beb8f0df0e0&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mynginx&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;10db07464ad98e3cbccf0d52d5c22d1fef02edfc7d0ea0d40969966c15caca25&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:c0:a8:00:04&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;192.168.0.4/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">&quot;c0b07d1080d3a9041a5f13a28c1666cb0644801ce5238261490fbce5fb98c1a5&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;Name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;mynginx11&quot;</span>,
+                <span class="token string">&quot;EndpointID&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;c320010edc494ef3ec262f52f4e4a4b9ec6fe59963a27ead743189d6b2456d1a&quot;</span>,
+                <span class="token string">&quot;MacAddress&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;02:42:c0:a8:00:02&quot;</span>,
+                <span class="token string">&quot;IPv4Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;192.168.0.2/16&quot;</span>,
+                <span class="token string">&quot;IPv6Address&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">&quot;Options&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>,
+        <span class="token string">&quot;Labels&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+
+<span class="token comment">#mynginx网卡信息</span>
+<span class="token punctuation">[</span>root@VM-16-5-centos ~<span class="token punctuation">]</span><span class="token comment"># docker exec -it mynginx /bin/bash</span>
+root@91ca2b95e724:/<span class="token comment"># ip addr</span>
+<span class="token number">1</span>: lo: <span class="token operator">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">65536</span> qdisc noqueue state UNKNOWN group default qlen <span class="token number">1000</span>
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet <span class="token number">127.0</span>.0.1/8 scope <span class="token function">host</span> lo
+       valid_lft forever preferred_lft forever
+<span class="token number">48</span>: eth0@if49: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state UP group default 
+    link/ether 02:42:ac:11:00:07 brd ff:ff:ff:ff:ff:ff link-netnsid <span class="token number">0</span>
+    inet <span class="token number">172.17</span>.0.7/16 brd <span class="token number">172.17</span>.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+<span class="token number">62</span>: eth1@if63: <span class="token operator">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="token operator">&gt;</span> mtu <span class="token number">1500</span> qdisc noqueue state UP group default 
+    link/ether 02:42:c0:a8:00:04 brd ff:ff:ff:ff:ff:ff link-netnsid <span class="token number">0</span>
+    inet <span class="token number">192.168</span>.0.4/16 brd <span class="token number">192.168</span>.255.255 scope global eth1
+       valid_lft forever preferred_lft forever
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/network/Iptables与防火墙-3.html" class="prev">
+        3. Iptables与防火墙
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/88.60082ea3.js" defer></script>
+  </body>
+</html>

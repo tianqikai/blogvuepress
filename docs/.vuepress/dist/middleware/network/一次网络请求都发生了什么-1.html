@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. 一次网络请求都发生了什么 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/24.f478b0fc.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/131.c102eff9.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.45304a1e.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/19.2f8716ce.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/195.fc8e0760.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/75.c4e6ea57.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/88.60082ea3.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link router-link-active">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link router-link-active">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Network</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/middleware/network/" aria-current="page" class="sidebar-link">云原生网络知识</a></li><li><a href="/middleware/network/网络基础知识-0.html" class="sidebar-link">0. 网络基础知识</a></li><li><a href="/middleware/network/一次网络请求都发生了什么-1.html" class="active sidebar-link">1. 一次网络请求都发生了什么</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/一次网络请求都发生了什么-1.html#_1-1-同一个局域网中不同主机的互联" class="sidebar-link">1.1 同一个局域网中不同主机的互联</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/middleware/network/一次网络请求都发生了什么-1.html#百度的响应包如何再打回到你的机器" class="sidebar-link">百度的响应包如何再打回到你的机器？</a></li></ul></li></ul></li><li><a href="/middleware/network/DNS域名解析器-2.html" class="sidebar-link">2. DNS（domain name system）域名管理</a></li><li><a href="/middleware/network/Iptables与防火墙-3.html" class="sidebar-link">3. Iptables与防火墙</a></li><li><a href="/middleware/network/Docker网络入门-4.html" class="sidebar-link">4. Docker网络入门</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_1-一次网络请求都发生了什么"><a href="#_1-一次网络请求都发生了什么" class="header-anchor">#</a> 1. 一次网络请求都发生了什么</h1> <p></p><div class="table-of-contents"><ul><li><a href="#_1-1-同一个局域网中不同主机的互联">1.1 同一个局域网中不同主机的互联</a><ul><li><a href="#百度的响应包如何再打回到你的机器">百度的响应包如何再打回到你的机器？</a></li></ul></li></ul></div><p></p> <ul><li>当你请求www.baidu.com时都发生了什么？
+<ul><li>以及数据包经历了怎样的过程才被转发到百度的IDC机房的?</li> <li>以及你的电脑又是如何接收到百度的返回的数据包的?</li></ul></li></ul> <p>这篇文章会串讲：IPv4、MAC、DNS、交换机、ARP、路由器、路由表、NAT、NAPT、私网、公网、OSI7层网络模型、以及不同机器互联互通原理等计算机网络知识点。</p> <h2 id="_1-1-同一个局域网中不同主机的互联"><a href="#_1-1-同一个局域网中不同主机的互联" class="header-anchor">#</a> 1.1 同一个局域网中不同主机的互联</h2> <p>先看个简单的，同一个局域网中的不同主机A、B之间是如何互联交换数据的。如下图：</p> <p><a data-fancybox="" title="同一个局域网中不同主机的互联" href="./images/network01.png"><img src="/assets/img/network01.fe3a9e1a.png" alt="同一个局域网中不同主机的互联"></a></p> <p>那既然是同一个局域网中，说明A、B的ip地址在同一个网段，如上图就假设它们都在192.168.1.0网段。</p> <p>还得再看下面这张OSI 7层网络模型图。
+<a data-fancybox="" title="同一个局域网中不同主机的互联" href="./images/network02.png"><img src="/assets/img/network02.0c717767.png" alt="同一个局域网中不同主机的互联"></a> <a data-fancybox="" title="同一个局域网中不同主机的互联" href="./images/network03.png"><img src="/assets/img/network03.aa4901dd.png" alt="同一个局域网中不同主机的互联"></a></p> <p>主机A向主机B发送数据，对主机A来说数据会从最上层的应用层一路往下层传递。比如应用层使用的http协议、传输层使用的TCP协议，那数据在往下层传递的过程中，会根据该层的协议添加上不同的协议头等信息。</p> <p>根据OSI7层网络模型的设定，对于接受数据的主机B来说，它会接收到很多数据包！这些数据包会从最下层的物理层依次往上层传递，依次根据每一层的网络协议进行拆包。一直到应用层取出主机A发送给他的数据。</p> <ul><li>那么问题来了，主机B怎么判断它收到的数据包是否是发送给自己的呢？万一有人发错了呢？</li></ul> <p>答案是：<strong>根据MAC地址</strong>，逻辑如下</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code><span class="token keyword">if</span> 收到的数据包<span class="token punctuation">.</span>MAC地址 <span class="token operator">==</span> 自己的MAC地址<span class="token punctuation">{</span>
+  <span class="token comment">// 接收数据</span>
+  <span class="token comment">// 处理数据包</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+ <span class="token comment">// 丢弃</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>那对于主机A来说，它想发送给主机B数据包，还不能让主机B把这个数据包扔掉，它只能中规中矩的按以太网网络协议要求封装将要发送出去的数据包，往下传递到数据链路层（这一层传输的数据要求，必须要有目标mac地址，因为数据链路层是基于mac地址做数据传输的）。</p> <ul><li>那数据包中都需要哪些字段呢？如下：</li></ul> <div class="language-c line-numbers-mode"><pre class="language-c"><code>src ip <span class="token operator">=</span> <span class="token number">192.168</span><span class="token number">.1</span><span class="token number">.2</span>  <span class="token comment">//源ip地址，交换机</span>
+dst ip <span class="token operator">=</span> <span class="token number">192.168</span><span class="token number">.1</span><span class="token number">.3</span>  <span class="token comment">//目标ip地址</span>
+<span class="token comment">//本机的mac地址（保证从主机B回来的包正常送达主机A，且主机A能正常处理它）</span>
+src mac <span class="token operator">=</span> 主机A的mac地址
+dst mac <span class="token operator">=</span> 主机B的mac地址<span class="token comment">//目标mac地址</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>其中的 <code>dst ip</code>好说，我们可以直接固定写，或者通过DNS解析域名得到目标ip。</p> <p>那 <code>dst mac</code>怎么获取呢？</p> <p>这就不得不说 <code>ARP</code> 协议了! ARP其实是一种地址解析协议，它的作用就是：<strong>以目标ip为线索，找到目的ip所在机器的mac地址</strong>。也就是帮我们找到dst mac地址！</p> <p>大概的过程如下几个step：
+<a data-fancybox="" title="同一个局域网中不同主机的互联" href="./images/network04.png"><img src="/assets/img/network04.8982a7e5.png" alt="同一个局域网中不同主机的互联"></a></p> <div class="custom-block tip"><p class="custom-block-title">简述这个过程：</p> <ul><li><p>主机A想给主机B发包，那需要知道主机B的mac地址</p></li> <li><p>主机A查询本地的<strong>arp高速缓存中是否已经存在dst ip和dst mac地址的映射关系</strong>了，如果已存在，那就直接用。</p></li> <li><p>本地arp高速缓存中不存在dst ip和dst mac地址的映射关系的话那就只能广播arp请求包，同一网段的所有机器都能收到arp请求包。</p></li> <li><p>收到arp请求包的机器会对比arp包中的<code>dst ip</code>是否是自己的ip，如果不是则直接丢弃该arp包。如果是的话就将自己的mac地址写到arp响应包中。并且它会把请求包中src ip和src mac的映射关系存储在自己的本地。</p></li></ul></div> <p><strong><code>总结：ARP是可以根据ip地址找到对方的Mac地址</code></strong></p> <blockquote><p><strong><code>补充：</code></strong></p> <ul><li>交换机本身也有学习能力，他会记录mac地址和交换机端口的映射关系。比如：mac=a，端口为1。</li> <li>那当它接收到数据包，并发现mac=a时，它会直接将数据扔向端口1。</li></ul></blockquote> <ul><li>再看下linux操作系统中的arp命令：</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 显示所有接口的当前 ARP 缓存表</span>
+~<span class="token punctuation">]</span><span class="token comment"># arp -a</span>
+gateway <span class="token punctuation">(</span><span class="token number">192.168</span>.0.1<span class="token punctuation">)</span> at fa:16:3e:66:c8:15 <span class="token punctuation">[</span>ether<span class="token punctuation">]</span> on eth0
+? <span class="token punctuation">(</span><span class="token number">192.168</span>.0.254<span class="token punctuation">)</span> at fa:fa:fa:fa:fa:01 <span class="token punctuation">[</span>ether<span class="token punctuation">]</span> on eth0
+
+<span class="token comment"># 可以看到网关ip地址：192.168.0.1，mac地址是：fa:16:3e:66:c8:15 网卡是eth0</span>
+<span class="token comment"># 广播地址：192.168.0.254，mac地址是：fa:fa:fa:fa:fa:01 网卡是eth0</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>在arp协议的帮助下，主机A顺利拿到了主机B的mac地址。于是数据包从网络层流转到数据链路层时已经被封装成了下面的样子：</p> <div class="language-arp line-numbers-mode"><pre class="language-text"><code>src ip = 192.168.1.2
+src mac = 主机A的mac地址
+dst ip = 192.168.1.3
+dst mac = 主机B的mac地址
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><blockquote><p>网络层基于ip地址做数据做转发
+数据链路基于mac地址做数据转发</p></blockquote> <p>根据OIS7层网络模型，我们都知道数据包经过物理层发送到机器B，机器B接收到数据包后，再将数据包向上流转，拆包。流转到主机B的数据链路层。</p> <p>那主机B是如何判断这个在数据链路层的包是否是发给自己的呢？答案前面说了，根据目的mac地址判断。</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code><span class="token comment">// 主机B</span>
+<span class="token keyword">if</span> 收到的数据包<span class="token punctuation">.</span>MAC地址 <span class="token operator">==</span> 自己的MAC地址<span class="token punctuation">{</span>
+  <span class="token keyword">if</span> dst ip <span class="token operator">==</span> 本机ip<span class="token punctuation">{</span>
+    <span class="token comment">// 本地处理数据包</span>
+  <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token comment">// 查询路由表，根据路由表的规则，将数据包转某个某卡、或者默认网关</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+ <span class="token comment">// 直接丢弃</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>这个例子比较简单，dst ip就是主机B的本机ip 所以它自己会处理这个数据包。</p> <p>那数据包处理完之后是需要给主机A一个响应包，那问题又来了，响应包该封装成什么样子呢？对主机B来说响应包也需要src ip、src mac、dst ip、dst mac</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code>src ip <span class="token operator">=</span> <span class="token number">192.168</span><span class="token number">.1</span><span class="token number">.3</span>
+src mac <span class="token operator">=</span> 主机B的mac地址
+dst ip <span class="token operator">=</span> <span class="token number">192.168</span><span class="token number">.1</span><span class="token number">.2</span>
+src mac <span class="token operator">=</span> 主机A的mac地址 （之前通过arp记录在自己的arp高速缓存中了，所以，这次直接用）
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>同样的道理，响应包也会按照如下的逻辑被主机A接受，处理。</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code><span class="token comment">// 主机A</span>
+<span class="token keyword">if</span> 收到的数据包<span class="token punctuation">.</span>MAC地址 <span class="token operator">==</span> 自己的MAC地址<span class="token punctuation">{</span>
+  <span class="token keyword">if</span> dst ip <span class="token operator">==</span> 本机ip<span class="token punctuation">{</span>
+    <span class="token comment">// 本地处理数据包</span>
+  <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token comment">// 查询路由表，根据路由表的规则，将数据包转某个某卡、或者默认网关</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+ <span class="token comment">// 直接丢弃</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>然后再补充一点，我们可以通过下面的命令查看路由转发是否开启：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code> ~<span class="token punctuation">]</span><span class="token comment"># cat /proc/sys/net/ipv4/ip_forward</span>
+<span class="token number">1</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>同一个局域网中的不同主机的通信方式大概就是这样子。下面我们再来看一下跨网段的不同主机的互联原理。</p> <h1 id="_1-2-跨网段请求百度的服务器"><a href="#_1-2-跨网段请求百度的服务器" class="header-anchor">#</a> 1.2 跨网段请求百度的服务器</h1> <p>那不同网段的主机之间是如何互联的呢？</p> <p>当你访问：www.baidu.com 时，都发生了什么？你的请求是如何打到百度的服务器机房里面去的？</p> <p>我们先尝试ping一下百度，如下，可以看到百度服务对外暴露的ip地址是<code>220.181.38.251</code></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@TXYUN-NO1 ~<span class="token punctuation">]</span><span class="token comment"># ping baidu.com</span>
+PING baidu.com <span class="token punctuation">(</span><span class="token number">220.181</span>.38.251<span class="token punctuation">)</span> <span class="token number">56</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">)</span> bytes of data.
+<span class="token number">64</span> bytes from <span class="token number">220.181</span>.38.251 <span class="token punctuation">(</span><span class="token number">220.181</span>.38.251<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">1</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">251</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">3.02</span> ms
+<span class="token number">64</span> bytes from <span class="token number">220.181</span>.38.251 <span class="token punctuation">(</span><span class="token number">220.181</span>.38.251<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">2</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">251</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">3.06</span> ms
+<span class="token number">64</span> bytes from <span class="token number">220.181</span>.38.251 <span class="token punctuation">(</span><span class="token number">220.181</span>.38.251<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">3</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">251</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">3.03</span> ms
+<span class="token number">64</span> bytes from <span class="token number">220.181</span>.38.251 <span class="token punctuation">(</span><span class="token number">220.181</span>.38.251<span class="token punctuation">)</span>: <span class="token assign-left variable">icmp_seq</span><span class="token operator">=</span><span class="token number">4</span> <span class="token assign-left variable">ttl</span><span class="token operator">=</span><span class="token number">251</span> <span class="token assign-left variable">time</span><span class="token operator">=</span><span class="token number">3.06</span> ms
+
+--- baidu.com <span class="token function">ping</span> statistics ---
+<span class="token number">4</span> packets transmitted, <span class="token number">4</span> packets received, <span class="token number">0.0</span>% packet loss
+round-trip min/avg/max/stddev <span class="token operator">=</span> <span class="token number">23.507</span>/33.673/38.944/6.277 ms
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>那，再通过<code>ifconfig</code>命令看下我的本机ip地址是<code>192.168.0.64</code></p> <p><a data-fancybox="" title="跨网段请求百度的服务器" href="./images/network05.png"><img src="/assets/img/network05.e34ccc64.png" alt="跨网段请求百度的服务器"></a></p> <p>像这种192.168.xx.xx这种局域网机器的ip通常使用dhcp动态分配</p> <p>我们也可以设置手动设置静态ip</p> <p>比如可以通过如下命令设置eth0网卡信息</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>vi /etc/sysconfig/network-scripts/ifcfg-eth0
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>另外我的机器还有运营商分配的公网ip地址：<code>121.36.30.75</code></li></ul> <p>有了上面这些信息，于是我们就能画出下面这张图：
+<a data-fancybox="" title="跨网段请求百度的服务器" href="./images/network06.png"><img src="/assets/img/network06.6ee41e56.png" alt="跨网段请求百度的服务器"></a></p> <p>然后我们再看一下当我们使用192.168.0.64访问百度时，数据包是如何被一层层转发到百度的IDC机房的，然后我电脑又是如何处理百度的回包的！</p> <p>对我的机器来说，我想访问百度的服务器，也就是往百度的服务器发数据包的话，那我的电脑得先封装好数据包吧！</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code><span class="token comment">// 那数据包里面起码要包含哪些信息呢？其实在上面的第一节中我们已经说过了，也就是src ip、src mac、dst ip、dst mac</span>
+src ip <span class="token operator">=</span> <span class="token number">192.168</span><span class="token number">.0</span><span class="token number">.64</span>
+src mac <span class="token operator">=</span> fa<span class="token operator">:</span><span class="token number">16</span><span class="token operator">:</span><span class="token number">3</span>e<span class="token operator">:</span><span class="token number">6</span>b<span class="token operator">:</span>ab<span class="token operator">:</span><span class="token number">64</span> （本机mac地址）
+dst ip <span class="token operator">=</span> <span class="token number">220.181</span><span class="token number">.38</span><span class="token number">.251</span> <span class="token punctuation">(</span>通过DNS服务解析www<span class="token punctuation">.</span>baidu<span class="token punctuation">.</span>com获取到<span class="token punctuation">)</span>
+dst mac <span class="token operator">=</span> <span class="token operator">?</span><span class="token operator">?</span><span class="token operator">?</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>那<code>dst mac</code>目的mac地址是多少呢？这是个问题！</p> <p>因为我是<code>192.168.0.X</code>网段，百度的服务器在<code>220.181.38.X</code>网段，我们都不在一个网段中！我的机器没法直接获取到百度对外暴露的网关的mac地址。</p> <p>那怎么我的机器怎么办呢？</p> <p>答案是：我的机器会先查看一下自己的路由表，路由表会记录该将这个数据包转发到哪里去。具体可通过route -n命令可以查看到，如下：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token punctuation">[</span>root@TXYUN-NO1 ~<span class="token punctuation">]</span><span class="token comment"># route -n</span>
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+<span class="token number">0.0</span>.0.0         <span class="token number">192.168</span>.0.1      <span class="token number">0.0</span>.0.0         UG    <span class="token number">0</span>      <span class="token number">0</span>        <span class="token number">0</span> eth0
+<span class="token number">169.254</span>.0.0     <span class="token number">0.0</span>.0.0         <span class="token number">255.255</span>.0.0     U     <span class="token number">1002</span>   <span class="token number">0</span>        <span class="token number">0</span> eth0
+<span class="token number">172.17</span>.0.0      <span class="token number">0.0</span>.0.0         <span class="token number">255.255</span>.0.0     U     <span class="token number">0</span>      <span class="token number">0</span>        <span class="token number">0</span> docker0
+<span class="token number">192.168</span>.0.0      <span class="token number">0.0</span>.0.0         <span class="token number">255.255</span>.240.0   U     <span class="token number">0</span>      <span class="token number">0</span>        <span class="token number">0</span> eth0
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>具体的做法就是，拿着dst ip <code>220.181.38.251</code>，分别和<code>路由表中的Genmask</code><strong>做与操作</strong>，</p> <p>ip地址 与 子网掩码可以得到该ip地址所在的网段，那得到了dst ip所在的网段之后呢，就拿着这个网段和路由表中的Destination对比，如果相同的话，就将数据包准发给他。</p> <p>在我们这个例子中，很明显dst ip <code>220.181.38.251</code>跟后三条路由相与得到的结果和route表期望的Destination都不匹配。</p> <p>但是dst ip 220.181.38.251跟第一条路由表中的记录相与，得到的结果肯定符合route预期的Destination，毕竟谁与0，结果都是0嘛。
+（它的Flags为UG，表示它就是网关，也就是网络的出口）</p> <p>找到了符合预期的路由后，我的机器就会先将数据包发送给网关，对应的网卡就是eth0 ，那这也就意味着我们找到了第一个跳目的ethernet地址。于是数据包被封装成下面这样</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code>src ip <span class="token operator">=</span> <span class="token number">192.168</span><span class="token number">.0</span><span class="token number">.64</span>
+src mac <span class="token operator">=</span> fa<span class="token operator">:</span><span class="token number">16</span><span class="token operator">:</span><span class="token number">3</span>e<span class="token operator">:</span><span class="token number">6</span>b<span class="token operator">:</span>ab<span class="token operator">:</span><span class="token number">64</span> （本机mac地址）
+dst ip <span class="token operator">=</span> <span class="token number">220.181</span><span class="token number">.38</span><span class="token number">.251</span> <span class="token punctuation">(</span>通过DNS服务解析www<span class="token punctuation">.</span>baidu<span class="token punctuation">.</span>com获取到<span class="token punctuation">)</span>
+dst mac <span class="token operator">=</span> eth0网卡的mac地址。<span class="token punctuation">(</span>ip地址是：<span class="token number">192.168</span><span class="token number">.0</span><span class="token number">.1</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p><a data-fancybox="" title="跨网段请求百度的服务器" href="./images/network07.png"><img src="/assets/img/network07.c24e8982.png" alt="跨网段请求百度的服务器"></a></p> <ul><li>同样的道理，当eth0网卡收到这个数据包后，路由器进行如下的判断。</li></ul> <div class="language-c line-numbers-mode"><pre class="language-c"><code><span class="token keyword">if</span> 数据包<span class="token punctuation">.</span>mac <span class="token operator">==</span> 自己的mac<span class="token punctuation">{</span>
+ <span class="token comment">// mac地址相同，说明这是发送给自己的包，所以它不会丢弃。</span>
+ <span class="token keyword">if</span> 数据包<span class="token punctuation">.</span>ip <span class="token operator">==</span> 自己的ip<span class="token punctuation">{</span>
+  <span class="token comment">// 说明这就是发给他的数据包，但是它只是一个路由器，只有OSI7层网络中的前三层。所以他的将数据包发给其他设备 </span>
+ <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+  <span class="token comment">// 继续查看自己的路由表，找到合适的下一跳地址（扔给网关）。</span>
+ <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+ <span class="token comment">// 直接丢弃</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><ul><li>经过上面伪代码的判断，eth0知道了这个包虽然是发给它的，但它并不能继续处理这个数据包，他需要将这个数据包准发给下一跳。</li></ul> <p>对它现在来说：</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code>src ip <span class="token operator">=</span> <span class="token number">192.168</span><span class="token number">.0</span><span class="token number">.1</span> <span class="token punctuation">(</span>上图LAN口的ip地址<span class="token punctuation">)</span>
+src mac <span class="token operator">=</span> eth0的mac地址，
+dst ip <span class="token operator">=</span> <span class="token number">220.181</span><span class="token number">.38</span><span class="token number">.251</span>
+dst mac <span class="token operator">=</span> <span class="token operator">?</span><span class="token operator">?</span><span class="token operator">?</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>那<code>dst mac地址</code>怎么获取到呢？</p> <p>其实和上面的流程类似，需要查询路由表。使用src ip和路由表中的子网掩码相与，得到网段后再与Desitantion对比。由于这个路由器上确实没有连接220.180.38.xxx的网段，所以数据包最终依然会被转发到这个路由器的公网网关。
+<a data-fancybox="" title="跨网段请求百度的服务器" href="./images/network08.png"><img src="/assets/img/network08.881ba5c7.png" alt="跨网段请求百度的服务器"></a></p> <p>经过这一步，数据包流转到路由器的WAN口，再往下走就流入公网啦！</p> <p>数据包在公网中各个路由节点之间跳转，最终会流转到百度对外暴露的网关路由器的公网WAN口。</p> <p>然后数据包会从这个WAN口流入百度内网的IDC机房集群。
+<a data-fancybox="" title="跨网段请求百度的服务器" href="./images/network09.png"><img src="/assets/img/network09.807e2192.png" alt="跨网段请求百度的服务器"></a></p> <p>你可能会问：那这次请求会打向百度IDC机房中的那台机器呢？</p> <p>嗯，这就没法再展开了，百度肯定会有他自己的负载均衡机制。我们只需知道这个数据包最终肯定会流转到某一台具体的物理器、或者是某个容器内就好啦！</p> <h3 id="百度的响应包如何再打回到你的机器"><a href="#百度的响应包如何再打回到你的机器" class="header-anchor">#</a> 百度的响应包如何再打回到你的机器？</h3> <p>这就要讲到NAT技术了，看下面的这张图：</p> <p><a data-fancybox="" title="跨网段请求百度的服务器" href="./images/network10.png"><img src="/assets/img/network10.03b5e3e9.png" alt="跨网段请求百度的服务器"></a></p> <p>数据包传输出去的过程中，虽然dst ip始终都是百度对外暴露公网网关的ip地址，但是src ip却一直不断的被改变。从一开始的<code>192.168.0.64 =&gt;192.168.0.1 =&gt; 121.36.30.75</code></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>---------------我的机器------------
+=&gt; src ip = 192.168.0.64 ....   
+---------------我的机器------------
+
+---------------路由器----------------
+然后=&gt; src ip = 192.168.0.1 .... （路由器的LAN口）
+然后=&gt; src ip = 121.36.30.75 ....（路由器的WAN口）
+---------------路由器----------------
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>在数据包在被发送到公网之前会被路由器做一次SNAT处理，全称是：<code>source network address translator</code>源网络地址转换，它的目的就是将私网ip转换成路由器的公网ip。</p> <p>当然了，路由器也都会记录下<code>SNAT</code>转换前和转换后的状态。<strong>毕竟如果不出意外话，路由器总能接受到百度给他的回包</strong>，但他是不能解析处理这个数据包的。（只有请求的发送者192.168.0.64这台机器的应用层才能正确解析出这个响应包）。所以路由器需要根据转发记录将这个包转发给我们起初发送请求的机器（也就是<code>192.168.0.64</code>）。</p> <p>而这些记录会被路由器记录在它的<code>地址转换表</code>中。</p> <p>如下：
+<a data-fancybox="" title="跨网段请求百度的服务器" href="./images/network11.png"><img src="/assets/img/network11.eab26fc2.png" alt="跨网段请求百度的服务器"></a></p> <p>看上图中绿色的部分，在地址转换表中记录，数据包的原地址从<code>192.168.0.64:1234</code>被转成了<code>121.36.30.75:1234</code>。(这种带端口号的地址转换其实叫NAPT)</p> <p>那我们继续往下看，假如我们的路由器收到百度的响应包长下面这样：</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code>src ip <span class="token operator">=</span> <span class="token number">220.181</span><span class="token number">.38</span><span class="token number">.251</span> （百度公网网关路由器WAN口ip地址）
+src mac <span class="token operator">=</span> 百度公网网关路由器的mac地址
+dst ip <span class="token operator">=</span> <span class="token number">121.36</span><span class="token number">.30</span><span class="token number">.75</span><span class="token operator">:</span><span class="token number">1234</span> （我们家里路由器的WAN口ip地址）
+dst mac <span class="token operator">=</span> 我们家里路由器的mac地址
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>同样的道理，我们家里路由器会有下面伪代码的判断逻辑。</p> <div class="language-c line-numbers-mode"><pre class="language-c"><code><span class="token keyword">if</span> 响应包<span class="token punctuation">.</span>mac <span class="token operator">==</span> 自己的mac<span class="token punctuation">{</span>
+ <span class="token comment">// 说明这是发给自己包，所以不能丢弃</span>
+  <span class="token keyword">if</span> 响应包<span class="token punctuation">.</span>ip <span class="token operator">==</span> 自己的ip<span class="token punctuation">{</span>
+    <span class="token comment">// 哎？ip也是自己的ip！</span>
+    <span class="token comment">// 但是它只是一个路由器，只有OSI7层网络模型的前三层</span>
+    <span class="token comment">// 所以路由器并不能真正的处理解析这个数据包,只能根据NAT表继续转发</span>
+    <span class="token keyword">if</span> 地址转换表<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>响应包<span class="token punctuation">.</span>dstIp<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token comment">// 通过查地址转换表发现：</span>
+      <span class="token comment">// dst ip = 121.36.30.75:1234 的流量，需要转给：192.168.0.64:1234</span>
+      <span class="token comment">// 转发...</span>
+    <span class="token punctuation">}</span>  
+  <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+    <span class="token comment">// 查自己的route表，找下一跳</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+ <span class="token comment">// 直接丢弃</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>这样的话，我们的发送请求的机器就接收到百度的响应包了，响应数据再一路往OIS7层网络模型的上层传递，最后到应用层根据http协议解析出响应报文，经过浏览器渲染html报文，于是下面的网页就展现在了我们面前！</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/middleware/network/网络基础知识-0.html" class="prev">
+        0. 网络基础知识
+      </a></span> <span class="next"><a href="/middleware/network/DNS域名解析器-2.html">
+        2. DNS（domain name system）域名管理
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/24.f478b0fc.js" defer></script>
+  </body>
+</html>

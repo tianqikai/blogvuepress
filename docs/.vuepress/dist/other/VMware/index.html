@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. VMware安装 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.b4c82722.css" as="style"><link rel="preload" href="/assets/js/app.657caddf.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/15.45304a1e.js" as="script"><link rel="prefetch" href="/assets/js/10.684c3112.js"><link rel="prefetch" href="/assets/js/100.b59c8d77.js"><link rel="prefetch" href="/assets/js/101.70c18cee.js"><link rel="prefetch" href="/assets/js/102.786989a8.js"><link rel="prefetch" href="/assets/js/103.8dfe3a2e.js"><link rel="prefetch" href="/assets/js/104.cc5fedfd.js"><link rel="prefetch" href="/assets/js/105.f3927b90.js"><link rel="prefetch" href="/assets/js/106.99e4cb32.js"><link rel="prefetch" href="/assets/js/107.43e37378.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.8b184f56.js"><link rel="prefetch" href="/assets/js/114.77a44634.js"><link rel="prefetch" href="/assets/js/115.6101f5eb.js"><link rel="prefetch" href="/assets/js/116.eee69879.js"><link rel="prefetch" href="/assets/js/117.c4d74f84.js"><link rel="prefetch" href="/assets/js/118.870e4d95.js"><link rel="prefetch" href="/assets/js/119.841058b3.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.4dbf1a2c.js"><link rel="prefetch" href="/assets/js/121.52f062fb.js"><link rel="prefetch" href="/assets/js/122.b8a6dbdb.js"><link rel="prefetch" href="/assets/js/123.188e8690.js"><link rel="prefetch" href="/assets/js/124.2d28a65f.js"><link rel="prefetch" href="/assets/js/125.0b3f7ec3.js"><link rel="prefetch" href="/assets/js/126.e57e437b.js"><link rel="prefetch" href="/assets/js/127.adcfe0dc.js"><link rel="prefetch" href="/assets/js/128.09bc3ad8.js"><link rel="prefetch" href="/assets/js/129.25a21739.js"><link rel="prefetch" href="/assets/js/13.421a4ff0.js"><link rel="prefetch" href="/assets/js/130.7d3cc00b.js"><link rel="prefetch" href="/assets/js/131.c102eff9.js"><link rel="prefetch" href="/assets/js/132.3198b3d0.js"><link rel="prefetch" href="/assets/js/133.53e6a261.js"><link rel="prefetch" href="/assets/js/134.7afbf937.js"><link rel="prefetch" href="/assets/js/135.a2ea82d4.js"><link rel="prefetch" href="/assets/js/136.b7870128.js"><link rel="prefetch" href="/assets/js/137.277a38d0.js"><link rel="prefetch" href="/assets/js/138.d33c5c99.js"><link rel="prefetch" href="/assets/js/139.8f22ef8e.js"><link rel="prefetch" href="/assets/js/14.40abcf20.js"><link rel="prefetch" href="/assets/js/140.e959dc5e.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.2e11915d.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.4130e979.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/150.6b311d98.js"><link rel="prefetch" href="/assets/js/151.287ba1d4.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.9b8a9cb7.js"><link rel="prefetch" href="/assets/js/154.6e158d9b.js"><link rel="prefetch" href="/assets/js/155.1416e63e.js"><link rel="prefetch" href="/assets/js/156.e8e48abc.js"><link rel="prefetch" href="/assets/js/157.83264f62.js"><link rel="prefetch" href="/assets/js/158.e6f8c602.js"><link rel="prefetch" href="/assets/js/159.0fe3cbfd.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.f2eef1ac.js"><link rel="prefetch" href="/assets/js/161.0d7517d3.js"><link rel="prefetch" href="/assets/js/162.33041ef2.js"><link rel="prefetch" href="/assets/js/163.20bbd775.js"><link rel="prefetch" href="/assets/js/164.f7344d6f.js"><link rel="prefetch" href="/assets/js/165.6515ffd1.js"><link rel="prefetch" href="/assets/js/166.28ba6d4f.js"><link rel="prefetch" href="/assets/js/167.d160eac1.js"><link rel="prefetch" href="/assets/js/168.b67be307.js"><link rel="prefetch" href="/assets/js/169.5a0cc798.js"><link rel="prefetch" href="/assets/js/17.2133d462.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.1bddb272.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.ca65dbe6.js"><link rel="prefetch" href="/assets/js/174.c1abdfb0.js"><link rel="prefetch" href="/assets/js/175.6d4894d9.js"><link rel="prefetch" href="/assets/js/176.d011896f.js"><link rel="prefetch" href="/assets/js/177.29b29834.js"><link rel="prefetch" href="/assets/js/178.f3b61f4c.js"><link rel="prefetch" href="/assets/js/179.e23a429c.js"><link rel="prefetch" href="/assets/js/18.6d20b12b.js"><link rel="prefetch" href="/assets/js/180.2b6113ae.js"><link rel="prefetch" href="/assets/js/181.271b0e14.js"><link rel="prefetch" href="/assets/js/182.588ca94d.js"><link rel="prefetch" href="/assets/js/183.00edb8e5.js"><link rel="prefetch" href="/assets/js/184.c3715d28.js"><link rel="prefetch" href="/assets/js/185.b83e4a34.js"><link rel="prefetch" href="/assets/js/186.f9d4390f.js"><link rel="prefetch" href="/assets/js/187.8575a153.js"><link rel="prefetch" href="/assets/js/188.bd033c3b.js"><link rel="prefetch" href="/assets/js/189.95781a65.js"><link rel="prefetch" href="/assets/js/19.2f8716ce.js"><link rel="prefetch" href="/assets/js/190.48b4bd5d.js"><link rel="prefetch" href="/assets/js/191.a93de23c.js"><link rel="prefetch" href="/assets/js/192.6c881897.js"><link rel="prefetch" href="/assets/js/193.faf8531c.js"><link rel="prefetch" href="/assets/js/194.8c5d4ad3.js"><link rel="prefetch" href="/assets/js/195.fc8e0760.js"><link rel="prefetch" href="/assets/js/196.c1847702.js"><link rel="prefetch" href="/assets/js/197.fb145dc6.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.5f39041e.js"><link rel="prefetch" href="/assets/js/20.56f7854f.js"><link rel="prefetch" href="/assets/js/200.1b0f44f7.js"><link rel="prefetch" href="/assets/js/201.f1f7e04b.js"><link rel="prefetch" href="/assets/js/202.b2deda71.js"><link rel="prefetch" href="/assets/js/203.0c1d9508.js"><link rel="prefetch" href="/assets/js/204.37852e01.js"><link rel="prefetch" href="/assets/js/205.d2689f54.js"><link rel="prefetch" href="/assets/js/206.b7529ec7.js"><link rel="prefetch" href="/assets/js/207.4ee3ead5.js"><link rel="prefetch" href="/assets/js/208.ee888f52.js"><link rel="prefetch" href="/assets/js/209.492deace.js"><link rel="prefetch" href="/assets/js/21.b02a4407.js"><link rel="prefetch" href="/assets/js/210.d843da19.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.b89c6139.js"><link rel="prefetch" href="/assets/js/216.56cfc19b.js"><link rel="prefetch" href="/assets/js/217.8ff2f314.js"><link rel="prefetch" href="/assets/js/218.6c94c8bf.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.a870ac2a.js"><link rel="prefetch" href="/assets/js/220.d805c8fe.js"><link rel="prefetch" href="/assets/js/221.d15c8e1f.js"><link rel="prefetch" href="/assets/js/222.26e830f8.js"><link rel="prefetch" href="/assets/js/223.0b3b014f.js"><link rel="prefetch" href="/assets/js/224.73a5abd2.js"><link rel="prefetch" href="/assets/js/225.7a779ff4.js"><link rel="prefetch" href="/assets/js/226.5aff5e21.js"><link rel="prefetch" href="/assets/js/227.d12945d0.js"><link rel="prefetch" href="/assets/js/228.ea7a38ea.js"><link rel="prefetch" href="/assets/js/229.77c3d8b3.js"><link rel="prefetch" href="/assets/js/23.940536c9.js"><link rel="prefetch" href="/assets/js/230.ae534523.js"><link rel="prefetch" href="/assets/js/231.c123d70c.js"><link rel="prefetch" href="/assets/js/232.2d45ee4e.js"><link rel="prefetch" href="/assets/js/233.45a8c26c.js"><link rel="prefetch" href="/assets/js/234.b7b68f26.js"><link rel="prefetch" href="/assets/js/235.212b7813.js"><link rel="prefetch" href="/assets/js/236.a4f42f4d.js"><link rel="prefetch" href="/assets/js/237.8acf8f8a.js"><link rel="prefetch" href="/assets/js/238.993fe0a0.js"><link rel="prefetch" href="/assets/js/239.75018fb1.js"><link rel="prefetch" href="/assets/js/24.f478b0fc.js"><link rel="prefetch" href="/assets/js/240.e0b3e5e8.js"><link rel="prefetch" href="/assets/js/241.973af47a.js"><link rel="prefetch" href="/assets/js/242.aff063ee.js"><link rel="prefetch" href="/assets/js/243.fa5c9fcb.js"><link rel="prefetch" href="/assets/js/244.41a8c8cb.js"><link rel="prefetch" href="/assets/js/245.029a9ebe.js"><link rel="prefetch" href="/assets/js/246.f48552f3.js"><link rel="prefetch" href="/assets/js/247.dbd7e9d3.js"><link rel="prefetch" href="/assets/js/248.03a8a5fb.js"><link rel="prefetch" href="/assets/js/249.19a6e695.js"><link rel="prefetch" href="/assets/js/25.93c4d7be.js"><link rel="prefetch" href="/assets/js/250.aab441f7.js"><link rel="prefetch" href="/assets/js/251.c649f825.js"><link rel="prefetch" href="/assets/js/252.95fe7542.js"><link rel="prefetch" href="/assets/js/253.d5bced78.js"><link rel="prefetch" href="/assets/js/254.939751d3.js"><link rel="prefetch" href="/assets/js/255.902630e1.js"><link rel="prefetch" href="/assets/js/256.c7b8698a.js"><link rel="prefetch" href="/assets/js/257.0047f6af.js"><link rel="prefetch" href="/assets/js/258.6048e274.js"><link rel="prefetch" href="/assets/js/259.56cd48f1.js"><link rel="prefetch" href="/assets/js/26.7135f4ff.js"><link rel="prefetch" href="/assets/js/260.cbc54a6f.js"><link rel="prefetch" href="/assets/js/261.e026c02a.js"><link rel="prefetch" href="/assets/js/262.12b5e4a8.js"><link rel="prefetch" href="/assets/js/263.e98cd4fc.js"><link rel="prefetch" href="/assets/js/264.783bca53.js"><link rel="prefetch" href="/assets/js/265.5a367a63.js"><link rel="prefetch" href="/assets/js/266.8e715c02.js"><link rel="prefetch" href="/assets/js/267.bacd2314.js"><link rel="prefetch" href="/assets/js/268.dec12cb5.js"><link rel="prefetch" href="/assets/js/269.27a026b3.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.ed8cb817.js"><link rel="prefetch" href="/assets/js/271.62b56cb9.js"><link rel="prefetch" href="/assets/js/272.067884f9.js"><link rel="prefetch" href="/assets/js/273.4082c0b2.js"><link rel="prefetch" href="/assets/js/274.1ecc206e.js"><link rel="prefetch" href="/assets/js/275.b62c4838.js"><link rel="prefetch" href="/assets/js/276.529fc5ac.js"><link rel="prefetch" href="/assets/js/277.ea0e6ede.js"><link rel="prefetch" href="/assets/js/278.8664a8d8.js"><link rel="prefetch" href="/assets/js/279.b4de2f5f.js"><link rel="prefetch" href="/assets/js/28.1efdefb5.js"><link rel="prefetch" href="/assets/js/280.ed9dd9fb.js"><link rel="prefetch" href="/assets/js/281.d47cda26.js"><link rel="prefetch" href="/assets/js/282.a899b49d.js"><link rel="prefetch" href="/assets/js/283.28626350.js"><link rel="prefetch" href="/assets/js/284.7c552dd1.js"><link rel="prefetch" href="/assets/js/285.0abf3e98.js"><link rel="prefetch" href="/assets/js/286.e91ede8e.js"><link rel="prefetch" href="/assets/js/287.9b4b010a.js"><link rel="prefetch" href="/assets/js/288.dd16a85a.js"><link rel="prefetch" href="/assets/js/289.431815da.js"><link rel="prefetch" href="/assets/js/29.02c8e8ce.js"><link rel="prefetch" href="/assets/js/290.d3d3b375.js"><link rel="prefetch" href="/assets/js/291.5ca2efc2.js"><link rel="prefetch" href="/assets/js/292.56260233.js"><link rel="prefetch" href="/assets/js/293.95b438ce.js"><link rel="prefetch" href="/assets/js/294.0d4dc624.js"><link rel="prefetch" href="/assets/js/295.f508017f.js"><link rel="prefetch" href="/assets/js/296.0bd23d59.js"><link rel="prefetch" href="/assets/js/297.5630d8bf.js"><link rel="prefetch" href="/assets/js/298.44a1d0ef.js"><link rel="prefetch" href="/assets/js/299.9d0f9cd5.js"><link rel="prefetch" href="/assets/js/3.153ee460.js"><link rel="prefetch" href="/assets/js/30.3d00a0e7.js"><link rel="prefetch" href="/assets/js/300.2a5a6aec.js"><link rel="prefetch" href="/assets/js/301.b9e59dc8.js"><link rel="prefetch" href="/assets/js/302.bec72867.js"><link rel="prefetch" href="/assets/js/31.6fd1cc67.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.46b65c82.js"><link rel="prefetch" href="/assets/js/34.acc90bf9.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.e5d29c14.js"><link rel="prefetch" href="/assets/js/37.5c4a3563.js"><link rel="prefetch" href="/assets/js/38.a81619aa.js"><link rel="prefetch" href="/assets/js/39.e0c74e65.js"><link rel="prefetch" href="/assets/js/4.ff45933e.js"><link rel="prefetch" href="/assets/js/40.6059e3fb.js"><link rel="prefetch" href="/assets/js/41.e1f20917.js"><link rel="prefetch" href="/assets/js/42.159e8379.js"><link rel="prefetch" href="/assets/js/43.00103280.js"><link rel="prefetch" href="/assets/js/44.0d7a4156.js"><link rel="prefetch" href="/assets/js/45.04c78109.js"><link rel="prefetch" href="/assets/js/46.302f6c77.js"><link rel="prefetch" href="/assets/js/47.28a420b2.js"><link rel="prefetch" href="/assets/js/48.5e8c8ae0.js"><link rel="prefetch" href="/assets/js/49.1e47ab60.js"><link rel="prefetch" href="/assets/js/5.b3ed9b47.js"><link rel="prefetch" href="/assets/js/50.f23ad968.js"><link rel="prefetch" href="/assets/js/51.f5532d7c.js"><link rel="prefetch" href="/assets/js/52.4dfaf96f.js"><link rel="prefetch" href="/assets/js/53.cffe6324.js"><link rel="prefetch" href="/assets/js/54.1df66145.js"><link rel="prefetch" href="/assets/js/55.d91e4b5c.js"><link rel="prefetch" href="/assets/js/56.2bf7fae7.js"><link rel="prefetch" href="/assets/js/57.53b0021f.js"><link rel="prefetch" href="/assets/js/58.af978ce3.js"><link rel="prefetch" href="/assets/js/59.aeeadc39.js"><link rel="prefetch" href="/assets/js/6.e76ac207.js"><link rel="prefetch" href="/assets/js/60.681365a6.js"><link rel="prefetch" href="/assets/js/61.dc59feb7.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.80e1ef7e.js"><link rel="prefetch" href="/assets/js/64.5dc78e37.js"><link rel="prefetch" href="/assets/js/65.00125d13.js"><link rel="prefetch" href="/assets/js/66.5cdac702.js"><link rel="prefetch" href="/assets/js/67.5bb351bb.js"><link rel="prefetch" href="/assets/js/68.54c4bbb8.js"><link rel="prefetch" href="/assets/js/69.d764cb9e.js"><link rel="prefetch" href="/assets/js/7.b8c9a8e6.js"><link rel="prefetch" href="/assets/js/70.0d1dc590.js"><link rel="prefetch" href="/assets/js/71.1dc3ba59.js"><link rel="prefetch" href="/assets/js/72.614e364e.js"><link rel="prefetch" href="/assets/js/73.757fda23.js"><link rel="prefetch" href="/assets/js/74.c31c99c5.js"><link rel="prefetch" href="/assets/js/75.c4e6ea57.js"><link rel="prefetch" href="/assets/js/76.0d1ccde9.js"><link rel="prefetch" href="/assets/js/77.9b471f0d.js"><link rel="prefetch" href="/assets/js/78.cc86fc1f.js"><link rel="prefetch" href="/assets/js/79.59a875c3.js"><link rel="prefetch" href="/assets/js/8.622d4025.js"><link rel="prefetch" href="/assets/js/80.b6dcd5d4.js"><link rel="prefetch" href="/assets/js/81.753cbe56.js"><link rel="prefetch" href="/assets/js/82.4811e473.js"><link rel="prefetch" href="/assets/js/83.d09b4139.js"><link rel="prefetch" href="/assets/js/84.3e0db3b0.js"><link rel="prefetch" href="/assets/js/85.7c3c0eaf.js"><link rel="prefetch" href="/assets/js/86.2ebc9c45.js"><link rel="prefetch" href="/assets/js/87.a4e47e98.js"><link rel="prefetch" href="/assets/js/88.60082ea3.js"><link rel="prefetch" href="/assets/js/89.440566d8.js"><link rel="prefetch" href="/assets/js/9.529109f9.js"><link rel="prefetch" href="/assets/js/90.b63c1035.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.993df76c.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.712f459d.js"><link rel="prefetch" href="/assets/js/95.ff855ca7.js"><link rel="prefetch" href="/assets/js/96.08e6f1bb.js"><link rel="prefetch" href="/assets/js/97.d6b80764.js"><link rel="prefetch" href="/assets/js/98.d2c5bdc2.js"><link rel="prefetch" href="/assets/js/99.fbc45681.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b4c82722.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>V Mware</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/other/VMware/" aria-current="page" class="active sidebar-link">1. VMware安装</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/other/VMware/#_1-1-创建虚拟机" class="sidebar-link">1.1 创建虚拟机</a></li><li class="sidebar-sub-header"><a href="/other/VMware/#_1-2-配置镜像源" class="sidebar-link">1.2 配置镜像源</a></li><li class="sidebar-sub-header"><a href="/other/VMware/#_1-3-开启虚拟机" class="sidebar-link">1.3 开启虚拟机</a></li><li class="sidebar-sub-header"><a href="/other/VMware/#_2-1-everything软件清理残余文件" class="sidebar-link">2.1 Everything软件清理残余文件</a></li><li class="sidebar-sub-header"><a href="/other/VMware/#_2-2-打开服务" class="sidebar-link">2.2 打开服务</a></li><li class="sidebar-sub-header"><a href="/other/VMware/#检查是否可以上网。" class="sidebar-link">检查是否可以上网。</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_1-vmware安装"><a href="#_1-vmware安装" class="header-anchor">#</a> 1. VMware安装</h1> <h2 id="_1-1-创建虚拟机"><a href="#_1-1-创建虚拟机" class="header-anchor">#</a> 1.1 创建虚拟机</h2> <p><img src="/assets/img/vmware.daefcb08.png" alt="vmware.png"></p> <h2 id="_1-2-配置镜像源"><a href="#_1-2-配置镜像源" class="header-anchor">#</a> 1.2 配置镜像源</h2> <p><img src="/assets/img/vmware2.f31ccb69.png" alt="vmware.png"></p> <h2 id="_1-3-开启虚拟机"><a href="#_1-3-开启虚拟机" class="header-anchor">#</a> 1.3 开启虚拟机</h2> <p><strong>开启虚拟机按提示一步一步安装即可</strong></p> <h1 id="_2-vmware没有本地适配器问题"><a href="#_2-vmware没有本地适配器问题" class="header-anchor">#</a> 2. VMware没有本地适配器问题</h1> <p><strong>遇到错误：安装VMware Workstation Pro这个软件，网络适配器中没有虚拟网卡，导致无法上网</strong></p> <p><strong>出现这种情况的原因是：之前也按照过后，但是你卸载的时候可能方法不对，导致VMware</strong></p> <h2 id="_2-1-everything软件清理残余文件"><a href="#_2-1-everything软件清理残余文件" class="header-anchor">#</a> 2.1 Everything软件清理残余文件</h2> <p>如果已经安装好了的话,请先卸载掉(也可以不卸载)</p> <h2 id="_2-2-打开服务"><a href="#_2-2-打开服务" class="header-anchor">#</a> 2.2 打开服务</h2> <p><img src="/assets/img/vmware3.7a947e7e.png" alt="vmware3.png"></p> <ul><li><p>找到下面这两个服务，设置成自动开启，最初始是手动的(下面这个是我之前已经设置好了的)
+<img src="data:image/png;base64,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" alt="vmware4.png"></p></li> <li><p>如果你已经安装了VMware的话，那么将VMware开头的改为禁用，如果VMware已经卸载的话，也看看有没有这个服务，有的话，也改为禁用吧（下面截图是我已经安装好了，只参考服务名，记住是VMware开头的）
+<img src="/assets/img/vmware5.fe711322.png" alt="vmware5.png"></p></li> <li><p>上面的步骤做好了之后呢，去这个https://www.52pojie.cn/thread-623430-1-1.html网站下载工具包，然后解压，直接可以用</p></li> <li><p>解压之后，打开CCleaner.exe文件，并点击到下面这个选项，点击扫描注册，并且修复选定问题
+<img src="/assets/img/vmware6.34fa03ff.png" alt="vmware6.png"></p></li> <li><p>修复完毕之后呢，如果你之前安装过了，打开VMware这个软件，打开虚拟网络编辑器，这个虚拟网络编辑器在编辑选项下面，</p> <ul><li><p>看到下面这个页面了，<strong>点击还原默认设置</strong>(在这之前先点击更改设置)，这样就可以解决了
+<img src="/assets/img/vmware7.14958079.png" alt="vmware7.png"></p></li> <li><p>如果你之前没有安装VMware的话，那就先安装吧，安装过后应该就会有虚拟网络适配器了。没有的话，再<strong>还原默认设置</strong></p></li></ul></li> <li><p>再去网络连接那里，看看适配器，就会出现下面这个图</p></li></ul> <p><img src="/assets/img/vmware8.8529b78b.png" alt="vmware8.png"></p> <h1 id="_3-xshell连接linux虚拟机"><a href="#_3-xshell连接linux虚拟机" class="header-anchor">#</a> 3. Xshell连接Linux虚拟机</h1> <ul><li><p>检查Linux虚拟机的网络连接模式，确保它是NAT模式。（由于只在本机进行连接，所以没有选择桥接模式。当然，桥接模式的配置会有所不同，在此不做深入分析）
+<img src="/assets/img/vmware9.28ce590c.png" alt="vmware9.png"></p></li> <li><p>在VMware workstation里，点击菜单栏上的【编辑】--&gt;【虚拟网络编辑器】，打开下方的虚拟网络编辑器。选择VMnet8（NAT模式），取消勾选【使用本地DHCP服务...】（若勾选，会设置动态IP）。</p></li></ul> <p><img src="/assets/img/vmware10.06aa56a4.png" alt="vmware10.png"></p> <p><img src="/assets/img/vmware11.6c49db21.png" alt="vmware11.png">
+记住上图中的子网IP范围，如上图所示表示虚拟机在192.168.222.0~192.168.222.255范围内。</p> <p><strong>注</strong>：上图中192.168.222.2为网关地址，192.168.222.255为广播地址，192.168.222.0一般为网段IP，所以0,2,255这三个地址不能设置</p> <h1 id="_4-设置虚拟机的ip、dns和主机名"><a href="#_4-设置虚拟机的ip、dns和主机名" class="header-anchor">#</a> 4. 设置虚拟机的IP、DNS和主机名</h1> <ul><li>设置IP地址、子网掩码和网关，如下图。</li></ul> <p>#vi /etc/sysconfig/network-scripts/ifcfg-ens* （*根据实际情况不同，本文为ens33）</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#vi /etc/sysconfig/network-scripts/ifcfg-ens</span>
+<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
+<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
+<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static
+<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
+<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
+<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
+<span class="token assign-left variable">NAME</span><span class="token operator">=</span>ens33
+<span class="token assign-left variable">UUID</span><span class="token operator">=</span>cd0f49f5-715a-496e-92ec-77643dfce32d
+<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>ens33
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token number">192.168</span>.222.3
+<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token number">255.255</span>.255.0
+<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token number">192.168</span>.222.2
+
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><div class="custom-block tip"><p class="custom-block-title">参数说明</p> <ul><li><p>ONBOOT：是指系统启动时是否激活网卡，默认为no，设置为yes，表示开机启动时激活网卡。</p></li> <li><p>BOOTPROTO：网络分配方式，静态。（一定记得修改为Static，否则无法连通网络）</p></li> <li><p>IPPADDR：手动指定ip地址。</p></li> <li><p>NETMASK：子网掩码。</p></li> <li><p>GATEWAY：网关ip。</p></li></ul></div> <ul><li>设置DNS</li></ul> <p>#vi /etc/resolv.conf</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#vi /etc/resolv.conf</span>
+<span class="token comment"># Generated by NetworkManage</span>
+nameserver <span class="token number">192.168</span>.222.2
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li>设置主机名</li></ul> <p>#vi /etc/sysconfig/network</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># vi /etc/sysconfig/network</span>
+<span class="token comment"># Created by anaconda</span>
+<span class="token assign-left variable">NETWORKING</span><span class="token operator">=</span>yes
+<span class="token assign-left variable"><span class="token environment constant">HOSTNAME</span></span><span class="token operator">=</span>k8s-Master
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>#vi /etc/hostname</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>#vi /etc/hostname
+localhost.localdomain
+k8s-Master
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ul><li>上述文件配置成功后，重启虚拟机或使用<strong>service network restart</strong>命令重启网卡。</li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token function">service</span> network restart
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li><p>设置VMnet8在Windows上的IP属性，如下图。（打开控制面板--&gt;网络和Internet，在右侧点击【更改适配器设置】，进入“网络连接”页面）
+<img src="/assets/img/vmware12.c1ceee7f.png" alt="vmware12.png"></p></li> <li><p>配置完上述步骤后就可以成功使用Xshell连接Linux虚拟机了</p></li></ul> <p><img src="/assets/img/vmware13.4758b3bc.png" alt="vmware13.png"></p> <h2 id="检查是否可以上网。"><a href="#检查是否可以上网。" class="header-anchor">#</a> 检查是否可以上网。</h2> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token function">ping</span> <span class="token number">114.114</span>.114.114
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li><p>如果不可以，调试通。通了之后下一步：</p></li> <li><p>然后检查DNS设置是否正常。</p></li></ul> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token function">ping</span> www.baidu.com
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>不正常的话，设置DNS，如下：</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#vi /etc/resolv.conf</span>
+nameserver <span class="token number">223.5</span>.5.5
+nameserver <span class="token number">223.6</span>.6.6
+<span class="token comment">#nameserver 114.114.114.144</span>
+<span class="token comment">#nameserver 114.114.115.115</span>
+
+<span class="token comment">#保存后。</span>
+<span class="token comment">#重启服务或者机器，再次ping baidu.或者下面连接。通了即可以。</span>
+<span class="token comment">#ping mirrorlist.centos.org</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.657caddf.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/15.45304a1e.js" defer></script>
+  </body>
+</html>
