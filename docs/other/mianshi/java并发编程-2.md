@@ -30,7 +30,7 @@
 
 4. ThreadLocal经典的应⽤场景就是连接管理 （⼀个线程持有⼀个连接， 该连接对象可以在不同的⽅法之间进⾏传递， 线程之间不共享同⼀个连接）
 
-<a href='http://www.tqk001.top:8081/base/seniorJava/%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB%E5%92%8C%E5%8D%8F%E4%BD%9C-2.html#_3-2-threadlocal'> ThreadLocal详解</a>
+<a href='http://www.tqk001.top:8081/base/seniorJava/%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB%E5%92%8C%E5%8D%8F%E4%BD%9C-2.html#_3-2-threadlocal'>ThreadLocal详解</a>
 
 ## 2.3 如何理解volatile关键字
 
@@ -62,6 +62,7 @@ volatile关键字⽤来修饰对象的属性， 在并发环境下可以保证�
 
 
 ## 2.5 ReentrantLock中tryLock()和lock()⽅法的区别
+
 1. tryLock()表示尝试加锁， 可能加到， 也可能加不到， 该⽅法不会阻塞线程， 如果加到锁则返回 true， 没有加到则返回false
 2. lock()表示阻塞加锁， 线程会阻塞直到加到锁， ⽅法也没有返回值
 
@@ -109,8 +110,8 @@ volatile关键字⽤来修饰对象的属性， 在并发环境下可以保证�
 
 `线程池内部是通过队列+线程实现的`
 当我们利⽤线程池执⾏任务时：
-1. 如果此时线程池中的线程数量⼩于corePoolSize， 即使线程池中的线程都处于空闲状态， 也要创建 新的线程来处理被添加的任务。
-2. 如果此时线程池中的线程数量等于corePoolSize， 但是缓冲队列workQueue未满， 那么任务被放⼊ 缓冲队列。
+1. 如果此时线程池中的线程数量⼩于corePoolSize， 即使线程池中的线程都处于空闲状态， 也要创建新的线程来处理被添加的任务。
+2. 如果此时线程池中的线程数量等于corePoolSize， 但是缓冲队列workQueue未满， 那么任务被放⼊缓冲队列。
 3. 如果此时线程池中的线程数量⼤于等于corePoolSize， 缓冲队列workQueue满， 并且线程池中的数量⼩于maximumPoolSize， 建新的线程来处理被添加的任务。
 4. 如果此时线程池中的线程数量⼤于corePoolSize， 缓冲队列workQueue满， 并且线程池中的数量等 于maximumPoolSize， 那么通过 handler所指定的策略来处理此任务。
 5.  当线程池中的线程数量⼤于 corePoolSize时， 如果某线程空闲时间超过keepAliveTime， 线程将被终⽌ 。这样线程池可以动态的调整池中的线程数

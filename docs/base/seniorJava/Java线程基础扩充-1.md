@@ -653,7 +653,7 @@ public class AsIfSerialSample {
 8. 对象终结规则对象的构造函数执行，结束先于finalize()方法
 :::
 
-## 2.3 Java 里的线程
+## 2.3 线程的生命周期
 
 <a data-fancybox title="多线程" href="./image/javathread.jpg">![多线程](./image/javathread.jpg)</a>
 
@@ -795,7 +795,7 @@ public class EndThread {
 
 如果<font color='red'><strong>一个线程处于了阻塞状态（如线程调用了 thread.sleep、thread.join、 thread.wait 等），则在线程在检查中断标示时如果发现中断标示为 true，则会在这些阻塞方法调用处抛出 InterruptedException 异常</strong></font>，
 
-并且在抛出异常后会立即将线程的中断标示位清除，即重新设置为 false。 不建议自定义一个取消标志位来中止线程的运行。因为 run 方法里有阻塞调用时会无法很快检测到取消标志，线程必须从阻塞调用返回后，才会检查这个取消标志。
+并且在抛出异常后会立即将线程的中断标示位清除，即重新设置为 false。不建议自定义一个取消标志位来中止线程的运行。因为 run 方法里有阻塞调用时会无法很快检测到取消标志，线程必须从阻塞调用返回后，才会检查这个取消标志。
 
 **示例**
 ```java
@@ -845,6 +845,8 @@ public class HasInterrputException {
 }
 ```
 
+----------------------------
+
 ```sh
 HasInterrputEx I am extends Thread.
 HasInterrputEx I am extends Thread.
@@ -862,8 +864,8 @@ Process finished with exit code 0
 ```
 
 这种情况下使用中断会更好   
-一、一般的阻塞方法，如 sleep 等本身就支持中断的检查，   
-二、检查中断位的状态和检查取消标志位没什么区别，用中断位的状态还可 以避免声明取消标志位，减少资源的消耗。   
+一. 一般的阻塞方法，如 sleep 等本身就支持中断的检查，   
+二. 检查中断位的状态和检查取消标志位没什么区别，用中断位的状态还可 以避免声明取消标志位，减少资源的消耗。   
 
 
 <font color='red'><strong>注意：处于死锁状态的线程无法被中断</strong></font>

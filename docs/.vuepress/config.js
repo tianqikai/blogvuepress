@@ -165,6 +165,7 @@ module.exports = {
                     { text: 'nginx', link: '/middleware/nginx/' },
                     { text: 'zookeeper', link: '/middleware/zookeeper/' },
                     { text: '单点登陆', link: '/middleware/sso/' },
+                    { text: 'fastDFS', link: '/middleware/fastdfs/' },
                     // { text: 'kubernetes', link: '/middleware/kubernetes/' },
                     { text: 'Elasticsearch', link: '/middleware/Elasticsearch/' },
                     {   text: 'MQ',

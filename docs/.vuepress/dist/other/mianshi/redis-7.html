@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1. redis集群方案 | TQK的个人博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/images/logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.2/jquery.fancybox.min.css">
+    <meta name="description" content="TQK的个人博客">
+    <meta name="author" content="冰岛红茶">
+    <meta name="keywords" content="个人博客 ，java ，后端">
+    
+    <link rel="preload" href="/assets/css/0.styles.7055dd22.css" as="style"><link rel="preload" href="/assets/js/app.a269e6e3.js" as="script"><link rel="preload" href="/assets/js/2.99bf64c9.js" as="script"><link rel="preload" href="/assets/js/297.a391f4a0.js" as="script"><link rel="prefetch" href="/assets/js/10.d1179322.js"><link rel="prefetch" href="/assets/js/100.49b09272.js"><link rel="prefetch" href="/assets/js/101.29516941.js"><link rel="prefetch" href="/assets/js/102.ff1b5789.js"><link rel="prefetch" href="/assets/js/103.c340ca13.js"><link rel="prefetch" href="/assets/js/104.c2878bbb.js"><link rel="prefetch" href="/assets/js/105.651ca559.js"><link rel="prefetch" href="/assets/js/106.a979c858.js"><link rel="prefetch" href="/assets/js/107.ccec254f.js"><link rel="prefetch" href="/assets/js/108.79d9c6e9.js"><link rel="prefetch" href="/assets/js/109.179d78d9.js"><link rel="prefetch" href="/assets/js/11.698fe406.js"><link rel="prefetch" href="/assets/js/110.e93501fc.js"><link rel="prefetch" href="/assets/js/111.eaa68a7e.js"><link rel="prefetch" href="/assets/js/112.3fb7de24.js"><link rel="prefetch" href="/assets/js/113.c47425c5.js"><link rel="prefetch" href="/assets/js/114.772b64f7.js"><link rel="prefetch" href="/assets/js/115.332dba12.js"><link rel="prefetch" href="/assets/js/116.1cc173fe.js"><link rel="prefetch" href="/assets/js/117.ec5ab521.js"><link rel="prefetch" href="/assets/js/118.c25e7170.js"><link rel="prefetch" href="/assets/js/119.cc2fc1a9.js"><link rel="prefetch" href="/assets/js/12.fe199234.js"><link rel="prefetch" href="/assets/js/120.43d8ef41.js"><link rel="prefetch" href="/assets/js/121.4da0fd1d.js"><link rel="prefetch" href="/assets/js/122.9d316f3e.js"><link rel="prefetch" href="/assets/js/123.803e7500.js"><link rel="prefetch" href="/assets/js/124.64d3aa15.js"><link rel="prefetch" href="/assets/js/125.db239821.js"><link rel="prefetch" href="/assets/js/126.89942a20.js"><link rel="prefetch" href="/assets/js/127.15ef758c.js"><link rel="prefetch" href="/assets/js/128.e4f78e13.js"><link rel="prefetch" href="/assets/js/129.73fa2a61.js"><link rel="prefetch" href="/assets/js/13.cdde4e95.js"><link rel="prefetch" href="/assets/js/130.9c14493b.js"><link rel="prefetch" href="/assets/js/131.0e732999.js"><link rel="prefetch" href="/assets/js/132.08cb7f52.js"><link rel="prefetch" href="/assets/js/133.f22aaa33.js"><link rel="prefetch" href="/assets/js/134.71b3a687.js"><link rel="prefetch" href="/assets/js/135.a20eb76d.js"><link rel="prefetch" href="/assets/js/136.268cbd16.js"><link rel="prefetch" href="/assets/js/137.7e38fe70.js"><link rel="prefetch" href="/assets/js/138.ccf82202.js"><link rel="prefetch" href="/assets/js/139.915db14d.js"><link rel="prefetch" href="/assets/js/14.0d53b6b7.js"><link rel="prefetch" href="/assets/js/140.f6113a12.js"><link rel="prefetch" href="/assets/js/141.4712ef9d.js"><link rel="prefetch" href="/assets/js/142.dd724054.js"><link rel="prefetch" href="/assets/js/143.238615ad.js"><link rel="prefetch" href="/assets/js/144.dde11e3b.js"><link rel="prefetch" href="/assets/js/145.9f9c9878.js"><link rel="prefetch" href="/assets/js/146.3772d154.js"><link rel="prefetch" href="/assets/js/147.c4c012c8.js"><link rel="prefetch" href="/assets/js/148.98a5816b.js"><link rel="prefetch" href="/assets/js/149.0e194576.js"><link rel="prefetch" href="/assets/js/15.813dccf4.js"><link rel="prefetch" href="/assets/js/150.bddfd1cd.js"><link rel="prefetch" href="/assets/js/151.82fcfc5d.js"><link rel="prefetch" href="/assets/js/152.24ebc08b.js"><link rel="prefetch" href="/assets/js/153.cc9bf248.js"><link rel="prefetch" href="/assets/js/154.5d2b1822.js"><link rel="prefetch" href="/assets/js/155.f1876697.js"><link rel="prefetch" href="/assets/js/156.63968943.js"><link rel="prefetch" href="/assets/js/157.695ae6cb.js"><link rel="prefetch" href="/assets/js/158.c541d9c1.js"><link rel="prefetch" href="/assets/js/159.f1814355.js"><link rel="prefetch" href="/assets/js/16.5ac24625.js"><link rel="prefetch" href="/assets/js/160.d6ee6a70.js"><link rel="prefetch" href="/assets/js/161.bb72144d.js"><link rel="prefetch" href="/assets/js/162.14c7f7ec.js"><link rel="prefetch" href="/assets/js/163.b88639d6.js"><link rel="prefetch" href="/assets/js/164.f6f03534.js"><link rel="prefetch" href="/assets/js/165.2e6db94f.js"><link rel="prefetch" href="/assets/js/166.64bf465b.js"><link rel="prefetch" href="/assets/js/167.1e48e360.js"><link rel="prefetch" href="/assets/js/168.c34e2d52.js"><link rel="prefetch" href="/assets/js/169.d8a0fe97.js"><link rel="prefetch" href="/assets/js/17.c2433c57.js"><link rel="prefetch" href="/assets/js/170.903c9154.js"><link rel="prefetch" href="/assets/js/171.8fd651ca.js"><link rel="prefetch" href="/assets/js/172.79f3e27c.js"><link rel="prefetch" href="/assets/js/173.a8609309.js"><link rel="prefetch" href="/assets/js/174.f80fdbeb.js"><link rel="prefetch" href="/assets/js/175.65470ebb.js"><link rel="prefetch" href="/assets/js/176.09bc1692.js"><link rel="prefetch" href="/assets/js/177.c26552ca.js"><link rel="prefetch" href="/assets/js/178.b8121477.js"><link rel="prefetch" href="/assets/js/179.606e984d.js"><link rel="prefetch" href="/assets/js/18.de0ee1ff.js"><link rel="prefetch" href="/assets/js/180.6bbf1d4c.js"><link rel="prefetch" href="/assets/js/181.d89a36ad.js"><link rel="prefetch" href="/assets/js/182.929bb905.js"><link rel="prefetch" href="/assets/js/183.3c36f550.js"><link rel="prefetch" href="/assets/js/184.e0777960.js"><link rel="prefetch" href="/assets/js/185.0fff0038.js"><link rel="prefetch" href="/assets/js/186.b1013792.js"><link rel="prefetch" href="/assets/js/187.ed542af9.js"><link rel="prefetch" href="/assets/js/188.d3a5c4ea.js"><link rel="prefetch" href="/assets/js/189.2467e84d.js"><link rel="prefetch" href="/assets/js/19.6d3f6558.js"><link rel="prefetch" href="/assets/js/190.8071038a.js"><link rel="prefetch" href="/assets/js/191.cfc9e9df.js"><link rel="prefetch" href="/assets/js/192.2da0e69d.js"><link rel="prefetch" href="/assets/js/193.cd9fb699.js"><link rel="prefetch" href="/assets/js/194.7b072aa5.js"><link rel="prefetch" href="/assets/js/195.d10ef79f.js"><link rel="prefetch" href="/assets/js/196.cb398e99.js"><link rel="prefetch" href="/assets/js/197.1b155918.js"><link rel="prefetch" href="/assets/js/198.9b0ecca5.js"><link rel="prefetch" href="/assets/js/199.0d44a3f3.js"><link rel="prefetch" href="/assets/js/20.9719e02b.js"><link rel="prefetch" href="/assets/js/200.f54834ff.js"><link rel="prefetch" href="/assets/js/201.7c0e4b7f.js"><link rel="prefetch" href="/assets/js/202.a39f5b32.js"><link rel="prefetch" href="/assets/js/203.995efedf.js"><link rel="prefetch" href="/assets/js/204.2cbc44b0.js"><link rel="prefetch" href="/assets/js/205.e40f9da5.js"><link rel="prefetch" href="/assets/js/206.4244cab8.js"><link rel="prefetch" href="/assets/js/207.4bf35a19.js"><link rel="prefetch" href="/assets/js/208.896a5d7d.js"><link rel="prefetch" href="/assets/js/209.4eb12207.js"><link rel="prefetch" href="/assets/js/21.9c139838.js"><link rel="prefetch" href="/assets/js/210.5852cf6b.js"><link rel="prefetch" href="/assets/js/211.4e3af679.js"><link rel="prefetch" href="/assets/js/212.7d63aeb2.js"><link rel="prefetch" href="/assets/js/213.0bfe648a.js"><link rel="prefetch" href="/assets/js/214.49de382c.js"><link rel="prefetch" href="/assets/js/215.4fd028c5.js"><link rel="prefetch" href="/assets/js/216.4410a191.js"><link rel="prefetch" href="/assets/js/217.39dfe01a.js"><link rel="prefetch" href="/assets/js/218.371a05d6.js"><link rel="prefetch" href="/assets/js/219.209ce6bf.js"><link rel="prefetch" href="/assets/js/22.98d39c99.js"><link rel="prefetch" href="/assets/js/220.9cfcda81.js"><link rel="prefetch" href="/assets/js/221.763d4525.js"><link rel="prefetch" href="/assets/js/222.fb5dd40d.js"><link rel="prefetch" href="/assets/js/223.14c93ecd.js"><link rel="prefetch" href="/assets/js/224.fb872755.js"><link rel="prefetch" href="/assets/js/225.b2ec9a65.js"><link rel="prefetch" href="/assets/js/226.a0821a12.js"><link rel="prefetch" href="/assets/js/227.5438a9db.js"><link rel="prefetch" href="/assets/js/228.0e0617ce.js"><link rel="prefetch" href="/assets/js/229.887747fc.js"><link rel="prefetch" href="/assets/js/23.0b4c41e7.js"><link rel="prefetch" href="/assets/js/230.00fb9a0a.js"><link rel="prefetch" href="/assets/js/231.ed777159.js"><link rel="prefetch" href="/assets/js/232.1e3c6b05.js"><link rel="prefetch" href="/assets/js/233.c46e372c.js"><link rel="prefetch" href="/assets/js/234.eabd24b5.js"><link rel="prefetch" href="/assets/js/235.888c6ea5.js"><link rel="prefetch" href="/assets/js/236.0304b04f.js"><link rel="prefetch" href="/assets/js/237.a12b4073.js"><link rel="prefetch" href="/assets/js/238.1463391e.js"><link rel="prefetch" href="/assets/js/239.b40feb9a.js"><link rel="prefetch" href="/assets/js/24.d2cc0dc6.js"><link rel="prefetch" href="/assets/js/240.89f156ab.js"><link rel="prefetch" href="/assets/js/241.25bc445f.js"><link rel="prefetch" href="/assets/js/242.b30267b9.js"><link rel="prefetch" href="/assets/js/243.df9d8044.js"><link rel="prefetch" href="/assets/js/244.63ae1880.js"><link rel="prefetch" href="/assets/js/245.05bbe300.js"><link rel="prefetch" href="/assets/js/246.c3dc1b81.js"><link rel="prefetch" href="/assets/js/247.decc7bb5.js"><link rel="prefetch" href="/assets/js/248.a8515fa4.js"><link rel="prefetch" href="/assets/js/249.249640d6.js"><link rel="prefetch" href="/assets/js/25.42841bf5.js"><link rel="prefetch" href="/assets/js/250.69d2baa0.js"><link rel="prefetch" href="/assets/js/251.32393d9b.js"><link rel="prefetch" href="/assets/js/252.6eff33af.js"><link rel="prefetch" href="/assets/js/253.51b8bb38.js"><link rel="prefetch" href="/assets/js/254.5bffac24.js"><link rel="prefetch" href="/assets/js/255.cab0c493.js"><link rel="prefetch" href="/assets/js/256.167de478.js"><link rel="prefetch" href="/assets/js/257.bcdc4031.js"><link rel="prefetch" href="/assets/js/258.6bce3f8d.js"><link rel="prefetch" href="/assets/js/259.dcfdee03.js"><link rel="prefetch" href="/assets/js/26.d01f0869.js"><link rel="prefetch" href="/assets/js/260.adcb9f1c.js"><link rel="prefetch" href="/assets/js/261.7ce9bc3a.js"><link rel="prefetch" href="/assets/js/262.5a4ab4cd.js"><link rel="prefetch" href="/assets/js/263.45e264cd.js"><link rel="prefetch" href="/assets/js/264.db5e91b3.js"><link rel="prefetch" href="/assets/js/265.7e124fd9.js"><link rel="prefetch" href="/assets/js/266.07a3f274.js"><link rel="prefetch" href="/assets/js/267.20982e52.js"><link rel="prefetch" href="/assets/js/268.314fb458.js"><link rel="prefetch" href="/assets/js/269.20d5c4e8.js"><link rel="prefetch" href="/assets/js/27.0b4ad970.js"><link rel="prefetch" href="/assets/js/270.92d52c55.js"><link rel="prefetch" href="/assets/js/271.f1f93bd4.js"><link rel="prefetch" href="/assets/js/272.e5dbad92.js"><link rel="prefetch" href="/assets/js/273.4c727e00.js"><link rel="prefetch" href="/assets/js/274.60260372.js"><link rel="prefetch" href="/assets/js/275.0a5d5f87.js"><link rel="prefetch" href="/assets/js/276.134c8a4f.js"><link rel="prefetch" href="/assets/js/277.7d7e6033.js"><link rel="prefetch" href="/assets/js/278.d36d4124.js"><link rel="prefetch" href="/assets/js/279.f5e1bf39.js"><link rel="prefetch" href="/assets/js/28.f50188dc.js"><link rel="prefetch" href="/assets/js/280.356771ee.js"><link rel="prefetch" href="/assets/js/281.bea0c5c3.js"><link rel="prefetch" href="/assets/js/282.25eaede0.js"><link rel="prefetch" href="/assets/js/283.ebf0447f.js"><link rel="prefetch" href="/assets/js/284.13ebdc64.js"><link rel="prefetch" href="/assets/js/285.d99922f9.js"><link rel="prefetch" href="/assets/js/286.6e561f3b.js"><link rel="prefetch" href="/assets/js/287.730cc6e8.js"><link rel="prefetch" href="/assets/js/288.a60281a6.js"><link rel="prefetch" href="/assets/js/289.187fa285.js"><link rel="prefetch" href="/assets/js/29.b083559e.js"><link rel="prefetch" href="/assets/js/290.3cdd9e39.js"><link rel="prefetch" href="/assets/js/291.2bb96bd7.js"><link rel="prefetch" href="/assets/js/292.eed40b0f.js"><link rel="prefetch" href="/assets/js/293.5cf23393.js"><link rel="prefetch" href="/assets/js/294.303ab288.js"><link rel="prefetch" href="/assets/js/295.cd4bd369.js"><link rel="prefetch" href="/assets/js/296.86c5b32c.js"><link rel="prefetch" href="/assets/js/298.2ba75900.js"><link rel="prefetch" href="/assets/js/299.087f4522.js"><link rel="prefetch" href="/assets/js/3.3d38832c.js"><link rel="prefetch" href="/assets/js/30.c792e265.js"><link rel="prefetch" href="/assets/js/300.aff0b9ef.js"><link rel="prefetch" href="/assets/js/301.8388919f.js"><link rel="prefetch" href="/assets/js/302.8b6ce08f.js"><link rel="prefetch" href="/assets/js/303.9e337546.js"><link rel="prefetch" href="/assets/js/304.0b8e5650.js"><link rel="prefetch" href="/assets/js/31.2eab6ad5.js"><link rel="prefetch" href="/assets/js/32.e7315569.js"><link rel="prefetch" href="/assets/js/33.17564f05.js"><link rel="prefetch" href="/assets/js/34.944abbcc.js"><link rel="prefetch" href="/assets/js/35.f27ca552.js"><link rel="prefetch" href="/assets/js/36.d9700e10.js"><link rel="prefetch" href="/assets/js/37.3ede438a.js"><link rel="prefetch" href="/assets/js/38.97f45114.js"><link rel="prefetch" href="/assets/js/39.bff69794.js"><link rel="prefetch" href="/assets/js/4.423930b9.js"><link rel="prefetch" href="/assets/js/40.4b39b534.js"><link rel="prefetch" href="/assets/js/41.3598dfb7.js"><link rel="prefetch" href="/assets/js/42.9b942e24.js"><link rel="prefetch" href="/assets/js/43.c216d266.js"><link rel="prefetch" href="/assets/js/44.0cb7ef31.js"><link rel="prefetch" href="/assets/js/45.68139ca7.js"><link rel="prefetch" href="/assets/js/46.50bfd95e.js"><link rel="prefetch" href="/assets/js/47.72a11523.js"><link rel="prefetch" href="/assets/js/48.7c8b36af.js"><link rel="prefetch" href="/assets/js/49.f9c3bd87.js"><link rel="prefetch" href="/assets/js/5.d604fdbb.js"><link rel="prefetch" href="/assets/js/50.fa55a822.js"><link rel="prefetch" href="/assets/js/51.1f9a97a0.js"><link rel="prefetch" href="/assets/js/52.1e1112e1.js"><link rel="prefetch" href="/assets/js/53.f159de2f.js"><link rel="prefetch" href="/assets/js/54.7af45d4f.js"><link rel="prefetch" href="/assets/js/55.aacfdb8e.js"><link rel="prefetch" href="/assets/js/56.936da245.js"><link rel="prefetch" href="/assets/js/57.6daf57dc.js"><link rel="prefetch" href="/assets/js/58.4f5c1139.js"><link rel="prefetch" href="/assets/js/59.a2513765.js"><link rel="prefetch" href="/assets/js/6.ae267412.js"><link rel="prefetch" href="/assets/js/60.ad6b3649.js"><link rel="prefetch" href="/assets/js/61.b985a9da.js"><link rel="prefetch" href="/assets/js/62.8c10d9e3.js"><link rel="prefetch" href="/assets/js/63.8c3afeaa.js"><link rel="prefetch" href="/assets/js/64.d576c320.js"><link rel="prefetch" href="/assets/js/65.e3437f64.js"><link rel="prefetch" href="/assets/js/66.517230f5.js"><link rel="prefetch" href="/assets/js/67.b1037f65.js"><link rel="prefetch" href="/assets/js/68.552a9ae1.js"><link rel="prefetch" href="/assets/js/69.226db1e1.js"><link rel="prefetch" href="/assets/js/7.d85a505a.js"><link rel="prefetch" href="/assets/js/70.93d4cc97.js"><link rel="prefetch" href="/assets/js/71.39a4af0d.js"><link rel="prefetch" href="/assets/js/72.596b33a8.js"><link rel="prefetch" href="/assets/js/73.189be66b.js"><link rel="prefetch" href="/assets/js/74.e22f5ac6.js"><link rel="prefetch" href="/assets/js/75.5d016438.js"><link rel="prefetch" href="/assets/js/76.6fd4e2f1.js"><link rel="prefetch" href="/assets/js/77.9691cf01.js"><link rel="prefetch" href="/assets/js/78.3be14737.js"><link rel="prefetch" href="/assets/js/79.b3b5c41e.js"><link rel="prefetch" href="/assets/js/8.67e4a3e0.js"><link rel="prefetch" href="/assets/js/80.4aabb9e2.js"><link rel="prefetch" href="/assets/js/81.f10b824c.js"><link rel="prefetch" href="/assets/js/82.02c973aa.js"><link rel="prefetch" href="/assets/js/83.a23ffdd1.js"><link rel="prefetch" href="/assets/js/84.b3edaff0.js"><link rel="prefetch" href="/assets/js/85.cdae8ce6.js"><link rel="prefetch" href="/assets/js/86.a32056d3.js"><link rel="prefetch" href="/assets/js/87.e46c8a98.js"><link rel="prefetch" href="/assets/js/88.d6b60e3f.js"><link rel="prefetch" href="/assets/js/89.79b23174.js"><link rel="prefetch" href="/assets/js/9.f00ca7a4.js"><link rel="prefetch" href="/assets/js/90.2b355f00.js"><link rel="prefetch" href="/assets/js/91.7c4108b6.js"><link rel="prefetch" href="/assets/js/92.4cf325a5.js"><link rel="prefetch" href="/assets/js/93.37982304.js"><link rel="prefetch" href="/assets/js/94.83785213.js"><link rel="prefetch" href="/assets/js/95.ea635412.js"><link rel="prefetch" href="/assets/js/96.c344c2c2.js"><link rel="prefetch" href="/assets/js/97.7faaf7ae.js"><link rel="prefetch" href="/assets/js/98.0c7e5c45.js"><link rel="prefetch" href="/assets/js/99.4f32e89c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7055dd22.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/images/logo.png" alt="TQK的个人博客" class="logo"> <span class="site-name can-hide">TQK的个人博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/fastdfs/" class="nav-link">
+  fastDFS
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="入门基础" class="dropdown-title"><span class="title">入门基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="入门基础" class="mobile-dropdown-title"><span class="title">入门基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/base/java/" class="nav-link">
+  Java基础
+</a></li><li class="dropdown-item"><!----> <a href="/base/seniorJava/" class="nav-link">
+  Java基础(高级)
+</a></li><li class="dropdown-item"><!----> <a href="/base/data-structure/" class="nav-link">
+  数据结构与算法
+</a></li><li class="dropdown-item"><!----> <a href="/base/design-pattern/" class="nav-link">
+  设计模式
+</a></li><li class="dropdown-item"><!----> <a href="/base/JVM/" class="nav-link">
+  JVM
+</a></li><li class="dropdown-item"><!----> <a href="/base/es6/" class="nav-link">
+  Javascript
+</a></li><li class="dropdown-item"><!----> <a href="/base/shell/" class="nav-link">
+  Shell脚本
+</a></li><li class="dropdown-item"><!----> <a href="/base/golang/" class="nav-link">
+  go语言
+</a></li><li class="dropdown-item"><!----> <a href="/base/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/base/c/" class="nav-link">
+  C语言
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="数据库" class="dropdown-title"><span class="title">数据库</span> <span class="arrow down"></span></button> <button type="button" aria-label="数据库" class="mobile-dropdown-title"><span class="title">数据库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/db/mysql/" class="nav-link">
+  Mysql
+</a></li><li class="dropdown-item"><!----> <a href="/db/redis/" class="nav-link">
+  Redis
+</a></li><li class="dropdown-item"><!----> <a href="/db/mongdb/" class="nav-link">
+  Mongdb
+</a></li><li class="dropdown-item"><!----> <a href="/db/oracle/" class="nav-link">
+  Oracle
+</a></li><li class="dropdown-item"><!----> <a href="/db/fenkufenbiao/" class="nav-link">
+  分库分表
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="常用框架" class="dropdown-title"><span class="title">常用框架</span> <span class="arrow down"></span></button> <button type="button" aria-label="常用框架" class="mobile-dropdown-title"><span class="title">常用框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/framework/Spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springmvc/" class="nav-link">
+  SpringMVC
+</a></li><li class="dropdown-item"><!----> <a href="/framework/mybatis/" class="nav-link">
+  Mybatis
+</a></li><li class="dropdown-item"><!----> <a href="/framework/springboot/" class="nav-link">
+  Springboot
+</a></li><li class="dropdown-item"><!----> <a href="/framework/dubbo/" class="nav-link">
+  Dubbo
+</a></li><li class="dropdown-item"><!----> <a href="/framework/vue/" class="nav-link">
+  Vue
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><span class="title">微服务</span> <span class="arrow down"></span></button> <button type="button" aria-label="微服务" class="mobile-dropdown-title"><span class="title">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          SpringCloud
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloud/Eureka/" class="nav-link">
+  Eureka
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Consul/" class="nav-link">
+  Consul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Feign/" class="nav-link">
+  Feign
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Hystrix/" class="nav-link">
+  Hystrix
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/zuul/" class="nav-link">
+  Zuul
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/gateway/" class="nav-link">
+  Gateway
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/sleuth/" class="nav-link">
+  Sleuth链路追踪
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloud/Apollo/" class="nav-link">
+  Apollo配置中心
+</a></li></ul></li><li class="dropdown-item"><h4>
+          SpringCloudAlibaba
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/nacos/" class="nav-link">
+  Nacos
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/Sentinel/" class="nav-link">
+  Sentinel
+</a></li><li class="dropdown-subitem"><a href="/framework/SpringCloudAlibaba/seata/" class="nav-link">
+  seata
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="分布式" class="dropdown-title"><span class="title">分布式</span> <span class="arrow down"></span></button> <button type="button" aria-label="分布式" class="mobile-dropdown-title"><span class="title">分布式</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/netty/" class="nav-link">
+  netty
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/nginx/" class="nav-link">
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/zookeeper/" class="nav-link">
+  zookeeper
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/sso/" class="nav-link">
+  单点登陆
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/fastdfs/" class="nav-link">
+  fastDFS
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/Elasticsearch/" class="nav-link">
+  Elasticsearch
+</a></li><li class="dropdown-item"><h4>
+          MQ
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/middleware/RabbitMQ/" class="nav-link">
+  RabbitMQ
+</a></li><li class="dropdown-subitem"><a href="/middleware/kafka/" class="nav-link">
+  kafka
+</a></li><li class="dropdown-subitem"><a href="/middleware/RocketMQ/" class="nav-link">
+  RocketMQ
+</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="云原生" class="dropdown-title"><span class="title">云原生</span> <span class="arrow down"></span></button> <button type="button" aria-label="云原生" class="mobile-dropdown-title"><span class="title">云原生</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/middleware/network/" class="nav-link">
+  云原生网络
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/docker/" class="nav-link">
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/middleware/kubernetes/" class="nav-link">
+  kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Jenkins/" class="nav-link">
+  Jenkins
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="其他" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="其他" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/other/alibaba/" class="nav-link">
+  阿里巴巴Java开发手册
+</a></li><li class="dropdown-item"><!----> <a href="/other/english/" class="nav-link">
+  编程英语
+</a></li><li class="dropdown-item"><!----> <a href="/other/idea/" class="nav-link">
+  IDEA快捷键
+</a></li><li class="dropdown-item"><!----> <a href="/other/url/" class="nav-link">
+  常用网站
+</a></li><li class="dropdown-item"><!----> <a href="/other/jdk/" class="nav-link">
+  Liunx安装jdk
+</a></li><li class="dropdown-item"><!----> <a href="/other/VMware/" class="nav-link">
+  VMware
+</a></li><li class="dropdown-item"><!----> <a href="/other/jiqun/" class="nav-link">
+  Liunx集群
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具" class="mobile-dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/maven/" class="nav-link">
+  maven
+</a></li><li class="dropdown-item"><!----> <a href="/tool/git/" class="nav-link">
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/tool/jemeter/" class="nav-link">
+  jemeter
+</a></li><li class="dropdown-item"><!----> <a href="/tool/postman/" class="nav-link">
+  postman
+</a></li><li class="dropdown-item"><!----> <a href="/tool/PowerDesigner/" class="nav-link">
+  PowerDesigner
+</a></li><li class="dropdown-item"><!----> <a href="/tool/Nodejs/" class="nav-link">
+  Nodejs
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/tianqikai/blogvuepress" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Mianshi</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/other/mianshi/" aria-current="page" class="sidebar-link">面试与解决方案整理</a></li><li><a href="/other/mianshi/JAVA基础-0.html" class="sidebar-link">1. JAVA基础</a></li><li><a href="/other/mianshi/Mysql数据库-1.html" class="sidebar-link">1. ACID靠什么保证的？</a></li><li><a href="/other/mianshi/java并发编程-2.html" class="sidebar-link">2. java并发编程</a></li><li><a href="/other/mianshi/JVM-3.html" class="sidebar-link">1.1 JVM中哪些是线程共享区</a></li><li><a href="/other/mianshi/框架源码原理-4.html" class="sidebar-link">5. 开发框架</a></li><li><a href="/other/mianshi/微服务-4.html" class="sidebar-link">/other/mianshi/微服务-4.html</a></li><li><a href="/other/mianshi/分布式-5.html" class="sidebar-link">6. 分布式</a></li><li><a href="/other/mianshi/消息队列-5.html" class="sidebar-link">/other/mianshi/消息队列-5.html</a></li><li><a href="/other/mianshi/redis-7.html" aria-current="page" class="active sidebar-link">1. redis集群方案</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#哨兵模式" class="sidebar-link">哨兵模式：</a></li><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#redis-cluster是一种服务端sharding技术" class="sidebar-link">Redis Cluster是一种服务端Sharding技术，</a></li><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#缓存雪崩" class="sidebar-link">缓存雪崩</a></li><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#缓存穿透" class="sidebar-link">缓存穿透</a></li><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#缓存击穿" class="sidebar-link">缓存击穿</a></li><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#定时删除" class="sidebar-link">定时删除</a></li><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#惰性删除" class="sidebar-link">惰性删除</a></li><li class="sidebar-sub-header"><a href="/other/mianshi/redis-7.html#定期删除" class="sidebar-link">定期删除</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_1-redis集群方案"><a href="#_1-redis集群方案" class="header-anchor">#</a> 1. redis集群方案</h1> <h2 id="哨兵模式"><a href="#哨兵模式" class="header-anchor">#</a> <strong>哨兵模式</strong>：</h2> <p>sentinel，哨兵是 redis 集群中非常重要的一个组件，主要有以下功能：
+集群监控：负责监控 redis master 和 slave 进程是否正常工作。
+消息通知：如果某个 redis 实例有故障，那么哨兵负责发送消息作为报警通知给管理员。
+故障转移：如果 master node 挂掉了，会自动转移到 slave node 上。
+配置中心：如果故障转移发生了，通知 client 客户端新的 master 地址。
+哨兵用于实现 redis 集群的高可用，本身也是分布式的，作为一个哨兵集群去运行，互相协同工作。
+故障转移时，判断一个 master node 是否宕机了，需要大部分的哨兵都同意才行，涉及到了分布
+式选举
+即使部分哨兵节点挂掉了，哨兵集群还是能正常工作的
+哨兵通常需要 3 个实例，来保证自己的健壮性。
+<code>哨兵 + redis 主从的部署架构，是不保证数据零丢失的，只能保证 redis 集群的高可用性</code>。
+对于哨兵 + redis 主从这种复杂的部署架构，尽量在测试环境和生产环境，都进行充足的测试和演练。</p> <h2 id="redis-cluster是一种服务端sharding技术"><a href="#redis-cluster是一种服务端sharding技术" class="header-anchor">#</a> Redis Cluster是一种服务端Sharding技术，</h2> <p>3.0版本开始正式提供。采用slot(槽)的概念，一共分成
+16384个槽。将请求发送到任意节点，接收到请求的节点会将查询请求发送到正确的节点上执行</p> <p>方案说明
+通过哈希的方式，将数据分片，每个节点均分存储一定哈希槽(哈希值)区间的数据，默认分配了
+16384 个槽位</p> <p>每份数据分片会存储在多个互为主从的多节点上
+数据写入先写主节点，再同步到从节点(支持配置为阻塞同步)
+同一分片多个节点间的数据不保持强一致性
+读取数据时，当客户端操作的key没有分配在该节点上时，redis会返回转向指令，指向正确的节点
+扩容时需要需要把旧节点的数据迁移一部分到新节点
+在 redis cluster 架构下，每个 redis 要放开两个端口号，比如一个是 6379，另外一个就是 加1w 的端口号，比如 16379。
+16379 端口号是用来进行节点间通信的，也就是 cluster bus 的通信，用来进行故障检测、配置更新、
+故障转移授权。cluster bus 用了另外一种二进制的协议，gossip 协议，用于节点间进行高效的数据交换，占用更少的网络带宽和处理时间。</p> <p><strong>优点</strong>
+无中心架构，支持动态扩容，对业务透明
+具备Sentinel的监控和自动Failover(故障转移)能力
+客户端不需要连接集群所有节点，连接集群中任何一个可用节点即可
+高性能，客户端直连redis服务，免去了proxy代理的损耗
+<strong>缺点</strong>
+运维也很复杂，数据迁移需要人工干预
+只能使用0号数据库
+不支持批量操作(pipeline管道操作)
+分布式逻辑和存储模块耦合等
+Redis Sharding是Redis Cluster出来之前，业界普遍使用的多Redis实例集群方法。其主要思想是采用
+哈希算法将Redis数据的key进行散列，通过hash函数，特定的key会映射到特定的Redis节点上。Java
+redis客户端驱动jedis，支持Redis Sharding功能，即ShardedJedis以及结合缓存池的</p> <p><code>ShardedJedisPool</code> <strong>优点</strong>
+优势在于非常简单，服务端的Redis实例彼此独立，相互无关联，每个Redis实例像单服务器一样运行，
+非常容易线性扩展，系统的灵活性很强
+<strong>缺点</strong>
+由于sharding处理放到客户端，规模进一步扩大时给运维带来挑战。
+客户端sharding不支持动态增删节点。服务端Redis实例群拓扑结构有变化时，每个客户端都需要更新调整。连接不能共享，当应用规模增大时，资源浪费制约优化</p> <hr> <h1 id="_2-如何避免缓存雪崩-缓存-失效-击穿-缓存穿透"><a href="#_2-如何避免缓存雪崩-缓存-失效-击穿-缓存穿透" class="header-anchor">#</a> 2. 如何避免缓存雪崩，缓存（失效）击穿，缓存穿透</h1> <p>缓存雪崩可以采用：
+cluter集群方式部署，将热点数据分布在不同的节点上</p> <ol><li><p>热点数据永不过期</p></li> <li><p>使用限流、熔断技术</p></li></ol> <hr> <h2 id="缓存雪崩"><a href="#缓存雪崩" class="header-anchor">#</a> 缓存雪崩</h2> <p>是指缓存同一时间大面积的失效，所以后面的请求都会落到数据库上，造成数据库短时间内承受大量请求而崩掉。</p> <div class="custom-block tip"><p class="custom-block-title">解决方案：</p> <ol><li><p>缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生。</p></li> <li><p>给每一个缓存数据增加相应的缓存标记，记录缓存是否失效，如果缓存标记失效，则更新数据缓存。</p></li> <li><p>缓存预热:服务器启动前先把热点数据缓存到redis中</p></li> <li><p>互斥锁</p></li> <li><p>请求限流</p></li> <li><p>redis-cluter集群模式</p></li></ol></div> <h2 id="缓存穿透"><a href="#缓存穿透" class="header-anchor">#</a> 缓存穿透</h2> <p>是指缓存和数据库中都没有的数据，导致所有的请求都落到数据库上，造成数据库短时间内承受大量请求而崩掉。</p> <div class="custom-block tip"><p class="custom-block-title">解决方案：</p> <ol><li><p>接口层增加校验，如用户鉴权校验，id做基础校验，id&lt;=0的直接拦截；</p></li> <li><p>从缓存取不到的数据，在数据库中也没有取到，这时也可以将key-value对写为key-null，缓存有效时间可以设置短点，如30秒（设置太长会导致正常情况也没法使用）。这样可以防止攻击用户反复用同一个id暴力攻击</p></li> <li><p>采用布隆过滤器，将所有可能存在的数据哈希到一个足够大的 bitmap 中，一个一定不存在的数据会被这个 bitmap 拦截掉，从而避免了对底层存储系统的查询压力</p></li></ol></div> <h2 id="缓存击穿"><a href="#缓存击穿" class="header-anchor">#</a> 缓存击穿</h2> <p>是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。和缓存雪
+崩不同的是，缓存击穿指并发查同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查数据库。</p> <div class="custom-block tip"><p class="custom-block-title">解决方案</p> <ol><li><p>设置热点数据永远不过期</p></li> <li><p>加互斥锁</p></li></ol></div> <h1 id="_3-redis和mysql如何保证数据一致"><a href="#_3-redis和mysql如何保证数据一致" class="header-anchor">#</a> 3. Redis和Mysql如何保证数据⼀致</h1> <p>1、如果先删缓存，再写数据库：</p> <p>在高并发场景下，当第一个线程删除了缓存，还没有来得及写数据库，第二个线程来读取数据，会发现缓存中的数据为空，那就会去读数据库中的数据(旧值，脏数据)，读完之后，把读到的结果写入缓存(此时，第一个线程已经将新的值写到缓存里面了)，这样缓存中的值就会被覆盖为修改前的脏数据。</p> <p>总结：在这种方式下，通常要求写操作不会太频繁。
+解决方案：
+1》<strong>先操作缓存，但是不删除缓存。将缓存修改为一个特殊值(-999)</strong>。
+客户端读缓存时，发现是默认值，就休眠一小会，再去查一次Redis。 -》 特殊值对业务有侵入。 休眠时间，<strong>可能会多次重复，对性能有影响</strong>。</p> <p>2》<strong>延时双删</strong>。</p> <p>先删除缓存，然后再写数据库，休眠一小会，再次删除缓存。-》 如果数据写操作很频繁，同样还是会有脏数据的问题。
+2、先写数据库，再删缓存： 如果数据库写完了之后，缓存删除失败，数据就会不一致。
+总结： 始终只能保证一定时间内的最终一致性。</p> <p>解决方案：
+1》给缓存设置一个过期时间 问题：过期时间内，缓存数据不会更新。
+2》<strong>引入MQ，保证原子操作</strong>
+解决方案：将热点数据缓存设置为永不过期，但是在value当中写入一个逻辑上的过期时间，另外起一个后台线程，扫描这些key，对于已逻辑上过期的缓存，进行删除。</p> <h1 id="_4-redis-主从复制的核心原理"><a href="#_4-redis-主从复制的核心原理" class="header-anchor">#</a> 4. redis 主从复制的核心原理</h1> <p>通过执行slaveof命令或设置slaveof选项，让一个服务器去复制另一个服务器的数据。主数据库可以进
+行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。而从数据库一般是只读的，并接
+受主数据库同步过来的数据。一个主数据库可以拥有多个从数据库，而一个从数据库只能拥有一个主数
+据库。</p> <p>全量复制：
+（1）主节点通过bgsave命令fork子进程进行<code>RDB持久化</code>，该过程是非常消耗CPU、内存(页表复制)、硬盘IO的</p> <p>（2）主节点通过网络将<code>RDB文件</code>发送给从节点，对主从节点的带宽都会带来很大的消耗</p> <p>（3）从节点清空老数据、载入新RDB文件的过程是阻塞的，无法响应客户端的命令；如果从节点执行bgrewriteaof，也会带来额外的消耗</p> <p>部分复制：</p> <ol><li>复制偏移量：执行复制的双方，主从节点，分别会维护一个复制偏移量offset</li> <li>复制积压缓冲区：主节点内部维护了一个固定长度的、先进先出(FIFO)队列 作为复制积压缓冲区，当主从节点offset的差距过大超过缓冲区长度时，将无法执行部分复制，只能执行全量复制。</li> <li>服务器运行ID(runid)：每个Redis节点，都有其运行ID，运行ID由节点在启动时自动生成，主节点会将自己的运行ID发送给从节点，从节点会将主节点的运行ID存起来。 从节点Redis断开重连的时候，就是根据运行ID来判断同步的进度：</li></ol> <p>如果从节点保存的runid与主节点现在的runid相同，说明主从节点之前同步过，主节点会继续尝试使用部分复制(到底能不能部分复制还要看offset和复制积压缓冲区的情况)；
+如果从节点保存的runid与主节点现在的runid不同，说明从节点在断线前同步的Redis节点并不是当前的主节点，只能进行全量复制。</p> <h1 id="_5-redis分布式锁"><a href="#_5-redis分布式锁" class="header-anchor">#</a> 5. Redis分布式锁</h1> <p><strong>分布式锁的本质</strong>：就是在所有进程都能访问到的一个地方，设置一个锁资源，让这些进程都来竞争锁资源。<code>数据库、zookeeper、 Redis</code>。通常对于分布式锁，会要求响应快、性能高、与业务无关。</p> <ol><li><p><code>SETNX 加锁</code></p></li> <li><p><code>redission+setnx</code></p></li></ol> <p><strong>前两种情况可能会出现锁的丢失情况</strong></p> <ol start="3"><li><code>redission的redlock锁</code></li></ol> <h1 id="_6-redis的数据结构及使用场景-redis的数据结构有"><a href="#_6-redis的数据结构及使用场景-redis的数据结构有" class="header-anchor">#</a> 6. Redis的数据结构及使⽤场景 Redis的数据结构有：</h1> <ol><li><code>字符串</code>：可以⽤来做最简单的数据缓存，可以缓存某个简单的字符串，也可以缓存某个json格式的字符 串，Redis分布式锁的实现就利⽤了这种数据结构，还包括可以实现计数器、Session共享、分布式ID</li> <li><code>哈希表</code>：可以⽤来存储⼀些key-value对，更适合⽤来存储对象</li> <li><code>列表</code>：Redis的列表通过命令的组合，既可以当做栈，也可以当做队列来使⽤，可以⽤来缓存类似微信 公众号、微博等消息流数据</li> <li><code>集合</code>：和列表类似，也可以存储多个元素，但是不能重复，集合可以进⾏交集、并集、差集操作，从⽽ 可以实现类似，我和某⼈共同关注的⼈、朋友圈点赞等功能</li> <li><code>有序集合</code>：集合是⽆序的，有序集合可以设置顺序，可以⽤来实现排⾏榜功能</li></ol> <p>String：字符串
+List：列表
+Hash：哈希表
+Set：无序集合
+Sorted Set：有序集合
+bitmap：布隆过滤器
+GeoHash：坐标，借助Sorted Set实现，通过zset的score进行排序就可以得到坐标附近的其它元素，
+通过将score还原成坐标值就可以得到元素的原始坐标
+HyperLogLog：统计不重复数据，用于大数据基数统计
+Streams：内存版的kafka</p> <h1 id="_7-redis缓存过期策略"><a href="#_7-redis缓存过期策略" class="header-anchor">#</a> 7. Redis缓存过期策略</h1> <p><code>定时过期</code>：每个设置过期时间的key都需要创建一个定时器，到过期时间就会立即清除。该策略可以立即清除过期的数据，对内存很友好；但是会占用大量的CPU资源去处理过期的数据，从而影响缓存的响应时间和吞吐量</p> <p><code>惰性过期</code>：只有当访问一个key时，才会判断该key是否已过期，过期则清除。该策略可以最大化地节省CPU资源，但是很消耗内存、许多的过期数据都还存在内存中。极端情况可能出现大量的过期key没有再次被访问，从而不会被清除，占用大量内存。</p> <p><code>定期过期</code>：每隔一定的时间，会扫描一定数量的数据库的expires字典中一定数量的key（是随机的），并清除其中已过期的key。该策略是定时过期和惰性过期的折中方案。通过调整定时扫描的时间间隔和每次扫描的限定耗时，可以在不同情况下使得CPU和内存资源达到最优的平衡效果。</p> <p><code>分桶策略</code>：<code>定期过期的优化</code>，将过期时间点相近的key放在一起，按时间扫描分桶。</p> <h2 id="定时删除"><a href="#定时删除" class="header-anchor">#</a> 定时删除</h2> <p>含义：在设置key的过期时间的同时，为该key创建一个定时器，让定时器在key的过期时间来临时，对key进行删除</p> <p>优点：保证内存被尽快释放</p> <p>缺点：
+若过期key很多，删除这些key会占用很多的CPU时间，在CPU时间紧张的情况下，CPU不能把所有的时间用来做要紧的事儿，还需要去花时间删除这些key定时器的创建耗时，若为每一个设置过期时间的key创建一个定时器（将会有大量的定时器产生），性能影响严重没人用</p> <h2 id="惰性删除"><a href="#惰性删除" class="header-anchor">#</a> 惰性删除</h2> <p>含义：<code>key过期的时候不删除，每次从数据库获取key的时候去检查是否过期，若过期，则删除，返回null</code></p> <p>优点：删除操作只发生在从数据库取出key的时候发生，而且只删除当前key，所以对CPU时间的占用是比较少的，而且此时的删除是已经到了非做不可的地步（如果此时还不删除的话，我们就会获取到了已经过期的key了）</p> <p>缺点：<code>若大量的key在超出超时时间后，很久一段时间内，都没有被访问过，那么可能发生内存泄露（无用的垃圾占用了大量的内存）</code></p> <h2 id="定期删除"><a href="#定期删除" class="header-anchor">#</a> 定期删除</h2> <p>含义：<code>每隔一段时间执行一次删除(在redis.conf配置文件设置hz，1s刷新的频率)过期key操作</code></p> <p>优点：
+通过限制删除操作的时长和频率，来减少删除操作对CPU时间的占用--处理&quot;定时删除&quot;的缺点
+定期删除过期key--处理&quot;惰性删除&quot;的缺点</p> <p>缺点
+在内存友好方面，不如&quot;定时删除&quot;
+在CPU时间友好方面，不如&quot;惰性删除&quot;</p> <p>难点
+合理设置删除操作的执行时长（每次删除执行多长时间）和执行频率（每隔多长时间做一次删除）（这个要根据服务器运行情况来定了）
+看完上面三种策略后可以得出以下结论：</p> <p>定时删除和定期删除为主动删除：Redis会定期主动淘汰一批已过去的key</p> <p>惰性删除为被动删除：用到的时候才会去检验key是不是已过期，过期就删除</p> <p>惰性删除为redis服务器内置策略</p> <p>定期删除可以通过：</p> <p>第一、配置redis.conf 的hz选项，默认为10 （即1秒执行10次，100ms一次，值越大说明刷新频率越快，最Redis性能损耗也越大）
+第二、配置redis.conf的maxmemory最大值，当已用内存超过maxmemory限定时，就会触发主动清理策略</p> <h1 id="_8-分布式系统中常用的缓存方案有哪些"><a href="#_8-分布式系统中常用的缓存方案有哪些" class="header-anchor">#</a> 8. 分布式系统中常用的缓存方案有哪些</h1> <p>客户端缓存：页面和浏览器缓存，APP缓存，H5缓存，localStorage 和 sessionStorage
+CDN缓存：内容存储：数据的缓存，内容分发：负载均衡
+nginx缓存：静态资源
+服务端缓存：本地缓存，外部缓存
+数据库缓存：持久层缓存（mybatis，hibernate多级缓存），mysql查询缓存
+操作系统缓存：Page Cache、Buffer Cache</p> <h1 id="_9-常见的缓存淘汰算法"><a href="#_9-常见的缓存淘汰算法" class="header-anchor">#</a> 9. 常见的缓存淘汰算法</h1> <p><code>FIFO（First In First Out，先进先出）</code>，根据缓存被存储的时间，离当前最远的数据优先被淘汰；
+<code>LRU（Least Recently Used，最近最少使用）</code>，根据最近被使用的时间，离当前最远的数据优先被淘汰；
+<code>LFU（Least Frequently Used，最不经常使用）</code>，在一段时间内，缓存数据被使用次数最少的会被淘汰。</p> <h1 id="_10-redis的持久化机制"><a href="#_10-redis的持久化机制" class="header-anchor">#</a> 10. redis的持久化机制</h1> <p>RDB：Redis DataBase 将某一个时刻的内存快照（Snapshot），以二进制的方式写入磁盘。
+手动触发：
+save命令，使 Redis 处于阻塞状态，直到 RDB 持久化完成，才会响应其他客户端发来的命令，所
+以在生产环境一定要慎用
+bgsave命令，fork出一个子进程执行持久化，主进程只在fork过程中有短暂的阻塞，子进程创建
+之后，主进程就可以响应客户端请求了
+自动触发：
+save m n ：在 m 秒内，如果有 n 个键发生改变，则自动触发持久化，通过bgsave执行，如果设
+置多个、只要满足其一就会触发，配置文件有默认配置(可以注释掉)
+flushall：用于清空redis所有的数据库，flushdb清空当前redis所在库数据(默认是0号数据库)，会
+清空RDB文件，同时也会生成dump.rdb、内容为空
+主从同步：全量同步时会自动触发bgsave命令，生成rdb发送给从节点</p> <p>优点：
+1、整个Redis数据库将只包含一个文件 dump.rdb，方便持久化。
+2、容灾性好，方便备份。
+3、性能最大化，fork 子进程来完成写操作，让主进程继续处理命令，所以是 IO 最大化。使用单独子进
+程来进行持久化，主进程不会进行任何 IO 操作，保证了 redis 的高性能
+4.相对于数据集大时，比 AOF 的启动效率更高。</p> <p>缺点：
+1、数据安全性低。RDB 是间隔一段时间进行持久化，如果持久化之间 redis 发生故障，会发生数据丢
+失。所以这种方式更适合数据要求不严谨的时候) 2、由于RDB是通过fork子进程来协助完成数据持久化工作的，因此，如果当数据集较大时，可能会导
+致整个服务器停止服务几百毫秒，甚至是1秒钟。会占用cpu
+AOF：Append Only File 以日志的形式记录服务器所处理的每一个写、删除操作，查询操作不会记
+录，以文本的方式记录，可以打开文件看到详细的操作记录，调操作系统命令进程刷盘
+1、所有的写命令会追加到 AOF 缓冲中。
+2、AOF 缓冲区根据对应的策略向硬盘进行同步操作。
+3、随着 AOF 文件越来越大，需要定期对 AOF 文件进行重写，达到压缩的目的。
+4、当 Redis 重启时，可以加载 AOF 文件进行数据恢复。</p> <p>同步策略：
+每秒同步：异步完成，效率非常高，一旦系统出现宕机现象，那么这一秒钟之内修改的数据将会丢失
+每修改同步：同步持久化，每次发生的数据变化都会被立即记录到磁盘中，最多丢一条
+不同步：由操作系统控制，可能丢失较多数据
+优点：
+1、数据安全
+2、通过 append 模式写文件，即使中途服务器宕机也不会破坏已经存在的内容，可以通过 redis-check-aof 工具解决数据一致性问题。
+3、AOF 机制的 rewrite 模式。定期对AOF文件进行重写，以达到压缩的目的
+缺点：
+1、AOF 文件比 RDB 文件大，且恢复速度慢。
+2、数据集大的时候，比 rdb 启动效率低。
+3、运行效率没有RDB高
+AOF文件比RDB更新频率高，优先使用AOF还原数据。
+AOF比RDB更安全也更大
+RDB性能比AOF好
+如果两个都配了优先加载AOF</p> <h1 id="_11-redis线程模型、单线程快的原因"><a href="#_11-redis线程模型、单线程快的原因" class="header-anchor">#</a> 11 Redis线程模型、单线程快的原因</h1> <p>Redis基于Reactor模式开发了网络事件处理器，这个处理器叫做<code>文件事件处理器</code> file event handler。
+这个文件事件处理器，它是单线程的，所以 Redis 才叫做单线程的模型，它采用IO多路复用机制来同时
+监听多个Socket，根据Socket上的事件类型来选择对应的事件处理器来处理这个事件。可以实现高性能
+的网络通信模型，又可以跟内部其他单线程的模块进行对接，保证了 Redis 内部的线程模型的简单性。
+图灵学院
+文件事件处理器的结构包含4个部分：多个Socket、IO多路复用程序、文件事件分派器以及事件处理器
+（命令请求处理器、命令回复处理器、连接应答处理器等）。
+多个 Socket 可能并发的产生不同的操作，每个操作对应不同的文件事件，但是IO多路复用程序会监听
+多个 Socket，会将 Socket 放入一个队列中排队，每次从队列中取出一个 Socket 给事件分派器，事件
+分派器把 Socket 给对应的事件处理器。
+然后一个 Socket 的事件处理完之后，IO多路复用程序才会将队列中的下一个 Socket 给事件分派器。文
+件事件分派器会根据每个 Socket 当前产生的事件，来选择对应的事件处理器来处理。
+单线程快的原因：
+1）纯内存操作
+2）核心是基于非阻塞的IO多路复用机制
+3）单线程反而避免了多线程的频繁上下文切换带来的性能问题</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/other/mianshi/消息队列-5.html" class="prev">
+        /other/mianshi/消息队列-5.html
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.a269e6e3.js" defer></script><script src="/assets/js/2.99bf64c9.js" defer></script><script src="/assets/js/297.a391f4a0.js" defer></script>
+  </body>
+</html>
