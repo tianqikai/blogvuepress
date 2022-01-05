@@ -25,7 +25,7 @@
 1. 可以使⽤`jmap`来查看JVM中各个区域的使⽤情况
 2. 可以通过`jstack`来查看线程的运⾏情况， ⽐如哪些线程阻塞、是否出现了死锁
 3. 可以通过`jstat`命令来查看垃圾回收的情况， 特别是fullgc， 如果发现fullgc⽐较频繁， 那么就得进⾏调优了
-4. 通过各个命令的结果， 或者`jvisualvm`等⼯具来进⾏分析
+4. 通过各个命令的结果， 或者`visualvm`  `Arthas` 等⼯具来进⾏分析
 5. ⾸先， 初步猜测频繁发送fullgc的原因， 如果频繁发⽣fullgc但是⼜⼀直没有出现内存溢出， 那么表 示fullgc实际上是回收了很多对象了， 所以这些对象最好能在younggc过程中就直接回收掉， 避免  这些对象进⼊到⽼年代， 对于这种情况， 就要考虑这些存活时间不⻓的对象是不是⽐较⼤， 导致年 轻代放不下， 直接进⼊到了⽼年代， 尝试加⼤年轻代的⼤⼩， 如果改完之后， fullgc减少， 则证明修改有效
 6.  同时，还可以找到占⽤CPU最多的线程， 定位到具体的⽅法， 优化这个⽅法的执⾏， 看是否能避免 某些对象的创建， 从⽽节省内存
 :::
@@ -64,14 +64,14 @@ ExtClassLoader的⽗加载器是BootstrapClassLoader。
 
 
 ## 1.5 Tomcat中为什么要使⽤⾃定义类加载器
-⼀个Tomcat中可以部署多个应⽤， ⽽每个应⽤中都存在很多类， 并且各个应⽤中的类是独⽴的， 全类     名是可以相同的， ⽐如⼀个订单系统中可能存在com.zhouyu.User类， ⼀个库存系统中可能也存在        com.zhouyu.User类， ⼀个Tomcat， 不管内部部署了多少应⽤， Tomcat启动之后就是⼀个Java进程， 也就是⼀个JVM， 所以如果Tomcat中只存在⼀个类加载器， ⽐如默认的AppClassLoader， 那么就只能 加载⼀个com.zhouyu.User类， 这是有问题的， ⽽在Tomcat中， 会为部署的每个应⽤都⽣成⼀个类加载 器实例， 名字叫做WebAppClassLoader， 这样Tomcat中每个应⽤就可以使⽤⾃⼰的类加载器去加载⾃  ⼰的类， 从⽽达到应⽤之间的类隔离， 不出现冲突。另外Tomcat还利⽤⾃定义加载器实现了热加载功   能。
+⼀个Tomcat中可以部署多个应⽤， ⽽每个应⽤中都存在很多类， 并且各个应⽤中的类是独⽴的， 全类     名是可以相同的， ⽐如⼀个订单系统中可能存在com.zhouyu.User类， ⼀个库存系统中可能也存在        com.zhouyu.User类， ⼀个Tomcat， 不管内部部署了多少应⽤， Tomcat启动之后就是⼀个Java进程， 也就是⼀个JVM， 所以如果Tomcat中只存在⼀个类加载器， ⽐如默认的AppClassLoader， 那么就只能 加载⼀个com.zhouyu.User类， 这是有问题的， ⽽在Tomcat中， 会为部署的每个应⽤都⽣成⼀个类加载 器实例， 名字叫做WebAppClassLoader， 这样Tomcat中每个应⽤就可以使⽤⾃⼰的类加载器去加载⾃  ⼰的类， 从⽽达到`应⽤之间的类隔离`， 不出现冲突。另外Tomcat还利⽤⾃定义加载器实现了热加载功能。
 
 
 ## 1.6 Tomcat如何进⾏优化？
-对于Tomcat调优， 可以从两个⽅⾯来进⾏调整：  内存和线程。
-⾸先启动Tomcat， 实际上就是启动了⼀个JVM， 所以可以按JVM调优的⽅式来进⾏调整， 从⽽达到 Tomcat优化的⽬的。
-另外Tomcat中设计了⼀些缓存区， ⽐如appReadBufSize、bufferPoolSize等缓存区来提⾼吞吐量。 还可以调整Tomcat的线程， ⽐如调整minSpareThreads参数来改变Tomcat空闲时的线程数， 调整       maxThreads参数来设置Tomcat处理连接的最⼤线程数。
-并且还可以调整IO模型， ⽐如使⽤NIO、APR这种相⽐于BIO更加⾼效的IO模型。
+对于Tomcat调优， 可以从两个⽅⾯来进⾏调整：  `内存和线程`。
+⾸先启动Tomcat， 实际上就是启动了⼀个JVM， 所以可以按`JVM调优的⽅式来进⾏调整`， 从⽽达到 Tomcat优化的⽬的。
+另外Tomcat中设计了⼀些缓存区， ⽐如`appReadBufSize、bufferPoolSize等缓存区来提⾼吞吐量`。 还可以调整Tomcat的线程， ⽐如调整minSpareThreads参数来改变Tomcat空闲时的线程数， 调整       `maxThreads参数来设置Tomcat处理连接的最⼤线程数`。
+并且还可以调整IO模型， ⽐如使⽤`NIO、APR这种相⽐于BIO更加⾼效的IO模型`。
 
 
 ## 1.7 BIO、NIO、AIO分别是什么

@@ -1,5 +1,9 @@
 # 1.RocketMQ安装
 [[toc]]
+
+<a data-fancybox title="RocketMQ" href="./image/rocketmq66.jpg">![RocketMQ](./image/rocketmq66.jpg)</a>
+
+
 ## 1.1 RocketMQ在linux下安装
 
 
