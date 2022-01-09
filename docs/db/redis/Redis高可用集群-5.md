@@ -18,10 +18,12 @@
 ### 6.1.3 复制原理
 
 执行slave master port后，与主节点连接，同步主节点的数据,6380:>info replication：查看主从及同步信息
+
 <a data-fancybox title="Redis主从拓扑" href="./image/rediscopy03.jpg">![Redis主从拓扑](./image/rediscopy03.jpg)</a>
 
 
 ## 6.2 哨兵模式
+
 反客为主的自动版，能够后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库
 
 
