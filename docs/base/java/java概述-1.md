@@ -117,7 +117,7 @@ Java语言中，线程是一种特殊的对象，它必须由Thread类或其子�
 #### ● 健壮性
   吸收了C/C++语言的优点，但去掉了其影响程序健壮性的部分（如指针、内存的申请与释放等），提供了一个相对安全的内存管理和访问机制
 
-####● 跨平台性
+#### ● 跨平台性
   **跨平台性**：*通过Java语言编写的应用程序在不同的系统平台上都可以运行。“Write  once，Run AnyWhere” 一次编译，到处运行。*
   原理：只要在需要运行java应用程序的操作系统上，先安装一个Java虚拟机（JVM Java Virtual Machine）即可。由JVM来负责Java程序在该系统中运行。
 
@@ -150,8 +150,7 @@ Java语言中，线程是一种特殊的对象，它必须由Thread类或其子�
 
   ![Alt text](../image/JVM.jpg)
 
-  **因为有了JVM，同一个Java 程序在三个不同的操作系统中都可以执行。这
-  样就实现了Java 程序的跨平台性。**
+  **因为有了JVM，同一个Java 程序在三个不同的操作系统中都可以执行。这样就实现了Java程序的跨平台性**
 
   ![Alt text](../image/javarun.png)
 
@@ -192,17 +191,19 @@ Java语言中，线程是一种特殊的对象，它必须由Thread类或其子�
 ## 1.5 JVM JRE JDK关系
 
 <font color='red'><strong>JDK(Java Development Kit Java开发工具包)</strong></font>  
-JDK是提供给Java开发人员使用的，其中包含了java的开发工具，也包括了
-JRE。所以安装了JDK，就不用在单独安装JRE了。
-◆其中的开发工具：**编译工具(javac.exe) 打包工具(jar.exe)等**
+JDK是提供给Java开发人员使用的，其中包含了java的开发工具，也包括了JRE。所以安装了JDK，就不用在单独安装JRE了。
+
+- 其中的开发工具：**编译工具(javac.exe)打包工具(jar.exe)等**
+
 <font color='red'><strong>JRE(Java Runtime Environment Java运行环境)</strong></font>  
-包括**Java虚拟机(JVM Java Virtual Machine)**和**Java程序所需的核心类库**等，
+包括 **Java虚拟机(JVM Java Virtual Machine)** 和 **Java程序所需的核心类库** 等，
 如果想要运行一个开发好的Java程序，计算机中只需要安装JRE即可。  
 
 ![Alt text](../image/jvm$jre$jdk.jpg)
 
 **• JDK = JRE + 开发工具集（例如Javac编译工具等）**  
 **• JRE = JVM + Java SE标准类库**
+
 ******
  ![Alt text](../image/Java8.0_platform.jpg)
 
@@ -218,11 +219,12 @@ JRE。所以安装了JDK，就不用在单独安装JRE了。
 录下都可以执行java的工具呢？  
 ※根据windows系统在查找可执行程序的原理，可以将java工具所在路径定义到
 path 环境变量中，让系统帮我们去找运行执行的程序。  
+
 ※配置方法：  
-◆我的电脑--属性--高级系统设置--环境变量  
-◆编辑 path 环境变量，在变量值开始处加上java工具所在目录，后面用 “ ; ”和其他值分隔
+ - 我的电脑--属性--高级系统设置--环境变量  
+ - 编辑 path 环境变量，在变量值开始处加上java工具所在目录，后面用 “ ; ”和其他值分隔
 开即可。  
-◆打开DOS命令行，任意目录下敲入javac。如果出现javac 的参数信息，配置成功。 
+ - 打开DOS命令行，任意目录下敲入javac。如果出现javac 的参数信息，配置成功。 
 
 ***注： 具体操作流程，参看JDK8下载_安装_配置.doc***
  ![Alt text](../image/javahome.jpg)
