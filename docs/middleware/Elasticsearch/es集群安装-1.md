@@ -1,4 +1,4 @@
-# EL集群安装
+# 2.ES集群安装
 
 ##  解压软件
 将下载的软件解压缩
@@ -129,6 +129,6 @@ bin/elasticsearch
 bin/elasticsearch -d 3.4.4 测试集群
 ```
 
-http://49.232.21.151:9200/_cat/nodes
-http://1.117.13.88:9200/_cat/nodes
-http://122.51.156.245:9200/_cat/nodes
+- http://49.232.21.151:9200/_cat/nodes  
+- http://1.117.13.88:9200/_cat/nodes  
+- http://122.51.156.245:9200/_cat/nodes  

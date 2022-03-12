@@ -67,7 +67,7 @@ module.exports = {
                     { text: '数据结构与算法', link: '/base/data-structure/' },
                     { text: '设计模式', link: '/base/design-pattern/' },
                     { text: 'JVM', link: '/base/JVM/' },
-                    { text: 'Javascript', link: '/base/es6/' },
+                    { text: 'Javascript', link: '/base/Javascript/' },
                     { text: 'Shell脚本', link: '/base/shell/' },
                     { text: 'go语言', link: '/base/golang/' },
                     { text: 'Python', link: '/base/python/' },
