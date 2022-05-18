@@ -568,6 +568,100 @@ Java8 中的 Arrays 的静态方法 stream() 可以获取数组流：
         return str;
     }
 ```
+
+-----------------------
+
+##### flatMap使用去重
+
+```java
+package javabase.java8.stream;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.*;
+
+/**
+ * @author tianqikai
+ */
+public class FlatMapTest {
+        public static void main(String[] args) {
+
+            List<String> cityListOne = new ArrayList<>();
+            cityListOne.add("郑州");
+            cityListOne.add("濮阳");
+            cityListOne.add("濮阳");
+            List<String> cityListTwo = new ArrayList<>();
+            cityListTwo.add("廊坊");
+            cityListTwo.add("邢台");
+            cityListTwo.add("邢台");
+            List<String> cityListThree = new ArrayList<>();
+            cityListThree.add("大同");
+            cityListThree.add("太原");
+            List<String> cityListFour = new ArrayList<>();
+            cityListFour.add("南昌");
+            cityListFour.add("九江");
+            cityListFour.add("九江");
+            Address addressOne = new Address();
+            addressOne.setProvince("河南");
+            addressOne.setCityList(cityListOne);
+
+            Address addressTwo = new Address();
+            addressTwo.setProvince("河北");
+            addressTwo.setCityList(cityListTwo);
+
+            Address addressThree = new Address();
+            addressThree.setProvince("山西");
+            addressThree.setCityList(cityListThree);
+
+            Address addressFour = new Address();
+            addressFour.setProvince("江西");
+            addressFour.setCityList(cityListFour);
+
+            List<Address> addresseList = new ArrayList<>();
+            addresseList.add(addressOne);
+            addresseList.add(addressTwo);
+            addresseList.add(addressThree);
+            addresseList.add(addressFour);
+
+            //使用map输出所有的城市名称
+            addresseList.stream()
+                    .map(a -> a.getCityList())
+                    .forEach(cityList->{ cityList.forEach(city -> System.out.print(city));
+                    });
+            System.out.println("");
+            //todo 使用Map输出所有城市名称 去重
+            List<List<String>> collect = addresseList.stream()
+                    .map(a -> a.getCityList()).distinct().collect(Collectors.toList());
+
+            collect.stream().forEach(x-> System.out.print(x.toString()));
+            System.out.println("");
+            System.out.println("-------------------");
+            //使用flatMap输出所有城市名称
+            addresseList.stream()
+                    .flatMap(a -> a.getCityList().stream())
+                    .forEach(city -> System.out.print(city));
+            System.out.println("");
+            //todo 使用flatMap输出所有城市名称 去重
+            addresseList.stream()
+                    .flatMap(a -> a.getCityList().stream())
+                    .distinct()
+                    .forEach(city -> System.out.print(city));
+            System.out.println("");
+            System.out.println("-------------------");
+        }
+
+}
+```
+
+```log
+郑州濮阳濮阳廊坊邢台邢台大同太原南昌九江九江
+[郑州, 濮阳, 濮阳][廊坊, 邢台, 邢台][大同, 太原][南昌, 九江, 九江]
+-------------------
+郑州濮阳濮阳廊坊邢台邢台大同太原南昌九江九江
+郑州濮阳廊坊邢台大同太原南昌九江
+-------------------
+```
+
 #### 16.4.2.3-排序
 <a data-fancybox title="排序" href="../image/paixu.jpg">![排序](../image/paixu.jpg)</a>
 

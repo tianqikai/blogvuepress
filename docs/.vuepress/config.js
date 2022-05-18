@@ -80,7 +80,7 @@ module.exports = {
                 items: [  //多级导航栏
                     { text: 'Mysql', link: '/db/mysql/' },
                     { text: 'Redis', link: '/db/redis/' },
-                    { text: 'Mongdb', link: '/db/mongdb/' },
+                    { text: 'MongoDB', link: '/db/mongodb/' },
                     { text: 'Oracle', link: '/db/oracle/' },
                     { text: '分库分表', link: '/db/fenkufenbiao/' }
                 ]
@@ -188,6 +188,7 @@ module.exports = {
                     { text: 'docker', link: '/middleware/docker/' },
                     { text: 'kubernetes', link: '/middleware/kubernetes/' },
                     { text: 'Jenkins', link: '/tool/Jenkins/' },
+                    { text: '阿里云计算ACP', link: '/other/AliACP/NO1/' },
                 ]
             },
             {
